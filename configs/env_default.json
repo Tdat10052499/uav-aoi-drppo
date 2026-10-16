@@ -1,0 +1,15 @@
+{
+  "T": 300,
+  "dt": 3.0,
+  "H": 100.0,
+  "B": 1000000.0,
+  "gamma0_db": 60.0,
+  "packet_bits": 15000000.0,
+  "Pc": 50.0,
+  "rotor_preset": "zeng2019_arxiv_v1",
+  "G": 16,
+  "lam": 0.1,
+  "mu": 0.1,
+  "count_norm": 3.0,
+  "use_action_mask_clip": true
+}

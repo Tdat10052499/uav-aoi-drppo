@@ -7,7 +7,7 @@ import sys
 
 import numpy as np
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
 from uavaoi import (EnvConfig, HEURISTICS, PRESETS, SUITES, TRAIN_FIXED, UAVAoIEnv,
                     characteristic_speeds, effective_radius, hover_power, propulsion_power,
@@ -127,6 +127,29 @@ def test_fixed_scenario_is_fixed():
     env.reset(seed=1); a = env.sensors.copy()
     env.reset(seed=2); b = env.sensors.copy()
     assert np.allclose(a, b) and len(a) == 20
+
+
+# ---------------------------------------------------------------- provenance
+def test_raw_dirs_are_append_only():
+    import tempfile
+    from uavaoi.runrecord import new_run_dir
+    base = tempfile.mkdtemp()
+    new_run_dir("EXP-T", "r1", base=base)
+    try:
+        new_run_dir("EXP-T", "r1", base=base)
+        raise AssertionError("re-using a raw run directory must fail")
+    except FileExistsError:
+        pass
+
+
+def test_eval_manifest_matches_samplers():
+    import json
+    from uavaoi.scenarios import suite_digest, eval_seeds
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "eval_manifest.json")
+    m = json.load(open(path))
+    seeds = eval_seeds(m["n_episodes"])
+    for name, spec in SUITES.items():
+        assert suite_digest(spec, seeds) == m["suites"][name]["sha256"], name
 
 
 # ---------------------------------------------------------------- statistics

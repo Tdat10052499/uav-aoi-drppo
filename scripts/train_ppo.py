@@ -2,15 +2,15 @@
 
 Requires: torch, gymnasium, stable-baselines3 (and sb3-contrib for --masked).
 NOT executed in the workspace where this starter kit was built (no PyPI access);
-run it on the team's machine and check `docs/03` section 7 for the compute plan.
+run it on the team's machine; compute plan in docs/03 section 8.
 
 Examples
   # proposed method: domain-randomised training
-  python scripts/train_ppo.py --train dr --seed 0 --timesteps 2000000 --masked
+  python scripts/train_ppo.py --experiment-id EXP-02 --train dr --seed 0 --timesteps 2000000 --masked
   # key baseline: one fixed layout
-  python scripts/train_ppo.py --train fixed --seed 0 --timesteps 2000000 --masked
+  python scripts/train_ppo.py --experiment-id EXP-02 --train fixed --seed 0 --timesteps 2000000 --masked
   # algorithm baseline
-  python scripts/train_ppo.py --algo dqn --train dr --seed 0 --timesteps 2000000
+  python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 2000000
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ import json
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
 import numpy as np
 import torch
@@ -28,6 +28,7 @@ from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor
 
 from uavaoi import TRAIN_DR, TRAIN_FIXED, EnvConfig, UAVAoIEnv
+from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 
 
 class SmallCNN(BaseFeaturesExtractor):
@@ -64,6 +65,7 @@ def make_env(train: str, cfg: EnvConfig, seed: int, rank: int, masked: bool):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--experiment-id", required=True, help="experiment card id, e.g. EXP-02")
     ap.add_argument("--algo", choices=["ppo", "dqn"], default="ppo")
     ap.add_argument("--train", choices=["dr", "fixed"], default="dr")
     ap.add_argument("--seed", type=int, default=0)
@@ -72,17 +74,25 @@ def main():
     ap.add_argument("--masked", action="store_true", help="MaskablePPO (ppo only)")
     ap.add_argument("--lam", type=float, default=None, help="override energy weight")
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides")
-    ap.add_argument("--out", default="runs")
+    ap.add_argument("--models-dir", default=os.path.join(REPO_ROOT, "runs"),
+                    help="where model files go (gitignored; record SHA256 in data/checkpoint_manifest.md)")
     ap.add_argument("--subproc", action="store_true")
     args = ap.parse_args()
 
+    if args.config and not os.path.isfile(args.config):
+        ap.error(f"config file not found: {args.config}")
     over = json.load(open(args.config)) if args.config else {}
     if args.lam is not None:
         over["lam"] = args.lam
     cfg = EnvConfig(**over)
     tag = f"{args.train}_{args.algo}{'_mask' if args.masked else ''}_lam{cfg.lam}_s{args.seed}"
-    run_dir = os.path.join(args.out, tag)
+    run_id, raw_dir = new_run_dir(args.experiment_id, f"{tag}_{__import__('time').strftime('%Y%m%d-%H%M%S')}")
+    run_dir = os.path.join(args.models_dir, args.experiment_id, run_id)
     os.makedirs(run_dir, exist_ok=True)
+    rr = RunRecord(args.experiment_id, raw_dir, run_id,
+                   config={"args": vars(args), "env_cfg": cfg.to_dict(),
+                           "scenario": (TRAIN_DR if args.train == "dr" else TRAIN_FIXED).to_dict()},
+                   seeds={"train_seed": args.seed, "env_reset_seeds": f"seed*1000 + rank, rank < n_envs"})
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -113,13 +123,23 @@ def main():
                     policy_kwargs=policy_kwargs, seed=args.seed, verbose=1,
                     tensorboard_log=os.path.join(run_dir, "tb"))
 
-    with open(os.path.join(run_dir, "run_config.json"), "w") as f:
-        json.dump({"args": vars(args), "env_cfg": cfg.to_dict(),
-                   "scenario": (TRAIN_DR if args.train == "dr" else TRAIN_FIXED).to_dict()},
-                  f, indent=2, default=str)
-    model.learn(total_timesteps=args.timesteps, progress_bar=False)
-    model.save(os.path.join(run_dir, "model"))
-    print("saved", os.path.join(run_dir, "model.zip"))
+    import time as _t
+    t0 = _t.time()
+    try:
+        model.learn(total_timesteps=args.timesteps, progress_bar=False)
+    except Exception as e:  # record failures, never hide them
+        rr.finish("failed", failure_reason=repr(e))
+        raise
+    model_path = os.path.join(run_dir, "model.zip")
+    model.save(model_path)
+    rr.data["checkpoint_digest"] = "sha256:" + sha256_file(model_path)
+    rr.data["metrics"] = {"wall_time_s": round(_t.time() - t0, 1),
+                          "steps_per_s": round(args.timesteps / max(_t.time() - t0, 1e-9), 1)}
+    rr.data["counts"] = {"timesteps": args.timesteps, "n_envs": n_envs}
+    rr.data["model_path"] = os.path.relpath(model_path, REPO_ROOT)
+    rr.finish("completed")
+    print("saved", model_path)
+    print("run record", os.path.join(raw_dir, "run_record.json"))
 
 
 if __name__ == "__main__":

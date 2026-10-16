@@ -1,6 +1,6 @@
 """Aggregate evaluation CSVs and test the pre-registered hypotheses (docs/03 section 6).
 
-  python scripts/analyze.py results/*.csv --out results/summary.md
+  python scripts/analyze.py results/raw/EXP-0*/*/events.csv --out results/processed/summary.md
 
 Per-seed aggregation: each (method, train_seed, suite) -> mean over evaluation episodes.
 Heuristics have no training seed; each evaluation episode is then treated as a replicate
@@ -14,7 +14,7 @@ import os
 import sys
 from collections import defaultdict
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
 import numpy as np
 

@@ -82,3 +82,29 @@ EVAL_SEED_BASE = 100_000
 
 def eval_seeds(n_episodes: int = 100) -> list:
     return [EVAL_SEED_BASE + i for i in range(n_episodes)]
+
+
+def suite_digest(spec: ScenarioSpec, seeds: list) -> str:
+    """SHA256 over the scenarios a suite generates for the given episode seeds, using the
+    same seeding path as UAVAoIEnv.reset(seed=s). Any silent change to a sampler, a
+    range or the seeding scheme changes this digest (checked by the smoke test)."""
+    import hashlib
+    h = hashlib.sha256()
+    for s in seeds:
+        scn = spec.sample(np.random.default_rng(s))
+        h.update(np.round(scn["sensors"], 6).tobytes())
+        h.update(np.round(scn["start"], 6).tobytes())
+        h.update(np.float64(scn["E_max"]).tobytes())
+        h.update(np.float64(scn["L"]).tobytes())
+    return h.hexdigest()
+
+
+def build_manifest(n_episodes: int = 100) -> dict:
+    seeds = eval_seeds(n_episodes)
+    return {
+        "eval_seed_range": [seeds[0], seeds[-1]],
+        "n_episodes": n_episodes,
+        "suites": {name: {"spec": spec.to_dict(), "sha256": suite_digest(spec, seeds)}
+                   for name, spec in SUITES.items()},
+        "train": {"train_dr": TRAIN_DR.to_dict(), "train_fixed": TRAIN_FIXED.to_dict()},
+    }

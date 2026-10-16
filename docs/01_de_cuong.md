@@ -44,7 +44,7 @@ Ngưỡng "khác biệt có ý nghĩa thực tiễn" chưa được xác định
 ## 6. Đóng góp dự kiến
 - **C1.** Công thức MDP cho thu dữ liệu UAV tối ưu AoI với năng lượng phụ thuộc tốc độ, quan sát bản đồ căn tâm bất biến theo số cảm biến.
 - **C2.** Giao thức đánh giá OOD có cấu trúc kèm phân tích thống kê, trả lời khi nào domain randomization thực sự giúp.
-- **C3.** Môi trường mô phỏng mã nguồn mở (`code/`), có kiểm thử đơn vị và bộ seed cố định.
+- **C3.** Môi trường mô phỏng mã nguồn mở (`src/uavaoi/`), có kiểm thử đơn vị và bộ seed cố định.
 
 ## 7. Phạm vi & giới hạn chấp nhận trước
 - Chỉ mô phỏng; 2D, độ cao cố định; một UAV; kênh LoS không che khuất; không bay thực nghiệm.

@@ -1,0 +1,45 @@
+% Manuscript skeleton. Template is venue-dependent (decided at Gate G1):
+%   Springer (LNICST / LNNS): \documentclass[runningheads]{llncs}  -- add llncs.cls from the venue author kit
+%   IEEE conference:          \documentclass[conference]{IEEEtran}
+% Comment conventions:  %%GVHD: supervisor comment   %%Reply-DAT: / %%Reply-LDN: / %%Reply-FAO: replies
+% Writing order (RIVF practice): Results -> Method -> Introduction -> Related Work -> Abstract last.
+\documentclass[runningheads]{llncs}
+\usepackage{amsmath,graphicx,booktabs}
+
+\begin{document}
+\title{Generalizable AoI- and Energy-Aware UAV Trajectory Planning for IoT Data Collection via Domain-Randomized Proximal Policy Optimization}
+\titlerunning{Generalizable AoI- and Energy-Aware UAV Trajectory Planning}
+\author{Anonymous Authors}  % keep anonymous for double-blind review
+\institute{Anonymous}
+\maketitle
+
+\begin{abstract}
+%% Owner: DAT. Write LAST, after every number has a checked claim-evidence row.
+\end{abstract}
+
+\section{Introduction}
+%% Owner: DAT. Motivation; limitation of one-scenario training; what Bayerlein et al. did and did not do; RQs; 3 contributions.
+
+\section{Related Work}
+%% Owner: FAO. Built from the positioning matrix (docs/04 sec. 5).
+
+\section{System Model and Problem Formulation}
+%% Owner: DAT. From docs/02: scenario, rotary-wing energy (Zeng et al.), LoS channel, AoI, objective.
+
+\section{MDP Formulation and DR-PPO}
+%% Owner: DAT. Centred map observation, 17 actions, reward, anti-early-termination penalty, DR distribution.
+
+\section{Experimental Setup}
+%% Owner: LDN. Baselines, ID/OOD suites, seeds, budgets, statistics (docs/03). Table T1 parameters with sources.
+
+\section{Results}
+%% Owner: LDN. RQ1 (H1), RQ3 (H2), RQ2 (lambda), ablations. Every number -> results/analysis/claim_evidence.md.
+
+\section{Discussion and Limitations}
+%% Owner: DAT (discussion), FAO (limitations): simulation only, LoS, 2D, single UAV.
+
+\section{Conclusion}
+
+\bibliographystyle{splncs04}
+\bibliography{references}
+\end{document}

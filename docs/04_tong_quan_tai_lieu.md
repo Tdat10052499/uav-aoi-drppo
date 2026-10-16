@@ -1,6 +1,6 @@
 # 04 — Tổng quan tài liệu cốt lõi
 
-Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ thống. Ký hiệu: ✔ = đã mở và đọc nội dung (toàn văn hoặc tóm tắt); ◐ = chỉ thấy tóm tắt/đoạn trích qua tìm kiếm; ✱ = trích từ hiểu biết chung, **phải kiểm tra** thông tin xuất bản trước khi đưa vào bài. Khoá BibTeX tương ứng nằm trong `references.bib`.
+Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ thống. Ký hiệu: ✔ = đã mở và đọc nội dung (toàn văn hoặc tóm tắt); ◐ = chỉ thấy tóm tắt/đoạn trích qua tìm kiếm; ✱ = trích từ hiểu biết chung, **phải kiểm tra** thông tin xuất bản trước khi đưa vào bài. Khoá BibTeX tương ứng nằm trong `paper/references.bib`.
 
 ---
 

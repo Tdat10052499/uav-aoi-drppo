@@ -25,4 +25,4 @@
 - [ ] Bộ tham số "light" của [Z19] so với bản IEEE TWC chính thức.
 - [ ] Hệ số mô hình LoS của Al-Hourani (2014) nếu dùng mở rộng kênh.
 - [ ] Toàn văn Lamenza et al. (2025) và Yi et al. (2020) để điền ma trận định vị.
-- [ ] Thông tin xuất bản các mục `VERIFY` trong `references.bib`.
+- [ ] Thông tin xuất bản các mục `VERIFY` trong `paper/references.bib`.

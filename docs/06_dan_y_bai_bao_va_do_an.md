@@ -38,7 +38,7 @@ Mọi hình phải có alt text (yêu cầu EAI/Springer). Nếu dùng LLM ngoà
 | 3. Mô hình hệ thống & phương pháp đề xuất | Mô hình năng lượng, kênh, MDP, thiết kế thưởng, kiến trúc mạng | `02` |
 | 4. Thực nghiệm & đánh giá | Thiết lập, kết quả RQ1–RQ3, ablation, thảo luận | `03`, `results/` |
 | 5. Kết luận & hướng phát triển | Tóm tắt, giới hạn, mở rộng đa UAV / kênh che khuất / bay thực nghiệm | `01` §7 |
-| Phụ lục | Hướng dẫn chạy mã, cấu hình, bảng tham số đầy đủ, kết quả theo từng seed | `code/README.md` |
+| Phụ lục | Hướng dẫn chạy mã, cấu hình, bảng tham số đầy đủ, kết quả theo từng seed | `README.md` |
 
 Đồ án được phép chi tiết hơn bài báo: trình bày đầy đủ kiểm thử đơn vị, toàn bộ kết quả từng seed và các thử nghiệm thất bại (có giá trị phương pháp luận).
 
@@ -51,4 +51,4 @@ Mọi hình phải có alt text (yêu cầu EAI/Springer). Nếu dùng LLM ngoà
 - [ ] Phân biệt kết quả kiểm định (H1, H2) với kết quả thăm dò (H3)
 - [ ] Mục giới hạn: mô phỏng, LoS, 2D, một UAV
 - [ ] Mã nguồn và seed sẵn sàng công bố khi camera-ready
-- [ ] Mục `[cần kiểm tra]` trong `02` và `VERIFY` trong `references.bib` đã xử lý hết
+- [ ] Mục `[cần kiểm tra]` trong `02` và `VERIFY` trong `paper/references.bib` đã xử lý hết

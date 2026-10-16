@@ -1,6 +1,7 @@
-__pycache__/
 *.pyc
-.venv/
-runs/
 *.zip
 .ipynb_checkpoints/
+.venv/
+__pycache__/
+results/raw/SMOKE/
+runs/

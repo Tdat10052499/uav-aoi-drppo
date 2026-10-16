@@ -34,7 +34,7 @@ Hai tốc độ đặc trưng [Z19, §II-B]: **V_me** = argmin P(V) (bền nhấ
 | δ | Hệ số cản profile | 0,012 |
 | P_c | Công suất truyền thông (W) | 50 (mục V của [Z19]) |
 
-**Giá trị suy ra** (tính lại bằng `code/uavaoi/energy.py`, kiểm thử trong `tests/`): P_0 ≈ 580,6 W; P_i ≈ 790,7 W; v_0 ≈ 7,19 m/s (khớp 7,2 của [Z19]); P_h ≈ 1371,3 W; V_me ≈ 21,5 m/s (P ≈ 935,6 W); V_mr ≈ 38,3 m/s (P ≈ 1199,5 W).
+**Giá trị suy ra** (tính lại bằng `src/uavaoi/energy.py`, kiểm thử trong `tests/`): P_0 ≈ 580,6 W; P_i ≈ 790,7 W; v_0 ≈ 7,19 m/s (khớp 7,2 của [Z19]); P_h ≈ 1371,3 W; V_me ≈ 21,5 m/s (P ≈ 935,6 W); V_mr ≈ 38,3 m/s (P ≈ 1199,5 W).
 
 **Bộ tham số "nhẹ" (tuỳ chọn, `preset="light"`):** W = 20 N, R = 0,4 m, A = 0,503 m², Ω = 300 rad/s, d_0 = 0,6, cùng ρ, s, k, δ. Cho P_0 ≈ 79,86 W, P_i ≈ 88,63 W — trùng các giá trị nhiều công trình sau trích dẫn. **[cần kiểm tra]** bộ này với bản IEEE TWC chính thức của [Z19] trước khi dùng làm mặc định.
 
@@ -89,9 +89,9 @@ r_t=-\frac{1}{N}\sum_{n=1}^{N}\frac{\Delta_n(t+1)}{\Delta_{\max}}-\lambda\,\frac
 
 ### Kết thúc episode & chống reward hacking
 - Hết T khe (truncated) hoặc năng lượng không đủ cho bước tiếp theo (terminated).
-- **Rủi ro:** nếu chỉ dừng sớm, tác tử có thể "học" cách cạn pin sớm để tránh các phần thưởng âm còn lại. **Biện pháp:** khi dừng sớm, cộng phạt (số khe còn lại)·(1 + λ·ρ_max + μ), với ρ_max = max(P_h + P_c, P(V_me), P(V_mr))/P_h. Mức phạt này không nhỏ hơn chi phí lớn nhất mà bất kỳ khe nào có thể gây ra, nên dừng sớm không bao giờ có lợi. Kiểm thử: `code/tests/test_core.py::test_early_battery_death_never_pays`.
+- **Rủi ro:** nếu chỉ dừng sớm, tác tử có thể "học" cách cạn pin sớm để tránh các phần thưởng âm còn lại. **Biện pháp:** khi dừng sớm, cộng phạt (số khe còn lại)·(1 + λ·ρ_max + μ), với ρ_max = max(P_h + P_c, P(V_me), P(V_mr))/P_h. Mức phạt này không nhỏ hơn chi phí lớn nhất mà bất kỳ khe nào có thể gây ra, nên dừng sớm không bao giờ có lợi. Kiểm thử: `tests/test_core.py::test_early_battery_death_never_pays`.
 - **Chỉ số AoI khi dừng sớm:** AoI tiếp tục tăng (không thu thêm) đến hết chân trời T, để so sánh công bằng giữa phương pháp hết pin sớm và phương pháp chạy đủ T.
-- **Quan sát từ mô phỏng (heuristic, 100 episode/bộ, `code/results/`):** với cấu hình mặc định, TSP và tham lam AoI hết pin trước T ở 92–100% episode tuỳ bộ (100% ở OOD-energy). Ràng buộc năng lượng vì vậy có hiệu lực, và còn dư địa cho chính sách biết điều tiết tốc độ và hover.
+- **Quan sát từ mô phỏng (heuristic, 100 episode/bộ, `results/raw/heuristics/`):** với cấu hình mặc định, TSP và tham lam AoI hết pin trước T ở 92–100% episode tuỳ bộ (100% ở OOD-energy). Ràng buộc năng lượng vì vậy có hiệu lực, và còn dư địa cho chính sách biết điều tiết tốc độ và hover.
 
 ## 7. Bảng tham số môi trường mặc định (thiết kế)
 | Tham số | Mặc định | Ghi chú |
