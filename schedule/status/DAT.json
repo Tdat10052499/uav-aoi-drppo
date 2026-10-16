@@ -1,5 +1,11 @@
 {
   "nick": "DAT",
   "reviews": {},
-  "tasks": {}
+  "tasks": {
+    "W0-DAT-01": {
+      "date": "2026-10-17",
+      "note": "Đã gửi lời mời Yui-Mika, F4ol4n (theo DAT, 17/10; chưa xác minh qua API). Còn: tên GVHD.",
+      "state": "doing"
+    }
+  }
 }
