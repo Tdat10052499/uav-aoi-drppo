@@ -1,0 +1,12 @@
+# core (environment, heuristics, statistics, tests)
+numpy>=1.26
+# training / evaluation of learned policies
+gymnasium>=0.29
+torch>=2.2
+stable-baselines3>=2.3
+sb3-contrib>=2.3
+# optional
+scipy>=1.11
+pytest>=8
+tensorboard>=2.15
+optuna>=3.6
