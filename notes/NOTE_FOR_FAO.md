@@ -2,6 +2,8 @@
 
 > Viết ngày 17/10/2026. Đọc kèm `docs/05_ke_hoach.md` (kế hoạch hiện hành) và `Project Agreement.md`.
 
+> **Mỗi sáng:** mở Claude Code trong repo và hỏi *"hôm nay tôi cần làm gì?"*. Lần đầu chạy `python scripts/today.py --set-nick FAO`. Lịch của bạn: `python scripts/today.py` hoặc lọc cột *Ai = FAO* trong `schedule/SCHEDULE.md`.
+
 Chào FAO! Vai trò của bạn giống phần bạn làm ở RIVF-Paper: **môi trường chạy, tái lập và provenance**. Mọi con số trong bài đều đứng trên nền bạn dựng, nên tuần 1 là tuần quan trọng nhất của bạn.
 
 ## Bạn sở hữu

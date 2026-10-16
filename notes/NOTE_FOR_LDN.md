@@ -2,6 +2,8 @@
 
 > Viết ngày 17/10/2026. Đọc kèm `docs/05_ke_hoach.md` (kế hoạch hiện hành) và `Project Agreement.md`.
 
+> **Mỗi sáng:** mở Claude Code trong repo và hỏi *"hôm nay tôi cần làm gì?"*. Lần đầu chạy `python scripts/today.py --set-nick LDN`. Lịch của bạn: `python scripts/today.py` hoặc lọc cột *Ai = LDN* trong `schedule/SCHEDULE.md`.
+
 Chào LDN! Vai trò của bạn tương ứng với phần bạn làm ở RIVF-Paper: **ma trận thực nghiệm, thống kê và gate report**. Bạn là người quyết định một con số có đủ bằng chứng để vào bài hay chưa.
 
 ## Bạn sở hữu

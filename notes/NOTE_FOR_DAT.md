@@ -2,6 +2,8 @@
 
 > Viết ngày 17/10/2026. Đọc kèm `docs/05_ke_hoach.md` (kế hoạch hiện hành) và `Project Agreement.md`.
 
+> **Mỗi sáng:** mở Claude Code trong repo và hỏi *"hôm nay tôi cần làm gì?"*. Lần đầu chạy `python scripts/today.py --set-nick DAT`. Lịch của bạn: `python scripts/today.py` hoặc lọc cột *Ai = DAT* trong `schedule/SCHEDULE.md`.
+
 Vai trò: **phương pháp DR-PPO, định vị đóng góp và điều phối**. Bạn là đầu mối với giảng viên và hội nghị, đồng thời giữ máy cố định dùng cho mọi số đo thời gian.
 
 ## Bạn sở hữu

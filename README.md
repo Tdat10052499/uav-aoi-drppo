@@ -9,6 +9,8 @@
 > Bộ khởi đầu: môi trường mô phỏng, heuristic, thống kê, 14/14 kiểm thử, smoke test và kết quả heuristic tham chiếu. `scripts/train_ppo.py` **chưa từng chạy với PyTorch** (issue #5, FAO).
 >
 > ### Read this first
+> - **Mỗi sáng:** `git pull`, mở Claude Code trong thư mục repo, hỏi **"hôm nay tôi cần làm gì?"** (hoặc chạy `python scripts/today.py`). Chi tiết ở mục *Daily workflow* bên dưới.
+> - [`schedule/SCHEDULE.md`](schedule/SCHEDULE.md): lịch theo ngày của cả 3 người, sinh từ `schedule/tasks.json`.
 > - [`docs/05_ke_hoach.md`](docs/05_ke_hoach.md) là **kế hoạch hiện hành**: lịch theo ngày/tuần cho DAT, LDN, FAO và tiêu chí gate G0–G3.
 > - Ghi chú riêng: [`notes/NOTE_FOR_DAT.md`](notes/NOTE_FOR_DAT.md) · [`notes/NOTE_FOR_LDN.md`](notes/NOTE_FOR_LDN.md) · [`notes/NOTE_FOR_FAO.md`](notes/NOTE_FOR_FAO.md)
 > - [`Project Agreement.md`](Project%20Agreement.md): GVHD góp ý bằng dòng `%%GVHD:`.
@@ -25,7 +27,9 @@ Khi bố trí, mật độ cảm biến, diện tích hoặc năng lượng dị
 
 ```
 uav-aoi-drppo/
+  CLAUDE.md              hướng dẫn cho Claude (đọc tự động); skill .claude/skills/hom-nay, ket-thuc-ngay
   Project Agreement.md   Form A — câu hỏi, giả thuyết, tiêu chí dừng, phân công
+  schedule/              tasks.json (lịch theo ngày), status/<NICK>.json, SCHEDULE.md (tự sinh)
   environment/           requirements.txt, machine_notes.md
   configs/               env_default.json (cấu hình môi trường đã khoá)
   src/uavaoi/            môi trường, năng lượng, kênh, kịch bản, heuristic, thống kê, run record
@@ -57,11 +61,43 @@ pip install -r environment/requirements.txt
 ```
 Môi trường, heuristic, thống kê và kiểm thử chạy được chỉ với NumPy. Huấn luyện cần PyTorch, Gymnasium, Stable-Baselines3 và sb3-contrib.
 
+## Daily workflow
+
+**Thiết lập một lần** (sau khi clone và cài môi trường):
+```bash
+python scripts/today.py --set-nick LDN     # hoặc DAT / FAO; lưu vào .nick (không commit)
+```
+Cài [Claude Code](https://claude.com/claude-code) (CLI hoặc tab Code trong ứng dụng Claude desktop), rồi mở nó **trong thư mục repo**. Claude tự đọc `CLAUDE.md` và các skill trong `.claude/skills/`.
+
+**Mỗi ngày**
+1. Hỏi Claude: *"hôm nay tôi cần làm gì?"*. Claude sẽ:
+   - `git pull`;
+   - chạy `scripts/today.py`;
+   - liệt kê việc quá hạn → cần review → hôm nay;
+   - tách phần Claude làm với phần bạn tự làm;
+   - hỏi bắt đầu từ đâu, rồi làm cùng bạn theo quy tắc RIVF (card trước khi chạy, run record, raw chỉ ghi thêm, PR cho `src/`).
+2. Cuối ngày nói *"kết thúc ngày"*. Claude sẽ:
+   - điền ghi chú ngày `notes/<ngày>_<nick>.md` (Form H);
+   - đánh dấu task `--done` kèm bằng chứng;
+   - commit và push.
+
+Không dùng Claude Code? Chạy thẳng các lệnh:
+```bash
+python scripts/today.py                                  # việc của tôi hôm nay
+python scripts/today.py --start W1-LDN-02                # bắt đầu task
+python scripts/today.py --done W1-LDN-02 --evidence "notes/reading/agarwal2021deep_LDN.md"
+python scripts/today.py --approve W1-FAO-02 --evidence "review_log dòng 2"   # second reader
+python scripts/today.py --note-file                      # khung ghi chú ngày
+python scripts/today.py --team                           # cả nhóm
+```
+Lịch (`schedule/tasks.json`) chỉ DAT sửa, qua PR. Trạng thái của mỗi người nằm ở file riêng `schedule/status/<NICK>.json`, nên không có xung đột khi merge.
+
 ## Smallest experiment (smoke test)
 
 Lệnh này **phải báo lỗi rõ ràng** nếu thiếu file hoặc kết quả bị lệch:
 ```bash
 python tests/test_core.py            # kỳ vọng 14/14 passed
+python tests/test_schedule.py        # kỳ vọng 12/12 passed (lịch và today.py)
 python scripts/run_smoke_test.py     # kỳ vọng SMOKE TEST PASSED
 ```
 Smoke test kiểm tra ba điều:

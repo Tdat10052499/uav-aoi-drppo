@@ -1,6 +1,6 @@
 # 05 — Kế hoạch chi tiết (3 thành viên)
 
-> **Đây là kế hoạch hiện hành.** Thay thế mọi bản trước. Day 0 = thứ Hai 19/10/2026. Mốc lịch là mặc định; **kết quả tại gate quan trọng hơn lịch.**
+> **Đây là kế hoạch hiện hành.** Thay thế mọi bản trước. Bản máy đọc được, chia theo ngày, nằm ở `schedule/tasks.json` (bảng xem: `schedule/SCHEDULE.md`). Hai bản phải khớp nhau; khi đổi lịch, DAT sửa cả hai trong cùng một PR và ghi lý do vào `docs/DECISIONS.md`. Day 0 = thứ Hai 19/10/2026. Mốc lịch là mặc định; **kết quả tại gate quan trọng hơn lịch.**
 
 | Nick | Họ tên | GitHub | Vai trò chính |
 | --- | --- | --- | --- |
