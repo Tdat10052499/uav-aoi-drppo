@@ -1,5 +1,11 @@
 {
   "nick": "FAO",
   "reviews": {},
-  "tasks": {}
+  "tasks": {
+    "W1-FAO-01": {
+      "date": "2026-10-19",
+      "evidence": "environment/machine_notes.md",
+      "state": "done"
+    }
+  }
 }
