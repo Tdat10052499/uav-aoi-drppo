@@ -11,6 +11,11 @@
       "date": "2026-10-20",
       "evidence": "results/raw/EXP-01/20261020-084218; 0/1500 dòng lệch",
       "state": "done"
+    },
+    "W1-FAO-03": {
+      "date": "2026-10-20",
+      "evidence": "https://github.com/Tdat10052499/uav-aoi-drppo/pull/18; run dr_ppo_mask_lam0.1_s0_20261020-090719",
+      "state": "done"
     }
   }
 }
