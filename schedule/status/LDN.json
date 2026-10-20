@@ -1,5 +1,11 @@
 {
   "nick": "LDN",
   "reviews": {},
-  "tasks": {}
+  "tasks": {
+    "W1-LDN-01": {
+      "date": "2026-10-19",
+      "evidence": "notes/2026-10-19_ldn.md",
+      "state": "done"
+    }
+  }
 }
