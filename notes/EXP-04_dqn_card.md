@@ -41,7 +41,7 @@ Trường raw cần: run_record.json (checkpoint_digest, steps_per_s), config.js
 ```
 
 ## Câu hỏi mở cho DAT (trước G1)
-- `buffer_size` cho pha chính: 200k (≈ 7,7 GB) có chạy được trên máy nào? Nếu giảm, giảm bao nhiêu và ghi vào DECISIONS.md.
+- `buffer_size` cho pha chính: 200k (≈ 7,7 GB) có chạy được trên máy nào? Laptop FAO chỉ còn ≈ 3,4 GB trống (20/10), nên **không** chạy được 200k. Nếu giảm, giảm bao nhiêu và ghi vào DECISIONS.md.
 - Siêu tham số DQN có tinh chỉnh bằng Optuna với cùng ngân sách như PPO không (docs/03: ngân sách tinh chỉnh bằng nhau)?
 
 ## Lệnh
@@ -56,10 +56,13 @@ python scripts/plot_trajectory.py --model runs/EXP-04/<run-id>/model.zip --label
 ## Kết quả pha 0 (FAO điền sau khi chạy — Form C)
 
 ```text
-Máy:
-train DQN 10k: OK/lỗi — run ID:
-wall_time_s = ___  steps_per_s = ___  (KHÔNG dùng cho bài)
-RAM đỉnh (Task Manager): ___ GB
-Quỹ đạo: figures/traj_dqn_10k_ood_cluster_100000.png — vẽ được: có/không
+Máy: Laptop FAO (i7-8665U, 16 GB, không GPU) / Windows 11 / Python 3.14.3 / torch 2.14.1+cpu / SB3 2.9.0
+train DQN 10k: OK — run EXP-04/dr_dqn_lam0.1_s0_20261020-094810 (buffer 20k, learning_starts 1000);
+  10000 bước, ≈ 2050 cập nhật gradient; status completed; SHA256 model.zip trong run_record.json
+wall_time_s = 511.5  steps_per_s = 19.5  (KHÔNG dùng cho bài; chậm hơn MaskablePPO ≈ 3,5 lần trên cùng máy)
+RAM đỉnh (Task Manager, "In use"): 11,6 → 12,0 GB, tức ≈ +0,4 GB (buffer đầy 10k/20k ≈ 0,38 GB, khớp ước lượng)
+Quỹ đạo: figures/traj_dqn_10k_ood_cluster_100000.png — vẽ được: có. Sau 10k bước chính sách chưa học:
+  không hover lần nào (coverage 0, Ā = 151,50 > Random 132,09), 1 lần chạm biên (DQN không có mask).
+  Chỉ là kiểm tra pipeline, không phải kết quả.
 Second reader (DAT): ___  ngày: ___
 ```
