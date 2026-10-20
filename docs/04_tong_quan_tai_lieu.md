@@ -12,7 +12,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | `zeng2019energy` | Zeng, Xu, Zhang — *Energy Minimization for Wireless Communication with Rotary-Wing UAV*, [arXiv:1804.02238](https://arxiv.org/pdf/1804.02238) (IEEE TWC 2019 ✱) | ✔ toàn văn | Nguồn của mô hình công suất đẩy (phương trình 6, 61), kênh LoS (1)–(2), giao thức fly–hover–communicate, tham số Bảng I. |
 | `agarwal2021deep` | Agarwal, Schwarzer, Castro, Courville, Bellemare — *Deep RL at the Edge of the Statistical Precipice*, NeurIPS 2021 ([PDF](https://proceedings.neurips.cc/paper_files/paper/2021/file/f514cec81cb148559cf475e7426eed5e-Paper.pdf)); thư viện [rliable](https://pypi.org/project/rliable) | ◐ | Cơ sở phương pháp luận cho CI bootstrap, IQM khi số lần chạy ít. |
 | `yi2020deep` | Yi et al. — *Deep Reinforcement Learning for Fresh Data Collection in UAV-assisted IoT Networks* ([ar5iv 2003.00391](https://ar5iv.arxiv.org/html/2003.00391)); IEEE INFOCOM Workshops 2020 theo trích dẫn của [B21] | ◐ | MDP cho quỹ đạo + lập lịch giảm AoI có trọng số, có ràng buộc năng lượng — tiền thân trực tiếp của bài toán AoI. |
-| `abdelmagid2019deep` | Abd-Elmagid, Ferdowsi, Dhillon, Saad — *DRL for Minimizing AoI in UAV-Assisted Networks*, GLOBECOM 2019 (arXiv:1905.02993 theo trích dẫn) | ◐ | Công trình AoI–DRL kinh điển, đối chứng khái niệm. |
+| `abdelmagid2019deep` | Abd-Elmagid, Ferdowsi, Dhillon, Saad — *DRL for Minimizing AoI in UAV-Assisted Networks*, GLOBECOM 2019 ✱ ([arXiv:1905.02993v2](https://arxiv.org/abs/1905.02993)) | ✔ toàn văn (`notes/reading/abdelmagid2019deep_FAO.md`) | Công trình AoI–DRL kinh điển, đối chứng khái niệm. |
 | `alhourani2014optimal` | Al-Hourani, Kandeepan, Lardner — *Optimal LAP Altitude for Maximum Coverage*, IEEE WCL 3(6):569–572, 2014, DOI 10.1109/LWC.2014.2342736 ([RMIT](https://research-repository.rmit.edu.au/articles/journal_contribution/Optimal_LAP_altitude_for_maximum_coverage/27465243)) | ◐ | Mô hình xác suất LoS cho mở rộng kênh (bản đầy đủ). Hệ số a, b cần lấy từ bài gốc. |
 
 ## 2. AoI + năng lượng + DRL (bối cảnh, so sánh trong Related Work)
@@ -21,7 +21,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | --- | --- | --- | --- |
 | `ohdrl2025` | *OH-DRL: An AoI-Guaranteed Energy-Efficient Approach for UAV-Assisted IoT Data Collection*, IEEE TWC 24(6):5009–5022, 2025 ([trang](https://research.usc.edu.au/esploro/outputs/journalArticle/OH-DRL-An-AoI-Guaranteed-Energy-Efficient-Approach-for/991127505202621)) | ◐ | DRL phân cấp + STAR-RIS; giảm 14,4% năng lượng bay, giảm 66% số episode hội tụ so với DRL đối chứng |
 | `sarathchandra2025age` | Sarathchandra et al. — *Age and Power Minimization via Meta-Deep RL in UAV Networks*, [arXiv:2501.14603](https://arxiv.org/pdf/2501.14603.pdf) | ◐ | DQN + MAML; thích nghi khi **hàm mục tiêu** thay đổi (không phải bố trí) |
-| `sun2025aoi` | Sun et al. — *AoI Optimization in Laser-charged UAV-assisted IoT Networks: A MADRL Method*, [arXiv:2507.08429](https://arxiv.org/pdf/2507.08429) | ◐ | MAPPO có bộ nhớ thời gian; giảm tới 15,1% peak AoI so với MADRL đối chứng |
+| `sun2025aoi` | Sun et al. — *AoI Optimization in Laser-charged UAV-assisted IoT Networks: A MADRL Method*, [arXiv:2507.08429](https://arxiv.org/pdf/2507.08429) | ✔ toàn văn (`notes/reading/sun2025aoi_FAO.md`) | MAPPO có bộ nhớ thời gian; giảm tới 15,1% peak AoI so với MADRL đối chứng |
 | `huang_lbi` | Huang et al. — *A Learning-Based Iterative Algorithm for AoI-Optimal Trajectory Planning in UAV-Assisted IoT Networks* ([trang](https://scholar.xjtu.edu.cn/en/publications/a-learning-based-iterative-algorithm-for-aoi-optimal-trajectory-p/)) | ◐ | SCA cho lập lịch + A3C phân cấp cho đường bay |
 | `kumari2024aoi` | Kumari et al. — *AoI-Aware DRL Based UAV Path Planning for Defence Applications*, IEEE SPACE 2024, DOI 10.1109/SPACE63117.2024.10668088 | ◐ | Phân cụm + PPO; mẫu tham khảo cấu trúc bài hội nghị ngắn |
 | `coop2023` | *Cooperative Data Collection with Multiple UAVs for Information Freshness in the IoT*, [arXiv:2303.01381](https://arxiv.org/pdf/2303.01381) | ◐ | Dec-POMDP, CTDE (QMIX) — tham khảo cho hướng mở rộng đa UAV |
@@ -33,7 +33,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | `zhao2025survey` | Zhao et al. — *A Survey on DRL based UAV Communications and Networking*, [arXiv:2502.12875](https://arxiv.org/abs/2502.12875v1) | ◐ |
 | `amodu2025survey` | Amodu et al. (có Nguyễn Công Lương) — *A comprehensive survey of DRL in UAV-assisted IoT data collection*, Vehicular Communications, 2025, DOI 10.1016/j.vehcom.2025.100949 | ◐ |
 | `luong2019applications` | Luong et al. — *Applications of DRL in Communications and Networking: A Survey*, IEEE COMST 21(4), 2019 ([arXiv:1810.07862](https://arxiv.org/pdf/1810.07862)) | ◐ |
-| `liu2024generalizable` | Liu — *Learning Generalizable Policy for Obstacle-Aware Autonomous Drone Racing*, [arXiv:2411.04246](https://arxiv.org/abs/2411.04246v1) | ◐ — domain randomization mỗi rollout |
+| `liu2024generalizable` | Liu — *Learning Generalizable Policy for Obstacle-Aware Autonomous Drone Racing*, [arXiv:2411.04246](https://arxiv.org/abs/2411.04246v1) | ✔ toàn văn (`notes/reading/liu2024generalizable_FAO.md`) — domain randomization mỗi rollout |
 | `robustquad2021` | *Robust Deep RL for Quadcopter Control*, [arXiv:2111.03915](https://arxiv.org/pdf/2111.03915) | ◐ — chỉ ra giới hạn "trong phân phối" của domain randomization |
 
 ## 4. Tài liệu nền phải trích (✱ — kiểm tra thông tin xuất bản)
@@ -50,6 +50,9 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | Yi 2020 | Có | Có ràng buộc năng lượng | Chưa rõ | Chưa rõ | Chưa rõ |
 | Sarathchandra 2025 | Có | Công suất phát | Không (thay mục tiêu) | Không | Chưa rõ |
 | Lamenza 2025 | Không (thăm một lần) | Chưa rõ | Có (số cảm biến linh hoạt) | Chưa rõ | Chưa rõ |
+| Abd-Elmagid 2019 | Có (tổng AoI có trọng số) | Không (UAV chỉ bị ràng buộc thời gian τ; năng lượng là pin của nút) | Không (vị trí nút cố định mỗi kịch bản) | Không (chỉ quét e_max, τ, mật độ) | Không (TB 1000 episode, không seed/CI) |
+| Sun 2025 | Có (peak AoI, đa UAV) | Có mô hình P(v) nhưng v cố định 5 m/s, nên không là biến quyết định | Không (IoT cố định) | Không (chỉ quét η_le) | Không (không báo seed; vùng "variance" không rõ n) |
+| Liu 2024 (tham khảo DR, ngoài phạm vi) | Không (đua drone) | Không | Có (môi trường mới mỗi rollout) | Có (4 mức khó + 4 đường đua thiết kế tay) | Không (1 chính sách, không seed/CI) |
 | **Đề tài này** | Có | Có (Zeng 2019) | Có | Có (4 bộ) | Có (10 seed, CI, Holm) |
 
 Các ô "Chưa rõ" phải được điền bằng việc đọc toàn văn; nếu một công trình có đủ cả năm cột "Có", đóng góp C2 phải được viết lại (gate G0, `05`).

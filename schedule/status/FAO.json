@@ -17,6 +17,10 @@
       "evidence": "https://github.com/Tdat10052499/uav-aoi-drppo/pull/18; run dr_ppo_mask_lam0.1_s0_20261020-090719",
       "state": "done"
     },
+    "W2-FAO-01": {
+      "date": "2026-10-20",
+      "state": "doing"
+    },
     "W2-FAO-02": {
       "date": "2026-10-20",
       "evidence": "https://github.com/Tdat10052499/uav-aoi-drppo/pull/19",
