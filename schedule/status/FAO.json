@@ -21,6 +21,10 @@
       "date": "2026-10-20",
       "evidence": "https://github.com/Tdat10052499/uav-aoi-drppo/pull/19",
       "state": "done"
+    },
+    "W2-FAO-03": {
+      "date": "2026-10-20",
+      "state": "doing"
     }
   }
 }
