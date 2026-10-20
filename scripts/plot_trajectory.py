@@ -132,7 +132,8 @@ def main():
         policy, label = HEURISTICS[args.method](), args.label or args.method
     env = UAVAoIEnv(scenario=SUITES[args.suite], cfg=cfg)
     ep = rollout(env, policy, args.seed)
-    flags = degeneracy_flags(ep["metrics"], masked=cfg.use_action_mask_clip)
+    # heuristics always respect the mask; DQN / plain PPO models do not see it
+    flags = degeneracy_flags(ep["metrics"], masked=getattr(policy, "masked", True))
 
     out = args.out or os.path.join(REPO_ROOT, "figures", f"traj_{label}_{args.suite}_{args.seed}.png")
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
