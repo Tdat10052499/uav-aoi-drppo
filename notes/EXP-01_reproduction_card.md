@@ -48,10 +48,10 @@ python scripts/train_ppo.py --experiment-id EXP-01 --train dr --seed 0 --timeste
 ## Kết quả (FAO điền sau khi chạy — Form C)
 
 ```text
-Máy / OS / Python / NumPy / torch:
-tests: __/14   smoke: PASS/FAIL
-Số dòng lệch so với tham chiếu:
-train_ppo 10k: OK/lỗi (dán lỗi)
+Máy / OS / Python / NumPy / torch: Laptop FAO (i7-8665U, 16 GB, không GPU) / Windows 11 10.0.26300 / 3.14.3 / 2.5.4 / 2.14.1+cpu
+tests: 14/14   smoke: PASS (20/10/2026)
+Số dòng lệch so với tham chiếu: 0/1500 (mean_aoi, sai số 1e-9) — run EXP-01/20261020-084218; NumPy 2.5.4 vẫn tái lập đúng tham chiếu sinh bằng 2.5.3
+train_ppo 10k: (W1-FAO-03, 21/10)
 100k bước: wall_time_s = ___  steps_per_s = ___  (n_envs=8)
 Second reader (DAT) chạy lại trên máy: ___  ngày: ___
 ```

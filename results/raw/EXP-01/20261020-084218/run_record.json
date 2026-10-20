@@ -1,0 +1,90 @@
+{
+  "run_id": "20261020-084218",
+  "experiment_id": "EXP-01",
+  "status": "completed",
+  "code_revision": "33661d996ecf17d36968568501f6655cc6a0204a",
+  "uncommitted_patch_path": "uncommitted.patch",
+  "config_path": "config.json",
+  "environment_path": "environment.json",
+  "data_manifest_path": "data\\eval_manifest.json",
+  "checkpoint_digest": "not-applicable",
+  "seeds": {
+    "eval_episode_seeds": [
+      100000,
+      100099
+    ],
+    "train_seed": -1
+  },
+  "started_at": "2026-10-20T08:42:18+07:00",
+  "finished_at": "2026-10-20T08:45:33+07:00",
+  "counts": {
+    "id/random": 100,
+    "id/greedy_aoi": 100,
+    "id/tsp": 100,
+    "ood_cluster/random": 100,
+    "ood_cluster/greedy_aoi": 100,
+    "ood_cluster/tsp": 100,
+    "ood_density/random": 100,
+    "ood_density/greedy_aoi": 100,
+    "ood_density/tsp": 100,
+    "ood_area/random": 100,
+    "ood_area/greedy_aoi": 100,
+    "ood_area/tsp": 100,
+    "ood_energy/random": 100,
+    "ood_energy/greedy_aoi": 100,
+    "ood_energy/tsp": 100
+  },
+  "metrics": {
+    "id/random": {
+      "mean_aoi_mean": 126.23589266603061
+    },
+    "id/greedy_aoi": {
+      "mean_aoi_mean": 29.041331378355416
+    },
+    "id/tsp": {
+      "mean_aoi_mean": 28.64412140819677
+    },
+    "ood_cluster/random": {
+      "mean_aoi_mean": 134.7084731848284
+    },
+    "ood_cluster/greedy_aoi": {
+      "mean_aoi_mean": 23.809414406429614
+    },
+    "ood_cluster/tsp": {
+      "mean_aoi_mean": 22.94147392520111
+    },
+    "ood_density/random": {
+      "mean_aoi_mean": 134.1527593333333
+    },
+    "ood_density/greedy_aoi": {
+      "mean_aoi_mean": 43.5909975
+    },
+    "ood_density/tsp": {
+      "mean_aoi_mean": 43.58396483333333
+    },
+    "ood_area/random": {
+      "mean_aoi_mean": 137.8993370970241
+    },
+    "ood_area/greedy_aoi": {
+      "mean_aoi_mean": 36.88248544963508
+    },
+    "ood_area/tsp": {
+      "mean_aoi_mean": 35.608381922025245
+    },
+    "ood_energy/random": {
+      "mean_aoi_mean": 133.8656031606965
+    },
+    "ood_energy/greedy_aoi": {
+      "mean_aoi_mean": 61.03181182197909
+    },
+    "ood_energy/tsp": {
+      "mean_aoi_mean": 60.52811238729081
+    },
+    "wall_time_s": 191.7
+  },
+  "raw_events_path": "events.csv",
+  "warnings": [
+    "working tree had uncommitted changes; patch saved"
+  ],
+  "failure_reason": null
+}

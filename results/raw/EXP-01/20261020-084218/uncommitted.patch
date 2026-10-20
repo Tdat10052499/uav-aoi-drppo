@@ -1,0 +1,15 @@
+diff --git a/schedule/status/FAO.json b/schedule/status/FAO.json
+index 4dbda69..80dbf70 100644
+--- a/schedule/status/FAO.json
++++ b/schedule/status/FAO.json
+@@ -6,6 +6,10 @@
+       "date": "2026-10-19",
+       "evidence": "environment/machine_notes.md",
+       "state": "done"
++    },
++    "W1-FAO-02": {
++      "date": "2026-10-20",
++      "state": "doing"
+     }
+   }
+ }

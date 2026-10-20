@@ -6,6 +6,11 @@
       "date": "2026-10-19",
       "evidence": "environment/machine_notes.md",
       "state": "done"
+    },
+    "W1-FAO-02": {
+      "date": "2026-10-20",
+      "evidence": "results/raw/EXP-01/20261020-084218; 0/1500 dòng lệch",
+      "state": "done"
     }
   }
 }
