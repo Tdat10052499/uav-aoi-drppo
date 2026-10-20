@@ -77,7 +77,12 @@
 
 ## Section 5: Logistics & Execution
 
-- **Available hardware / datasets / checkpoints:** **[cần điền — FAO trước 21/10]**: máy của từng thành viên (CPU, RAM, GPU), Kaggle T4 (30 GPU-giờ/tuần, như dự án RIVF). Không cần dataset ngoài: mọi kịch bản sinh từ seed (`data/eval_manifest.json`). Checkpoint chính sách lưu ngoài git (`runs/`); SHA256 ghi trong `data/checkpoint_manifest.md`.
+- **Available hardware / datasets / checkpoints:** chi tiết phiên bản phần mềm ở `environment/machine_notes.md`.
+  - Laptop DAT (dự kiến là máy cố định đo thời gian, chờ DAT xác nhận): Intel Core i7-13620H (10 nhân/16 luồng, 2,4–4,9 GHz), 16 GB DDR5-5200, NVIDIA GeForce RTX 5060 8 GB, SSD 512 GB.
+  - Laptop FAO: Intel Core i7-8665U (4 nhân/8 luồng, 1,9 GHz), 16 GB, Intel UHD 620 (không CUDA), Windows 11.
+  - Máy LDN: **[chờ LDN cung cấp]**.
+  - Kaggle T4 (30 GPU-giờ/tuần, như dự án RIVF), nếu nhóm dùng.
+  - Không cần dataset ngoài: mọi kịch bản sinh từ seed (`data/eval_manifest.json`). Checkpoint chính sách lưu ngoài git (`runs/`); SHA256 ghi trong `data/checkpoint_manifest.md`.
 - **Missing prerequisites, owner, and resolution date:**
   - `train_ppo.py` chưa từng chạy với PyTorch — FAO — 22/10 (issue #5).
   - Xác nhận giảng viên hướng dẫn, quy định cộng điểm và hội nghị đích — DAT — 25/10 (issue #7).
