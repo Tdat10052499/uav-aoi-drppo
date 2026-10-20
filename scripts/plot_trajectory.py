@@ -1,12 +1,12 @@
-"""Plot the trajectory of one episode as an SVG map (no plotting library needed).
+"""Plot the trajectory of one episode (figure F6 and the degenerate-behaviour check).
 
-Used for figure F6 and for the weekly degenerate-behaviour check (docs/05 G1 #5):
-every model gets >= 3 trajectories looked at before its numbers are trusted.
-
-The map shows the area, sensors (filled = served at least once, number = times served),
-the UAV path coloured by speed (V_me slow / V_mr fast), hover slots (collect or idle),
-start and end. The title line repeats the episode metrics; degenerate-behaviour flags
-(one action class >= 90 %, boundary hits with masking on) are printed and drawn.
+docs/05 G1 #5: FAO looks at >= 3 trajectories per model before its numbers are trusted.
+The map shows the area, the sensors (filled = served at least once, number = times
+served, dashed circle = collection radius), the UAV path coloured by speed (V_me slow,
+V_mr fast), hover slots (collect or idle), start and end. Episode metrics go in the
+title; degenerate-behaviour flags (one action class >= 90 %, boundary hits with the
+action mask on) are printed and drawn in red. The file type follows --out (.png, .pdf
+or .svg). Requires matplotlib.
 
 Examples
   python scripts/plot_trajectory.py --method tsp --suite ood_cluster --seed 100000
@@ -31,108 +31,81 @@ SLOW, FAST, COLLECT, IDLE = "#2b6cb0", "#dd6b20", "#2f855a", "#a0aec0"
 
 
 def rollout(env: UAVAoIEnv, policy, seed: int) -> dict:
-    """Run one episode, recording position, action class and served sensor per slot."""
+    """Run one episode, recording position and action class per slot."""
     env.reset(seed=seed)
     policy.reset(env)
     path = [env.pos.copy()]
-    kinds, served_at = [], []
+    kinds = []
     done = False
     while not done:
         a = policy.act(env)
-        before = env.n_served.copy()
+        before = int(env.n_served.sum())
         _, _, term, trunc, info = env.step(a)
-        hit = np.flatnonzero(env.n_served > before)
         path.append(env.pos.copy())
         if a == 0:
-            kinds.append("collect" if hit.size else "idle")
+            kinds.append("collect" if env.n_served.sum() > before else "idle")
         else:
             kinds.append("slow" if a <= 8 else "fast")
-        served_at.append(int(hit[0]) if hit.size else -1)
         done = term or trunc
-    return {"path": np.array(path), "kinds": kinds, "served_at": served_at,
-            "metrics": info["episode_metrics"]}
+    return {"path": np.array(path), "kinds": kinds, "metrics": info["episode_metrics"]}
 
 
 def degeneracy_flags(m: dict, masked: bool) -> list:
-    flags = []
-    for k in ("hover_frac", "slow_frac", "fast_frac"):
-        if m[k] >= 0.9:
-            flags.append(f"{k} = {m[k]:.2f} >= 0.90")
+    flags = [f"{k} = {m[k]:.2f} >= 0.90" for k in ("hover_frac", "slow_frac", "fast_frac") if m[k] >= 0.9]
     if masked and m["boundary_hits"] > 0:
         flags.append(f"boundary_hits = {m['boundary_hits']} with action mask on")
     return flags
 
 
-def to_svg(env: UAVAoIEnv, ep: dict, title: str, flags: list, size: int = 640) -> str:
-    pad, top = 40, 90
-    s = size / env.L                                   # metres -> pixels
-    X = lambda x: pad + x * s                          # noqa: E731
-    Y = lambda y: top + (env.L - y) * s                # noqa: E731  (y axis up)
-    W, H = size + 2 * pad, size + top + pad + 40
-    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
-           f'font-family="Helvetica, Arial, sans-serif" font-size="12">',
-           f'<rect width="{W}" height="{H}" fill="white"/>',
-           f'<text x="{pad}" y="22" font-size="14" font-weight="bold">{title}</text>']
-    m = ep["metrics"]
-    out.append(f'<text x="{pad}" y="40">mean AoI {m["mean_aoi"]:.2f} slots · peak {m["peak_aoi"]:.0f} · '
-               f'coverage {m["coverage"]:.2f} · collections {m["collections"]} · '
-               f'boundary hits {m["boundary_hits"]}</text>')
-    out.append(f'<text x="{pad}" y="56">hover/slow/fast {m["hover_frac"]:.2f}/{m["slow_frac"]:.2f}/'
-               f'{m["fast_frac"]:.2f} · energy used {m["energy_frac"]:.2f} E_max · '
-               f'battery empty before T: {m["early_termination"]}</text>')
-    if flags:
-        out.append(f'<text x="{pad}" y="72" fill="#c53030">DEGENERATE? {"; ".join(flags)}</text>')
-    out.append(f'<clipPath id="area"><rect x="{X(0)}" y="{Y(env.L)}" width="{size}" height="{size}"/></clipPath>')
-    out.append(f'<rect x="{X(0)}" y="{Y(env.L)}" width="{size}" height="{size}" fill="#f7fafc" '
-               f'stroke="#4a5568"/>')
-    # collection radius around each sensor (clipped to the area), then the path, then sensors
-    out.append('<g clip-path="url(#area)">')
+def plot(env: UAVAoIEnv, ep: dict, title: str, flags: list, out: str):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+
+    m, p = ep["metrics"], ep["path"]
+    fig, ax = plt.subplots(figsize=(6.4, 7.0))
+    ax.add_patch(plt.Rectangle((0, 0), env.L, env.L, facecolor="#f7fafc", edgecolor="#4a5568"))
     for w in env.sensors:
-        out.append(f'<circle cx="{X(w[0]):.1f}" cy="{Y(w[1]):.1f}" r="{env.r_eff * s:.1f}" '
-                   f'fill="none" stroke="#e2e8f0" stroke-dasharray="3,3"/>')
-    out.append('</g>')
-    p = ep["path"]
+        ax.add_patch(plt.Circle(w, env.r_eff, fill=False, ls="--", lw=0.6, ec="#cbd5e0", clip_on=True))
     for t, k in enumerate(ep["kinds"]):
         if k in ("slow", "fast"):
-            out.append(f'<line x1="{X(p[t, 0]):.1f}" y1="{Y(p[t, 1]):.1f}" x2="{X(p[t + 1, 0]):.1f}" '
-                       f'y2="{Y(p[t + 1, 1]):.1f}" stroke="{SLOW if k == "slow" else FAST}" '
-                       f'stroke-width="2" stroke-opacity="0.8"/>')
-    for t, k in enumerate(ep["kinds"]):
-        if k in ("collect", "idle"):
-            out.append(f'<circle cx="{X(p[t, 0]):.1f}" cy="{Y(p[t, 1]):.1f}" r="3.5" '
-                       f'fill="{COLLECT if k == "collect" else IDLE}"/>')
-    for n, w in enumerate(env.sensors):
-        cnt = int(env.n_served[n])
-        out.append(f'<rect x="{X(w[0]) - 4:.1f}" y="{Y(w[1]) - 4:.1f}" width="8" height="8" '
-                   f'fill="{"#1a202c" if cnt else "white"}" stroke="#1a202c"/>')
-        out.append(f'<text x="{X(w[0]) + 6:.1f}" y="{Y(w[1]) - 6:.1f}" font-size="10">{cnt}</text>')
-    out.append(f'<circle cx="{X(p[0, 0]):.1f}" cy="{Y(p[0, 1]):.1f}" r="7" fill="none" stroke="#000" '
-               f'stroke-width="2"/>')
-    out.append(f'<path d="M{X(p[-1, 0]) - 6:.1f},{Y(p[-1, 1]) - 6:.1f} l12,12 m0,-12 l-12,12" '
-               f'stroke="#c53030" stroke-width="2.5"/>')
-    # legend
-    ly = top + size + 22
-    items = [("line", SLOW, f"fly V_me ({env.V_slow:.1f} m/s)"), ("line", FAST, f"fly V_mr ({env.V_fast:.1f} m/s)"),
-             ("dot", COLLECT, "hover + collect"), ("dot", IDLE, "hover, nothing in range"),
-             ("sq", "#1a202c", "sensor (n = times served)"), ("ring", "#000", "start"), ("x", "#c53030", "end")]
-    x = pad
-    for i, (kind, col, label) in enumerate(items):
-        if i == 4:                                     # second legend row
-            x, ly = pad, ly + 20
-        if kind == "line":
-            out.append(f'<line x1="{x}" y1="{ly - 4}" x2="{x + 16}" y2="{ly - 4}" stroke="{col}" stroke-width="3"/>')
-        elif kind == "dot":
-            out.append(f'<circle cx="{x + 8}" cy="{ly - 4}" r="4" fill="{col}"/>')
-        elif kind == "sq":
-            out.append(f'<rect x="{x + 4}" y="{ly - 8}" width="8" height="8" fill="{col}"/>')
-        elif kind == "ring":
-            out.append(f'<circle cx="{x + 8}" cy="{ly - 4}" r="5" fill="none" stroke="{col}" stroke-width="2"/>')
-        else:
-            out.append(f'<path d="M{x + 3},{ly - 9} l10,10 m0,-10 l-10,10" stroke="{col}" stroke-width="2"/>')
-        out.append(f'<text x="{x + 20}" y="{ly}">{label}</text>')
-        x += 24 + 6.2 * len(label)
-    out.append("</svg>")
-    return "\n".join(out)
+            ax.plot(p[t:t + 2, 0], p[t:t + 2, 1], color=SLOW if k == "slow" else FAST, lw=1.6, alpha=0.8)
+    for k, col in (("collect", COLLECT), ("idle", IDLE)):
+        idx = [t for t, kk in enumerate(ep["kinds"]) if kk == k]
+        if idx:
+            ax.scatter(p[idx, 0], p[idx, 1], s=18, color=col, zorder=3)
+    served = env.n_served
+    ax.scatter(env.sensors[:, 0], env.sensors[:, 1], s=36, marker="s", zorder=4, edgecolors="#1a202c",
+               facecolors=np.where(served[:, None] > 0, [[0.1, 0.13, 0.17]], [[1, 1, 1]]))
+    for w, c in zip(env.sensors, served):
+        ax.annotate(str(int(c)), w, xytext=(4, 4), textcoords="offset points", fontsize=7)
+    ax.scatter(*p[0], s=90, facecolors="none", edgecolors="black", lw=1.8, zorder=5)
+    ax.scatter(*p[-1], s=80, marker="x", color="#c53030", lw=2.2, zorder=5)
+    ax.set_xlim(-0.02 * env.L, 1.02 * env.L)
+    ax.set_ylim(-0.02 * env.L, 1.02 * env.L)
+    ax.set_aspect("equal")
+    ax.set_xlabel("x [m]")
+    ax.set_ylabel("y [m]")
+    sub = (f"mean AoI {m['mean_aoi']:.2f} slots · peak {m['peak_aoi']:.0f} · coverage {m['coverage']:.2f} · "
+           f"collections {m['collections']}\nhover/slow/fast {m['hover_frac']:.2f}/{m['slow_frac']:.2f}/"
+           f"{m['fast_frac']:.2f} · energy {m['energy_frac']:.2f} E_max · boundary hits {m['boundary_hits']} · "
+           f"battery empty before T: {m['early_termination']}")
+    ax.set_title(f"{title}\n{sub}", fontsize=8.5, loc="left")
+    if flags:
+        ax.text(0.01, 0.99, "DEGENERATE? " + "; ".join(flags), transform=ax.transAxes, va="top",
+                fontsize=8, color="#c53030")
+    legend = [Line2D([], [], color=SLOW, lw=2, label=f"fly V_me ({env.V_slow:.1f} m/s)"),
+              Line2D([], [], color=FAST, lw=2, label=f"fly V_mr ({env.V_fast:.1f} m/s)"),
+              Line2D([], [], color=COLLECT, marker="o", ls="", label="hover + collect"),
+              Line2D([], [], color=IDLE, marker="o", ls="", label="hover, nothing in range"),
+              Line2D([], [], color="#1a202c", marker="s", ls="", label="sensor (n = times served)"),
+              Line2D([], [], color="black", marker="o", mfc="none", ls="", label="start"),
+              Line2D([], [], color="#c53030", marker="x", ls="", label="end")]
+    ax.legend(handles=legend, loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3, fontsize=7.5, frameon=False)
+    fig.tight_layout()
+    fig.savefig(out, dpi=150)
+    plt.close(fig)
 
 
 def main():
@@ -143,7 +116,8 @@ def main():
     ap.add_argument("--suite", choices=list(SUITES), default="id")
     ap.add_argument("--seed", type=int, default=100_000, help="episode seed (eval seeds: 100000-100099)")
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides")
-    ap.add_argument("--out", default=None, help="output .svg (default figures/traj_<label>_<suite>_<seed>.svg)")
+    ap.add_argument("--out", default=None,
+                    help="output .png/.pdf/.svg (default figures/traj_<label>_<suite>_<seed>.png)")
     args = ap.parse_args()
     if bool(args.method) == bool(args.model):
         ap.error("give exactly one of --method or --model")
@@ -160,11 +134,9 @@ def main():
     ep = rollout(env, policy, args.seed)
     flags = degeneracy_flags(ep["metrics"], masked=cfg.use_action_mask_clip)
 
-    out = args.out or os.path.join(REPO_ROOT, "figures", f"traj_{label}_{args.suite}_{args.seed}.svg")
+    out = args.out or os.path.join(REPO_ROOT, "figures", f"traj_{label}_{args.suite}_{args.seed}.png")
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    title = f"{label} · {args.suite} · seed {args.seed} · N={env.N}, L={env.L:.0f} m"
-    with open(out, "w", encoding="utf-8") as f:
-        f.write(to_svg(env, ep, title, flags))
+    plot(env, ep, f"{label} · {args.suite} · seed {args.seed} · N={env.N}, L={env.L:.0f} m", flags, out)
     m = ep["metrics"]
     print(f"{label} {args.suite} seed {args.seed}: mean AoI {m['mean_aoi']:.2f}, coverage {m['coverage']:.2f}, "
           f"hover/slow/fast {m['hover_frac']:.2f}/{m['slow_frac']:.2f}/{m['fast_frac']:.2f}, "
