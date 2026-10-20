@@ -1,7 +1,7 @@
 # Generalizable AoI- and Energy-Aware UAV Trajectory Planning for IoT Data Collection via Domain-Randomized PPO
 
 **Team:** Hồ Du Tuấn Đạt (DAT) · Dương Ngọc Linh Đan (LDN) · Nguyễn Minh Chính (FAO)
-**Supervisor:** [cần xác nhận]
+**Supervisor:** Dr. Nguyễn Trí Hải
 **Target:** chưa chốt; ứng viên AIEI 2027 (hạn 15/02/2027), IEEE SMC 2027 (hạn 15/04/2027, chưa xác minh trang chính thức), FJCAI/ICISN 2027 (chưa công bố hạn)
 **Working deadline:** bản thảo sẵn sàng **10/01/2027** (Gate G3)
 
