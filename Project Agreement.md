@@ -12,7 +12,7 @@
   - Hồ Du Tuấn Đạt — **DAT** — GitHub `Tdat10052499`
   - Dương Ngọc Linh Đan — **LDN** — GitHub `Yui-Mika`
   - Nguyễn Minh Chính — **FAO** — GitHub `F4ol4n`
-  - Giảng viên hướng dẫn: **[cần xác nhận]**
+  - Giảng viên hướng dẫn: **Dr. Nguyễn Trí Hải**
 - **Hình thức:** bài báo hội nghị + đồ án tốt nghiệp
 - **Submission track, verified deadline, and source:** **chưa chốt.** Ứng viên đã kiểm tra ngày 16/10/2026 (`docs/04` §7):
   - AIEI 2027 (ĐH Văn Lang): hạn 15/02/2027 (đã xác minh trên trang chính thức).
