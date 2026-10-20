@@ -19,7 +19,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 
 | Khoá | Công trình | Trạng thái | Điểm chính (theo tác giả) |
 | --- | --- | --- | --- |
-| `ohdrl2025` | *OH-DRL: An AoI-Guaranteed Energy-Efficient Approach for UAV-Assisted IoT Data Collection*, IEEE TWC 24(6):5009–5022, 2025 ([trang](https://research.usc.edu.au/esploro/outputs/journalArticle/OH-DRL-An-AoI-Guaranteed-Energy-Efficient-Approach-for/991127505202621)) | ◐ | DRL phân cấp + STAR-RIS; giảm 14,4% năng lượng bay, giảm 66% số episode hội tụ so với DRL đối chứng |
+| `ohdrl2025` | *OH-DRL: An AoI-Guaranteed Energy-Efficient Approach for UAV-Assisted IoT Data Collection*, IEEE TWC 24(6):5009–5022, 2025 ([trang](https://research.usc.edu.au/esploro/outputs/journalArticle/OH-DRL-An-AoI-Guaranteed-Energy-Efficient-Approach-for/991127505202621)) | ◐ chỉ tóm tắt, không truy cập được toàn văn (`notes/reading/ohdrl2025_FAO.md`) | DRL phân cấp + STAR-RIS; giảm 14,4% năng lượng bay, giảm 66% số episode hội tụ so với DRL đối chứng |
 | `sarathchandra2025age` | Sarathchandra et al. — *Age and Power Minimization via Meta-Deep RL in UAV Networks*, [arXiv:2501.14603](https://arxiv.org/pdf/2501.14603.pdf) | ◐ | DQN + MAML; thích nghi khi **hàm mục tiêu** thay đổi (không phải bố trí) |
 | `sun2025aoi` | Sun et al. — *AoI Optimization in Laser-charged UAV-assisted IoT Networks: A MADRL Method*, [arXiv:2507.08429](https://arxiv.org/pdf/2507.08429) | ✔ toàn văn (`notes/reading/sun2025aoi_FAO.md`) | MAPPO có bộ nhớ thời gian; giảm tới 15,1% peak AoI so với MADRL đối chứng |
 | `huang_lbi` | Huang et al. — *A Learning-Based Iterative Algorithm for AoI-Optimal Trajectory Planning in UAV-Assisted IoT Networks* ([trang](https://scholar.xjtu.edu.cn/en/publications/a-learning-based-iterative-algorithm-for-aoi-optimal-trajectory-p/)) | ◐ | SCA cho lập lịch + A3C phân cấp cho đường bay |
@@ -52,6 +52,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | Lamenza 2025 | Không (thăm một lần) | Chưa rõ | Có (số cảm biến linh hoạt) | Chưa rõ | Chưa rõ |
 | Abd-Elmagid 2019 | Có (tổng AoI có trọng số) | Không (UAV chỉ bị ràng buộc thời gian τ; năng lượng là pin của nút) | Không (vị trí nút cố định mỗi kịch bản) | Không (chỉ quét e_max, τ, mật độ) | Không (TB 1000 episode, không seed/CI) |
 | Sun 2025 | Có (peak AoI, đa UAV) | Có mô hình P(v) nhưng v cố định 5 m/s, nên không là biến quyết định | Không (IoT cố định) | Không (chỉ quét η_le) | Không (không báo seed; vùng "variance" không rõ n) |
+| OH-DRL 2025 (chỉ tóm tắt) | Có (ràng buộc AoI trung bình tối đa; mục tiêu là năng lượng bay) | Chưa rõ (có tối thiểu năng lượng bay; mô hình chưa kiểm) | Chưa rõ | Chưa rõ | Chưa rõ |
 | Liu 2024 (tham khảo DR, ngoài phạm vi) | Không (đua drone) | Không | Có (môi trường mới mỗi rollout) | Có (4 mức khó + 4 đường đua thiết kế tay) | Không (1 chính sách, không seed/CI) |
 | **Đề tài này** | Có | Có (Zeng 2019) | Có | Có (4 bộ) | Có (10 seed, CI, Holm) |
 
