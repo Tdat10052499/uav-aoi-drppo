@@ -80,7 +80,7 @@
 - **Available hardware / datasets / checkpoints:** chi tiết phiên bản phần mềm ở `environment/machine_notes.md`.
   - Laptop DAT (dự kiến là máy cố định đo thời gian, chờ DAT xác nhận): Intel Core i7-13620H (10 nhân/16 luồng, 2,4–4,9 GHz), 16 GB DDR5-5200, NVIDIA GeForce RTX 5060 8 GB, SSD 512 GB.
   - Laptop FAO: Intel Core i7-8665U (4 nhân/8 luồng, 1,9 GHz), 16 GB, Intel UHD 620 (không CUDA), Windows 11.
-  - Máy LDN: **[chờ LDN cung cấp]**.
+  - Laptop LDN: Intel Core i7-13620H (10 nhân/16 luồng), 16 GB, NVIDIA GeForce RTX 4060 Laptop (hiện dùng torch bản CPU), Windows 11.
   - Kaggle T4 (30 GPU-giờ/tuần, như dự án RIVF), nếu nhóm dùng.
   - Không cần dataset ngoài: mọi kịch bản sinh từ seed (`data/eval_manifest.json`). Checkpoint chính sách lưu ngoài git (`runs/`); SHA256 ghi trong `data/checkpoint_manifest.md`.
 - **Missing prerequisites, owner, and resolution date:**
