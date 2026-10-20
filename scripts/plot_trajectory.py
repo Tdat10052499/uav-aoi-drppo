@@ -64,7 +64,7 @@ def plot(env: UAVAoIEnv, ep: dict, title: str, flags: list, out: str):
     from matplotlib.lines import Line2D
 
     m, p = ep["metrics"], ep["path"]
-    fig, ax = plt.subplots(figsize=(6.4, 7.0))
+    fig, ax = plt.subplots(figsize=(6.4, 7.2))
     ax.add_patch(plt.Rectangle((0, 0), env.L, env.L, facecolor="#f7fafc", edgecolor="#4a5568"))
     for w in env.sensors:
         ax.add_patch(plt.Circle(w, env.r_eff, fill=False, ls="--", lw=0.6, ec="#cbd5e0", clip_on=True))
@@ -89,7 +89,7 @@ def plot(env: UAVAoIEnv, ep: dict, title: str, flags: list, out: str):
     ax.set_ylabel("y [m]")
     sub = (f"mean AoI {m['mean_aoi']:.2f} slots · peak {m['peak_aoi']:.0f} · coverage {m['coverage']:.2f} · "
            f"collections {m['collections']}\nhover/slow/fast {m['hover_frac']:.2f}/{m['slow_frac']:.2f}/"
-           f"{m['fast_frac']:.2f} · energy {m['energy_frac']:.2f} E_max · boundary hits {m['boundary_hits']} · "
+           f"{m['fast_frac']:.2f} · energy {m['energy_frac']:.2f} E_max · boundary hits {m['boundary_hits']}\n"
            f"battery empty before T: {m['early_termination']}")
     ax.set_title(f"{title}\n{sub}", fontsize=8.5, loc="left")
     if flags:
