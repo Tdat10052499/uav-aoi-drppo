@@ -17,6 +17,11 @@
       "evidence": "https://github.com/Tdat10052499/uav-aoi-drppo/pull/18; run dr_ppo_mask_lam0.1_s0_20261020-090719",
       "state": "done"
     },
+    "W1-FAO-04": {
+      "date": "2026-10-22",
+      "note": "Form C phía FAO xong (PR #18, 59c2a7f); chờ DAT chạy lại EXP-01 và ký second reader",
+      "state": "blocked"
+    },
     "W2-FAO-01": {
       "date": "2026-10-20",
       "evidence": "notes/reading: 4 Form B (ohdrl2025 chỉ tóm tắt, không truy cập được toàn văn); ma trận docs/04 §5",
