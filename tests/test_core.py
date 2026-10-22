@@ -88,6 +88,21 @@ def test_masks_block_leaving_area():
     assert m[1 + 0] and m[1 + 2]             # East and North allowed
 
 
+def test_single_speed_masks_fast_moves():
+    env = _env(single_speed=True)
+    env.reset(seed=0)
+    for _ in range(20):
+        m = env.action_masks()
+        assert not m[9:].any() and m[1:9].any()
+        env.step(int(np.flatnonzero(m)[-1]))
+    try:
+        env.step(9)
+        raise AssertionError("fast move accepted with single_speed=True")
+    except ValueError:
+        pass
+    run_episode(env, HEURISTICS["tsp"](), seed=100000)   # heuristics follow the mask
+
+
 def test_early_battery_death_never_pays():
     """Return of an agent that drains the battery must be lower than one that survives
     doing nothing useful (anti reward-hacking check, docs/02 section 6)."""

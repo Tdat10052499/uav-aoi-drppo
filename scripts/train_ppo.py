@@ -85,7 +85,8 @@ def main():
     if args.lam is not None:
         over["lam"] = args.lam
     cfg = EnvConfig(**over)
-    tag = f"{args.train}_{args.algo}{'_mask' if args.masked else ''}_lam{cfg.lam}_s{args.seed}"
+    tag = (f"{args.train}_{args.algo}{'_mask' if args.masked else ''}"
+           f"{'_1spd' if cfg.single_speed else ''}_lam{cfg.lam}_s{args.seed}")
     run_id, raw_dir = new_run_dir(args.experiment_id, f"{tag}_{__import__('time').strftime('%Y%m%d-%H%M%S')}")
     run_dir = os.path.join(args.models_dir, args.experiment_id, run_id)
     os.makedirs(run_dir, exist_ok=True)
