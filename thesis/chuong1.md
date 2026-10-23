@@ -5,7 +5,7 @@
 > - Chương này chỉ trình bày kiến thức nền. Mô hình cụ thể của đề tài (tham số, MDP, hàm thưởng) thuộc Chương 3 (`docs/02`).
 > - Không có số liệu thực nghiệm nào trong chương.
 > - Trích dẫn dùng khoá trong `paper/references.bib`. Khoá có đánh dấu ✱ chưa kiểm thông tin xuất bản (`note = {VERIFY}`).
-> - Mục **[cần thêm bib ✱]** là tài liệu kinh điển chưa có trong `references.bib`. Phải thêm và kiểm trước khi nộp; nếu không kiểm được thì bỏ câu trích.
+> - Tài liệu kinh điển cho chương này (sutton2018reinforcement, mnih2015human, schulman2016high, holm1979simple, cliff1993dominance) được thêm vào `references.bib` ngày 23/10/2026. mnih2015human và cliff1993dominance đã đối chiếu Crossref; ba khoá còn lại có `note = {VERIFY}` (✱).
 
 ## 1.1. UAV trong thu thập dữ liệu IoT
 
@@ -117,7 +117,7 @@ Q^\pi(s,a)=r(s,a)+\gamma\,\mathbb E_{s'\sim P,\,a'\sim\pi}\big[Q^\pi(s',a')\big]
 $$
 
 Chính sách tối ưu thoả phương trình Bellman tối ưu, thay kỳ vọng theo $a'$ bằng $\max_{a'}$.
-[cần thêm bib ✱: Sutton & Barto, *Reinforcement Learning: An Introduction*, 2nd ed., MIT Press, 2018.]
+[sutton2018reinforcement ✱]
 
 ### 1.3.3. Quan sát không đầy đủ
 - Khi tác tử không thấy toàn bộ trạng thái, bài toán là MDP quan sát một phần (POMDP).
@@ -150,7 +150,7 @@ $$
 $$
 
 trong đó $Q_{\bar\phi}$ là mạng đích, được cập nhật chậm. Khám phá theo ε-greedy.
-[cần thêm bib ✱: Mnih et al., *Human-level control through deep reinforcement learning*, Nature, 2015.]
+[mnih2015human]
 
 Đặc điểm:
 - DQN là thuật toán **off-policy** nên dùng lại mẫu cũ, nhưng cần bộ nhớ phát lại lớn.
@@ -169,7 +169,7 @@ $$
 \hat A_t=\sum_{l\ge0}(\gamma\lambda_{GAE})^l\,\delta_{t+l},\qquad \delta_t=r_t+\gamma V(s_{t+1})-V(s_t).
 $$
 
-[cần thêm bib ✱: Schulman et al., *High-Dimensional Continuous Control Using Generalized Advantage Estimation*, ICLR 2016.]
+[schulman2016high ✱]
 
 > **Lưu ý ký hiệu:** λ_GAE khác với trọng số năng lượng λ trong hàm thưởng của đề tài (Chương 3).
 
@@ -216,7 +216,7 @@ Domain randomization (DR) [tobin2017domain ✱]:
 - mỗi episode, tham số môi trường được rút ngẫu nhiên từ một phân phối rộng;
 - tác tử buộc phải học chiến lược không phụ thuộc một cấu hình cụ thể.
 
-DR ban đầu dùng để chuyển chính sách từ mô phỏng sang thực tế. Liu [liu2024generalizable — chưa có trong references.bib] dùng DR cho đua drone: sinh lại đường đua mới mỗi rollout. Kết quả là tỷ lệ thành công giảm dần khi đường đua thử lệch xa phân phối huấn luyện.
+DR ban đầu dùng để chuyển chính sách từ mô phỏng sang thực tế. Liu [liu2024generalizable] dùng DR cho đua drone: sinh lại đường đua mới mỗi rollout. Kết quả là tỷ lệ thành công giảm dần khi đường đua thử lệch xa phân phối huấn luyện.
 
 Giới hạn đã biết: DR chủ yếu đảm bảo hiệu năng **trong vùng được ngẫu nhiên hoá**. Ngoại suy ra ngoài vùng đó không được bảo đảm. Đây chính là câu hỏi mà các bộ OOD có cấu trúc của đề tài được thiết kế để kiểm tra.
 
@@ -243,9 +243,9 @@ Khi chỉ có ít lần chạy, Agarwal và cộng sự [agarwal2021deep] khuy�
 ### 1.7.3. Công cụ kiểm định đề tài dùng (`src/uavaoi/stats.py`)
 - **Kiểm định hoán vị:** hoán vị nhãn nhóm nhiều lần để có phân phối của thống kê dưới H0. Không giả định phân phối chuẩn, nên phù hợp cỡ mẫu nhỏ (n = 10).
 - **Hiệu chỉnh Holm:** kiểm soát sai số loại I theo họ khi kiểm nhiều giả thuyết (4 bộ OOD). Holm mạnh hơn Bonferroni mà vẫn giữ cùng mức kiểm soát.
-  [cần thêm bib ✱: Holm, *A Simple Sequentially Rejective Multiple Test Procedure*, Scand. J. Statist., 1979.]
+  [holm1979simple ✱]
 - **Cliff's δ:** cỡ hiệu ứng phi tham số, bằng P(X > Y) − P(X < Y), nằm trong [−1, 1].
-  [cần thêm bib ✱: Cliff, *Dominance statistics: Ordinal analyses to answer ordinal questions*, Psychological Bulletin, 1993.]
+  [cliff1993dominance]
 - **Phân biệt kiểm định và thăm dò:** giả thuyết khẳng định phải đăng ký trước (PREREG); mọi phân tích ngoài đăng ký chỉ là thăm dò và được báo cáo như vậy.
 
 ## 1.8. Tóm tắt chương
