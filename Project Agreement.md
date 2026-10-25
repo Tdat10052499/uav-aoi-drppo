@@ -78,7 +78,7 @@
 ## Section 5: Logistics & Execution
 
 - **Available hardware / datasets / checkpoints:** chi tiết phiên bản phần mềm ở `environment/machine_notes.md`.
-  - Laptop DAT (dự kiến là máy cố định đo thời gian, chờ DAT xác nhận): Intel Core i7-13620H (10 nhân/16 luồng, 2,4–4,9 GHz), 16 GB DDR5-5200, NVIDIA GeForce RTX 5060 8 GB, SSD 512 GB.
+  - Laptop DAT, Acer Nitro ANV16S-61 (dự kiến là máy cố định đo thời gian, chờ DAT xác nhận): AMD Ryzen AI 7 350 w/ Radeon 860M (2,00 GHz), 32 GB RAM 5600 MT/s, NVIDIA GeForce RTX 5060 Laptop 8 GB, SSD 954 GB (cập nhật 25/10/2026).
   - Laptop FAO: Intel Core i7-8665U (4 nhân/8 luồng, 1,9 GHz), 16 GB, Intel UHD 620 (không CUDA), Windows 11.
   - Laptop LDN: Intel Core i7-13620H (10 nhân/16 luồng), 16 GB, NVIDIA GeForce RTX 4060 Laptop (hiện dùng torch bản CPU), Windows 11.
   - Kaggle T4 (30 GPU-giờ/tuần, như dự án RIVF), nếu nhóm dùng.
