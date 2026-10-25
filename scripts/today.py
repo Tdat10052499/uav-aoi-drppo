@@ -15,6 +15,10 @@ Chỉ dùng thư viện chuẩn. Ví dụ:
   python scripts/today.py --render            # sinh schedule/SCHEDULE.md
   python scripts/today.py --check             # kiểm tra tính hợp lệ của lịch
 
+Yêu cầu giữa các thành viên (thay cho biên bản họp) là file
+notes/yeu-cau/<YYYY-MM-DD>_<từ>_can-<NICK>_<chủ-đề>.md; người nhận trả lời bằng dòng
+"<NICK>: ..." dưới mỗi mục. today.py liệt kê các mục chưa trả lời.
+
 Trạng thái mỗi người nằm ở schedule/status/<NICK>.json; mỗi người chỉ sửa file của mình,
 nên không có xung đột khi merge.
 """
@@ -37,6 +41,9 @@ NICKS = ("DAT", "LDN", "FAO")
 STATES = ("todo", "doing", "done", "blocked", "skipped")
 WEEKDAY_VI = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
 UPCOMING_DAYS = 3
+REQ_DIRS = (os.path.join(REPO, "notes", "yeu-cau"), os.path.join(REPO, "notes"))
+REQ_NAME = re.compile(r"^(\d{4}-\d{2}-\d{2})_([a-z]+)_can-([a-z]+)(?:_[^/]*)?\.md$", re.I)
+REQ_ITEM = re.compile(r"^#{2,3}\s+([A-Z]\d+)\.\s*(.+?)\s*$")
 
 # Windows đôi khi thiếu tzdata; khi đó dùng UTC+7 cố định (Việt Nam không có giờ mùa hè).
 try:
@@ -131,6 +138,42 @@ def applicable(task: dict, plan: str | None) -> tuple[bool, str | None]:
     return plan == want, None
 
 
+def parse_requests(text: str, to: str) -> list[dict]:
+    """Các mục `## A1. ...` / `### A1. ...`; mục đã trả lời khi có dòng bắt đầu bằng `<TO>:`."""
+    items, cur = [], None
+    answered = re.compile(rf"^\s*(?:[-*>]\s*)?\**{to}\**\s*:", re.I)
+    for ln in text.splitlines():
+        m = REQ_ITEM.match(ln)
+        if m:
+            cur = {"item": m.group(1), "title": m.group(2), "answered": False}
+            items.append(cur)
+        elif ln.startswith("#"):
+            cur = None
+        elif cur and answered.match(ln):
+            cur["answered"] = True
+    return items
+
+
+def requests(day: dt.date) -> list[dict]:
+    """Mọi mục yêu cầu (đã/chưa trả lời) có ngày ≤ day, cũ trước."""
+    out, seen = [], set()
+    for folder in REQ_DIRS:
+        if not os.path.isdir(folder):
+            continue
+        for name in sorted(os.listdir(folder)):
+            m = REQ_NAME.match(name)
+            if not m or name in seen or d(m.group(1)) > day:
+                continue
+            seen.add(name)
+            frm, to = m.group(2).upper(), m.group(3).upper()
+            path = os.path.join(folder, name)
+            with open(path, encoding="utf-8") as f:
+                items = parse_requests(f.read(), to)
+            rel = os.path.relpath(path, REPO).replace(os.sep, "/")
+            out += [{**it, "from": frm, "to": to, "date": m.group(1), "file": rel} for it in items]
+    return out
+
+
 # ---------------------------------------------------------------- nhận diện thành viên
 def git(*args: str) -> str:
     try:
@@ -223,8 +266,13 @@ def build_today(sched: dict, nick: str, day: dt.date) -> dict:
     for r in sched.get("recurring", []):
         if not (d(r["from"]) <= day <= d(r["to"])):
             continue
-        if r["every"] == "day" or (r["every"] == "monday" and day.weekday() == 0):
+        if (r["every"] == "day" or (r["every"] == "monday" and day.weekday() == 0)
+                or (r["every"] == "weekly" and WEEKDAY_VI[day.weekday()] in r.get("days", []))):
             recurring.append(r)
+
+    reqs = requests(day)
+    inbox = [q for q in reqs if q["to"] == nick and not q["answered"]]
+    outbox = [q for q in reqs if q["from"] == nick and not q["answered"]]
 
     note_path = os.path.join("notes", f"{day.isoformat()}_{nick.lower()}.md")
     next_gate = next((g for g in sched["gates"] if d(g["date"]) >= day), None)
@@ -239,7 +287,7 @@ def build_today(sched: dict, nick: str, day: dt.date) -> dict:
         "today": sorted(today, key=key), "overdue": sorted(overdue, key=key),
         "blocked": sorted(blocked, key=key), "reviews": sorted(reviews, key=key),
         "waiting_on_me": waiting_on_me, "upcoming": sorted(upcoming, key=lambda t: (t["start"], t["id"])),
-        "recurring": recurring,
+        "recurring": recurring, "inbox": inbox, "outbox": outbox,
         "daily_note": {"path": note_path, "exists": os.path.exists(os.path.join(REPO, note_path))},
     }
 
@@ -285,6 +333,10 @@ def print_today(r: dict) -> None:
         print(f"Gate gần nhất: {g['id']} {g['title']} — {g['date']} (còn {g['days_left']} ngày)")
     print(f"Phương án (G1): {r['plan'] or 'chưa quyết'}")
 
+    if r["inbox"]:
+        print(f"\n## YÊU CẦU GỬI BẠN — trả lời bằng dòng `{r['nick']}:` dưới mục")
+        for q in r["inbox"]:
+            print(f"- [{q['from']} {q['date']}] {q['item']}. {q['title']} ({q['file']})")
     sections = [("QUÁ HẠN — làm trước", r["overdue"], True),
                 ("HÔM NAY", r["today"], True),
                 ("CẦN BẠN REVIEW (second reader)", r["reviews"], False),
@@ -300,7 +352,11 @@ def print_today(r: dict) -> None:
         print("\n## NGƯỜI KHÁC ĐANG CHỜ BẠN")
         for w in r["waiting_on_me"]:
             print(f"- {w['owner']} [{w['id']}] {w['title']} (bắt đầu {w['start']}) cần: {', '.join(w['needs'])}")
-    if not (r["overdue"] or r["today"] or r["reviews"]):
+    if r["outbox"]:
+        print("\n## BẠN ĐANG CHỜ NGƯỜI KHÁC TRẢ LỜI")
+        for q in r["outbox"]:
+            print(f"- [{q['to']} {q['date']}] {q['item']}. {q['title']} ({q['file']})")
+    if not (r["overdue"] or r["today"] or r["reviews"] or r["inbox"]):
         print("\nKhông có việc theo lịch hôm nay. Gợi ý: xem mục SẮP TỚI, đọc thêm, hoặc hỗ trợ việc bị chặn.")
     print("\n## LẶP LẠI")
     for x in r["recurring"]:
@@ -317,6 +373,7 @@ def print_team(sched: dict, day: dt.date) -> None:
         own = lambda xs: [t for t in xs if t["owner"] == n]  # noqa: E731
         print(f"\n{n} ({r['name']}): hôm nay {len(own(r['today']))} · quá hạn {len(own(r['overdue']))}"
               f" · bị chặn {len(own(r['blocked']))} · chờ review {len(r['reviews'])}"
+              f" · yêu cầu chưa trả lời {len(r['inbox'])}"
               f" · ghi chú ngày {'✓' if r['daily_note']['exists'] else '✗'}")
         for t in own(r["overdue"]):
             print(f"   TRỄ  [{t['id']}] {t['title']} (hạn {t['due']}, {t['state']})")
@@ -461,7 +518,7 @@ def render(sched: dict) -> str:
             out.append(f"| {fmt(d(t['start']))} | {t['owner']} | `{t['id']}` {t['title']}{cond} "
                        f"| {fmt(d(t['due']))} | {t.get('reviewer') or ''} "
                        f"| {('#' + str(t['issue'])) if t.get('issue') else ''} |")
-    out += ["", "Lặp lại: ghi chú ngày (Form H) mỗi ngày làm việc; họp nhóm thứ Hai 20:00."]
+    out += ["", "Lặp lại: ghi chú ngày (Form H) mỗi ngày làm việc; gặp mặt làm việc T3, T4, T6 (không biên bản)."]
     return "\n".join(out) + "\n"
 
 

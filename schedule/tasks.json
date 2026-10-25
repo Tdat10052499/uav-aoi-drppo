@@ -22,9 +22,9 @@
     {"id": "R-NOTE", "owner": "ALL", "every": "day", "from": "2026-10-19", "to": "2027-01-10",
      "title": "Ghi chú ngày (Form H): notes/<YYYY-MM-DD>_<nick>.md — 3 câu + 1 bằng chứng",
      "when": "Cuối mỗi ngày có làm việc. Lệnh tạo khung: python scripts/today.py --note-file"},
-    {"id": "R-TEAM", "owner": "ALL", "every": "monday", "from": "2026-10-26", "to": "2027-01-04",
-     "title": "Họp nhóm 20:00, 30 phút — mỗi người mang 1 hình hoặc 1 bảng mới",
-     "when": "DAT ghi biên bản ngắn vào notes/<YYYY-MM-DD>_hop-nhom.md"}
+    {"id": "R-TEAM", "owner": "ALL", "every": "weekly", "days": ["T3", "T4", "T6"], "from": "2026-10-27", "to": "2027-01-08",
+     "title": "Gặp mặt làm việc nhóm (T3, T4, T6) — không ghi biên bản",
+     "when": "Câu hỏi, yêu cầu số liệu hay việc cần người khác làm: ghi file notes/yeu-cau/<YYYY-MM-DD>_<nick>_can-<NICK>_<chủ-đề>.md rồi push; người nhận trả lời bằng dòng '<NICK>:' dưới mục"}
   ],
   "tasks": [
     {"id": "W0-DAT-01", "owner": "DAT", "start": "2026-10-17", "due": "2026-10-18", "kind": "admin", "issue": 9, "gate": "G0", "reviewer": null, "depends": [],

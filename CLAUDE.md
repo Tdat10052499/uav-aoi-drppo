@@ -18,6 +18,11 @@ Dùng skill **`hom-nay`** (`.claude/skills/hom-nay/SKILL.md`). Nếu skill khôn
 4. Thực hiện theo quy tắc dưới. Bắt đầu task thì `--start <ID>`. Xong task thì `--done <ID> --evidence "..."`. Second reader dùng `--approve`.
 5. Cuối ngày dùng skill **`ket-thuc-ngay`**: ghi chú Form H, cập nhật status, commit, push.
 
+## Cách làm việc của nhóm (từ 25/10/2026)
+- Khoảng 80% công việc làm qua Claude. Nhóm gặp mặt làm việc **thứ Ba, thứ Tư, thứ Sáu** và **không ghi biên bản họp**.
+- **Trao đổi giữa thành viên qua GitHub.** Khi thành viên cần câu trả lời, số liệu hay việc từ người khác, Claude soạn file `notes/yeu-cau/<YYYY-MM-DD>_<nick>_can-<NICK>_<chủ-đề>.md` (mỗi việc một mục `## A1. ...`), thành viên đọc lại, rồi commit và push lên `main`. Quy ước: `notes/yeu-cau/README.md`.
+- **Yêu cầu gửi cho thành viên** hiện trong `today.py` ở mục *YÊU CẦU GỬI BẠN* (cả các file cũ `notes/*_can-<NICK>.md`). Trình bày chúng cùng mức ưu tiên với việc quá hạn. Trả lời bằng dòng `<NICK>:` ngay dưới mục; quyết định do thành viên đưa ra, Claude chỉ soạn và ghi lại.
+
 Khi **không có shell** (ví dụ Claude trên web, repo chỉ đồng bộ dạng file), làm như sau:
 - Đọc `schedule/tasks.json` và `schedule/status/<NICK>.json`.
 - Lấy ngày hôm nay theo giờ Việt Nam. Hỏi thành viên nếu không chắc.

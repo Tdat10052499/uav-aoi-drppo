@@ -158,4 +158,4 @@
 | T4 06/01/2027 | FAO | `W12-FAO-01` Bàn giao artifact (Form J): smoke test từ clone sạch, tag submission | T7 09/01/2027 | LDN | #4 |
 | CN 10/01/2027 | ALL | `W12-ALL-01` GATE G3 — bài báo và đồ án sẵn sàng | CN 10/01/2027 |  | #4 |
 
-Lặp lại: ghi chú ngày (Form H) mỗi ngày làm việc; họp nhóm thứ Hai 20:00.
+Lặp lại: ghi chú ngày (Form H) mỗi ngày làm việc; gặp mặt làm việc T3, T4, T6 (không biên bản).
