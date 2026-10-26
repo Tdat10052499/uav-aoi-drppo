@@ -30,6 +30,11 @@
       "note": "Nháp Form B từ toàn văn arXiv v3 (Claude soạn 26/10); chờ DAT đọc lại",
       "state": "done"
     },
+    "W1-DAT-04": {
+      "date": "2026-10-26",
+      "note": "Form B Zeng 2019 nháp xong; còn Lamenza 2025 (chờ PDF)",
+      "state": "doing"
+    },
     "W1-DAT-05": {
       "date": "2026-10-26",
       "evidence": "notes/EXP-01_reproduction_card.md Form C; EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835: 358.4 bước/s (CPU, n_envs=8)",
