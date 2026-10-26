@@ -19,8 +19,9 @@
     },
     "W1-FAO-04": {
       "date": "2026-10-26",
+      "evidence": "Form C đủ (PR #18, 2083d8e); DAT ký second reader e31bff4 (0/1500 lệch); issue #5 đóng",
       "note": "DAT đã chạy lại EXP-01 (126ae08), FAO kiểm 1500/1500 MATCH; chờ PR #18 merge rồi DAT ký second reader",
-      "state": "blocked"
+      "state": "done"
     },
     "W1-FAO-05": {
       "date": "2026-10-26",
