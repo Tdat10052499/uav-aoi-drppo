@@ -1,6 +1,17 @@
 {
   "nick": "DAT",
-  "reviews": {},
+  "reviews": {
+    "W1-FAO-02": {
+      "date": "2026-10-26",
+      "evidence": "chạy lại EXP-01/20261025-115153 trên laptop DAT: 0/1500 dòng lệch; tests 14/14; smoke PASS",
+      "state": "approved"
+    },
+    "W1-FAO-03": {
+      "date": "2026-10-26",
+      "evidence": "PR #18 merge 2083d8e; chạy lại 10k EXP-01/dr_ppo_mask_lam0.1_s0_20261025-115314 trên laptop DAT",
+      "state": "approved"
+    }
+  },
   "tasks": {
     "W0-DAT-01": {
       "date": "2026-10-20",
@@ -11,6 +22,11 @@
     "W1-DAT-01": {
       "date": "2026-10-20",
       "evidence": "notes/2026-10-19_gvhd.md, mục Nhật ký (gửi 20/10 theo DAT)",
+      "state": "done"
+    },
+    "W1-DAT-05": {
+      "date": "2026-10-26",
+      "evidence": "notes/EXP-01_reproduction_card.md Form C; EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835: 358.4 bước/s (CPU, n_envs=8)",
       "state": "done"
     }
   }
