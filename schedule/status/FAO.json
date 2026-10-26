@@ -18,8 +18,8 @@
       "state": "done"
     },
     "W1-FAO-04": {
-      "date": "2026-10-22",
-      "note": "Form C phía FAO xong (PR #18, 59c2a7f); chờ DAT chạy lại EXP-01 và ký second reader",
+      "date": "2026-10-26",
+      "note": "DAT đã chạy lại EXP-01 (126ae08), FAO kiểm 1500/1500 MATCH; chờ PR #18 merge rồi DAT ký second reader",
       "state": "blocked"
     },
     "W1-FAO-05": {
