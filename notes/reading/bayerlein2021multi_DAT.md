@@ -1,6 +1,6 @@
 # Form B — `bayerlein2021multi`
 
-> Trạng thái: **nháp do Claude soạn từ toàn văn PDF** (arXiv:2010.12461v3, 15 trang, SHA256 `44d03192…dcbb3`, DAT tải và gửi ngày 26/10/2026). DAT đọc lại trước khi đánh dấu W1-DAT-02 xong; second reader: LDN. Mọi số liệu dưới đây lấy từ văn bản và bảng; không có số nào đọc từ hình.
+> Trạng thái: **DAT duyệt 26/10/2026**; soạn từ toàn văn PDF (arXiv:2010.12461v3, 15 trang, SHA256 `44d03192…dcbb3`, DAT tải và gửi ngày 26/10/2026). DAT đọc lại trước khi đánh dấu W1-DAT-02 xong; second reader: LDN. Mọi số liệu dưới đây lấy từ văn bản và bảng; không có số nào đọc từ hình.
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Multi-UAV Path Planning for Wireless Data Harvesting with Deep Reinforcement Learning*, 2021.
 - **Tác giả:** Harald Bayerlein, Mirco Theile, Marco Caccamo, David Gesbert (EURECOM; TU München).

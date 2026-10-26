@@ -26,8 +26,9 @@
     },
     "W1-DAT-02": {
       "date": "2026-10-26",
+      "evidence": "notes/reading/bayerlein2021multi_DAT.md (DAT duyệt 26/10); docs/04 §5 hàng Bayerlein; commit 7c6d36d",
       "note": "Nháp Form B từ toàn văn arXiv v3 (Claude soạn 26/10); chờ DAT đọc lại",
-      "state": "doing"
+      "state": "done"
     },
     "W1-DAT-05": {
       "date": "2026-10-26",
