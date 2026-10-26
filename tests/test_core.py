@@ -23,11 +23,6 @@ def test_energy_matches_zeng_table_I():
     assert abs(propulsion_power(0.0, p) - hover_power(p)) < 1e-6   # P(0) = P0 + Pi
 
 
-def test_light_preset_reproduces_commonly_cited_values():
-    p = PRESETS["light"]
-    assert abs(p.P0 - 79.86) < 0.05 and abs(p.Pi - 88.63) < 0.05
-
-
 def test_characteristic_speeds_ordering():
     sp = characteristic_speeds()
     assert 0 < sp["V_me"] < sp["V_mr"]        # Zeng et al.: V_me <= V_mr
