@@ -1,6 +1,6 @@
 # Form B — `zeng2019energy`
 
-> Trạng thái: **nháp chờ DAT duyệt**; soạn từ toàn văn PDF (arXiv:1804.02238v1, 31 trang, SHA256 `f071ace9…0e06160`, DAT tải và gửi ngày 26/10/2026). Second reader: LDN. Mọi số liệu lấy từ văn bản, phương trình và Bảng I; không có số nào đọc từ hình. Các số V_me, V_mr, P_h ghi dưới đây là **do nhóm tính** từ PT (6), (61) và Bảng I, bài không in các số này trong văn bản (chỉ vẽ ở Fig. 1).
+> Trạng thái: **DAT duyệt 26/10/2026**; soạn từ toàn văn PDF (arXiv:1804.02238v1, 31 trang, SHA256 `f071ace9…0e06160`, DAT tải và gửi ngày 26/10/2026). Second reader: LDN. Mọi số liệu lấy từ văn bản, phương trình và Bảng I; không có số nào đọc từ hình. Các số V_me, V_mr, P_h ghi dưới đây là **do nhóm tính** từ PT (6), (61) và Bảng I, bài không in các số này trong văn bản (chỉ vẽ ở Fig. 1).
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Energy Minimization for Wireless Communication with Rotary-Wing UAV*.
 - **Tác giả:** Yong Zeng, Jie Xu, Rui Zhang.
