@@ -46,7 +46,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 ## 5. Ma trận định vị (điền tiếp trong tuần 1–2)
 | Công trình | Mục tiêu AoI | Năng lượng phụ thuộc tốc độ | Huấn luyện trên nhiều bố trí | Đánh giá OOD có cấu trúc | Nhiều seed + CI |
 | --- | --- | --- | --- | --- | --- |
-| Bayerlein 2021 | Không (dữ liệu thu) | Không (hằng số/bước) | Có | Một phần (ngoại suy tham số) | Monte Carlo trên kịch bản |
+| Bayerlein 2021 | Không (dữ liệu thu một lần, PT (13)) | Không (pin −1/bước, một tốc độ V; PT (5), §II-A) | Có (số UAV, số/vị trí/dữ liệu cảm biến, thời gian bay, điểm xuất phát; bản đồ cố định; §VI-A) | Một phần (ngoại suy tham số I, K, D, b₀; không đổi phân phối không gian hay bản đồ; §VI-E, Fig. 7) | Không (1 lần huấn luyện mỗi bản đồ; trung bình Monte Carlo, không CI; §VI-A, Bảng IV) |
 | Yi 2020 | Có | Có ràng buộc năng lượng | Chưa rõ | Chưa rõ | Chưa rõ |
 | Sarathchandra 2025 | Có | Công suất phát | Không (thay mục tiêu) | Không | Chưa rõ |
 | Lamenza 2025 | Không (thăm một lần) | Chưa rõ | Có (số cảm biến linh hoạt) | Chưa rõ | Chưa rõ |

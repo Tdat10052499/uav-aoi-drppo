@@ -24,6 +24,11 @@
       "evidence": "notes/2026-10-19_gvhd.md, mục Nhật ký (gửi 20/10 theo DAT)",
       "state": "done"
     },
+    "W1-DAT-02": {
+      "date": "2026-10-26",
+      "note": "Nháp Form B từ toàn văn arXiv v3 (Claude soạn 26/10); chờ DAT đọc lại",
+      "state": "doing"
+    },
     "W1-DAT-05": {
       "date": "2026-10-26",
       "evidence": "notes/EXP-01_reproduction_card.md Form C; EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835: 358.4 bước/s (CPU, n_envs=8)",
