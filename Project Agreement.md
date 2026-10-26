@@ -84,10 +84,25 @@
   - Kaggle T4 (30 GPU-giờ/tuần, như dự án RIVF), nếu nhóm dùng.
   - Không cần dataset ngoài: mọi kịch bản sinh từ seed (`data/eval_manifest.json`). Checkpoint chính sách lưu ngoài git (`runs/`); SHA256 ghi trong `data/checkpoint_manifest.md`.
 - **Missing prerequisites, owner, and resolution date:**
-  - `train_ppo.py` chưa từng chạy với PyTorch — FAO — 22/10 (issue #5).
+  - ~~`train_ppo.py` chưa từng chạy với PyTorch — FAO — 22/10 (issue #5).~~ Đã chạy: laptop FAO 20/10 (PR #18), laptop DAT 25–26/10 (`results/raw/EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835`).
   - Xác nhận giảng viên hướng dẫn, quy định cộng điểm và hội nghị đích — DAT — 25/10 (issue #7).
   - Đọc toàn văn các công trình gần nhất — cả nhóm — 01/11 (Gate G0, issue #1).
-- **Estimated pilot compute cost:** **[cần đo — FAO, 23/10]**: thời gian 100k bước MaskablePPO trên từng máy. Sau đó tính chi phí: (số learner) × (số seed) × (số bước). Mốc tham chiếu: môi trường chạy khoảng 4 300 bước/giây trên 1 nhân CPU (đo khi dựng bộ mã), chưa tính cập nhật mạng.
+- **Estimated pilot compute cost:** cập nhật 26/10/2026 (W1-FAO-05); chi tiết và giả định ở `notes/2026-10-21_fao_chi-phi-nhap.md` §4.
+  - Số đo: MaskablePPO, `--n-envs 8`, 100k bước, **358,4 bước/s**, đo trên laptop DAT, CPU (torch 2.14.1+cpu), commit ff6d658, run `results/raw/EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835`. Laptop DAT chưa được xác nhận chính thức là máy cố định.
+  - DQN chưa đo trên laptop DAT. Cột cuối giả định DQN chậm hơn 3,5 lần (tỉ lệ trên laptop FAO, khác cấu hình), không phải số đo.
+
+  | Thực nghiệm | Tổng bước | Giờ máy (358,4 bước/s) | Giờ máy (DQN chậm 3,5 lần) |
+  | --- | --- | --- | --- |
+  | EXP-02 pilot | 1,2 M | 0,9 | 0,9 |
+  | Optuna | 8 M | 6,2 | 6,2 |
+  | EXP-03 | 40 M | 31,0 | 31,0 |
+  | EXP-04 | 20 M | 15,5 | 54,3 |
+  | EXP-05 | 50 M | 38,8 | 38,8 |
+  | EXP-06 | 20 M | 15,5 | 15,5 |
+  | EXP-07 | 20 M | 15,5 | 15,5 |
+  | **Tổng (Phương án B, 159,2 M)** | | **123,4 h ≈ 5,1 ngày** | **162,1 h ≈ 6,8 ngày** |
+
+  - **Kết luận:** kịp trước 13/12 (tiêu chí G1 số 6). EXP-03 đến EXP-07 cần 116–155 giờ máy trên một máy, tức khoảng 18–24% của 648 giờ từ 16/11 đến 13/12. Kaggle không cần cho tiến độ; chỉ dùng nếu nhóm muốn chạy thêm seed song song.
 - **Measurement rule:** mọi số đo thời gian (huấn luyện, suy luận) chạy trên **một máy cố định, đứng yên** do DAT chỉ định. Không lấy số thời gian từ Kaggle/Colab. Kaggle chỉ dùng để chạy thêm seed.
 - **Student responsibilities and second readers:**
   - **FAO — Nguyễn Minh Chính:** môi trường chạy và tái lập, smoke test trên máy nhóm, đo chi phí tính toán, provenance checkpoint (`data/checkpoint_manifest.md`), DQN, script vẽ quỹ đạo. Second reader: DAT hoặc LDN.

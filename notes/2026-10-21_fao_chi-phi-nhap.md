@@ -1,6 +1,6 @@
 # Bản nháp ước lượng chi phí tính toán (chuẩn bị cho W1-FAO-05) — 21/10/2026
 
-> FAO soạn trước, khi chưa có số đo. **Chưa có số đo thời gian nào trong file này**: steps/s phải lấy từ máy cố định của DAT (W1-DAT-05, quy tắc 4). Khi có số, FAO điền cột cuối và chuyển bảng sang `Project Agreement.md` §5.
+> FAO soạn trước, khi chưa có số đo. **Cập nhật 26/10:** đã điền số đo của DAT ở §2 và §4 (laptop DAT, CPU; máy cố định chưa được xác nhận chính thức, mục A4 trong `notes/2026-10-21_fao_can-DAT.md`). Bảng đã chuyển sang `Project Agreement.md` §5.
 
 ## 1. Tổng số bước theo thực nghiệm (Phương án B, `docs/03` §3, §7, §8)
 
@@ -31,7 +31,7 @@ Giờ máy = tổng bước / steps_per_s / 3600, với 159,2 M bước, nếu c
 | 200 | 221 | 9,2 |
 | 400 | 111 | 4,6 |
 | 800 | 55 | 2,3 |
-| **số đo của DAT (W1-DAT-05)** | ___ | ___ |
+| **358,4: số đo của DAT, laptop DAT, CPU (26/10)** | **123,4** | **5,1** |
 
 Mốc so sánh:
 - EXP-03 đến EXP-07 phải xong trước 13/12 (`docs/05`, tiêu chí G1 số 6).
@@ -46,3 +46,33 @@ Mốc so sánh:
   - Nếu tỉ lệ này đúng trên máy DAT, EXP-04 sẽ chiếm phần lớn ngân sách.
 - **CPU hay GPU:** đo trên thiết bị nào thì chạy thật trên thiết bị đó (`docs/03` §8.1 có ghi "CPU và GPU nếu có").
 - **100k bước với `--n-envs 8`**, đúng lệnh cuối trong `notes/EXP-01_reproduction_card.md`.
+
+## 4. Ước lượng theo số đo của DAT (cập nhật 26/10/2026)
+
+Số đo: run `results/raw/EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835`, commit ff6d658, không có uncommitted patch. MaskablePPO, `--train dr --masked --n-envs 8`, 100k bước, CPU (torch 2.14.1+cpu), `wall_time_s = 279.0`, `steps_per_s = 358.4` (đọc từ `run_record.json`). Ghi là **"đo trên laptop DAT, CPU"** cho tới khi DAT xác nhận máy cố định (A4).
+
+Giờ máy = tổng bước / steps/s / 3600, chạy tuần tự, một lần huấn luyện tại một thời điểm, trên một máy. Cột DQN là giả định, **không** phải số đo: DQN chậm hơn PPO 3,5 lần như tỉ lệ trên laptop FAO (§3), tức khoảng 102 bước/s.
+
+| Thực nghiệm | Tổng bước | Giờ máy, mọi learner 358,4 bước/s | Giờ máy, DQN giả định chậm 3,5 lần |
+| --- | --- | --- | --- |
+| EXP-02 pilot | 1,2 M | 0,9 | 0,9 |
+| Optuna (W4) | 8 M | 6,2 | 6,2 |
+| EXP-03 | 40 M | 31,0 | 31,0 |
+| EXP-04 (DQN) | 20 M | 15,5 | 54,3 |
+| EXP-05 | 50 M | 38,8 | 38,8 |
+| EXP-06 | 20 M | 15,5 | 15,5 |
+| EXP-07 | 20 M | 15,5 | 15,5 |
+| **Tổng (159,2 M)** | | **123,4 h ≈ 5,1 ngày** | **162,1 h ≈ 6,8 ngày** |
+| Tổng nếu EXP-05 dùng lại seed EXP-03 (149,2 M) | | 115,6 h ≈ 4,8 ngày | 154,4 h ≈ 6,4 ngày |
+| Riêng EXP-03 đến EXP-07 (sau G1) | 150 M | 116,3 h | 155,0 h |
+
+**Kết luận:** kịp trước 13/12 (tiêu chí G1 số 6). Trường hợp xấu nhất trong bảng, 155 h cho EXP-03 đến EXP-07, chiếm khoảng 24% của 648 h máy có được từ 16/11 đến 13/12, dù chỉ dùng một máy. Vẫn còn dư nếu tốc độ thật thấp hơn số đo khoảng 4 lần.
+
+Các giả định có thể làm sai ước lượng (chưa kiểm):
+1. Tốc độ đo trên 100k bước có thể khác khi chạy 2M bước (nhiệt độ, chế độ nguồn của laptop).
+2. Chạy song song nhiều lần huấn luyện trên cùng máy sẽ chia CPU, nên tốc độ mỗi lần giảm.
+3. DQN chưa đo trên máy DAT; tỉ lệ 3,5 lần lấy từ máy khác và cấu hình khác (§3).
+4. Chưa tính tinh chỉnh DQN, chạy lại khi lỗi và đánh giá.
+5. GPU chưa đo. Nếu chạy thật trên GPU thì phải đo lại trên GPU (§3).
+
+Đề xuất cho DAT: đo thêm DQN 100k bước trên laptop DAT, CPU, để thay giả định ở cột cuối bằng số đo. Card `notes/EXP-04_dqn_card.md` hiện chỉ có trên nhánh của PR #20, nên nên đo sau khi PR #20 merge (quy tắc 1), bằng lệnh `python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 100000`. Việc này không chặn G0 hay W1-FAO-05.

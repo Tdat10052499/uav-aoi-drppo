@@ -23,9 +23,10 @@
       "state": "blocked"
     },
     "W1-FAO-05": {
-      "date": "2026-10-24",
+      "date": "2026-10-26",
+      "evidence": "Project Agreement.md §5 + notes/2026-10-21_fao_chi-phi-nhap.md §4: 358,4 bước/s (laptop DAT, CPU) → 123,4–162,1 giờ máy cho 159,2 M bước; kịp trước 13/12",
       "note": "Bản nháp chi phí xong (notes/2026-10-21_fao_chi-phi-nhap.md); chờ steps/s của W1-DAT-05 trên máy cố định",
-      "state": "blocked"
+      "state": "done"
     },
     "W2-FAO-01": {
       "date": "2026-10-20",
