@@ -47,9 +47,6 @@ class RotorParams:
 PRESETS = {
     # Table I of arXiv:1804.02238v1 (verified).
     "zeng2019_arxiv_v1": RotorParams(),
-    # Lighter quadrotor set widely reused in later papers (P0~79.86 W, Pi~88.63 W).
-    # [TO VERIFY] against the published IEEE TWC version before using as default.
-    "light": RotorParams(W=20.0, R=0.4, A=0.503, Omega=300.0, d0=0.6),
 }
 
 
