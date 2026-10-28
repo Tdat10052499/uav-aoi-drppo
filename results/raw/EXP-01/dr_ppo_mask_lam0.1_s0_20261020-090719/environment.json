@@ -1,0 +1,12 @@
+{
+  "python": "3.14.3",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "machine": "AMD64",
+  "node": "Faolan",
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cpu",
+  "gymnasium": "1.4.0",
+  "stable_baselines3": "2.9.0",
+  "sb3_contrib": "2.9.0",
+  "scipy": "1.18.1"
+}

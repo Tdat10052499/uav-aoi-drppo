@@ -36,7 +36,7 @@ Hai tốc độ đặc trưng [Z19, §II-B]: **V_me** = argmin P(V) (bền nhấ
 
 **Giá trị suy ra** (tính lại bằng `src/uavaoi/energy.py`, kiểm thử trong `tests/`): P_0 ≈ 580,6 W; P_i ≈ 790,7 W; v_0 ≈ 7,19 m/s (khớp 7,2 của [Z19]); P_h ≈ 1371,3 W; V_me ≈ 21,5 m/s (P ≈ 935,6 W); V_mr ≈ 38,3 m/s (P ≈ 1199,5 W).
 
-**Bộ tham số "nhẹ" (tuỳ chọn, `preset="light"`):** W = 20 N, R = 0,4 m, A = 0,503 m², Ω = 300 rad/s, d_0 = 0,6, cùng ρ, s, k, δ. Cho P_0 ≈ 79,86 W, P_i ≈ 88,63 W — trùng các giá trị nhiều công trình sau trích dẫn. **[cần kiểm tra]** bộ này với bản IEEE TWC chính thức của [Z19] trước khi dùng làm mặc định.
+**Bộ tham số "nhẹ" (`light`) đã bỏ ngày 26/10/2026:** không có trong Bảng I của arXiv:1804.02238v1 nên không kiểm chứng được (xem `notes/reading/zeng2019energy_DAT.md`, `DECISIONS.md`). Đề tài chỉ dùng bộ `zeng2019_arxiv_v1`.
 
 ## 3. Mô hình kênh & tốc độ truyền (đã đối chiếu [Z19], phương trình (1)–(2))
 

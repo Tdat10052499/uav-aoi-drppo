@@ -18,9 +18,16 @@
       "state": "done"
     },
     "W1-FAO-04": {
-      "date": "2026-10-22",
-      "note": "Form C phía FAO xong (PR #18, 59c2a7f); chờ DAT chạy lại EXP-01 và ký second reader",
-      "state": "blocked"
+      "date": "2026-10-26",
+      "evidence": "Form C đủ (PR #18, 2083d8e); DAT ký second reader e31bff4 (0/1500 lệch); issue #5 đóng",
+      "note": "DAT đã chạy lại EXP-01 (126ae08), FAO kiểm 1500/1500 MATCH; chờ PR #18 merge rồi DAT ký second reader",
+      "state": "done"
+    },
+    "W1-FAO-05": {
+      "date": "2026-10-26",
+      "evidence": "Project Agreement.md §5 + notes/2026-10-21_fao_chi-phi-nhap.md §4: 358,4 bước/s (laptop DAT, CPU) → 123,4–162,1 giờ máy cho 159,2 M bước; kịp trước 13/12",
+      "note": "Bản nháp chi phí xong (notes/2026-10-21_fao_chi-phi-nhap.md); chờ steps/s của W1-DAT-05 trên máy cố định",
+      "state": "done"
     },
     "W2-FAO-01": {
       "date": "2026-10-20",

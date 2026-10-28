@@ -51,7 +51,15 @@ python scripts/train_ppo.py --experiment-id EXP-01 --train dr --seed 0 --timeste
 Máy / OS / Python / NumPy / torch: Laptop FAO (i7-8665U, 16 GB, không GPU) / Windows 11 10.0.26300 / 3.14.3 / 2.5.4 / 2.14.1+cpu
 tests: 14/14   smoke: PASS (20/10/2026)
 Số dòng lệch so với tham chiếu: 0/1500 (mean_aoi, sai số 1e-9) — run EXP-01/20261020-084218; NumPy 2.5.4 vẫn tái lập đúng tham chiếu sinh bằng 2.5.3
-train_ppo 10k: (W1-FAO-03, 21/10)
-100k bước: wall_time_s = ___  steps_per_s = ___  (n_envs=8)
-Second reader (DAT) chạy lại trên máy: ___  ngày: ___
+train_ppo 10k: OK, không cần sửa mã — run EXP-01/dr_ppo_mask_lam0.1_s0_20261020-090719; 10240 bước, 146.6 s (68.2 bước/s, MaskablePPO, n_envs=2, laptop FAO, CPU; KHÔNG dùng cho bài); SHA256 model.zip trong run_record.json
+100k bước: không đo trên máy FAO — số thời gian chỉ lấy từ máy cố định (quy tắc 4); DAT đo trong W1-DAT-05
+Chênh lệch so với môi trường dựng tham chiếu (environment/machine_notes.md): Python 3.14.3 (tham chiếu 3.13); NumPy 2.5.4 (2.5.3);
+  có gymnasium 1.4.0, torch 2.14.1+cpu, stable-baselines3 / sb3-contrib 2.9.0 (tham chiếu chạy qua lớp _compat.py, không có Gymnasium/PyTorch)
+Kiểm tra đã làm: (1) tests 14/14; (2) smoke test PASS, gồm digest kịch bản của 5 bộ khớp data/eval_manifest.json;
+  (3) so khớp 1500 dòng (3 heuristic × 5 bộ × 100 episode) mean_aoi với results/raw/heuristics/heuristics_100ep_2026-10-16.csv, sai số 1e-9: 0 dòng lệch;
+  (4) train_ppo 10k xong, run_record có checkpoint_digest; 21/10 băm lại model.zip bằng scripts/manifest_row.py --verify (PR #22): SHA256 khớp
+Second reader (DAT) chạy lại trên máy: Laptop DAT (Ryzen AI 7 350, 32 GB) / Windows 11 10.0.26300 / Python 3.12.0 / NumPy 2.5.4 / torch 2.14.1+cpu; commit ff6d658, không có uncommitted patch  ngày: 25–26/10/2026
+  tests 14/14; smoke PASS (25/10); evaluate heuristic run EXP-01/20261025-115153: so với run FAO 20261020-084218, 1500/1500 dòng, 0 dòng lệch ở mọi cột số (chênh lệch lớn nhất 0)
+  train_ppo 10k (n_envs=2): run EXP-01/dr_ppo_mask_lam0.1_s0_20261025-115314, 43.6 s, 229.2 bước/s
+  100k bước: wall_time_s = 279.0  steps_per_s = 358.4  (n_envs=8, CPU) — run EXP-01/dr_ppo_mask_lam0.1_s0_20261026-132835; laptop DAT là máy cố định dự kiến (xác nhận chính thức: mục A4, notes/2026-10-21_fao_can-DAT.md); GPU chưa đo
 ```

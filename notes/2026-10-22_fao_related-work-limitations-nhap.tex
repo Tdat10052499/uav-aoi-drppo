@@ -1,0 +1,182 @@
+% =====================================================================================
+% BẢN NHÁP W10-FAO-01 (Related Work + Limitations) — FAO, viết sớm ngày 22/10/2026
+% Chưa đưa vào paper/main.tex. Second reader: LDN. Chủ trì bản thảo: DAT.
+%
+% Quy ước trong file:
+%   %%CHECK  = nguồn ở trạng thái ◐ trong docs/04 (chỉ tóm tắt/đoạn trích) hoặc ✱; câu đi kèm
+%              chỉ dùng những gì docs/04 hoặc Form B ghi, phải kiểm toàn văn trước khi nộp.
+%   %%SRC    = vị trí bằng chứng (Form B, mục/bảng/hình của bài gốc).
+%   [n]      = số chưa có; điền từ PREREG/claim_evidence, không tự điền.
+% Nguyên tắc: không viết "first"/"đầu tiên" (CLAUDE.md quy tắc 7); không đưa số liệu của
+% bài khác ngoài những gì đã ghi trong Form B.
+% Khoá BibTeX đều có trong paper/references.bib, TRỪ liu2024generalizable (đề xuất ở cuối file).
+% =====================================================================================
+
+\section{Related Work}
+%% Owner: FAO. Built from the positioning matrix (docs/04 sec. 5).
+
+\paragraph{DRL for UAV-assisted data collection.}
+Deep reinforcement learning (DRL) has become a common tool for joint UAV trajectory and
+scheduling problems, which are non-convex and combinatorial; recent surveys cover the
+breadth of this line of work~\cite{luong2019applications,zhao2025survey,amodu2025survey}.
+%%CHECK: ba survey đều ◐; câu chỉ dẫn chung, không trích kết luận cụ thể của survey.
+Closest to our setting, Bayerlein et~al.~\cite{bayerlein2021multi} train double deep
+Q-networks for single- and multi-UAV data harvesting on map-based observations centred
+on the agent, and show that one policy can serve a range of scenario parameters,
+including the number, positions and data volumes of sensors, the flight time and the
+start position, with additional tests beyond the training range.
+%%SRC: docs/04 §1 (✔ toàn văn, DAT đọc). DAT kiểm lại câu này với §IV–§V của [B21].
+Their objective is the amount of data collected in a single mission, and the flight
+energy per step is modelled as constant, a choice they motivate by the small difference
+between hovering and horizontal flight.
+%%SRC: docs/04 §1; docs/01 §3. %%CHECK: câu "khoảng 10%" trong docs/04 chưa có số mục; DAT ghi mục.
+de Souza Lamenza et~al.~\cite{lamenza2025} also target a model that handles a flexible
+number of sensors, in a visit-once data collection task.
+%%CHECK: ◐, chưa mở được toàn văn (docs/04 §2). Bỏ câu này nếu tới W10 vẫn chưa đọc được.
+
+\paragraph{Age of information in UAV networks.}
+Age of information (AoI)~\cite{kaul2012realtime} measures the freshness of the most recent
+update received from a source.
+%%CHECK: kaul2012realtime ✱ (VERIFY trong references.bib).
+Abd-Elmagid et~al.~\cite{abdelmagid2019deep} formulate the joint choice of UAV moves and
+update scheduling as a finite-horizon MDP that minimises the weighted sum of AoI, and solve
+it with a deep Q-network. The UAV has no propulsion-energy model, only a flight-time
+budget, and each scenario uses a fixed placement of at most three ground nodes; results
+are averaged over 1000 episodes without training seeds or confidence intervals.
+%%SRC: notes/reading/abdelmagid2019deep_FAO.md (§II-A, §II-B, §III-B, §IV).
+Yi et~al.~\cite{yi2020deep} combine trajectory and scheduling decisions to reduce
+weighted AoI under an energy constraint.
+%%CHECK: ◐ (ar5iv), docs/04 §1. Kiểm toàn văn: năng lượng là của UAV hay của cảm biến? bố trí cố định?
+Sun et~al.~\cite{sun2025aoi} minimise the peak AoI of a multi-UAV network with laser
+charging using MAPPO extended with temporal memory. Their energy model follows the
+rotary-wing propulsion power, but the flight speed is held constant, so speed is not a
+decision variable; sensor positions are fixed and robustness is examined only by
+sweeping one physical parameter. The authors list domain randomization as future work.
+%%SRC: notes/reading/sun2025aoi_FAO.md (§III-A, Bảng IV, §V-A, Fig. 4b, §VII).
+OH-DRL~\cite{ohdrl2025} reverses the roles of the two quantities: it minimises UAV flight
+energy subject to a maximum average-AoI constraint, with a hierarchical design in which DRL
+selects the UAV's visiting policy and semidefinite relaxation handles scheduling and
+STAR-RIS beamforming.
+%%CHECK: CHỈ tóm tắt (notes/reading/ohdrl2025_FAO.md). Không nêu gì về tổng quát hoá của OH-DRL
+%%       cho tới khi có toàn văn (câu hỏi A3 trong notes/2026-10-21_fao_can-DAT.md).
+Sarathchandra et~al.~\cite{sarathchandra2025age} use meta-learning so that a DQN adapts
+when the weighting between age and transmit power changes, i.e., the shift is in the
+objective rather than in the deployment.
+%%CHECK: ◐ (docs/04 §2, ma trận §5). Kiểm toàn văn trước khi giữ câu "objective rather than deployment".
+
+\paragraph{Generalization of DRL policies.}
+Domain randomization trains on a distribution of simulated environments so that the
+learned policy transfers to conditions not seen during training~\cite{tobin2017domain}.
+%%CHECK: tobin2017domain ✱ (VERIFY).
+In drone racing, Liu~\cite{liu2024generalizable} regenerates randomized tracks and
+obstacles for every rollout of PPO and evaluates one policy on increasingly shifted
+tracks; its success rate decreases as the test tracks move away from the training
+distribution, and no fixed-environment baseline or multi-seed analysis is reported.
+%%SRC: notes/reading/liu2024generalizable_FAO.md (§III-C3, §IV-A, §IV-B, Fig. 6, Fig. 10).
+%%     Bài ngoài phạm vi tổng quan hệ thống (docs/04 §6); chỉ dùng làm tham khảo phương pháp DR.
+Because DRL results vary strongly across training runs, we follow the recommendations of
+Agarwal et~al.~\cite{agarwal2021deep} and report per-seed bootstrap confidence intervals
+and interquartile means.
+%%CHECK: agarwal2021deep ◐. Câu này có thể chuyển sang Experimental Setup (LDN quyết).
+
+\paragraph{Positioning.}
+Table~\ref{tab:positioning} summarises how the closest works relate to the five properties
+our study combines.
+While parameter generalization has been shown for single-shot data
+harvesting~\cite{bayerlein2021multi}, it remains unclear whether such policies stay robust
+under structured distribution shifts when the objective is continual information freshness
+and the propulsion energy depends on speed.
+%%SRC: câu định vị nháp ở docs/01 §3, giữ nguyên chữ. Phải được G0 xác nhận lại.
+Among the AoI-oriented works we read in full, none trains on a distribution of layouts and
+evaluates under structured shifts with multiple training seeds; the gap is also noted
+as future work by~\cite{sun2025aoi}.
+%%SRC: ma trận docs/04 §5 (hàng Abd-Elmagid, Sun). Câu chỉ đúng cho các bài "read in full";
+%%     nếu OH-DRL/Yi/Lamenza có toàn văn trước W10, cập nhật câu này. KHÔNG đổi thành "first".
+
+\begin{table}[t]
+\caption{Positioning against the closest works (\checkmark: yes; --: no; ?: not determinable
+from the text available to us).}
+\label{tab:positioning}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+Work & AoI & Speed-dep.\ energy & Multi-layout training & Structured OOD & Seeds + CI \\
+\midrule
+\cite{bayerlein2021multi}   & --         & --  & \checkmark & partial    & -- \\
+\cite{abdelmagid2019deep}   & \checkmark & --  & --         & --         & -- \\
+\cite{sun2025aoi}           & \checkmark & --$^{a}$ & --    & --         & -- \\
+\cite{ohdrl2025}$^{b}$      & \checkmark & ?   & ?          & ?          & ? \\
+\cite{liu2024generalizable}$^{c}$ & -- & --  & \checkmark & \checkmark & -- \\
+Ours                        & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize $^{a}$Propulsion model present, but speed fixed.
+$^{b}$Abstract only. $^{c}$Drone racing; reference for domain randomization only.}
+\end{table}
+%%SRC: docs/04 §5. Bayerlein "Seeds + CI": ma trận ghi "Monte Carlo trên kịch bản" → "--" ở đây;
+%%     DAT xác nhận. Yi, Sarathchandra, Lamenza không đưa vào bảng vì còn nhiều ô "Chưa rõ".
+
+
+\section{Discussion and Limitations}
+%% Owner: DAT (discussion), FAO (limitations).
+
+\subsection{Limitations}
+%% Nguồn: docs/01 §7, docs/02, docs/03 §3 và §10, notes/EXP-07_ablation_card.md.
+Our conclusions are bounded by the following modelling and evaluation choices.
+
+\emph{Simulation only.} All results come from a simulator; no flight experiment was
+performed, and the causal statements we make hold only within the simulated model.
+
+\emph{Channel.} We assume a line-of-sight free-space channel without blockage or
+shadowing; a probabilistic LoS model~\cite{alhourani2014optimal} is a natural extension
+that we did not implement.
+%%CHECK: alhourani2014optimal ◐; chỉ trích như hướng mở rộng.
+
+\emph{Geometry and mobility.} The UAV flies at a fixed altitude in a two-dimensional
+area, chooses among eight directions and two discrete speeds ($V_{\mathrm{me}}$ and
+$V_{\mathrm{mr}}$), and collects data only while hovering (fly--hover--communicate).
+Wind, acceleration and turning costs are not modelled, and there is no constraint to
+return to a charging point.
+
+\emph{Single UAV.} Multi-UAV coordination, studied for instance
+in~\cite{bayerlein2021multi,sun2025aoi}, is outside our scope.
+
+\emph{Scope of the distribution shifts.} The four OOD suites are designed shifts in
+spatial structure, sensor density, area and energy budget. Robustness to these shifts
+does not imply robustness to other shifts, such as different channel conditions or
+sensor traffic; in the larger-area suite the physical size of a grid cell also changes.
+
+\emph{Baselines and tuning.} The heuristics read the true sensor positions and ages at
+full resolution, which favours them over the learned policies. Hyper-parameters were tuned
+with an equal budget for DR-PPO and Fixed-PPO on the in-distribution suite only; the
+ablation variants reuse the DR-PPO hyper-parameters without separate tuning, so their
+reported degradation is an upper bound on the harm of removing each component.
+%%SRC: docs/03 §2, §3, §10; notes/EXP-07_ablation_card.md. Câu DQN: CHỜ quyết định A2 (tinh chỉnh DQN).
+
+\emph{Statistical power.} Each learned method is trained with [n] seeds
+([n] for ablations and the $\lambda$ sweep); with samples of this size we rely on
+permutation tests and bootstrap intervals and avoid strong claims when intervals overlap.
+%%Điền [n] từ docs/PREREG.md sau G1.
+
+\emph{Design parameters.} Several environment parameters (slot length, packet size,
+grid resolution, reward weights) are design choices rather than values from the
+literature; they are listed as such in Table~T1.
+%%SRC: docs/02 (các giá trị "thiết kế"), docs/06 §3.
+
+
+% -------------------------------------------------------------------------------------
+% Đề xuất mục BibTeX còn thiếu (DAT thêm vào paper/references.bib nếu đồng ý).
+% Nguồn: notes/reading/liu2024generalizable_FAO.md (arXiv v1, 06/11/2024; không ghi nơi công bố ✱).
+%
+% @misc{liu2024generalizable,
+%   author        = {Liu, Yueqian},
+%   title         = {Learning Generalizable Policy for Obstacle-Aware Autonomous Drone Racing},
+%   year          = {2024},
+%   eprint        = {2411.04246},
+%   archivePrefix = {arXiv},
+%   primaryClass  = {cs.RO},
+%   note          = {v1. VERIFY whether a peer-reviewed version exists}
+% }
+% -------------------------------------------------------------------------------------

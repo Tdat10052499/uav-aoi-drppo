@@ -1,0 +1,15 @@
+diff --git a/schedule/status/FAO.json b/schedule/status/FAO.json
+index 0d9d2d8..baaa596 100644
+--- a/schedule/status/FAO.json
++++ b/schedule/status/FAO.json
+@@ -11,6 +11,10 @@
+       "date": "2026-10-20",
+       "evidence": "results/raw/EXP-01/20261020-084218; 0/1500 dòng lệch",
+       "state": "done"
++    },
++    "W1-FAO-03": {
++      "date": "2026-10-20",
++      "state": "doing"
+     }
+   }
+ }
