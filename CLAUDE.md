@@ -37,7 +37,7 @@ Khi **không có shell** (ví dụ Claude trên web, repo chỉ đồng bộ d�
 - `scripts/`: các script chính.
   - `train_ppo.py` và `evaluate.py`: bắt buộc truyền `--experiment-id`.
   - `analyze.py`, `run_smoke_test.py`, `today.py`.
-- `tests/`: chạy `python tests/test_core.py` (13 kiểm thử) và `python tests/test_schedule.py`.
+- `tests/`: chạy `python tests/test_core.py` (14 kiểm thử) và `python tests/test_schedule.py`.
 
 ## Quy tắc không được vi phạm
 1. **Experiment card trước, chạy sau.** Không chạy thực nghiệm không có card. Không sửa hay xoá `results/raw/`.

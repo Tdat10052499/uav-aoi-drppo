@@ -96,7 +96,7 @@ Lịch (`schedule/tasks.json`) chỉ DAT sửa, qua PR. Trạng thái của mỗ
 
 Lệnh này **phải báo lỗi rõ ràng** nếu thiếu file hoặc kết quả bị lệch:
 ```bash
-python tests/test_core.py            # kỳ vọng 13/13 passed
+python tests/test_core.py            # kỳ vọng 14/14 passed
 python tests/test_schedule.py        # kỳ vọng 12/12 passed (lịch và today.py)
 python scripts/run_smoke_test.py     # kỳ vọng SMOKE TEST PASSED
 ```
