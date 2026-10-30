@@ -1,10 +1,10 @@
 # Form B — `lamenza2025`
 
-> Trạng thái: **nháp chờ DAT duyệt**; soạn từ toàn văn PDF bản xuất bản (14 trang, SHA256 `8ccb22d7…54bc6993`, DAT tải từ Wiley Online Library ngày 29/10/2026 và gửi ngày 30/10/2026). Second reader: LDN. Mọi số liệu lấy từ văn bản và Bảng 1. **Phần lớn kết quả định lượng của bài chỉ có trên hình (Fig. 1, 4, 7, 8)**; Form B không đọc số từ hình.
+> Trạng thái: **owner DAT đánh dấu xong 30/10 (W1-DAT-04), chờ second reader LDN**; soạn từ toàn văn PDF bản xuất bản (14 trang, SHA256 `8ccb22d7…54bc6993`, DAT tải từ Wiley Online Library ngày 29/10/2026 và gửi ngày 30/10/2026). Second reader: LDN. Mọi số liệu lấy từ văn bản và Bảng 1. **Phần lớn kết quả định lượng của bài chỉ có trên hình (Fig. 1, 4, 7, 8)**; Form B không đọc số từ hình.
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Deep Reinforcement Learning Approaches for Sensor Data Collection by a Swarm of UAVs*.
 - **Tác giả:** Thiago de Souza Lamenza, Bruno José Olivieri de Souza, Markus Endler (PUC-Rio, Brazil).
-- **Nơi công bố:** Advanced Intelligent Systems, 2026, 8:e202501146, DOI 10.1002/aisy.202501146 (đầu trang 1). Nhận 25/09/2025, sửa 03/12/2025, chấp nhận 05/01/2026. Truy cập mở, CC BY. **Năm xuất bản là 2026**, không phải 2025 như khoá `lamenza2025` đang ghi.
+- **Nơi công bố:** Advanced Intelligent Systems, 2026, 8:e202501146, DOI 10.1002/aisy.202501146 (đầu trang 1). Nhận 25/09/2025, sửa 03/12/2025, chấp nhận 05/01/2026. Truy cập mở, CC BY. **Năm xuất bản là 2026**, không phải 2025. Khoá `lamenza2025` được giữ nguyên để không đổi các trích dẫn đã có; trường `year` trong `paper/references.bib` ghi 2026 (DECISIONS 2026-10-30).
 
 **URL nguồn gốc và phiên bản/ngày truy cập:** https://doi.org/10.1002/aisy.202501146 (bản xuất bản, tập 8 số 5 theo chân trang tải về), DAT tải ngày 29/10/2026.
 

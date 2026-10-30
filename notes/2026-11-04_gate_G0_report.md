@@ -53,7 +53,7 @@ Nhu cầu tính toán/thời gian còn lại:
 Quyết định: [DAT/GVHD chọn tại họp 04/11 — đề xuất bên dưới]
 Lý do:
 Phạm vi tuyên bố được duyệt:
-Thực nghiệm tiếp theo và owner: EXP-02 pilot (W3, DAT huấn luyện); tune_ppo.py (PR #30, FAO review).
+Thực nghiệm tiếp theo và owner: EXP-02 pilot (W3, DAT huấn luyện trên laptop DAT); Optuna TUNE (W4, DAT; `tune_ppo.py` đã merge ở PR #30, FAO đã duyệt).
 Ngày quyết định tiếp theo: G1 — CN 15/11/2026.
 Ý kiến giảng viên:
 ```
@@ -89,4 +89,4 @@ Ngày quyết định tiếp theo: G1 — CN 15/11/2026.
 
 - Ma trận và kết luận #2 là **dữ kiện từ các bài đã đọc**, không phải kết luận về toàn bộ tài liệu, cho tới khi có số PRISMA.
 - Hàng Yi 2020 hiện ghi "Có" ở cột AoI và năng lượng nhưng **chưa có nguồn**. Hai ô này không được dùng cho tới khi có Form B.
-- Khoá `lamenza2025` ghi sai năm (bài xuất bản 2026, tập 8). Cần quyết đổi khoá trước khi bài báo trích.
+- Khoá `lamenza2025` giữ nguyên dù bài xuất bản 2026 (tập 8); trường `year` đã đúng (DECISIONS 2026-10-30).

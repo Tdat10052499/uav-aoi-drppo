@@ -11,6 +11,16 @@
       "evidence": "PR #18 merge 2083d8e; chạy lại 10k EXP-01/dr_ppo_mask_lam0.1_s0_20261025-115314 trên laptop DAT",
       "state": "approved"
     },
+    "W1-FAO-04": {
+      "date": "2026-10-30",
+      "evidence": "Form C notes/EXP-01_reproduction_card.md dòng 61 (DAT chạy lại 25–26/10, 0/1500 lệch); PR #18 merged; issue #5 đóng",
+      "state": "approved"
+    },
+    "W1-FAO-05": {
+      "date": "2026-10-30",
+      "evidence": "Project Agreement §5: kiểm lại từng dòng 163,2 M bước / 358,4 bước/s = 126,5 h; 173,0 h khi DQN chậm 3,5 lần (giả định, chưa đo DQN trên laptop DAT)",
+      "state": "approved"
+    },
     "W2-FAO-02": {
       "date": "2026-10-30",
       "evidence": "PR #19 + #26 merged 30/10; plot_trajectory.py chạy với heuristic và model",
@@ -47,8 +57,9 @@
     },
     "W1-DAT-04": {
       "date": "2026-10-30",
+      "evidence": "notes/reading/zeng2019energy_DAT.md (DAT duyệt 26/10); notes/reading/lamenza2025_DAT.md (3105342); docs/04 §5 hai hàng có nguồn; preset light bỏ (PR #29)",
       "note": "Form B Zeng (duyệt 26/10) + Lamenza (nháp 30/10)",
-      "state": "doing"
+      "state": "done"
     },
     "W1-DAT-05": {
       "date": "2026-10-26",
@@ -62,8 +73,9 @@
     },
     "W2-DAT-02": {
       "date": "2026-10-30",
+      "evidence": "PR #30 merged 81a32e8; FAO approve (W2-FAO-04); smoke PPO/Fixed/DQN; #32 thêm tag _1spd",
       "note": "PR #30 tune_ppo.py chờ FAO review",
-      "state": "doing"
+      "state": "done"
     },
     "W2-DAT-03": {
       "date": "2026-10-30",
