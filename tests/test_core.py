@@ -152,6 +152,23 @@ def test_raw_dirs_are_append_only():
         pass
 
 
+def test_eval_refuses_single_speed_mismatch():
+    import json
+    import tempfile
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+    from evaluate import check_model_cfg
+    tmp = tempfile.mkdtemp()
+    raw = os.path.join(tmp, "raw", "EXP-T", "r_1")          # results/raw/<exp>/<run_id>/config.json
+    os.makedirs(raw)
+    with open(os.path.join(raw, "config.json"), "w") as f:
+        json.dump({"env_cfg": {**EnvConfig().to_dict(), "single_speed": True}}, f)
+    model = os.path.join(tmp, "runs", "EXP-T", "r_1", "model.zip")   # runs/<exp>/<run_id>/model.zip
+    errors, _ = check_model_cfg(model, EnvConfig(), raw_base=os.path.join(tmp, "raw"))
+    assert errors and "single_speed" in errors[0]
+    errors, warnings = check_model_cfg(model, EnvConfig(single_speed=True), raw_base=os.path.join(tmp, "raw"))
+    assert not errors and not warnings
+
+
 def test_eval_manifest_matches_samplers():
     import json
     from uavaoi.scenarios import suite_digest, eval_seeds
