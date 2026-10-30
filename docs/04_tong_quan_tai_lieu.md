@@ -25,7 +25,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | `huang_lbi` | Huang et al. — *A Learning-Based Iterative Algorithm for AoI-Optimal Trajectory Planning in UAV-Assisted IoT Networks* ([trang](https://scholar.xjtu.edu.cn/en/publications/a-learning-based-iterative-algorithm-for-aoi-optimal-trajectory-p/)) | ◐ | SCA cho lập lịch + A3C phân cấp cho đường bay |
 | `kumari2024aoi` | Kumari et al. — *AoI-Aware DRL Based UAV Path Planning for Defence Applications*, IEEE SPACE 2024, DOI 10.1109/SPACE63117.2024.10668088 | ◐ | Phân cụm + PPO; mẫu tham khảo cấu trúc bài hội nghị ngắn |
 | `coop2023` | *Cooperative Data Collection with Multiple UAVs for Information Freshness in the IoT*, [arXiv:2303.01381](https://arxiv.org/pdf/2303.01381) | ◐ | Dec-POMDP, CTDE (QMIX) — tham khảo cho hướng mở rộng đa UAV |
-| `lamenza2025` | de Souza Lamenza et al. — *DRL Approaches for Sensor Data Collection by a Swarm of UAVs*, Advanced Intelligent Systems, DOI 10.1002/aisy.202501146 | ◐ (không mở được toàn văn) | "Flexible sensor count": một mô hình cho số cảm biến/tác tử bất kỳ; bài toán thăm một lần. **Cần đọc toàn văn** để định vị. |
+| `lamenza2025` | de Souza Lamenza et al. — *DRL Approaches for Sensor Data Collection by a Swarm of UAVs*, Advanced Intelligent Systems 8:e202501146, 2026, DOI 10.1002/aisy.202501146 | ✔ toàn văn (`notes/reading/lamenza2025_DAT.md`) | MADDPG đa UAV, thu một lần, không năng lượng. "Flexible sensor count" ngẫu nhiên hoá N_s khi huấn luyện và chỉ mất ít hiệu năng (§5.2); mô hình huấn luyện với nhiều UAV sụp khi triển khai với ít UAV hơn (Bảng 1). Không seed hay CI. |
 
 ## 3. Tổng quan & tổng quát hoá
 | Khoá | Công trình | Trạng thái |
@@ -50,7 +50,7 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | Zeng 2019 (nguồn mô hình, tối ưu tất định) | Không (năng lượng tối thiểu với throughput Q̃ một lần; PT (11)) | Có (P(V) PT (6), (61); FHC bay ở V_mr, Lemma 1) | Không (giải offline cho một bố trí K = 3; §V) | Không áp dụng (không học) | Không áp dụng (tất định; SCA tối ưu cục bộ) |
 | Yi 2020 | Có | Có ràng buộc năng lượng | Chưa rõ | Chưa rõ | Chưa rõ |
 | Sarathchandra 2025 | Có | Công suất phát | Không (thay mục tiêu) | Không | Chưa rõ |
-| Lamenza 2025 | Không (thăm một lần) | Chưa rõ | Có (số cảm biến linh hoạt) | Chưa rõ | Chưa rõ |
+| Lamenza 2026 (khoá `lamenza2025`) | Không (thu một lần, thời gian hoàn thành; §1) | Không (không mô hình năng lượng; tốc độ liên tục s ∈ [0, 15] nhưng không có chi phí; PT (7), §6) | Có (vị trí cảm biến ngẫu nhiên; biến thể "flexible sensor count" lấy N_s ngẫu nhiên; §3.4, §4) | Một phần (chỉ số UAV khi triển khai, sụp khi ít UAV hơn huấn luyện; Bảng 1) | Không (không báo seed; trung bình 500 lần đánh giá, không CI; §5) |
 | Abd-Elmagid 2019 | Có (tổng AoI có trọng số; PT (7), §III-A) | Không (UAV chỉ bị ràng buộc thời gian τ; năng lượng là pin của nút; PT (3)–(5), §II-A) | Không (vị trí nút cố định mỗi kịch bản; §IV, Fig. 3) | Không (chỉ quét e_max, τ, mật độ; Fig. 5a–c) | Không (TB 1000 episode, không seed/CI; §IV, Fig. 4–5) |
 | Sun 2025 | Có (peak AoI, đa UAV; PT (3), (5a)) | Có mô hình P(v) (PT (4)) nhưng v cố định 5 m/s (§III-A, Bảng IV), nên không là biến quyết định | Không (IoT cố định; §V-A) | Không (chỉ quét η_le; Fig. 4b); DR nêu là hướng tương lai (§VII) | Không (không báo seed; vùng "variance" không rõ n; §V-B1, Fig. 3) |
 | OH-DRL 2025 (chỉ tóm tắt) | Có (ràng buộc AoI trung bình tối đa; mục tiêu là năng lượng bay; tóm tắt) | Chưa rõ (có tối thiểu năng lượng bay; mô hình chưa kiểm; tóm tắt) | Chưa rõ | Chưa rõ | Chưa rõ |
