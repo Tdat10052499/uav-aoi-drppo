@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 import numpy as np
 
 from uavaoi import HEURISTICS, SUITES, EnvConfig, UAVAoIEnv, eval_seeds, run_episode
-from uavaoi.runrecord import RunRecord, new_run_dir, sha256_file
+from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 
 FIELDS = ["method", "train_seed", "suite", "episode_seed", "mean_aoi", "peak_aoi", "energy_used_J",
           "energy_frac", "collections", "coverage", "hover_frac", "slow_frac", "fast_frac",
@@ -61,6 +61,38 @@ class SB3Policy:
         return int(a)
 
 
+def check_model_cfg(model_path: str, cfg: EnvConfig, raw_base: str | None = None) -> tuple[list[str], list[str]]:
+    """Compare the evaluation EnvConfig with the one the model was trained with.
+
+    train_ppo.py / tune_ppo.py save the model at runs/<exp>/<run_id>/model.zip and the training
+    config at results/raw/<exp>/<run_id>/config.json, so both places are tried.
+    Returns (errors, warnings). `single_speed` changes the action mask, so a mismatch is an
+    error: an A5 model evaluated without its config could pick V_mr, whose logits were never
+    trained. Other differing fields are only warnings (they may be intentional).
+    """
+    errors, warnings = [], []
+    model_dir = os.path.dirname(os.path.abspath(model_path))
+    run_id, exp = os.path.basename(model_dir), os.path.basename(os.path.dirname(model_dir))
+    raw_base = raw_base or os.path.join(REPO_ROOT, "results", "raw")
+    candidates = [os.path.join(model_dir, "config.json"), os.path.join(raw_base, exp, run_id, "config.json")]
+    train_cfg_path = next((c for c in candidates if os.path.isfile(c)), None)
+    if train_cfg_path:
+        with open(train_cfg_path) as f:
+            train_cfg = json.load(f).get("env_cfg", {})
+        if bool(train_cfg.get("single_speed", False)) != cfg.single_speed:
+            errors.append(f"single_speed: trained {train_cfg.get('single_speed', False)}, "
+                          f"evaluating {cfg.single_speed} ({train_cfg_path}); pass the training --config")
+        for k, v in cfg.to_dict().items():
+            if k != "single_speed" and k in train_cfg and train_cfg[k] != v:
+                warnings.append(f"env_cfg.{k}: trained {train_cfg[k]!r}, evaluating {v!r}")
+    else:
+        warnings.append(f"no training config.json found for {model_path} (tried {candidates}); env_cfg not checked")
+        if "_1spd" in model_path.replace("\\", "/") and not cfg.single_speed:
+            errors.append("model path contains '_1spd' but single_speed is False; "
+                          "pass --config configs/a5_single_speed.json")
+    return errors, warnings
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--experiment-id", required=True, help="experiment card id, e.g. EXP-02")
@@ -78,7 +110,13 @@ def main():
         ap.error(f"config file not found: {args.config}")
     cfg = EnvConfig(**(json.load(open(args.config)) if args.config else {}))
     policies = [(m, HEURISTICS[m]()) for m in args.method]
+    cfg_warnings = []
     if args.model:
+        cfg_errors, cfg_warnings = check_model_cfg(args.model, cfg)
+        if cfg_errors:
+            ap.error("; ".join(cfg_errors))
+        for msg in cfg_warnings:
+            print("WARNING:", msg, flush=True)
         policies.append((args.label, SB3Policy(args.model)))
     if not policies:
         ap.error("give --method and/or --model")
@@ -89,6 +127,7 @@ def main():
                    config={"args": vars(args), "env_cfg": cfg.to_dict(),
                            "suites": {s: SUITES[s].to_dict() for s in args.suites}},
                    seeds={"eval_episode_seeds": [seeds[0], seeds[-1]], "train_seed": args.train_seed})
+    rr.data["warnings"] += cfg_warnings
     if args.model:
         rr.data["checkpoint_digest"] = "sha256:" + sha256_file(args.model)
     events = os.path.join(run_dir, "events.csv")
