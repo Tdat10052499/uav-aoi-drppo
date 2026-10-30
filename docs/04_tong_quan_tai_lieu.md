@@ -51,10 +51,10 @@ Trạng thái: mẫu tài liệu có chọn lọc, chưa phải tổng quan hệ
 | Yi 2020 | Có | Có ràng buộc năng lượng | Chưa rõ | Chưa rõ | Chưa rõ |
 | Sarathchandra 2025 | Có | Công suất phát | Không (thay mục tiêu) | Không | Chưa rõ |
 | Lamenza 2025 | Không (thăm một lần) | Chưa rõ | Có (số cảm biến linh hoạt) | Chưa rõ | Chưa rõ |
-| Abd-Elmagid 2019 | Có (tổng AoI có trọng số) | Không (UAV chỉ bị ràng buộc thời gian τ; năng lượng là pin của nút) | Không (vị trí nút cố định mỗi kịch bản) | Không (chỉ quét e_max, τ, mật độ) | Không (TB 1000 episode, không seed/CI) |
-| Sun 2025 | Có (peak AoI, đa UAV) | Có mô hình P(v) nhưng v cố định 5 m/s, nên không là biến quyết định | Không (IoT cố định) | Không (chỉ quét η_le) | Không (không báo seed; vùng "variance" không rõ n) |
-| OH-DRL 2025 (chỉ tóm tắt) | Có (ràng buộc AoI trung bình tối đa; mục tiêu là năng lượng bay) | Chưa rõ (có tối thiểu năng lượng bay; mô hình chưa kiểm) | Chưa rõ | Chưa rõ | Chưa rõ |
-| Liu 2024 (tham khảo DR, ngoài phạm vi) | Không (đua drone) | Không | Có (môi trường mới mỗi rollout) | Có (4 mức khó + 4 đường đua thiết kế tay) | Không (1 chính sách, không seed/CI) |
+| Abd-Elmagid 2019 | Có (tổng AoI có trọng số; PT (7), §III-A) | Không (UAV chỉ bị ràng buộc thời gian τ; năng lượng là pin của nút; PT (3)–(5), §II-A) | Không (vị trí nút cố định mỗi kịch bản; §IV, Fig. 3) | Không (chỉ quét e_max, τ, mật độ; Fig. 5a–c) | Không (TB 1000 episode, không seed/CI; §IV, Fig. 4–5) |
+| Sun 2025 | Có (peak AoI, đa UAV; PT (3), (5a)) | Có mô hình P(v) (PT (4)) nhưng v cố định 5 m/s (§III-A, Bảng IV), nên không là biến quyết định | Không (IoT cố định; §V-A) | Không (chỉ quét η_le; Fig. 4b); DR nêu là hướng tương lai (§VII) | Không (không báo seed; vùng "variance" không rõ n; §V-B1, Fig. 3) |
+| OH-DRL 2025 (chỉ tóm tắt) | Có (ràng buộc AoI trung bình tối đa; mục tiêu là năng lượng bay; tóm tắt) | Chưa rõ (có tối thiểu năng lượng bay; mô hình chưa kiểm; tóm tắt) | Chưa rõ | Chưa rõ | Chưa rõ |
+| Liu 2024 (tham khảo DR, ngoài phạm vi) | Không (đua drone; §I) | Không (chỉ động lực học thân cứng và rotor, PT (1)–(3); không có mô hình năng lượng) | Có (môi trường mới mỗi rollout; §III-C3) | Có (4 mức khó + 4 đường đua thiết kế tay; §IV-A Fig. 6, §IV-B Fig. 10) | Không (1 chính sách, không seed/CI; §IV) |
 | **Đề tài này** | Có | Có (Zeng 2019) | Có | Có (4 bộ) | Có (10 seed, CI, Holm) |
 
 Các ô "Chưa rõ" phải được điền bằng việc đọc toàn văn; nếu một công trình có đủ cả năm cột "Có", đóng góp C2 phải được viết lại (gate G0, `05`).

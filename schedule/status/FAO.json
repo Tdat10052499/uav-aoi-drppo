@@ -43,6 +43,11 @@
       "date": "2026-10-20",
       "evidence": "https://github.com/Tdat10052499/uav-aoi-drppo/pull/20; run dr_dqn_lam0.1_s0_20261020-094810",
       "state": "done"
+    },
+    "W2-FAO-04": {
+      "date": "2026-10-30",
+      "note": "chờ W2-DAT-02 (tune_ppo.py chưa được push, hạn 29/10); đã báo DAT ở notes/yeu-cau/2026-10-30_fao_can-DAT_g0-tune-ppo.md",
+      "state": "blocked"
     }
   }
 }
