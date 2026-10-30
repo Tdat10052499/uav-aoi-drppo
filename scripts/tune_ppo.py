@@ -196,9 +196,10 @@ def main():
             model.save(model_path)
             wall = time.time() - t0
             val = validate(model_path, cfg, args.val_episodes)
-        except Exception as e:  # record failures, never hide them
+        except BaseException as e:  # record failures (and Ctrl+C), never hide them
             rr.finish("failed", failure_reason=repr(e))
-            log_trial({"trial": trial.number, "state": "failed", "run_id": run_id, **params})
+            log_trial({"trial": trial.number, "state": "failed", "run_id": run_id,
+                       "wall_time_s": round(time.time() - t0, 1), **params})
             raise
         finally:
             venv.close()
@@ -223,7 +224,7 @@ def main():
             study.optimize(objective, n_trials=1, catch=(Exception,))
             if sum(t.state == optuna.trial.TrialState.FAIL for t in study.trials) > args.n_trials:
                 raise RuntimeError("more failed trials than --n-trials; see trials.csv")
-    except Exception as e:
+    except BaseException as e:   # includes Ctrl+C, so the study record is always closed
         study_rr.finish("failed", failure_reason=repr(e))
         raise
 
