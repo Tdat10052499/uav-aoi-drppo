@@ -1,8 +1,9 @@
-"""Optuna hyper-parameter search for (Maskable)PPO, with an equal budget per learner.
+"""Optuna hyper-parameter search for (Maskable)PPO and DQN, with an equal budget per learner.
 
 Protocol (docs/03 section 3):
   * DR-PPO and Fixed-PPO get the same number of trials, the same steps per trial and the
-    same sampler seed, so neither learner is tuned harder than the other.
+    same sampler seed, so neither learner is tuned harder than the other. DQN (EXP-04, RQ3)
+    gets the same budget too (docs/DECISIONS.md, 2026-10-30).
   * The objective is the mean AoI on the `id` suite only, never on an OOD suite.
   * Validation episodes use seeds VAL_SEED_BASE + i, disjoint from the test seeds
     100000-100099 (scenarios.eval_seeds), so the reported ID numbers are not tuned on.
@@ -18,6 +19,7 @@ Writes (results/raw is append-only):
 Examples
   python scripts/tune_ppo.py --experiment-id TUNE --train dr --n-trials 20 --masked
   python scripts/tune_ppo.py --experiment-id TUNE --train fixed --n-trials 20 --masked
+  python scripts/tune_ppo.py --experiment-id TUNE --algo dqn --train dr --n-trials 20
   # quick check of the script itself (results/raw/SMOKE is gitignored)
   python scripts/tune_ppo.py --experiment-id SMOKE --train dr --n-trials 2 --timesteps 2048 \
          --n-envs 2 --val-episodes 2 --masked
@@ -46,15 +48,29 @@ from train_ppo import SmallCNN, make_env
 
 VAL_SEED_BASE = 200_000
 TRIAL_FIELDS = ["trial", "state", "val_mean_aoi", "val_mean_energy_frac", "learning_rate", "n_steps",
-                "batch_size", "ent_coef", "gamma", "clip_range", "wall_time_s", "run_id"]
+                "batch_size", "ent_coef", "gamma", "clip_range", "train_freq", "target_update_interval",
+                "exploration_fraction", "wall_time_s", "run_id"]
 
 
 def val_seeds(n: int) -> list:
     return [VAL_SEED_BASE + i for i in range(n)]
 
 
+def sample_dqn_params(trial: optuna.Trial) -> dict:
+    """DQN search space. buffer_size and learning_starts are fixed by --dqn-buffer-size and
+    --dqn-learning-starts (memory, not tuning); exploration_final_eps stays at 0.02."""
+    return {
+        "learning_rate": trial.suggest_float("learning_rate", 1e-5, 1e-3, log=True),
+        "batch_size": trial.suggest_categorical("batch_size", [64, 128, 256]),
+        "gamma": trial.suggest_categorical("gamma", [0.95, 0.98, 0.99, 0.995]),
+        "train_freq": trial.suggest_categorical("train_freq", [1, 4, 8]),
+        "target_update_interval": trial.suggest_categorical("target_update_interval", [1000, 5000, 10000]),
+        "exploration_fraction": trial.suggest_categorical("exploration_fraction", [0.1, 0.2, 0.3]),
+    }
+
+
 def sample_params(trial: optuna.Trial, n_envs: int) -> dict:
-    """Search space of W2-DAT-02. batch_size must divide the rollout size n_steps * n_envs."""
+    """PPO search space of W2-DAT-02. batch_size must divide the rollout size n_steps * n_envs."""
     n_steps = trial.suggest_categorical("n_steps", [256, 512, 1024, 2048])
     batch_size = trial.suggest_categorical("batch_size", [64, 128, 256, 512])
     if (n_steps * n_envs) % batch_size:
@@ -69,8 +85,10 @@ def sample_params(trial: optuna.Trial, n_envs: int) -> dict:
     }
 
 
-def build_model(params: dict, venv, masked: bool, seed: int, tb_dir: str):
-    if masked:
+def build_model(params: dict, venv, algo: str, masked: bool, seed: int, tb_dir: str, dqn_args=None):
+    if algo == "dqn":
+        from stable_baselines3 import DQN as Algo
+    elif masked:
         from sb3_contrib import MaskablePPO as Algo
     else:
         from stable_baselines3 import PPO as Algo
@@ -81,6 +99,11 @@ def build_model(params: dict, venv, masked: bool, seed: int, tb_dir: str):
         import tensorboard  # noqa: F401  (optional dependency, environment/requirements.txt)
     except ImportError:
         tb_dir = None
+    if algo == "dqn":
+        # fixed values follow train_ppo.py
+        return Algo("CnnPolicy", venv, buffer_size=dqn_args.dqn_buffer_size,
+                    learning_starts=dqn_args.dqn_learning_starts, exploration_final_eps=0.02,
+                    policy_kwargs=policy_kwargs, seed=seed, verbose=0, tensorboard_log=tb_dir, **params)
     # n_epochs and gae_lambda stay at the train_ppo.py values; they are not searched.
     return Algo("CnnPolicy", venv, n_epochs=10, gae_lambda=0.95, policy_kwargs=policy_kwargs,
                 seed=seed, verbose=0, tensorboard_log=tb_dir, **params)
@@ -99,6 +122,7 @@ def validate(model_path: str, cfg: EnvConfig, n_episodes: int) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--experiment-id", required=True, help="experiment card id, e.g. TUNE")
+    ap.add_argument("--algo", choices=["ppo", "dqn"], default="ppo")
     ap.add_argument("--train", choices=["dr", "fixed"], required=True)
     ap.add_argument("--n-trials", type=int, default=20)
     ap.add_argument("--timesteps", type=int, default=200_000, help="training steps per trial")
@@ -112,17 +136,26 @@ def main():
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides")
     ap.add_argument("--models-dir", default=os.path.join(REPO_ROOT, "runs"))
     ap.add_argument("--subproc", action="store_true")
+    ap.add_argument("--dqn-buffer-size", type=int, default=200_000,
+                    help="DQN replay buffer (transitions); ~7.7 GB at 200k")
+    ap.add_argument("--dqn-learning-starts", type=int, default=20_000)
     args = ap.parse_args()
 
     if args.config and not os.path.isfile(args.config):
         ap.error(f"config file not found: {args.config}")
+    if args.algo == "dqn":
+        if args.masked:
+            ap.error("--masked is PPO only (SB3 DQN has no action masks)")
+        if args.dqn_learning_starts >= args.timesteps:
+            ap.error("--dqn-learning-starts >= --timesteps: DQN would never update")
+        args.n_envs = 1   # as in train_ppo.py
     if 0 <= args.seed <= 9:
         ap.error("--seed 0-9 is reserved for the main results; tune with another seed")
     cfg = EnvConfig(**(json.load(open(args.config)) if args.config else {}))
     scenario = TRAIN_DR if args.train == "dr" else TRAIN_FIXED
 
     study_id, study_dir = new_run_dir(
-        args.experiment_id, f"tune_{args.train}{'_mask' if args.masked else ''}_{time.strftime('%Y%m%d-%H%M%S')}")
+        args.experiment_id, f"tune_{args.train}_{args.algo}{'_mask' if args.masked else ''}_{time.strftime('%Y%m%d-%H%M%S')}")
     study_rr = RunRecord(args.experiment_id, study_dir, study_id,
                          config={"args": vars(args), "env_cfg": cfg.to_dict(), "scenario": scenario.to_dict(),
                                  "objective": "minimise mean AoI on suite 'id', validation seeds",
@@ -138,7 +171,8 @@ def main():
 
     def objective(trial: optuna.Trial) -> float:
         try:
-            params = sample_params(trial, args.n_envs)
+            params = (sample_dqn_params(trial) if args.algo == "dqn"
+                      else sample_params(trial, args.n_envs))
         except optuna.TrialPruned:
             log_trial({"trial": trial.number, "state": "invalid_params", **trial.params})
             raise
@@ -155,7 +189,8 @@ def main():
         venv = VecMonitor(SubprocVecEnv(fns) if (args.subproc and args.n_envs > 1) else DummyVecEnv(fns))
         t0 = time.time()
         try:
-            model = build_model(params, venv, args.masked, args.seed, os.path.join(model_dir, "tb"))
+            model = build_model(params, venv, args.algo, args.masked, args.seed,
+                                os.path.join(model_dir, "tb"), dqn_args=args)
             model.learn(total_timesteps=args.timesteps, progress_bar=False)
             model_path = os.path.join(model_dir, "model.zip")
             model.save(model_path)
