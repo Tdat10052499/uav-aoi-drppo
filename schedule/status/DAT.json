@@ -10,6 +10,16 @@
       "date": "2026-10-26",
       "evidence": "PR #18 merge 2083d8e; chạy lại 10k EXP-01/dr_ppo_mask_lam0.1_s0_20261025-115314 trên laptop DAT",
       "state": "approved"
+    },
+    "W2-FAO-02": {
+      "date": "2026-10-30",
+      "evidence": "PR #19 + #26 merged 30/10; plot_trajectory.py chạy với heuristic và model",
+      "state": "approved"
+    },
+    "W2-FAO-03": {
+      "date": "2026-10-30",
+      "evidence": "PR #20 merged 30/10; EXP-04 pha 0 ký second reader (3986172)",
+      "state": "approved"
     }
   },
   "tasks": {
@@ -29,6 +39,11 @@
       "evidence": "notes/reading/bayerlein2021multi_DAT.md (DAT duyệt 26/10); docs/04 §5 hàng Bayerlein; commit 7c6d36d",
       "note": "Nháp Form B từ toàn văn arXiv v3 (Claude soạn 26/10); chờ DAT đọc lại",
       "state": "done"
+    },
+    "W1-DAT-03": {
+      "date": "2026-10-30",
+      "note": "DAT 30/10: không hỏi FJCAI/ICISN; nhóm tìm hội nghị quốc tế hybrid khác (W1-DAT-08)",
+      "state": "skipped"
     },
     "W1-DAT-04": {
       "date": "2026-10-30",
