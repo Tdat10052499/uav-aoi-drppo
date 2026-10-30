@@ -57,14 +57,12 @@ def degeneracy_flags(m: dict, masked: bool) -> list:
     return flags
 
 
-def plot(env: UAVAoIEnv, ep: dict, title: str, flags: list, out: str):
-    import matplotlib
-    matplotlib.use("Agg")
+def draw(ax, env: UAVAoIEnv, ep: dict, title: str, flags: list, show_legend: bool = True):
+    """Draw one episode on an existing matplotlib axis (env must be the one that ran it)."""
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
 
     m, p = ep["metrics"], ep["path"]
-    fig, ax = plt.subplots(figsize=(6.4, 7.2))
     ax.add_patch(plt.Rectangle((0, 0), env.L, env.L, facecolor="#f7fafc", edgecolor="#4a5568"))
     for w in env.sensors:
         ax.add_patch(plt.Circle(w, env.r_eff, fill=False, ls="--", lw=0.6, ec="#cbd5e0", clip_on=True))
@@ -102,7 +100,18 @@ def plot(env: UAVAoIEnv, ep: dict, title: str, flags: list, out: str):
               Line2D([], [], color="#1a202c", marker="s", ls="", label="sensor (n = times served)"),
               Line2D([], [], color="black", marker="o", mfc="none", ls="", label="start"),
               Line2D([], [], color="#c53030", marker="x", ls="", label="end")]
-    ax.legend(handles=legend, loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3, fontsize=7.5, frameon=False)
+    if show_legend:
+        ax.legend(handles=legend, loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3, fontsize=7.5,
+                  frameon=False)
+
+
+def plot(env: UAVAoIEnv, ep: dict, title: str, flags: list, out: str):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    fig, ax = plt.subplots(figsize=(6.4, 7.2))
+    draw(ax, env, ep, title, flags)
     fig.tight_layout()
     fig.savefig(out, dpi=150)
     plt.close(fig)
