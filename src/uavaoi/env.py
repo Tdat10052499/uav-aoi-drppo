@@ -34,7 +34,10 @@ class EnvConfig:
     lam: float = 0.1              # energy weight in reward
     mu: float = 0.1               # boundary penalty
     count_norm: float = 3.0       # sensor-count channel normalisation
-    use_action_mask_clip: bool = True  # if False, out-of-area moves are clipped + penalised
+    # Not read by the env: out-of-area moves are always clipped and penalised by mu, and the
+    # action mask (MaskablePPO) is chosen at training time. Kept so existing config files and
+    # their SHA256 still load unchanged.
+    use_action_mask_clip: bool = True
     single_speed: bool = False    # ablation A5: only V_me moves (actions 9..16 always masked)
 
     def to_dict(self) -> dict:
