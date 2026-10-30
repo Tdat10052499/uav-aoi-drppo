@@ -71,6 +71,11 @@
       "evidence": "Khung tune_ppo.py gộp vào PR #30",
       "state": "done"
     },
+    "W1-DAT-08": {
+      "date": "2026-10-30",
+      "note": "Ứng viên: notes/2026-10-30_dat_hoi-nghi-ung-vien.md (DCOSS-IoT 2027 hạn 27/01/2027). Chờ khoa giải thích mốc 18–19/01",
+      "state": "doing"
+    },
     "W2-DAT-02": {
       "date": "2026-10-30",
       "evidence": "PR #30 merged 81a32e8; FAO approve (W2-FAO-04); smoke PPO/Fixed/DQN; #32 thêm tag _1spd",
