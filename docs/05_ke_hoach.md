@@ -84,6 +84,7 @@
 ## 5. Tiêu chí gate (khai báo trước — **đề xuất, GVHD duyệt trước 25/10**)
 
 ### G0 · 01/11 — định vị đóng góp (owner DAT, second reader LDN)
+> **Đã kéo dài sang T4 04/11/2026** theo điều khoản của tiêu chí 1 (DECISIONS 2026-10-30). Đây là lần kéo dài duy nhất được phép.
 | # | Điều kiện | Nếu không đạt |
 | --- | --- | --- |
 | 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | Kéo dài tối đa 3 ngày |

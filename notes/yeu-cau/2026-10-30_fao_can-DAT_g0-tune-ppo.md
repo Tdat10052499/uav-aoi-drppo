@@ -16,6 +16,8 @@
 - **Cần DAT quyết:** giữ G0 ngày 01/11 hay áp dụng điều khoản "kéo dài tối đa 3 ngày" của tiêu chí 1 (`docs/05`, G0). Nếu kéo dài, ghi vào `docs/DECISIONS.md`.
 - **FAO có thể giúp nếu DAT hoặc LDN đồng ý:** đọc toàn văn Yi 2020 (ar5iv) và viết Form B để điền hàng Yi. Đây là việc của LDN (W1-LDN-02), nên FAO chỉ làm khi được giao.
 
+DAT: (30/10) Kéo dài G0 3 ngày, sang **T4 04/11/2026** (DECISIONS 2026-10-30, `docs/05` §5). G1 15/11 giữ nguyên. Lamenza đã có Form B và hàng ma trận đủ nguồn (commit 3105342). Việc đọc Yi 2020: chờ DAT hỏi LDN.
+
 ## A3. Việc đang chờ DAT review hoặc trả lời
 - **PR #23** (cờ `single_speed` cho A5): đã merge `main` sau #29, 14/14 kiểm thử, smoke PASS. Phải merge trước khi khoá PREREG (G1).
 - **PR #20** (EXP-04 card, DQN 10k): cần merge trước khi DAT đo DQN 100k bước (A1 của `notes/yeu-cau/2026-10-26_dat_can-FAO_steps-per-s.md`).
