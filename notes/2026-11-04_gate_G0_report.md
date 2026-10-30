@@ -45,9 +45,10 @@ Trùng lặp với công trình gần nhất còn chưa giải quyết:
 
 Nhu cầu tính toán/thời gian còn lại:
   Ước lượng của FAO (notes/2026-10-21_fao_chi-phi-nhap.md §2, §4; Project Agreement §5):
-  159,2 M bước. Cần 123,4 giờ máy nếu mọi learner chạy 358,4 bước/s (PPO, CPU, laptop DAT),
-  hoặc 162,1 giờ nếu DQN chậm 3,5 lần. Thêm khoảng 16 giờ cho Optuna (PPO DR + Fixed +
-  DQN, DECISIONS 2026-10-30; ước lượng, chưa đo). DQN 100k trên máy DAT chưa đo.
+  163,2 M bước (Phương án B, đã gồm Optuna DQN 4 M bước, cập nhật FAO 30/10 tại c9da329).
+  Cần 126,5 giờ máy (≈ 5,3 ngày) nếu mọi learner chạy 358,4 bước/s (PPO, CPU, laptop DAT),
+  hoặc 173,0 giờ (≈ 7,2 ngày) nếu DQN chậm 3,5 lần. FAO kết luận kịp trước 13/12.
+  Tỉ lệ 3,5 lần lấy từ laptop FAO; DQN 100k trên máy DAT chưa đo.
 
 Quyết định: [DAT/GVHD chọn tại họp 04/11 — đề xuất bên dưới]
 Lý do:
