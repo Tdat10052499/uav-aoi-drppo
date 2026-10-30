@@ -1,6 +1,17 @@
 {
   "nick": "FAO",
-  "reviews": {},
+  "reviews": {
+    "W1-DAT-06": {
+      "date": "2026-10-30",
+      "evidence": "PR #30 review FAO 30/10: --help/CLI có --experiment-id, --train, --n-trials; chạy trên laptop FAO",
+      "state": "approved"
+    },
+    "W2-DAT-02": {
+      "date": "2026-10-30",
+      "evidence": "PR #30 review FAO 30/10: 2 lượt DR + 2 lượt Fixed (mask) chạy không lỗi trên laptop FAO",
+      "state": "approved"
+    }
+  },
   "tasks": {
     "W1-FAO-01": {
       "date": "2026-10-19",
@@ -46,8 +57,9 @@
     },
     "W2-FAO-04": {
       "date": "2026-10-30",
+      "evidence": "PR #30 approve tại 4a20e55: 5 lệnh smoke trên laptop FAO (DR/Fixed mask 2 lượt, PPO không mask, DQN, seed 3 bị từ chối) + 5 góp ý nhỏ",
       "note": "chờ W2-DAT-02 (tune_ppo.py chưa được push, hạn 29/10); đã báo DAT ở notes/yeu-cau/2026-10-30_fao_can-DAT_g0-tune-ppo.md",
-      "state": "doing"
+      "state": "done"
     }
   }
 }
