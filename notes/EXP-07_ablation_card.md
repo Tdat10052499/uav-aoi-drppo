@@ -3,7 +3,8 @@
 **Owner:** FAO (Nguyễn Minh Chính) · **Second reader:** LDN
 **Viết:** 22/10/2026, trước khi chạy, viết sớm so với lịch (W6-FAO-02, hạn 29/11) · **Chạy:** W7, 30/11–06/12 (W7-FAO-01) · **Gate:** G2 (20/12)
 **Phụ thuộc:**
-- PR #23 (`fao/a5-single-speed`) phải merge **trước khi khoá PREREG tại G1**, vì sau mốc khoá `src/` không được sửa.
+- PR #23 (`fao/a5-single-speed`) đã merge ngày 30/10 (5904d3d), trước mốc khoá PREREG như yêu cầu.
+- PR #31 (`evaluate.py` so `single_speed` với `config.json` lúc huấn luyện) đã merge ngày 30/10 (86459a3).
 - Cần EXP-03 seed 0–4 của DR-PPO (W5-DAT-01) để làm nhóm đối chứng.
 - Siêu tham số lấy từ PREREG (W4-DAT-01).
 
@@ -112,7 +113,9 @@ foreach ($s in 0..4) {
 }
 ```
 
-Đánh giá, với mỗi `model.zip` in ra ở cuối lần huấn luyện. A5 **bắt buộc** truyền cùng `--config`; nếu quên, `step()` báo lỗi thay vì cho số sai:
+Đánh giá, với mỗi `model.zip` in ra ở cuối lần huấn luyện. A5 **bắt buộc** truyền cùng `--config`. Nếu quên, `evaluate.py` dừng với lỗi `single_speed: trained True, evaluating False` trước khi tạo thư mục run (PR #31). Ghi chú: bản card trước viết rằng `step()` sẽ báo lỗi, nhưng điều đó sai, vì khi thiếu `--config` thì `single_speed = False`, nên `step()` không kiểm gì (DAT phát hiện ở review PR #23).
+
+A4 được đánh giá **không có mask**: `SB3Policy` thử `MaskablePPO.load` trước. Với model PPO thường, sb3-contrib 2.9.0 báo `ValueError("Policy must subclass MaskableActorCriticPolicy")` (`sb3_contrib/ppo_mask/ppo_mask.py`, dòng 153–154), nên hàm quay về `PPO.load` với `masked = False`. Lệnh thử ngày 30/10 trên laptop FAO (`tune_ppo.py` không `--masked`) chạy qua bước kiểm định mà không lỗi, khớp với đường đi này.
 
 ```powershell
 python scripts/evaluate.py --experiment-id EXP-07 --model runs/EXP-07/<run-id-A4-s0>/model.zip --label dr_ppo_nomask --train-seed 0
@@ -149,6 +152,6 @@ Commit: ___  Máy: ___
 A4 seed 0–4 run_id: ___
 A5 seed 0–4 run_id: ___
 Kiểm cờ A5 (fast_frac = 0 mọi episode): ___
-Kiểm A4 (args.masked = false): ___
+Kiểm A4 (args.masked = false trong config.json; boundary_hits > 0 ở ít nhất một episode, nếu không thì ghi rõ): ___
 Second reader (LDN): ___  ngày: ___
 ```

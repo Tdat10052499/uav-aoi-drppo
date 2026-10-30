@@ -11,7 +11,7 @@
 | Ngày khoá | CHỜ: G1, 15/11/2026 |
 | Commit | CHỜ: commit mang tag `prereg-lock` (DAT, W4-ALL-01) |
 | Phương án | CHỜ: A hoặc B, quyết tại G1 và ghi `PLAN: A/B` vào `docs/DECISIONS.md` |
-| PR phải merge trước khi khoá | Đã merge: #18, #20, #23, #29 (bỏ preset `light`), #30 (`tune_ppo.py`). Còn mở (30/10): #31 (`evaluate.py` kiểm `single_speed`). Sau mốc khoá không sửa `src/` (W5-DAT-01). |
+| PR phải merge trước khi khoá | Đã merge: #18, #20, #23, #29 (bỏ preset `light`), #30 (`tune_ppo.py`), #31 (`evaluate.py` kiểm `single_speed`, 86459a3). Sau mốc khoá không sửa `src/` (W5-DAT-01). |
 
 ## 2. Cấu hình môi trường (EnvConfig)
 
