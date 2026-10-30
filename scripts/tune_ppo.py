@@ -155,7 +155,8 @@ def main():
     scenario = TRAIN_DR if args.train == "dr" else TRAIN_FIXED
 
     study_id, study_dir = new_run_dir(
-        args.experiment_id, f"tune_{args.train}_{args.algo}{'_mask' if args.masked else ''}_{time.strftime('%Y%m%d-%H%M%S')}")
+        args.experiment_id, f"tune_{args.train}_{args.algo}{'_mask' if args.masked else ''}{'_1spd' if cfg.single_speed else ''}"
+        f"_{time.strftime('%Y%m%d-%H%M%S')}")
     study_rr = RunRecord(args.experiment_id, study_dir, study_id,
                          config={"args": vars(args), "env_cfg": cfg.to_dict(), "scenario": scenario.to_dict(),
                                  "objective": "minimise mean AoI on suite 'id', validation seeds",
