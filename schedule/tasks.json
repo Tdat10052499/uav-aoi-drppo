@@ -227,7 +227,7 @@
     {"id": "W4-DAT-01", "owner": "DAT", "start": "2026-11-09", "due": "2026-11-13", "kind": "experiment", "issue": 11, "gate": "G1", "reviewer": "FAO", "depends": ["W2-FAO-04", "W3-DAT-02"],
      "title": "Optuna trên id (DR và Fixed, cùng số trial); đề xuất siêu tham số EXP-03",
      "steps": ["Chạy tune_ppo cho DR và Fixed với cùng số trial", "Chọn cấu hình tốt nhất cho mỗi learner (chỉ theo id)", "Ghi đề xuất vào docs/PREREG.md (FAO điền phần còn lại)"],
-     "commands": ["python scripts/tune_ppo.py --experiment-id TUNE --train dr --n-trials 20", "python scripts/tune_ppo.py --experiment-id TUNE --train fixed --n-trials 20"],
+     "commands": ["python scripts/tune_ppo.py --experiment-id TUNE --train dr --n-trials 20 --masked", "python scripts/tune_ppo.py --experiment-id TUNE --train fixed --n-trials 20 --masked", "python scripts/tune_ppo.py --experiment-id TUNE --algo dqn --train dr --n-trials 20"],
      "outputs": ["results/raw/TUNE/", "docs/PREREG.md"],
      "done_when": "Hai cấu hình đề xuất có run ID của trial tốt nhất; issue #11 đóng."},
     {"id": "W4-LDN-01", "owner": "LDN", "start": "2026-11-09", "due": "2026-11-14", "kind": "gate", "issue": 2, "gate": "G1", "reviewer": "FAO", "depends": ["W3-LDN-01", "W3-FAO-01"],
