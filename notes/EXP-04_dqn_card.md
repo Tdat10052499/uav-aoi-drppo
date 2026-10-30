@@ -42,7 +42,9 @@ Trường raw cần: run_record.json (checkpoint_digest, steps_per_s), config.js
 
 ## Câu hỏi mở cho DAT (trước G1)
 - `buffer_size` cho pha chính: 200k (≈ 7,7 GB) có chạy được trên máy nào? Laptop FAO chỉ còn ≈ 3,4 GB trống (20/10), nên **không** chạy được 200k. Nếu giảm, giảm bao nhiêu và ghi vào DECISIONS.md.
+  DAT (30/10): giữ **200k**, chạy trên laptop DAT (32 GB) (DECISIONS 2026-10-30).
 - Siêu tham số DQN có tinh chỉnh bằng Optuna với cùng ngân sách như PPO không (docs/03: ngân sách tinh chỉnh bằng nhau)?
+  DAT (30/10): **Có**, cùng ngân sách như PPO, bằng `tune_ppo.py --algo dqn` (DECISIONS 2026-10-30).
 
 ## Lệnh
 
@@ -64,5 +66,5 @@ RAM đỉnh (Task Manager, "In use"): 11,6 → 12,0 GB, tức ≈ +0,4 GB (buffe
 Quỹ đạo: figures/traj_dqn_10k_ood_cluster_100000.png — vẽ được: có. Sau 10k bước chính sách chưa học:
   không hover lần nào (coverage 0, Ā = 151,50 > Random 132,09), 1 lần chạm biên (DQN không có mask).
   Chỉ là kiểm tra pipeline, không phải kết quả.
-Second reader (DAT): ___  ngày: ___
+Second reader (DAT): đã kiểm pha 0 (PR #20 review: run record khớp 449f6df, RAM đúng, chặn learning_starts hoạt động; số cập nhật thật ≈ 2250, không phải 2050)  ngày: 30/10/2026
 ```

@@ -6,4 +6,6 @@ Owner: **FAO**. Mỗi checkpoint dùng cho bất kỳ con số nào trong bài p
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | <EXP-02> | <run-id> | MaskablePPO | dr | 0 | 300000 | <sha256> | <release/asset hoặc runs/...> | <máy> |
 
-Kiểm tra: `python -c "import sys;sys.path.insert(0,'src');from uavaoi.runrecord import sha256_file;print(sha256_file('runs/EXP-02/<run-id>/model.zip'))"`.
+Sinh dòng từ run record (kiểm SHA256, bỏ qua run đã có): `python scripts/manifest_row.py results/raw/<EXP>/<run-id> --verify --append`.
+
+Kiểm tra thủ công: `python -c "import sys;sys.path.insert(0,'src');from uavaoi.runrecord import sha256_file;print(sha256_file('runs/EXP-02/<run-id>/model.zip'))"`.

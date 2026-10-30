@@ -57,12 +57,13 @@ Giờ máy = tổng bước / steps/s / 3600, chạy tuần tự, một lần hu
 | --- | --- | --- | --- |
 | EXP-02 pilot | 1,2 M | 0,9 | 0,9 |
 | Optuna (W4) | 8 M | 6,2 | 6,2 |
+| Optuna DQN (thêm 30/10, DECISIONS) | 4 M | 3,1 | 10,9 |
 | EXP-03 | 40 M | 31,0 | 31,0 |
 | EXP-04 (DQN) | 20 M | 15,5 | 54,3 |
 | EXP-05 | 50 M | 38,8 | 38,8 |
 | EXP-06 | 20 M | 15,5 | 15,5 |
 | EXP-07 | 20 M | 15,5 | 15,5 |
-| **Tổng (159,2 M)** | | **123,4 h ≈ 5,1 ngày** | **162,1 h ≈ 6,8 ngày** |
+| **Tổng (163,2 M, gồm Optuna DQN)** | | **126,5 h ≈ 5,3 ngày** | **173,0 h ≈ 7,2 ngày** |
 | Tổng nếu EXP-05 dùng lại seed EXP-03 (149,2 M) | | 115,6 h ≈ 4,8 ngày | 154,4 h ≈ 6,4 ngày |
 | Riêng EXP-03 đến EXP-07 (sau G1) | 150 M | 116,3 h | 155,0 h |
 
@@ -76,3 +77,5 @@ Các giả định có thể làm sai ước lượng (chưa kiểm):
 5. GPU chưa đo. Nếu chạy thật trên GPU thì phải đo lại trên GPU (§3).
 
 Đề xuất cho DAT: đo thêm DQN 100k bước trên laptop DAT, CPU, để thay giả định ở cột cuối bằng số đo. Card `notes/EXP-04_dqn_card.md` hiện chỉ có trên nhánh của PR #20, nên nên đo sau khi PR #20 merge (quy tắc 1), bằng lệnh `python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 100000`. Việc này không chặn G0 hay W1-FAO-05.
+
+Cập nhật 30/10: DAT quyết tinh chỉnh DQN bằng Optuna cùng ngân sách PPO (20 lượt × 200k = 4 M bước, `docs/DECISIONS.md`). Đã thêm vào bảng §4. Mức 10,9 giờ máy là giả định DQN chậm 3,5 lần so với 358,4 bước/s. Nếu tính theo số tuyệt đối 19,5 bước/s của laptop FAO thì sẽ là khoảng 57 giờ; số này không dùng được, vì DQN sẽ chạy trên laptop DAT. Kết luận kịp trước 13/12 không đổi.

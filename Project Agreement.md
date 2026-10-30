@@ -94,13 +94,14 @@
   | Thực nghiệm | Tổng bước | Giờ máy (358,4 bước/s) | Giờ máy (DQN chậm 3,5 lần) |
   | --- | --- | --- | --- |
   | EXP-02 pilot | 1,2 M | 0,9 | 0,9 |
-  | Optuna | 8 M | 6,2 | 6,2 |
+  | Optuna PPO (DR, Fixed) | 8 M | 6,2 | 6,2 |
+  | Optuna DQN (DECISIONS 30/10) | 4 M | 3,1 | 10,9 |
   | EXP-03 | 40 M | 31,0 | 31,0 |
   | EXP-04 | 20 M | 15,5 | 54,3 |
   | EXP-05 | 50 M | 38,8 | 38,8 |
   | EXP-06 | 20 M | 15,5 | 15,5 |
   | EXP-07 | 20 M | 15,5 | 15,5 |
-  | **Tổng (Phương án B, 159,2 M)** | | **123,4 h ≈ 5,1 ngày** | **162,1 h ≈ 6,8 ngày** |
+  | **Tổng (Phương án B, 163,2 M)** | | **126,5 h ≈ 5,3 ngày** | **173,0 h ≈ 7,2 ngày** |
 
   - **Kết luận:** kịp trước 13/12 (tiêu chí G1 số 6). EXP-03 đến EXP-07 cần 116–155 giờ máy trên một máy, tức khoảng 18–24% của 648 giờ từ 16/11 đến 13/12. Kaggle không cần cho tiến độ; chỉ dùng nếu nhóm muốn chạy thêm seed song song.
 - **Measurement rule:** mọi số đo thời gian (huấn luyện, suy luận) chạy trên **một máy cố định, đứng yên** do DAT chỉ định. Không lấy số thời gian từ Kaggle/Colab. Kaggle chỉ dùng để chạy thêm seed.
