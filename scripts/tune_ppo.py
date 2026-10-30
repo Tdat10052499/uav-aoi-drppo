@@ -11,6 +11,7 @@ Protocol (docs/03 section 3):
   * No pruning: every trial trains for exactly --timesteps steps.
 
 Writes (results/raw is append-only):
+  study-id = tune_<train>_<algo>[_mask][_1spd]_<YYYYmmdd-HHMMSS>
   results/raw/<experiment-id>/<study-id>/            run_record.json of the study,
                                                      trials.csv, best_params.json
   results/raw/<experiment-id>/<study-id>_t<NNN>/     run_record.json of each trial
@@ -154,9 +155,10 @@ def main():
     cfg = EnvConfig(**(json.load(open(args.config)) if args.config else {}))
     scenario = TRAIN_DR if args.train == "dr" else TRAIN_FIXED
 
-    study_id, study_dir = new_run_dir(
-        args.experiment_id, f"tune_{args.train}_{args.algo}{'_mask' if args.masked else ''}{'_1spd' if cfg.single_speed else ''}"
-        f"_{time.strftime('%Y%m%d-%H%M%S')}")
+    # same tags as train_ppo.py, so an A5 study is recognisable from its name
+    tag = (f"tune_{args.train}_{args.algo}{'_mask' if args.masked else ''}"
+           f"{'_1spd' if cfg.single_speed else ''}")
+    study_id, study_dir = new_run_dir(args.experiment_id, f"{tag}_{time.strftime('%Y%m%d-%H%M%S')}")
     study_rr = RunRecord(args.experiment_id, study_dir, study_id,
                          config={"args": vars(args), "env_cfg": cfg.to_dict(), "scenario": scenario.to_dict(),
                                  "objective": "minimise mean AoI on suite 'id', validation seeds",
