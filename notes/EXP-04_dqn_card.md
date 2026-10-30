@@ -64,5 +64,5 @@ RAM đỉnh (Task Manager, "In use"): 11,6 → 12,0 GB, tức ≈ +0,4 GB (buffe
 Quỹ đạo: figures/traj_dqn_10k_ood_cluster_100000.png — vẽ được: có. Sau 10k bước chính sách chưa học:
   không hover lần nào (coverage 0, Ā = 151,50 > Random 132,09), 1 lần chạm biên (DQN không có mask).
   Chỉ là kiểm tra pipeline, không phải kết quả.
-Second reader (DAT): ___  ngày: ___
+Second reader (DAT): đã kiểm pha 0 (PR #20 review: run record khớp 449f6df, RAM đúng, chặn learning_starts hoạt động; số cập nhật thật ≈ 2250, không phải 2050)  ngày: 30/10/2026
 ```
