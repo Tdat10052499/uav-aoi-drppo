@@ -85,7 +85,7 @@
 | T2 16/11/2026 | FAO | `W5-FAO-01` EXP-03 seed 5–9 (Kaggle hoặc máy FAO) | CN 22/11/2026 | LDN |  |
 | T2 16/11/2026 | LDN | `W5-LDN-01` Pipeline phân tích EXP-03 (H1/H2, IQM, Holm, Cliff's δ) | T6 20/11/2026 | FAO |  |
 | T4 18/11/2026 | DAT | `W5-DAT-02` Viết mục System Model (paper/main.tex) | CN 22/11/2026 | FAO |  |
-| T4 18/11/2026 | DAT | `W5-DAT-03` EXP-04: chạy DR-DQN seed 0–9 (buffer 200k) trên laptop DAT | CN 29/11/2026 | FAO |  |
+| T4 18/11/2026 | DAT | `W5-DAT-03` EXP-04: chạy DR-DQN seed 0–9 (buffer 200k) trên laptop DAT | T5 26/11/2026 | FAO |  |
 | T4 18/11/2026 | FAO | `W5-FAO-02` EXP-04: chốt card theo PREREG; kiểm DR-DQN seed 0–4 (DAT chạy trên laptop DAT) | CN 22/11/2026 | DAT |  |
 | T5 19/11/2026 | LDN | `W5-LDN-02` Viết mục Experimental Setup | CN 22/11/2026 | DAT |  |
 
