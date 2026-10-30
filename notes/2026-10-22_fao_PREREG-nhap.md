@@ -11,7 +11,7 @@
 | Ngày khoá | CHỜ: G1, 15/11/2026 |
 | Commit | CHỜ: commit mang tag `prereg-lock` (DAT, W4-ALL-01) |
 | Phương án | CHỜ: A hoặc B, quyết tại G1 và ghi `PLAN: A/B` vào `docs/DECISIONS.md` |
-| PR phải merge trước khi khoá | Đã merge: #18, #20, #23, #29 (bỏ preset `light`). Còn mở (30/10): #30 (`tune_ppo.py`, FAO đã duyệt), #31 (`evaluate.py` kiểm `single_speed`). Sau mốc khoá không sửa `src/` (W5-DAT-01). |
+| PR phải merge trước khi khoá | Đã merge: #18, #20, #23, #29 (bỏ preset `light`), #30 (`tune_ppo.py`). Còn mở (30/10): #31 (`evaluate.py` kiểm `single_speed`). Sau mốc khoá không sửa `src/` (W5-DAT-01). |
 
 ## 2. Cấu hình môi trường (EnvConfig)
 
@@ -58,7 +58,7 @@ Digest đầy đủ nằm trong `data/eval_manifest.json`, sinh ngày 17/10/2026
 | Seed huấn luyện | 0–9 cho EXP-03, EXP-04; 0–4 cho EXP-05, EXP-06, EXP-07 (Phương án B, `docs/03` §3, §7) |
 | Seed reset môi trường khi huấn luyện | `seed × 1000 + rank`, rank < n_envs (`train_ppo.py`) |
 | Seed đánh giá | 100 episode, 100000–100099, dùng chung mọi phương pháp, nên so sánh được ghép cặp theo kịch bản |
-| Seed đánh giá trong lúc tinh chỉnh | Bộ `id`, seed 200000 + i, i < `--val-episodes` (mặc định 20) (`VAL_SEED_BASE` trong `tune_ppo.py`, PR #30). Seed huấn luyện khi tinh chỉnh: 1000 (script từ chối 0–9). |
+| Seed đánh giá trong lúc tinh chỉnh | Bộ `id`, seed 200000 + i, i < `--val-episodes` (mặc định 20) (`VAL_SEED_BASE` trong `scripts/tune_ppo.py`). Seed huấn luyện khi tinh chỉnh: 1000 (script từ chối 0–9). |
 
 ## 5. Learner, thực nghiệm và ngân sách
 
