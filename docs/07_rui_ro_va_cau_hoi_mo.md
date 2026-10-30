@@ -22,7 +22,7 @@
 
 ## 3. Việc cần xác minh (tồn đọng)
 - [ ] Hạn nộp FJCAI 2027 và ICISN 2027: hỏi qua fisu.vietnam@gmail.com (địa chỉ trên CFP FJCAI 2026) và icisnconf@gmail.com.
-- [ ] Bộ tham số "light" của [Z19] so với bản IEEE TWC chính thức.
+- [x] Bộ tham số "light" của [Z19]: đã bỏ khỏi mã ngày 26/10/2026 vì không có trong Bảng I bản v1 (DECISIONS).
 - [ ] Hệ số mô hình LoS của Al-Hourani (2014) nếu dùng mở rộng kênh.
-- [ ] Toàn văn Lamenza et al. (2025) và Yi et al. (2020) để điền ma trận định vị.
+- [ ] Toàn văn Yi et al. (2020) để điền ma trận định vị. (Lamenza: đã đọc toàn văn 30/10/2026, `notes/reading/lamenza2025_DAT.md`.)
 - [ ] Thông tin xuất bản các mục `VERIFY` trong `paper/references.bib`.

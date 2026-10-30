@@ -23,11 +23,6 @@ def test_energy_matches_zeng_table_I():
     assert abs(propulsion_power(0.0, p) - hover_power(p)) < 1e-6   # P(0) = P0 + Pi
 
 
-def test_light_preset_reproduces_commonly_cited_values():
-    p = PRESETS["light"]
-    assert abs(p.P0 - 79.86) < 0.05 and abs(p.Pi - 88.63) < 0.05
-
-
 def test_characteristic_speeds_ordering():
     sp = characteristic_speeds()
     assert 0 < sp["V_me"] < sp["V_mr"]        # Zeng et al.: V_me <= V_mr
@@ -88,6 +83,21 @@ def test_masks_block_leaving_area():
     assert m[1 + 0] and m[1 + 2]             # East and North allowed
 
 
+def test_single_speed_masks_fast_moves():
+    env = _env(single_speed=True)
+    env.reset(seed=0)
+    for _ in range(20):
+        m = env.action_masks()
+        assert not m[9:].any() and m[1:9].any()
+        env.step(int(np.flatnonzero(m)[-1]))
+    try:
+        env.step(9)
+        raise AssertionError("fast move accepted with single_speed=True")
+    except ValueError:
+        pass
+    run_episode(env, HEURISTICS["tsp"](), seed=100000)   # heuristics follow the mask
+
+
 def test_early_battery_death_never_pays():
     """Return of an agent that drains the battery must be lower than one that survives
     doing nothing useful (anti reward-hacking check, docs/02 section 6)."""
@@ -140,6 +150,23 @@ def test_raw_dirs_are_append_only():
         raise AssertionError("re-using a raw run directory must fail")
     except FileExistsError:
         pass
+
+
+def test_eval_refuses_single_speed_mismatch():
+    import json
+    import tempfile
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+    from evaluate import check_model_cfg
+    tmp = tempfile.mkdtemp()
+    raw = os.path.join(tmp, "raw", "EXP-T", "r_1")          # results/raw/<exp>/<run_id>/config.json
+    os.makedirs(raw)
+    with open(os.path.join(raw, "config.json"), "w") as f:
+        json.dump({"env_cfg": {**EnvConfig().to_dict(), "single_speed": True}}, f)
+    model = os.path.join(tmp, "runs", "EXP-T", "r_1", "model.zip")   # runs/<exp>/<run_id>/model.zip
+    errors, _ = check_model_cfg(model, EnvConfig(), raw_base=os.path.join(tmp, "raw"))
+    assert errors and "single_speed" in errors[0]
+    errors, warnings = check_model_cfg(model, EnvConfig(single_speed=True), raw_base=os.path.join(tmp, "raw"))
+    assert not errors and not warnings
 
 
 def test_eval_manifest_matches_samplers():

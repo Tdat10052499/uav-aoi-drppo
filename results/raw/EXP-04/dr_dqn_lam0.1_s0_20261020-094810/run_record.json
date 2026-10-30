@@ -1,0 +1,29 @@
+{
+  "run_id": "dr_dqn_lam0.1_s0_20261020-094810",
+  "experiment_id": "EXP-04",
+  "status": "completed",
+  "code_revision": "449f6df20933a5b130ada9a054e8fffb3aadd190",
+  "uncommitted_patch_path": null,
+  "config_path": "config.json",
+  "environment_path": "environment.json",
+  "data_manifest_path": "data\\eval_manifest.json",
+  "checkpoint_digest": "sha256:cff4b2d973e2a4da83b8475b8d08d6c3b549b4ccc087572d99aeecedb0077714",
+  "seeds": {
+    "train_seed": 0,
+    "env_reset_seeds": "seed*1000 + rank, rank < n_envs"
+  },
+  "started_at": "2026-10-20T09:48:11+07:00",
+  "finished_at": "2026-10-20T09:56:44+07:00",
+  "counts": {
+    "timesteps": 10000,
+    "n_envs": 1
+  },
+  "metrics": {
+    "wall_time_s": 511.5,
+    "steps_per_s": 19.5
+  },
+  "raw_events_path": null,
+  "warnings": [],
+  "failure_reason": null,
+  "model_path": "runs\\EXP-04\\dr_dqn_lam0.1_s0_20261020-094810\\model.zip"
+}

@@ -6,7 +6,7 @@
 **Working deadline:** bản thảo sẵn sàng **10/01/2027** (Gate G3)
 
 > ### Status, 17/10/2026
-> Bộ khởi đầu: môi trường mô phỏng, heuristic, thống kê, 14/14 kiểm thử, smoke test và kết quả heuristic tham chiếu. `scripts/train_ppo.py` **chưa từng chạy với PyTorch** (issue #5, FAO).
+> Bộ khởi đầu: môi trường mô phỏng, heuristic, thống kê, 13/13 kiểm thử, smoke test và kết quả heuristic tham chiếu. `scripts/train_ppo.py` **chưa từng chạy với PyTorch** (issue #5, FAO).
 >
 > ### Read this first
 > - **Mỗi sáng:** `git pull`, mở Claude Code trong thư mục repo, hỏi **"hôm nay tôi cần làm gì?"** (hoặc chạy `python scripts/today.py`). Chi tiết ở mục *Daily workflow* bên dưới.
@@ -96,7 +96,7 @@ Lịch (`schedule/tasks.json`) chỉ DAT sửa, qua PR. Trạng thái của mỗ
 
 Lệnh này **phải báo lỗi rõ ràng** nếu thiếu file hoặc kết quả bị lệch:
 ```bash
-python tests/test_core.py            # kỳ vọng 14/14 passed
+python tests/test_core.py            # kỳ vọng 15/15 passed
 python tests/test_schedule.py        # kỳ vọng 12/12 passed (lịch và today.py)
 python scripts/run_smoke_test.py     # kỳ vọng SMOKE TEST PASSED
 ```
