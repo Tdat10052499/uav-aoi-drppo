@@ -35,6 +35,7 @@ class EnvConfig:
     mu: float = 0.1               # boundary penalty
     count_norm: float = 3.0       # sensor-count channel normalisation
     use_action_mask_clip: bool = True  # if False, out-of-area moves are clipped + penalised
+    single_speed: bool = False    # ablation A5: only V_me moves (actions 9..16 always masked)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -100,6 +101,8 @@ class UAVAoIEnv(gym.Env):
                 mask[a] = False
             if self.E_move[a - 1] > self.energy:
                 mask[a] = False
+            if self.cfg.single_speed and a > 8:
+                mask[a] = False
         if self.E_hover_tx > self.energy:
             mask[0] = False
         if not mask.any():
@@ -111,6 +114,9 @@ class UAVAoIEnv(gym.Env):
         cfg = self.cfg
         served = -1
         penalty = 0.0
+        if cfg.single_speed and a > 8:
+            raise ValueError(f"action {a} uses V_mr but single_speed=True (ablation A5); "
+                             "the policy must respect action_masks()")
         # --- energy feasibility: not enough energy for the chosen action -> terminate
         e_needed = self.E_hover_tx if a == 0 else self.E_move[a - 1]
         if e_needed > self.energy:
