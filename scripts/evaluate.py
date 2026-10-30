@@ -61,6 +61,32 @@ class SB3Policy:
         return int(a)
 
 
+def check_model_cfg(model_path: str, cfg: EnvConfig) -> tuple[list[str], list[str]]:
+    """Compare the evaluation EnvConfig with the one the model was trained with.
+
+    Returns (errors, warnings). `single_speed` changes the action mask, so a mismatch is an
+    error: an A5 model evaluated without its config could pick V_mr, whose logits were never
+    trained. Other differing fields are only warnings (they may be intentional).
+    """
+    errors, warnings = [], []
+    train_cfg_path = os.path.join(os.path.dirname(os.path.abspath(model_path)), "config.json")
+    if os.path.isfile(train_cfg_path):
+        with open(train_cfg_path) as f:
+            train_cfg = json.load(f).get("env_cfg", {})
+        if bool(train_cfg.get("single_speed", False)) != cfg.single_speed:
+            errors.append(f"single_speed: trained {train_cfg.get('single_speed', False)}, "
+                          f"evaluating {cfg.single_speed} ({train_cfg_path}); pass the training --config")
+        for k, v in cfg.to_dict().items():
+            if k != "single_speed" and k in train_cfg and train_cfg[k] != v:
+                warnings.append(f"env_cfg.{k}: trained {train_cfg[k]!r}, evaluating {v!r}")
+    else:
+        warnings.append(f"no training config.json next to {model_path}; env_cfg not checked")
+        if "_1spd" in model_path.replace("\\", "/") and not cfg.single_speed:
+            errors.append("model path contains '_1spd' but single_speed is False; "
+                          "pass --config configs/a5_single_speed.json")
+    return errors, warnings
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--experiment-id", required=True, help="experiment card id, e.g. EXP-02")
@@ -78,7 +104,13 @@ def main():
         ap.error(f"config file not found: {args.config}")
     cfg = EnvConfig(**(json.load(open(args.config)) if args.config else {}))
     policies = [(m, HEURISTICS[m]()) for m in args.method]
+    cfg_warnings = []
     if args.model:
+        cfg_errors, cfg_warnings = check_model_cfg(args.model, cfg)
+        if cfg_errors:
+            ap.error("; ".join(cfg_errors))
+        for msg in cfg_warnings:
+            print("WARNING:", msg, flush=True)
         policies.append((args.label, SB3Policy(args.model)))
     if not policies:
         ap.error("give --method and/or --model")
@@ -89,6 +121,7 @@ def main():
                    config={"args": vars(args), "env_cfg": cfg.to_dict(),
                            "suites": {s: SUITES[s].to_dict() for s in args.suites}},
                    seeds={"eval_episode_seeds": [seeds[0], seeds[-1]], "train_seed": args.train_seed})
+    rr.data["warnings"] += cfg_warnings
     if args.model:
         rr.data["checkpoint_digest"] = "sha256:" + sha256_file(args.model)
     events = os.path.join(run_dir, "events.csv")
