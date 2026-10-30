@@ -43,6 +43,7 @@ Trường raw cần: run_record.json (checkpoint_digest, steps_per_s), config.js
 ## Câu hỏi mở cho DAT (trước G1)
 - `buffer_size` cho pha chính: 200k (≈ 7,7 GB) có chạy được trên máy nào? Laptop FAO chỉ còn ≈ 3,4 GB trống (20/10), nên **không** chạy được 200k. Nếu giảm, giảm bao nhiêu và ghi vào DECISIONS.md.
 - Siêu tham số DQN có tinh chỉnh bằng Optuna với cùng ngân sách như PPO không (docs/03: ngân sách tinh chỉnh bằng nhau)?
+  DAT (30/10): **Có**, cùng ngân sách như PPO, bằng `tune_ppo.py --algo dqn` (DECISIONS 2026-10-30).
 
 ## Lệnh
 
