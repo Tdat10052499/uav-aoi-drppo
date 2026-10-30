@@ -64,6 +64,11 @@
       "date": "2026-10-30",
       "note": "PR #30 tune_ppo.py chờ FAO review",
       "state": "doing"
+    },
+    "W2-DAT-03": {
+      "date": "2026-10-30",
+      "note": "Nháp notes/2026-11-04_gate_G0_report.md; gate dời 04/11",
+      "state": "doing"
     }
   }
 }
