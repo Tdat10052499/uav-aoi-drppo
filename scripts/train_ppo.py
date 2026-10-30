@@ -11,6 +11,9 @@ Examples
   python scripts/train_ppo.py --experiment-id EXP-02 --train fixed --seed 0 --timesteps 2000000 --masked
   # algorithm baseline
   python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 2000000
+  # DQN pipeline check (small buffer, updates start early)
+  python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 10000 \
+         --dqn-buffer-size 20000 --dqn-learning-starts 1000
 """
 from __future__ import annotations
 
@@ -77,10 +80,17 @@ def main():
     ap.add_argument("--models-dir", default=os.path.join(REPO_ROOT, "runs"),
                     help="where model files go (gitignored; record SHA256 in data/checkpoint_manifest.md)")
     ap.add_argument("--subproc", action="store_true")
+    ap.add_argument("--dqn-buffer-size", type=int, default=200_000,
+                    help="DQN replay buffer (transitions); memory ~ 2 x size x obs bytes")
+    ap.add_argument("--dqn-learning-starts", type=int, default=20_000,
+                    help="DQN steps before the first gradient update")
     args = ap.parse_args()
 
     if args.config and not os.path.isfile(args.config):
         ap.error(f"config file not found: {args.config}")
+    if args.algo == "dqn" and args.dqn_learning_starts >= args.timesteps:
+        ap.error(f"--dqn-learning-starts ({args.dqn_learning_starts}) >= --timesteps ({args.timesteps}): "
+                 "DQN would never update; lower --dqn-learning-starts")
     over = json.load(open(args.config)) if args.config else {}
     if args.lam is not None:
         over["lam"] = args.lam
@@ -117,7 +127,11 @@ def main():
                      verbose=1, tensorboard_log=os.path.join(run_dir, "tb"))
     else:
         from stable_baselines3 import DQN
-        model = DQN("CnnPolicy", venv, buffer_size=200_000, learning_starts=20_000,
+        # obs and next_obs are both stored, as float32
+        buf_gb = 2 * args.dqn_buffer_size * int(np.prod(venv.observation_space.shape)) * 4 / 1e9
+        print(f"DQN replay buffer: {args.dqn_buffer_size} transitions ~ {buf_gb:.1f} GB RAM")
+        model = DQN("CnnPolicy", venv, buffer_size=args.dqn_buffer_size,
+                    learning_starts=args.dqn_learning_starts,
                     batch_size=128, gamma=0.99, train_freq=4, target_update_interval=10_000,
                     exploration_fraction=0.2, exploration_final_eps=0.02, learning_rate=1e-4,
                     policy_kwargs=policy_kwargs, seed=args.seed, verbose=1,
