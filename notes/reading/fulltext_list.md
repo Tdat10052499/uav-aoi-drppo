@@ -28,6 +28,8 @@ Nếu một bài nhóm B/C hoá ra có đánh giá ngoài phân phối thật, c
 | A9 | Sarathchandra et al. 2025, meta-deep RL for age and power (IEEE TVT) — đã có hàng ma trận | LDN | arXiv 2501.14603 |
 | — | Yi et al. 2020, DRL for fresh data collection (`yi2020deep`) — đã có hàng ma trận, không ra trong Q1–Q3 | LDN | ar5iv 2003.00391 |
 
+**Tiến độ phần LDN (31/10, nháp chờ LDN duyệt):** Yi 2020 → `yi2020deep_LDN.md`; A9 → `sarathchandra2025age_LDN.md`; A2 → `yi2023meta_LDN.md`; A8 → `eldeeb2026resilient_LDN.md`; A6 → `xiao2024meta_LDN.md` (đọc qua bản trích tự động của PDF IFIP, LDN phải đối chiếu PDF). Cả 5 đã có hàng ma trận `docs/04` §5.
+
 Chia theo cụm tác giả để đọc nhanh: phần LDN gồm hai cụm Eldeeb–Alves (A8, A9) và Yi–Wang (A2, A6, Yi 2020); phần DAT gồm các bài còn lại. Mỗi người 5 bài.
 
 ## Nhóm B
@@ -59,6 +61,20 @@ Chia xen kẽ: mã lẻ cho DAT, mã chẵn cho LDN (mỗi người 18 bài).
 | LDN | C2, C4, C6, C8, C10, C12, C14, C16, C18, C20, C22, C24, C26, C28, C30, C32, C34, C36 |
 
 Bảng đầy đủ tên bài ở `search_log_LDN.md` §6.3.
+
+## Tra ngược từ Yi 2023 (không ra trong Q1–Q3, chưa sàng lọc)
+
+Danh mục tài liệu của Yi 2023 có các bài về **điều khiển tốc độ UAV** và **chuyển giao giữa nhiệm vụ** mà chuỗi Q1–Q3 không bắt được. Đề xuất sàng lọc tóm tắt trước G0; người đọc chờ DAT phân công.
+
+| Bài (theo danh mục Yi 2023) | Vì sao |
+| --- | --- |
+| Chu et al., *Joint Speed Control and Energy Replenishment Optimization for UAV-assisted IoT Data Collection with Deep Reinforcement Transfer Learning*, IEEE IoT-J 2022 ✱ | Tốc độ là biến quyết định + DRL + chuyển giao sang nhiệm vụ mới |
+| Sun, Xu, Qin, Zhang, *AoI-Energy-Aware UAV-Assisted Data Collection for IoT Networks: A DRL Method*, IEEE IoT-J 8(24), 2021 | AoI + năng lượng + DRL |
+| Li, Ni, Tovar, Guizani, *Joint Flight Cruise Control and Data Collection in UAV-Aided IoT: An Onboard DRL Approach*, IEEE IoT-J 8(12), 2021 | Điều khiển tốc độ hành trình + DRL |
+| Yi et al., *Multi-Task Transfer DRL for Timely Data Collection in Rechargeable-UAV-aided IoT Networks*, IEEE IoT-J 2023 ✱ | AoI + chuyển giao đa nhiệm vụ |
+| Lu, Wang, Gursoy, *Trajectory Design for UAVs via Meta-Reinforcement Learning*, INFOCOM Workshops 2023 | Meta-RL cho thu dữ liệu |
+
+Chuỗi Q1–Q3 không có từ khoá về tốc độ (speed, velocity, cruise) hay chuyển giao (transfer), nên đây là khoảng hở của chiến lược tìm kiếm; ghi vào phần giới hạn của chương 2.
 
 ## Lưu ý truy cập
 

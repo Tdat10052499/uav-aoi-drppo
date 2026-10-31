@@ -24,6 +24,13 @@
 - Cần DAT: biết trước để chuẩn bị câu định vị bản 2; nếu toàn văn cho thấy một bài đủ 5 cột thì áp dụng nhánh "không đạt" của tiêu chí G0 số 2.
 - Hạn: trước họp G0 04/11.
 
+## A5. (bổ sung 31/10 tối) Yi 2023 đã có cột "năng lượng phụ thuộc tốc độ" và "huấn luyện nhiều bố trí"
+- Dữ kiện, từ toàn văn arXiv:2311.06742 (`notes/reading/yi2023meta_LDN.md`): AoI + năng lượng UAV trong mục tiêu (PT (15a)); công suất đẩy phụ thuộc tốc độ và gia tốc (PT (9)–(10)); **tốc độ và hướng là hành động liên tục** (§IV-A2); trạng thái chứa vị trí tương đối tới mọi cảm biến (§IV-A1); meta-training MAML trên nhiều nhiệm vụ khác số và vị trí cảm biến (§IV-B2).
+- Bài **không** có: đánh giá không huấn luyện lại (Fig. 8 đo tốc độ thích nghi khi huấn luyện tiếp), dịch chuyển có cấu trúc, đối chứng huấn luyện trên bố trí cố định, nhiều seed + CI.
+- Hệ quả: ma trận Yi 2023 = Có, Có, Có, Một phần, Không. Chưa có bài nào đủ 5 cột, nhưng **"năng lượng phụ thuộc tốc độ, tốc độ là hành động" và "huấn luyện nhiều bố trí" không còn là điểm mới**. Khác biệt còn đứng được nằm ở cách đánh giá: không huấn luyện lại, 4 dịch chuyển có cấu trúc, đối chứng Fixed, 10 seed + CI.
+- Cần DAT: cân nhắc viết lại câu định vị bản 2 theo hướng này; cân nhắc thay cột "năng lượng phụ thuộc tốc độ" trong ma trận bằng cột "có đối chứng huấn luyện trên bố trí cố định". Tra ngược từ Yi 2023 thêm 5 bài về điều khiển tốc độ/chuyển giao (`fulltext_list.md`, mục "Tra ngược"), cần phân công sàng lọc.
+- Hạn: trước họp G0 04/11.
+
 ## A4. Chia đọc toàn văn và mức đọc
 - Đề xuất ở `fulltext_list.md`: nhóm A (DAT 5 bài, LDN 5 bài kể cả Yi 2020) đọc toàn văn + Form B **trước T3 03/11**; nhóm B (12) và C (36) chỉ đọc mục mô hình + thực nghiệm để điền hàng ma trận rút gọn, hạn T6 13/11.
 - Bài chỉ có trên IEEE (A4 Chen–Hanzo, A6 Xiao, A7 Zhou): nhóm không vào được IEEE Xplore, cần thử bản tác giả hoặc nhờ GVHD/thư viện.
