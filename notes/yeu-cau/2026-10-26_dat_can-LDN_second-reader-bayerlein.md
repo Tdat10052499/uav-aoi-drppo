@@ -11,6 +11,7 @@
 ## A2. Danh sách tìm kiếm Q1–Q3 (W1-LDN-04, W1-LDN-05)
 - W2-DAT-01 và W2-LDN-01 (đọc toàn văn, hạn 27/10) đang chờ danh sách này; G0 là CN 01/11.
 - Cần LDN: đẩy danh sách đọc toàn văn (kể cả bản chưa hoàn chỉnh) lên repo sớm nhất có thể, để DAT và LDN chia đôi.
+LDN: (31/10) Đã đẩy bản nháp: `notes/reading/search_log_LDN.md` (số kết quả, PRISMA rút gọn, sàng lọc) và `notes/reading/fulltext_list.md` (chia DAT/LDN). IEEE Xplore và Scopus không truy cập được; các điểm cần DAT quyết ở `notes/yeu-cau/2026-10-31_ldn_can-DAT_tim-kiem-q1-q3.md`.
 
 ## A3. Đọc phản biện Form B `notes/reading/zeng2019energy_DAT.md` (W1-DAT-04, second reader LDN)
 - Cần LDN: kiểm bảng đối chiếu mã–bài (PT (1)–(2), (6), (10), (61), Bảng I) và hàng Zeng mới trong ma trận `docs/04` §5. Lưu ý: V_me, V_mr, P_h là số nhóm tự tính, bài không in.
