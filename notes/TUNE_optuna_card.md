@@ -79,4 +79,17 @@ Lưu ý: W4-DAT-01 trong `schedule/tasks.json` ghi lệnh PPO **thiếu `--maske
 
 FAO: đọc card, xác nhận lệnh khớp `docs/03` §3 và DECISIONS 30/10, ký dòng dưới trước khi DAT chạy.
 
-Second reader (FAO) đã đọc card: ____  ngày: ____
+Second reader (FAO) đã đọc card: đã đọc; lệnh, ngân sách, seed và không gian tìm kiếm khớp `scripts/tune_ppo.py` (main 3929f64, cộng PR #32), `docs/03` §3 và DECISIONS 30/10. Có 4 góp ý dưới đây, không chặn việc chạy.  ngày: 31/10/2026
+
+### Góp ý của FAO (31/10)
+Đã đối chiếu từng dòng của card với mã:
+- DQN: `n_envs = 1` (dòng 151), `--dqn-buffer-size 200000` (dòng 139), `--dqn-learning-starts 20000` (dòng 141), `--masked` bị từ chối với DQN (dòng 147–148).
+- Seed: 0–9 bị từ chối (dòng 152–153); kiểm định dùng `VAL_SEED_BASE + i` trên `SUITES["id"]`.
+- Dừng khi số trial lỗi vượt `--n-trials` (dòng 225–226). Ctrl+C đóng cả record của trial và của study.
+- Chi phí: 8 M / 358,4 = 6,2 h; 4 M / 358,4 = 3,1 h; 4 M / (358,4 / 3,5) = 10,9 h. Không tính thời gian kiểm định 20 episode mỗi trial.
+
+Góp ý:
+1. **Ngưỡng Random lấy từ bộ seed khác.** 126,24 khe là Random trên `id` với 100 seed test 100000–100099 (`results/processed/heuristics_summary_2026-10-16.md`). Mục tiêu của Optuna tính trên 20 seed kiểm định 200000–200019. Vẫn dùng được làm ngưỡng thô, nhưng card nên ghi rõ điều này. Tốt hơn nữa là đo Random (và TSP) trên đúng 20 seed kiểm định trước khi chạy, để mức "thấp hơn Random" so trên cùng kịch bản.
+2. **Lịch thăm dò của DQN co giãn theo tổng số bước.** `exploration_fraction` là tỉ lệ của `total_timesteps`. Ví dụ 0,1 nghĩa là ε giảm trong 20k bước khi tinh chỉnh (200k), nhưng trong 200k bước ở kết quả chính (2 M). Tương tự, `learning_starts` 20k chiếm 10% ngân sách khi tinh chỉnh nhưng chỉ 1% ở kết quả chính. Đề xuất thêm vào mục "Giới hạn phải ghi trong bài". PPO không có lịch phụ thuộc tổng bước (`learning_rate` và `clip_range` là hằng), nên không bị ảnh hưởng.
+3. **Ràng buộc batch_size không bao giờ kích hoạt với `n_envs 8`.** `n_steps × 8 ≥ 2048` luôn chia hết cho 64, 128, 256 và 512, nên không trial PPO nào bị loại. Câu trong card vẫn đúng nhưng chỉ có tác dụng khi đổi `--n-envs`. Card nên ghi `--n-envs 8` (mặc định) như một điều kiện cố định, vì `n_envs` đổi thì kích thước rollout và không gian tìm kiếm thực tế cũng đổi.
+4. **`docs/03` §3 mới nêu DR-PPO và Fixed-PPO.** Việc tinh chỉnh DR-DQN với cùng ngân sách hiện chỉ có trong DECISIONS 30/10. Đề xuất DAT cập nhật `docs/03` §3, hoặc ghi vào PREREG khi khoá, để người đọc không thấy hai văn bản mâu thuẫn.
