@@ -1,6 +1,17 @@
 {
   "nick": "LDN",
-  "reviews": {},
+  "reviews": {
+    "W1-DAT-02": {
+      "date": "2026-11-01",
+      "evidence": "LDN: dưới A1 trong notes/yeu-cau/2026-10-26_dat_can-LDN_second-reader-bayerlein.md; đối chiếu arXiv v3 (ar5iv) 01/11; 3 góp ý nhỏ, không đổi hàng ma trận",
+      "state": "approved"
+    },
+    "W1-DAT-04": {
+      "date": "2026-11-01",
+      "evidence": "Zeng: LDN: dưới A3 (cùng file), chạy lại energy.py khớp; Lamenza: đối chiếu bản Wiley HTML 01/11, Bảng 1 khớp; góp ý nhỏ ghi dưới A3",
+      "state": "approved"
+    }
+  },
   "tasks": {
     "W1-LDN-01": {
       "date": "2026-10-19",
