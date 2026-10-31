@@ -26,7 +26,8 @@ description: Dùng khi thành viên nói "kết thúc ngày", "xong rồi", "t�
    git pull --rebase && git push
    ```
    Mã trong `src/` và `scripts/` không push thẳng: chúng nằm trên nhánh riêng với PR.
-5. Nếu task có issue, comment tiến độ 1–2 dòng vào issue kèm bằng chứng, nếu `gh` dùng được. Hỏi thành viên trước khi gửi.
-6. Kết thúc bằng 2 dòng:
+5. Nếu trong ngày có việc cần người khác (câu hỏi, số liệu, review) mà chưa gửi: soạn file `notes/yeu-cau/<YYYY-MM-DD>_<nick>_can-<NICK>_<chủ-đề>.md` theo `notes/yeu-cau/README.md` và đưa vào cùng commit. Nếu đã trả lời yêu cầu của người khác (dòng `<NICK>:`), đưa cả file đó vào commit.
+6. Nếu task có issue, comment tiến độ 1–2 dòng vào issue kèm bằng chứng, nếu `gh` dùng được. Hỏi thành viên trước khi gửi.
+7. Kết thúc bằng 2 dòng:
    - việc đầu tiên ngày mai, lấy từ `python scripts/today.py --date <ngày mai>`;
    - ai đang chờ thành viên (`waiting_on_me`).

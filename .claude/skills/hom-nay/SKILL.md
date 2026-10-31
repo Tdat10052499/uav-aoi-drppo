@@ -21,7 +21,7 @@ Mục tiêu: trong vài phút, thành viên biết chính xác việc của ngà
 
 ## 2. Trình bày kế hoạch (ngắn, tiếng Việt)
 Thứ tự ưu tiên:
-1. **QUÁ HẠN** (`overdue`), nhất là task có người khác đang chờ (`waiting_on_me`).
+0. **YÊU CẦU GỬI BẠN** (`inbox`): câu hỏi, số liệu, quyết định mà thành viên khác đang chờ, từ `notes/yeu-cau/` và `notes/*_can-<NICK>.md`. Gom theo người gửi; với mỗi mục, đọc file và nói cần thành viên trả lời gì. Trả lời bằng dòng `<NICK>:` dưới mục, theo lời của thành viên.
 2. **CẦN REVIEW** (`reviews`). Second reader chậm sẽ chặn cả nhóm.
 3. **HÔM NAY** (`today`).
 4. Task bị chặn (`blocked`): nêu đang chờ ai và việc gì.
@@ -66,6 +66,7 @@ Quy tắc bắt buộc (từ RIVF-Paper, `docs/00_HUONG_DAN_PROJECT.md`):
   - không đổi giả thuyết hay ngưỡng sau khi thấy kết quả. PREREG khoá tại G1.
 - **Hành động thay mặt người:** không tự gửi email, mời collaborator, nộp bài hay bấm submit. Chỉ soạn nháp, để thành viên tự làm.
 - **Lịch:** không sửa `schedule/tasks.json`. Nếu lịch cần đổi, ghi đề xuất vào ghi chú ngày và báo DAT.
+- **Cần người khác** (số liệu, quyết định, review, file): không chờ buổi gặp và không ghi biên bản. Soạn file yêu cầu theo `notes/yeu-cau/README.md`, cho thành viên đọc lại, rồi commit thẳng `main` và push.
 - **Khi bị chặn quá 30 phút:**
   - `python scripts/today.py --block <ID> --note "<lý do, chờ ai>"`;
   - viết ví dụ tái hiện nhỏ nhất;

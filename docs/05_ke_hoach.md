@@ -119,7 +119,9 @@ Danh sách `docs/06` §3 + Form J (`notes/workbook_forms.md`). Mọi claim *inde
 ---
 
 ## 6. Nhịp làm việc
-- **Họp nhóm:** thứ Hai 20:00, 30'. Mỗi người mang 1 hình hoặc 1 bảng mới.
+- **Cách làm việc (từ 25/10/2026, xem `docs/DECISIONS.md`):** khoảng 80% công việc làm qua Claude trong repo. Mỗi sáng hỏi Claude "hôm nay tôi cần làm gì?"; cuối ngày dùng skill `ket-thuc-ngay`.
+- **Gặp mặt làm việc:** thứ Ba, thứ Tư, thứ Sáu. **Không ghi biên bản.**
+- **Trao đổi giữa thành viên:** câu hỏi, yêu cầu số liệu hay việc cần người khác làm được ghi thành file `notes/yeu-cau/<YYYY-MM-DD>_<nick>_can-<NICK>_<chủ-đề>.md` và push. Người nhận trả lời bằng dòng `<NICK>:` dưới mục. Quy ước đầy đủ: `notes/yeu-cau/README.md`.
 - **Họp GVHD:** 2 tuần/lần và tại mỗi gate. Mang theo 1 kết quả, 1 diễn giải, 1 câu hỏi chưa giải quyết, 1 đề xuất bước tiếp. Nếu bị chặn, mang ví dụ lỗi nhỏ nhất.
 - **Git:** nhánh `<nick>/<chủ-đề>`, ví dụ `ldn/analyze-deg`. Mọi thay đổi trong `src/` qua PR, second reader review. Không push thẳng `main` trừ `notes/`.
 - **Issue:** mỗi công việc tuần có issue gắn milestone gate; người nhận tự gán khi bắt đầu.
