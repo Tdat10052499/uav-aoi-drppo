@@ -48,11 +48,16 @@ Cùng chuỗi như IEEE Xplore. Điều chỉnh: arXiv chỉ lọc được theo
 
 ## 3. Số kết quả (PRISMA rút gọn)
 
-| Truy vấn | Scopus | IEEE Xplore | arXiv | Google Scholar | Ngày tìm |
-| --- | --- | --- | --- | --- | --- |
-| Q1 | | | | | |
-| Q2 | | | | | |
-| Q3 | | | | | |
+| Truy vấn | Scopus | IEEE Xplore | arXiv (mọi chuyên mục) | arXiv (chỉ cs.NI, cs.LG, eess.SP) | Google Scholar | Ngày tìm |
+| --- | --- | --- | --- | --- | --- | --- |
+| Q1 | chờ | không truy cập được | 13 | 6 | khoảng 2 830 | 31/10/2026 |
+| Q2 | chờ | không truy cập được | 4 | 4 | khoảng 1 580 | 31/10/2026 |
+| Q3 | chờ | không truy cập được | 0 | 0 | khoảng 274 | 31/10/2026 |
+
+Ghi chú cách chạy (31/10/2026, Claude chạy trên Chrome của LDN):
+- **IEEE Xplore:** trang tìm kiếm và trang chủ đều hiện trang lỗi trên Chrome của LDN, kể cả không đăng nhập. Chưa có số.
+- **arXiv:** dùng API `export.arxiv.org/api/query`, trường `abs:` (tóm tắt), lọc `submittedDate` 2018–2026. API **không mở rộng ký tự đại diện**: với `generaliz*`, Q1 chỉ ra 5 kết quả, còn khi viết `generalization` ra 13. Vì vậy `generaliz*` được thay bằng `generalization OR generalize OR generalizable OR generalizing OR generalized OR generalizes OR generalisation OR generalise`. API có đưa về từ gốc, nên thêm `UAVs`, `drones` không đổi số kết quả. Lọc chuyên mục theo `docs/04` §6 sẽ loại 2 bài liên quan trực tiếp (2311.06742 thuộc cs.IT, 2502.01268 thuộc cs.RO), nên số dùng cho PRISMA là cột "mọi chuyên mục"; cần DAT đồng ý.
+- **Google Scholar:** tìm trên toàn văn, lọc năm 2018–2026, không đăng nhập. Chỉ sàng lọc 100 kết quả đầu mỗi truy vấn (sắp theo mức liên quan). Số "khoảng …" là ước lượng của Scholar.
 
 | Bước | Số bài |
 | --- | --- |
