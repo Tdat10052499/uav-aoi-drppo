@@ -9,8 +9,9 @@
     },
     "W1-LDN-02": {
       "date": "2026-10-31",
+      "evidence": "notes/reading/agarwal2021deep_LDN.md; notes/reading/yi2020deep_LDN.md; hàng Yi 2020 ở docs/04 §5 không còn 'Chưa rõ' (e7c652a)",
       "note": "Form B Yi 2020 nháp xong; còn Agarwal 2021",
-      "state": "doing"
+      "state": "done"
     },
     "W1-LDN-04": {
       "date": "2026-10-31",
