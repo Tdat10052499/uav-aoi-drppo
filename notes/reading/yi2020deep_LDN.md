@@ -43,7 +43,7 @@
 
 **Giới hạn đã biết:**
 1. **Tham số năng lượng trong Bảng I khác xa Zeng 2019 Bảng I:** v₀ = 0,002 m/s (Zeng: 4,03 m/s), độ đặc rotor s = 0,0001 (Zeng: 0,05), d₀ = 0,48 (Zeng: 0,6), đơn vị diện tích đĩa rotor ghi "s²". Có thể là lỗi in; không nên chép các giá trị này.
-2. **Thành phần cảm ứng ở PT (1)** trên bản HTML là P₁(1 + V⁴/(4v₀⁴) − V²/(2v₀²))^{1/2}, thiếu một lớp căn so với PT (6) của Zeng. Cần đối chiếu PDF.
+2. ~~Thành phần cảm ứng ở PT (1) thiếu một lớp căn~~ (sửa 01/11): nhiều khả năng là lỗi hiển thị của ar5iv, không phải lỗi của bài. Bản ar5iv của Zeng 2019 hiển thị PT (6) y hệt (cũng mất dấu căn trong), trong khi PT (6) của Zeng đã được kiểm khớp với `energy.py`. Vẫn nên đối chiếu PDF nếu trích PT (1).
 3. **Định nghĩa năng lượng dư Δ_t** (§III-A1) có tổng chạy tới N − t; nhiều khả năng là T − t (lỗi in).
 4. Phần thưởng mỗi bước dùng J là AoI trung bình **trên cả chân trời T** (PT (10)), nên không rõ phần thưởng tức thời được tính thế nào trước khi kết thúc episode.
 5. Độ dài khe τ không được nêu, nên không kiểm được ràng buộc năng lượng (7) với E_max = 2,2·10⁴ J.
