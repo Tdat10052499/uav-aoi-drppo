@@ -7,6 +7,11 @@
       "evidence": "notes/2026-10-19_ldn.md",
       "state": "done"
     },
+    "W1-LDN-02": {
+      "date": "2026-10-31",
+      "note": "Form B Yi 2020 nháp xong; còn Agarwal 2021",
+      "state": "doing"
+    },
     "W1-LDN-04": {
       "date": "2026-10-31",
       "note": "Q1–Q3 đã chạy trên arXiv, OpenAlex, Scholar; sàng lọc nháp chờ LDN duyệt; IEEE Xplore/Scopus không truy cập được (yêu cầu DAT 31/10)",
@@ -15,6 +20,11 @@
     "W1-LDN-05": {
       "date": "2026-10-31",
       "note": "fulltext_list.md nháp; chờ DAT đồng ý cách chia (yêu cầu 31/10 A4)",
+      "state": "doing"
+    },
+    "W2-LDN-01": {
+      "date": "2026-10-31",
+      "note": "Form B Sarathchandra 2025 nháp xong; đang đọc nhóm A phần LDN (fulltext_list.md)",
       "state": "doing"
     }
   }
