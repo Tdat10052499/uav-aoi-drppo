@@ -6,7 +6,7 @@
 
 | Gate | Ngày | Nội dung |
 | --- | --- | --- |
-| **G0** | 2026-11-01 | Chốt định vị đóng góp |
+| **G0** | 2026-11-04 | Chốt định vị đóng góp |
 | **G1** | 2026-11-15 | Pilot: PPO học được, khoá PREREG, chọn phương án A/B |
 | **G2** | 2026-12-20 | Đóng băng kết quả |
 | **G3** | 2027-01-10 | Bài báo và đồ án sẵn sàng |
@@ -52,10 +52,9 @@
 | T4 28/10/2026 | DAT | `W2-DAT-02` Hoàn thiện tune_ppo.py | T5 29/10/2026 | FAO | #11 |
 | T4 28/10/2026 | FAO | `W2-FAO-03` Chạy thử DR-DQN 10k bước; hoàn thiện script quỹ đạo | T5 29/10/2026 | DAT | #17 |
 | T4 28/10/2026 | LDN | `W2-LDN-02` Mở rộng analyze.py: độ suy giảm OOD theo seed + hình F4 | T5 29/10/2026 | FAO | #14 |
-| T6 30/10/2026 | DAT | `W2-DAT-03` Soạn báo cáo G0 (Form G) | T6 30/10/2026 | LDN | #1 |
+| T6 30/10/2026 | DAT | `W2-DAT-03` Soạn báo cáo G0 (Form G) | T2 02/11/2026 | LDN | #1 |
 | T6 30/10/2026 | FAO | `W2-FAO-04` Second reader tune_ppo.py: đọc mã, chạy 2 lượt nhỏ | T7 31/10/2026 |  | #11 |
-| T6 30/10/2026 | LDN | `W2-LDN-03` Second reader báo cáo G0 + chốt số PRISMA | T7 31/10/2026 |  | #6 |
-| CN 01/11/2026 | ALL | `W2-ALL-01` GATE G0 — họp 45', gửi GVHD | CN 01/11/2026 |  | #1 |
+| T6 30/10/2026 | LDN | `W2-LDN-03` Second reader báo cáo G0 + chốt số PRISMA | T3 03/11/2026 |  | #6 |
 
 ## W3
 
@@ -63,6 +62,7 @@
 | --- | --- | --- | --- | --- | --- |
 | T2 02/11/2026 | DAT | `W3-DAT-01` EXP-02: huấn luyện seed 0 (DR và Fixed) trên máy cố định | T4 04/11/2026 | FAO |  |
 | T3 03/11/2026 | LDN | `W3-LDN-01` Đánh giá từng model EXP-02 ngay khi xong; bảng mô tả tạm | CN 08/11/2026 | FAO |  |
+| T4 04/11/2026 | ALL | `W2-ALL-01` GATE G0 — họp 45', gửi GVHD | T4 04/11/2026 |  | #1 |
 | T5 05/11/2026 | DAT | `W3-DAT-02` EXP-02: huấn luyện seed 1 (DR và Fixed) | T7 07/11/2026 | FAO |  |
 | T5 05/11/2026 | FAO | `W3-FAO-01` Manifest checkpoint EXP-02 + second reader quỹ đạo (≥ 3/model) | CN 08/11/2026 |  |  |
 
@@ -85,7 +85,8 @@
 | T2 16/11/2026 | FAO | `W5-FAO-01` EXP-03 seed 5–9 (Kaggle hoặc máy FAO) | CN 22/11/2026 | LDN |  |
 | T2 16/11/2026 | LDN | `W5-LDN-01` Pipeline phân tích EXP-03 (H1/H2, IQM, Holm, Cliff's δ) | T6 20/11/2026 | FAO |  |
 | T4 18/11/2026 | DAT | `W5-DAT-02` Viết mục System Model (paper/main.tex) | CN 22/11/2026 | FAO |  |
-| T4 18/11/2026 | FAO | `W5-FAO-02` EXP-04 card + bắt đầu DR-DQN 10 seed | CN 22/11/2026 | DAT |  |
+| T4 18/11/2026 | DAT | `W5-DAT-03` EXP-04: chạy DR-DQN seed 0–9 (buffer 200k) trên laptop DAT | T5 26/11/2026 | FAO |  |
+| T4 18/11/2026 | FAO | `W5-FAO-02` EXP-04: chốt card theo PREREG; kiểm DR-DQN seed 0–4 (DAT chạy trên laptop DAT) | CN 22/11/2026 | DAT |  |
 | T5 19/11/2026 | LDN | `W5-LDN-02` Viết mục Experimental Setup | CN 22/11/2026 | DAT |  |
 
 ## W6
@@ -94,7 +95,7 @@
 | --- | --- | --- | --- | --- | --- |
 | T2 23/11/2026 | DAT | `W6-DAT-01` Cài biến thể quan sát A2 (lưới tuyệt đối), A3 (vector padding) + EXP-06 card | CN 29/11/2026 | FAO |  |
 | T2 23/11/2026 | DAT | `W6-DAT-02` [Chỉ phương án A] Hoàn thiện và nộp bản MVP 6–8 trang _(PLAN: A)_ | CN 29/11/2026 | LDN |  |
-| T2 23/11/2026 | FAO | `W6-FAO-01` EXP-04 tiếp: DR-DQN seed 5–9 | CN 29/11/2026 | DAT |  |
+| T2 23/11/2026 | FAO | `W6-FAO-01` EXP-04 tiếp: kiểm DR-DQN seed 5–9; đánh giá mọi model DQN | CN 29/11/2026 | DAT |  |
 | T2 23/11/2026 | LDN | `W6-LDN-01` Phân tích tạm EXP-03 (≥ 5 seed): bảng H1/H2, CI | T6 27/11/2026 | FAO |  |
 | T4 25/11/2026 | FAO | `W6-FAO-02` Hình F6: quỹ đạo TSP vs DR-PPO trên cùng kịch bản cụm; EXP-07 card | CN 29/11/2026 | LDN |  |
 | T5 26/11/2026 | LDN | `W6-LDN-02` Viết EXP-05 card (quét λ) | CN 29/11/2026 | DAT |  |
