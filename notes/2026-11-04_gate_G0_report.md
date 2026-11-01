@@ -1,17 +1,25 @@
 # Báo cáo gate G0 — định vị đóng góp (Form G)
 
-> **Trạng thái: NHÁP** do Claude soạn cho DAT ngày 30/10/2026. Owner: DAT. Second reader: LDN (W2-LDN-03). Gate dời từ 01/11 sang **T4 04/11/2026** (DECISIONS 2026-10-30). Đây là lần kéo dài duy nhất được phép.
+> **Trạng thái: NHÁP** do Claude soạn cho DAT ngày 30/10/2026, cập nhật 01/11 theo kết quả Q1–Q3 của LDN. Owner: DAT. Second reader: LDN (W2-LDN-03). Gate dời từ 01/11 sang **T4 04/11/2026** (DECISIONS 2026-10-30). Đây là lần kéo dài duy nhất được phép.
 > Mọi nhận định dưới đây đều có nguồn (mục/PT/bảng của Form B, hoặc commit). Báo cáo không đưa thêm số liệu thực nghiệm nào ngoài các số đã có trong repo.
 
 ```text
 Ngày và gate: G0 — định vị đóng góp. Họp gate T4 04/11/2026 (gốc CN 01/11).
 
 Bằng chứng xem xét, kể cả lần chạy thất bại (run ID):
-  - Ma trận định vị docs/04 §5 tại commit f6a3d57: 9 công trình.
-  - Form B toàn văn (6): bayerlein2021multi_DAT, zeng2019energy_DAT, lamenza2025_DAT,
-    abdelmagid2019deep_FAO, sun2025aoi_FAO, liu2024generalizable_FAO.
+  - Tìm kiếm Q1–Q3 (notes/reading/search_log_LDN.md, nháp chờ LDN duyệt): arXiv 17 +
+    OpenAlex 23 + Scholar 300 bản ghi; khoảng 279 bản ghi duy nhất (số "≈", cần số chính
+    xác); giữ 57 bài đọc toàn văn (nhóm A 9, B 12, C 36). IEEE Xplore và Scopus thay bằng
+    OpenAlex (DECISIONS 2026-11-01).
+  - Ma trận định vị docs/04 §5: thêm Yi 2020, Sarathchandra 2025, Yi 2023, Xiao 2024,
+    Eldeeb 2026 (LDN, 31/10). Thêm cột 6 "đối chứng huấn luyện cố định" (DECISIONS 01/11).
+  - Form B toàn văn đã duyệt: bayerlein2021multi_DAT, zeng2019energy_DAT, lamenza2025_DAT
+    (LDN second reader 01/11); abdelmagid2019deep_FAO, sun2025aoi_FAO, liu2024generalizable_FAO.
+    Form B nháp (LDN, chờ duyệt): yi2020deep, sarathchandra2025age, yi2023meta, eldeeb2026,
+    xiao2024meta (đọc qua bản trích tự động, phải đối chiếu PDF).
     Form B chỉ có tóm tắt (1): ohdrl2025_FAO.
-    Chưa có Form B (2): Yi 2020, Sarathchandra 2025.
+    Nhóm A phần DAT chưa đọc (5): Gong 2024, Lu 2025, Toure 2026 (arXiv); Chen–Hanzo 2024,
+    Zhou 2024 (chỉ có trên IEEE).
   - Câu định vị nháp: docs/01 §3.
   - G0 không có thực nghiệm. Không có lần chạy nào là bằng chứng của gate này.
 
@@ -25,11 +33,12 @@ Hiệu ứng chính có đạt tiêu chí khai báo trước không? Bằng ch�
   Tóm tắt: #1 CHƯA ĐẠT; #2 ĐẠT TẠM (chỉ trong 9 công trình đã có); #3 CHỜ GVHD.
 
 Giải thích thay thế mạnh nhất còn đứng vững:
-  "Khoảng trống" trong ma trận có thể chỉ do tìm kiếm chưa đủ, không phải do chưa ai làm.
-  Tìm kiếm hệ thống Q1–Q3 (docs/04 §6; W1-LDN-04, W1-LDN-05) chưa có kết quả trên repo,
-  nên chưa có số PRISMA. Có ít nhất 3 hàng còn "Chưa rõ" (Yi 2020, Sarathchandra 2025,
-  OH-DRL 2025), và cả ba đều có AoI. Vì vậy chưa loại trừ được khả năng một bài đã có
-  đủ 5 cột.
+  Tìm kiếm đã chạy (01/11), nên "khoảng trống" không còn chỉ dựa trên 9 bài. Nhưng:
+  (1) Yi 2023 đã có AoI + năng lượng phụ thuộc tốc độ với tốc độ là hành động + huấn luyện
+  nhiều bố trí (Có, Có, Có, Một phần, Không); điểm mới về mô hình không còn. (2) 5 bài nhóm
+  A phần DAT chưa đọc, trong đó Gong 2024 (AoI + năng lượng, tối ưu vận tốc, đánh giá trên
+  môi trường chưa thấy, theo tóm tắt) có thể đủ nhiều cột. (3) OpenAlex có thể sót bài IEEE
+  thiếu tóm tắt trong chỉ mục (chưa kiểm). Vì vậy chưa loại trừ được khả năng một bài đủ 6 cột.
 
 Trùng lặp với công trình gần nhất còn chưa giải quyết:
   - Bayerlein 2021 đã tổng quát hoá theo tham số kịch bản và có thử ngoại suy tham số
@@ -40,8 +49,12 @@ Trùng lặp với công trình gần nhất còn chưa giải quyết:
   - Sun 2025 có AoI và mô hình P(v) (PT (4)), nhưng v cố định 5 m/s (§III-A, Bảng IV).
     Đây là bài gần nhất ở cột "năng lượng phụ thuộc tốc độ". Câu định vị phải nói rõ
     tốc độ là biến quyết định của chính sách.
-  - OH-DRL 2025 (AoI + năng lượng bay, IEEE TWC): chỉ có tóm tắt, chưa xác định được
-    3/5 cột. Đây là rủi ro trùng lặp lớn nhất còn mở.
+  - Yi 2023 (arXiv 2311.06742, Form B nháp LDN): trùng ở mô hình (AoI + năng lượng đẩy theo
+    tốc độ và gia tốc, PT (9)–(10); tốc độ là hành động, §IV-A2; MAML trên nhiều nhiệm vụ,
+    §IV-B2). Không có: đánh giá không huấn luyện lại (Fig. 8 là thích nghi khi huấn luyện
+    tiếp), dịch chuyển có cấu trúc, đối chứng Fixed, nhiều seed + CI.
+  - Gong 2024 (nhóm A1): chưa đọc toàn văn; rủi ro trùng lặp lớn nhất còn mở cùng OH-DRL 2025
+    (chỉ có tóm tắt, chưa xác định được 3/5 cột).
 
 Nhu cầu tính toán/thời gian còn lại:
   Ước lượng của FAO (notes/2026-10-21_fao_chi-phi-nhap.md §2, §4; Project Agreement §5):
@@ -62,20 +75,21 @@ Ngày quyết định tiếp theo: G1 — CN 15/11/2026.
 
 | # | Tiêu chí | Hiện trạng (30/10) | Bằng chứng | Kết luận |
 | --- | --- | --- | --- | --- |
-| 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | 6 hàng có nguồn cho mọi ô. Zeng có hàng riêng nhưng là nguồn mô hình, không phải đối thủ. Còn 3 hàng có ô "Chưa rõ" hoặc chưa có nguồn: Yi 2020 (3 ô, 2 ô "Có" chưa có nguồn), Sarathchandra 2025 (1 ô, các ô còn lại chưa có nguồn), OH-DRL 2025 (3 ô; chỉ có tóm tắt). Tìm kiếm Q1–Q3 chưa có kết quả, nên chưa biết "đủ" hay chưa. | `docs/04` §5; `notes/reading/`; status LDN | **Chưa đạt.** Đã dùng hết lần kéo dài 3 ngày. |
-| 2 | Không công trình nào đủ cả 5 cột | Trong 9 công trình đã có, không bài nào đủ 5 cột "Có". Gần nhất: Liu 2024 (DR + OOD có cấu trúc, nhưng không AoI, không năng lượng), Bayerlein 2021 (DR + một phần OOD), Sun 2025 (AoI + mô hình P(v) nhưng tốc độ cố định). Cột "Nhiều seed + CI" là "Không" ở mọi bài đã đọc toàn văn. | Các hàng ma trận và Form B tương ứng | **Đạt tạm**, có điều kiện: chỉ trong phạm vi đã đọc. 3 hàng "Chưa rõ" đều có cột AoI = Có. |
-| 3 | Câu định vị `docs/01` §3 được GVHD đồng ý | Câu nháp chưa gửi GVHD. Câu hiện tại khớp với dữ kiện Bayerlein (§I-B, §VI-E). Chưa nhắc Sun 2025 (đã có P(v)) và chưa nhắc cột seed/CI. | `docs/01` §3; Form B Bayerlein mục "Một câu hỏi cho nhóm" | **Chờ GVHD.** |
+| 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | Tìm kiếm Q1–Q3 xong (nháp, chờ LDN duyệt; PRISMA còn số "≈"). Nhóm A: 5/10 bài phần LDN có Form B nháp và hàng ma trận; 0/5 bài phần DAT đã đọc. Cột 6 mới chưa điền. OH-DRL vẫn chỉ có tóm tắt. | `notes/reading/search_log_LDN.md`, `fulltext_list.md`; `docs/04` §5 | **Chưa đạt (01/11).** Đạt được nếu trước 03/11: DAT đọc Gong, Lu, Toure; LDN duyệt sàng lọc và 5 Form B; điền cột 6. Không được kéo dài lần hai. |
+| 2 | Không công trình nào đủ cả 6 cột (DECISIONS 2026-11-01) | Gần nhất: **Yi 2023** (Có, Có, Có, Một phần, Không; cột 6 Không theo Form B nháp). Các hàng khác đều thiếu từ 2 cột trở lên. Cột "Nhiều seed + CI" là Không ở mọi bài đã đọc toàn văn. | Form B tương ứng | **Đạt tạm**, chỉ trong các bài đã đọc; Gong 2024 chưa đọc. Điểm mới về mô hình (tốc độ là hành động, nhiều bố trí) **không còn**. |
+| 3 | Câu định vị `docs/01` §3 được GVHD đồng ý | Có câu bản 2 (nháp 01/11): điểm mới chuyển sang cách đánh giá (không huấn luyện lại, 4 dịch chuyển có cấu trúc, đối chứng Fixed, ≥ 10 seed + CI). Chưa gửi GVHD. | `docs/01` §3 | **Chờ GVHD.** Hỏi GVHD: đóng góp nặng về đánh giá có đủ cho hội nghị đích không. |
 
 ## Việc phải xong trước họp 04/11 để tiêu chí 1 đạt
 
 | Việc | Owner | Phụ thuộc |
 | --- | --- | --- |
-| Đẩy kết quả tìm kiếm Q1–Q3: số kết quả mỗi truy vấn, số bài sau lọc, danh sách đọc toàn văn | LDN (W1-LDN-04, W1-LDN-05) | Không. **Đang trễ 7–8 ngày, chặn W2-DAT-01 và W2-LDN-01** |
-| Form B Yi 2020 (arXiv 2003.00391) | LDN (W1-LDN-02). Claude có thể soạn nháp nếu có PDF | PDF; mạng của Claude chặn arXiv |
-| Form B Sarathchandra 2025 (arXiv 2501.14603) | LDN (W2-LDN-01). Claude có thể soạn nháp nếu có PDF | PDF |
-| OH-DRL 2025: thử lấy toàn văn qua thư viện trường hoặc GVHD; nếu không được thì giữ "chỉ tóm tắt" và ghi rủi ro | DAT | Quyền IEEE Xplore |
-| Đọc toàn văn các bài mới từ Q1–Q3 (chia đôi DAT/LDN) | DAT (W2-DAT-01), LDN (W2-LDN-01) | Danh sách Q1–Q3 |
-| Câu định vị bản 2, gửi GVHD | DAT | Ma trận đủ |
+| ~~Đẩy kết quả tìm kiếm Q1–Q3~~ | LDN | Xong 31/10 (nháp). Còn: LDN duyệt sàng lọc, thay số "≈" trong PRISMA |
+| ~~Form B Yi 2020, Sarathchandra 2025~~ | LDN | Nháp 31/10; DAT second reader cần PDF (mạng Claude chặn arXiv) |
+| Đọc Gong 2024 (A1), Lu 2025 (A3), Toure 2026 (A5), Form B + hàng ma trận | DAT (W2-DAT-01) | DAT tải PDF arXiv, Claude soạn nháp. **Hạn 03/11** |
+| Chen–Hanzo 2024 (A4), Zhou 2024 (A7), OH-DRL 2025: toàn văn qua GVHD hoặc thư viện; nếu không được thì giữ "chỉ tóm tắt" và ghi rủi ro | DAT | Quyền IEEE Xplore |
+| Duyệt 5 Form B nháp phần LDN; đối chiếu PDF Xiao 2024 | LDN (W2-LDN-01) | Hạn 03/11 |
+| Điền cột 6 "đối chứng huấn luyện cố định" cho mọi hàng | Người đọc từng hàng | Hạn 03/11 |
+| Câu định vị bản 2 (nháp đã có ở `docs/01` §3), sửa sau khi đọc nhóm A, gửi GVHD | DAT | Nhóm A đọc xong |
 
 ## Đề xuất quyết định (để DAT và GVHD cân nhắc)
 
