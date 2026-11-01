@@ -36,7 +36,7 @@ DAT: (30/10) Chưa lấy được toàn văn. DAT sẽ thử IEEE Xplore qua th�
 - Cần chốt: số đo thời gian lấy trên CPU hay GPU? Hai cách cho bảng chi phí khác nhau.
 - RTX 5060 (thế hệ Blackwell) có thể cần bản torch dựng với CUDA ≥ 12.8. Đây là hiểu biết chung, chưa kiểm trên máy DAT.
 
-DAT: (30/10) Laptop DAT là máy cố định đo thời gian; số 358,4 bước/s (CPU, `--n-envs 8`) đã đo trên máy này (W1-DAT-05, `notes/EXP-01_reproduction_card.md`). CPU hay GPU: chờ DAT chốt; đề xuất CPU vì mọi ước lượng chi phí hiện dựa trên CPU. Phần chạy 3 lệnh trong `environment/machine_notes.md` và đo DQN 100k bước: DAT tự chạy trên máy mình.
+DAT: (30/10) Laptop DAT là máy cố định đo thời gian; số 358,4 bước/s (CPU, `--n-envs 8`) đã đo trên máy này (W1-DAT-05, `notes/EXP-01_reproduction_card.md`). CPU hay GPU: DAT chốt **CPU** ngày 01/11 (DECISIONS 2026-11-01). Phần chạy 3 lệnh trong `environment/machine_notes.md` và đo DQN 100k bước: DAT tự chạy trên máy mình.
 
 ### A5. `paper/references.bib`
 Danh sách tác giả đầy đủ đã có trong Form B:
