@@ -16,7 +16,7 @@
 - **Số UAV:** N_a ∈ {2, 4, 8}, đồng nhất, dùng chung tham số mạng (parameter sharing) (§3.1, §4).
 - **Không gian:** vùng vuông 200 m × 200 m, phẳng. UAV xuất phát ngẫu nhiên trong ô 4 m × 4 m ở tâm; cảm biến phân bố ngẫu nhiên trên toàn vùng (§2, §4). Độ cao cố định nhưng **không ghi giá trị**.
 - **Hành động liên tục:** a = ⟨θ ∈ [0, 2π], s ∈ [0, 15]⟩, gồm hướng và tốc độ, chuẩn hoá về [0, 1] (PT (7), §3.2). Bài không ghi đơn vị của s; có thể là m/s, nhưng đó là suy đoán.
-- **Di chuyển:** "constant speed and instant change in direction"; UAV đổi tốc độ và hướng tức thời (§2).
+- **Di chuyển:** "constant speed and instant change in direction"; UAV đổi tốc độ và hướng tức thời (§2). Câu "constant speed" mâu thuẫn với hành động có thành phần tốc độ s ∈ [0, 15] (PT (7)); đây là mâu thuẫn nội tại của bài (LDN nêu 01/11), có thể hiểu là tốc độ không đổi trong mỗi bước.
 - **Năng lượng: không mô hình hoá.** Bài xếp "energy handling" vào việc tương lai (§6).
 - **Kênh:** không có mô hình kênh. Thu được dữ liệu khi UAV cách cảm biến ≤ 20 m (§4); truyền qua hai thông điệp trên trình mô phỏng GrADyS-SIM NextGen (§3.2, §4).
 - **Liên lạc giữa UAV:** giả định có kênh vệ tinh toàn cục, nên mỗi UAV biết vị trí các UAV khác và trạng thái đã thăm của cảm biến (§1, §2). Tác giả tự nhận đây là giới hạn.
@@ -109,4 +109,6 @@ Hàng ma trận đề xuất (thay hàng hiện có):
 
 **Có mã nguồn/dữ liệu không:** Có: https://github.com/Project-GrADyS/gradys-data-collection/tree/journal (§4) và bản phát hành tag `journal` (Data Availability Statement). Trình mô phỏng GrADyS-SIM NextGen là mã mở (§4). Chưa kiểm tra mã có chạy được hay không.
 
-**Một câu hỏi cho nhóm:** Khoá trích dẫn đang là `lamenza2025` nhưng bài xuất bản năm 2026 (tập 8). Nhóm có đổi khoá thành `lamenza2026` trong `docs/04` và `paper/references.bib` không? Khuyến nghị là đổi ngay khi chưa bài viết nào trích khoá này, để tránh ghi sai năm trong bài báo.
+**Đã quyết (30/10):** giữ khoá `lamenza2025`; trường `year` là 2026 (DECISIONS 2026-10-30).
+
+**Câu hỏi đã đặt cho nhóm:** Khoá trích dẫn đang là `lamenza2025` nhưng bài xuất bản năm 2026 (tập 8). Nhóm có đổi khoá thành `lamenza2026` trong `docs/04` và `paper/references.bib` không? Khuyến nghị là đổi ngay khi chưa bài viết nào trích khoá này, để tránh ghi sai năm trong bài báo.

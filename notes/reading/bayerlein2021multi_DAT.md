@@ -2,9 +2,11 @@
 
 > Trạng thái: **DAT duyệt 26/10/2026**; soạn từ toàn văn PDF (arXiv:2010.12461v3, 15 trang, SHA256 `44d03192…dcbb3`, DAT tải và gửi ngày 26/10/2026). DAT đọc lại trước khi đánh dấu W1-DAT-02 xong; second reader: LDN. Mọi số liệu dưới đây lấy từ văn bản và bảng; không có số nào đọc từ hình.
 
+> Ghi chú đánh số (LDN, 01/11): bản HTML ar5iv đánh số hình/bảng lệch 1 so với PDF (ar5iv: MFLOPs = Bảng I, kết quả = Bảng III, hình tham số = Fig. 6). Form B dùng số theo PDF.
+
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Multi-UAV Path Planning for Wireless Data Harvesting with Deep Reinforcement Learning*, 2021.
 - **Tác giả:** Harald Bayerlein, Mirco Theile, Marco Caccamo, David Gesbert (EURECOM; TU München).
-- **Trạng thái:** preprint arXiv:2010.12461v3 [cs.MA], 03/06/2021. Chú thích trang 1 ghi một phần đã trình bày tại IEEE GLOBECOM 2020 (tham khảo [1] của bài). PDF không ghi nơi đăng bản mở rộng ✱.
+- **Trạng thái:** preprint arXiv:2010.12461v3 [cs.MA], 03/06/2021. Chú thích trang 1 ghi một phần đã trình bày tại IEEE GLOBECOM 2020 (tham khảo [1] của bài). PDF không ghi nơi đăng bản mở rộng; trang arXiv có journal-ref *IEEE Open Journal of the Communications Society*, vol. 2, pp. 1171–1187, 2021, DOI 10.1109/OJCOMS.2021.3081996 (LDN kiểm qua trang abs và OpenAlex, 01/11; DAT chưa mở bản tạp chí ✱).
 
 **URL nguồn gốc và phiên bản/ngày truy cập:** https://arxiv.org/abs/2010.12461 (v3), bản PDF DAT tải ngày 26/10/2026.
 
@@ -36,7 +38,7 @@
   - Bản đồ được tách làm hai: bản đồ cục bộ cắt l × l giữ nguyên chi tiết, và bản đồ toàn cục nén bằng average pooling hệ số g.
   - Các lớp bản đồ gồm: môi trường (vùng hạ cánh, NFZ/vật cản), dữ liệu còn lại của cảm biến, thời gian bay còn lại và trạng thái hoạt động của các UAV. Thêm một số vô hướng là thời gian bay còn lại của chính UAV.
   - Bảng II: tách toàn cục–cục bộ giảm số phép tính suy luận, ví dụ Manhattan32 cần 80 MFLOPs khi chỉ căn tâm, còn 7,7 MFLOPs khi căn tâm kèm tách toàn cục–cục bộ.
-- **Học:** DDQN với combined experience replay, cập nhật mạng mục tiêu mềm τ; khi huấn luyện chọn hành động bằng softmax với nhiệt độ β (§V-B, PT (45)).
+- **Học:** DDQN với combined experience replay, cập nhật mạng mục tiêu mềm τ; khi huấn luyện chọn hành động bằng softmax với nhiệt độ β (§V-D, PT (45)).
   - Huấn luyện tập trung, triển khai phi tập trung. Kinh nghiệm của mọi UAV được gom chung để huấn luyện một mạng dùng cho tất cả (§V-C).
   - Mạng gồm CNN cho các bản đồ rồi các lớp fully connected (Fig. 3).
 - **Domain randomization** (tác giả không dùng thuật ngữ này): đầu mỗi episode, các tham số kịch bản được lấy ngẫu nhiên (§VI-A):
@@ -87,7 +89,7 @@
 - **Những dịch chuyển bài không thử** (suy ra từ §VI-A, §VI-C, §VI-D):
   - Không đổi bản đồ: mỗi tác nhân chỉ huấn luyện và đánh giá trên một bản đồ.
   - Không đổi kích thước vùng.
-  - Không đổi **phân phối không gian** của cảm biến: luôn ngẫu nhiên đều trên ô trống, không có kịch bản phân cụm.
+  - Không đổi **phân phối không gian** của cảm biến: luôn đặt ngẫu nhiên trên ô trống ("randomized throughout the unoccupied map space"; bài không nói rõ là phân phối đều), không có kịch bản phân cụm.
   - Không đổi mô hình năng lượng.
 
 **Số seed / cách báo cáo độ bất định:**

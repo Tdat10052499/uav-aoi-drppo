@@ -36,7 +36,7 @@
   - "In practice, we usually have V_me ≤ V_mr ≤ V_max". Cả hai chỉ tìm được bằng số.
 - **Giao thức fly–hover–communicate (FHC)** (§III):
   - UAV bay tới các điểm hover, chỉ truyền khi hover, mỗi điểm phục vụ một GN.
-  - **Lemma 1:** trong FHC, đoạn bay tối ưu là bay với tốc độ không đổi V_mr. Chứng minh bị lược ("details are omitted for brevity").
+  - **Lemma 1** (§III-A, bài toán một GN (P2); xem thêm §V, Fig. 4 cho nhiều GN): trong FHC, đoạn bay tối ưu là bay với tốc độ không đổi V_mr. Chứng minh bị lược ("details are omitted for brevity").
   - Bài toán thứ tự thăm quy về TSP/TSPN, là NP-hard (P3). Vị trí hover tối ưu hoá bằng tối ưu lồi (Algorithm 1).
 - **Thiết kế tổng quát** (§IV): cho phép truyền cả khi bay; rời rạc hoá đường bay theo đoạn (path discretization), giải bằng SCA (Algorithm 2), cho nghiệm tối ưu cục bộ.
 
@@ -77,7 +77,7 @@
 2. **Mô hình lý thuyết, chưa kiểm chứng bằng đo bay thật** trong bài này; tham số Bảng I là giá trị mô phỏng, không phải của một UAV thương mại cụ thể.
 3. **Kênh LoS thuần** (PT (1)), không NLoS hay shadowing; hợp với độ cao 100 m vùng thoáng, không hợp với đô thị dày.
 4. **Một bố trí K = 3, không có tổng quát hoá.** Bài toán NP-hard (TSP) nên khó mở rộng ra K lớn và cập nhật online. Đây là lập luận hợp lý cho việc dùng chính sách học, nhưng bài không tự nêu hướng này.
-5. **Lemma 1 không có chứng minh đầy đủ** (§III).
+5. **Lemma 1 không có chứng minh đầy đủ** (§III-A).
 
 **Khác biệt với đề tài (điền thẳng vào ma trận docs/04 §5):**
 - **Zeng 2019:** tối ưu tất định offline, mục tiêu năng lượng với ràng buộc throughput một lần, tốc độ là biến liên tục, một bố trí cố định.
@@ -97,6 +97,8 @@ Hàng ma trận đề xuất (thêm mới, đánh dấu là nguồn mô hình):
 
 **Có mã nguồn/dữ liệu không:** PDF v1 không dẫn mã nguồn hay dữ liệu.
 
-**Một câu hỏi cho nhóm:** Preset `light` không kiểm chứng được từ bản v1. Nhóm chọn cách nào?
+**Đã xử lý (26/10):** nhóm chọn (a), preset `light` đã bỏ ở PR #29 (DECISIONS 2026-10-26).
+
+**Câu hỏi đã đặt cho nhóm:** Preset `light` không kiểm chứng được từ bản v1. Nhóm chọn cách nào?
 - (a) Xoá `light` khỏi `PRESETS` và `docs/02` cho tới khi có nguồn. **Khuyến nghị**, vì mặc định `zeng2019_arxiv_v1` đã kiểm khớp và chưa thực nghiệm nào dùng `light`.
 - (b) Giữ nhưng chỉ dùng sau khi ai đó đọc bản IEEE TWC chính thức và ghi số trang/bảng.
