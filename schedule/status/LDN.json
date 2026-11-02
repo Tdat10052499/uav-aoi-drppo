@@ -10,6 +10,16 @@
       "date": "2026-11-01",
       "evidence": "Zeng: LDN: dưới A3 (cùng file), chạy lại energy.py khớp; Lamenza: đối chiếu bản Wiley HTML 01/11, Bảng 1 khớp; góp ý nhỏ ghi dưới A3",
       "state": "approved"
+    },
+    "W2-DAT-03": {
+      "date": "2026-11-02",
+      "evidence": "notes/review_log.md G0-1…G0-6; yêu cầu LDN→DAT 31/10 mục A6 (bản báo cáo c63ab0e)",
+      "state": "changes_requested"
+    },
+    "W2-FAO-01": {
+      "date": "2026-11-02",
+      "evidence": "đối chiếu toàn văn Abd-Elmagid (ar5iv), Liu, Sun (arXiv HTML), tóm tắt OH-DRL (OpenAlex) 01/11; hàng ma trận khớp; góp ý nhỏ ở notes/yeu-cau/2026-11-02_ldn_can-FAO_form-b-w2-fao-01.md",
+      "state": "approved"
     }
   },
   "tasks": {
@@ -37,6 +47,11 @@
     "W2-LDN-01": {
       "date": "2026-10-31",
       "note": "Form B nháp: Sarathchandra 2025, Yi 2023, Eldeeb 2026, Xiao 2024 (cần đối chiếu PDF); hàng ma trận đã điền; chờ LDN duyệt",
+      "state": "doing"
+    },
+    "W2-LDN-03": {
+      "date": "2026-11-02",
+      "note": "Đã phản biện báo cáo G0 (review_log G0-1…6), PRISMA chốt 02/11; chờ DAT sửa báo cáo, đọc lại 03/11; issue #6 chưa đóng",
       "state": "doing"
     }
   }

@@ -45,3 +45,14 @@ DAT: (01/11) Đồng ý với đánh giá ma trận Yi 2023 và hướng câu đ
 - Cần DAT: đồng ý cách chia và mức đọc, hoặc sửa. Hạn: T2 02/11 sáng, để kịp đọc nhóm A.
 
 DAT: (01/11) Đồng ý nhóm A (trước T3 03/11) và nhóm B (trước T6 13/11) như đề xuất. Nhóm C lùi hạn sang **CN 30/11**: nhóm này chủ yếu để kiểm cột tốc độ, mà Yi 2023 đã cho thấy cột đó không còn là điểm mới; tuần 02–13/11 DAT còn chạy EXP-02 và TUNE trên đường tới G1. Bài chỉ có trên IEEE (A4, A7) và OH-DRL: DAT nhờ GVHD hoặc thư viện. Ghi trong DECISIONS 2026-11-01.
+
+## A6. (02/11) Second reader báo cáo G0 (W2-LDN-03): yêu cầu sửa
+- LDN đã đọc `notes/2026-11-04_gate_G0_report.md` (bản cập nhật 01/11, commit c63ab0e) và kiểm lại ma trận `docs/04` §5. Phản biện ở `notes/review_log.md`, dòng G0-1 … G0-6. Bản 01/11 đã xử lý phần lớn: câu định vị bản 2, OpenAlex, cột 6, thứ tự đọc Gong 2024.
+- Còn phải sửa trong báo cáo trước họp 04/11:
+  1. Xoá hai chỗ còn nêu "tốc độ là biến quyết định" như điểm khác biệt (G0-1), cho khớp câu bản 2.
+  2. Cập nhật các dòng cũ: cột "Hiện trạng (30/10)", tóm tắt "#2 ĐẠT TẠM (chỉ trong 9 công trình)", "5 cột" thành 6 cột, nhánh "chưa có kết quả tìm kiếm", hai gạch về Yi 2020 và PRISMA ở mục "Cần nói rõ" (G0-3).
+  3. Thêm vào "Giải thích thay thế": Q1–Q3 thiếu từ khoá tốc độ/chuyển giao, tra ngược đã ra 5 bài bị sót (G0-5).
+  4. Thêm cột 6 vào header bảng `docs/04` §5 để mọi người điền (G0-4).
+- Kết luận hiện tại của LDN về tiêu chí: #1 **chưa đạt** (nhóm A phần DAT chưa đọc; OH-DRL ◐; cột 6 chưa điền); #2 **chưa kết luận được** (12 bài đã đọc chưa bài nào đủ; cao nhất Yi 2023; Gong 2024 chưa đọc); #3 chờ GVHD.
+- PRISMA đã chốt (bỏ "≈") ở `search_log_LDN.md` §4, theo yêu cầu của DAT dưới A1.
+- Hạn: T3 03/11. LDN đọc lại bản sửa trong ngày 03/11.

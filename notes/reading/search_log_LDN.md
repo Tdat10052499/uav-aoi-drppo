@@ -56,19 +56,23 @@ Q3: "UAV" "age of information" ("propulsion energy" OR "rotary-wing") ("PPO" OR 
 
 ## 4. PRISMA rút gọn
 
+**Chốt 02/11/2026** (số dùng cho báo cáo G0 và chương 2; theo yêu cầu DAT 01/11 dưới A1: bỏ "≈").
+
 | Bước | Số bản ghi |
 | --- | --- |
-| Bản ghi nhận vào sàng lọc: arXiv 17 + OpenAlex 23 + Scholar 300 | 340 |
-| Loại trùng (so tiêu đề đã chuẩn hoá; AAV coi như UAV) | 61 |
-| Bản ghi duy nhất được sàng lọc | ≈ 279 |
-| Loại ở bước tiêu đề (rõ ràng ngoài phạm vi: MEC/offloading, xe/vệ tinh/AUV, điều hướng, tổng quan, sách, luận văn) | ≈ 187 |
-| Loại ở bước tóm tắt/đoạn trích (mã E1–E3, mục 6) | 30 |
+| Bản ghi từ CSDL: arXiv 17 + OpenAlex 23 + Scholar 300 (100 kết quả đầu × 3 truy vấn) | 340 |
+| Bản ghi từ nguồn khác: tra ngược danh mục Yi 2023 (chưa sàng lọc, làm sau G0) | 5 |
+| Loại trùng (quy tắc ở dưới) | 61 |
+| Bản ghi duy nhất được sàng lọc | 279 |
+| Loại ở bước tiêu đề (MEC/offloading, xe/vệ tinh/AUV, điều hướng, tổng quan, sách, luận văn), tính bằng hiệu 279 − 30 − 5 − 57 | 187 |
+| Loại ở bước tóm tắt/đoạn trích (E1 10 · E2 4 · E3 16 bài; §6.4) | 30 |
 | Đã có trong ma trận `docs/04` §5 trước tìm kiếm (Bayerlein 2021, Abd-Elmagid 2019, Sun 2025, OH-DRL 2025, Lamenza 2026) | 5 |
-| **Giữ để đọc toàn văn** | **57** (nhóm A 9, B 12, C 36; trong đó A9 Sarathchandra 2025 đã có hàng ma trận nhưng còn ô "Chưa rõ") |
+| **Giữ để đọc toàn văn** | **57** (nhóm A 9, B 12, C 36; A9 Sarathchandra 2025 đã có hàng ma trận nhưng còn ô "Chưa rõ") |
+| Đã đọc toàn văn đến 02/11 | 4 (A2, A6, A8, A9) + Yi 2020 (ngoài Q1–Q3) |
 
-Yi 2020 (`yi2020deep`, đã có trong ma trận) không xuất hiện trong kết quả Q1–Q3 vì tóm tắt không có từ khoá tổng quát hoá; vẫn phải đọc theo W1-LDN-02.
+**Quy tắc loại trùng:** hai bản ghi là trùng nếu tiêu đề trùng nhau sau khi viết thường, bỏ mọi ký tự không phải chữ/số, bỏ nhãn [HTML]/[PDF]/[BOOK], coi "AAV" như "UAV", và so 55 ký tự đầu. Bản preprint và bản tạp chí của cùng bài được tính là trùng. Quy tắc này có thể sót bản ghi trùng có tiêu đề khác hẳn; đây là giới hạn được ghi lại, không phải số ước lượng.
 
-Dấu ≈: loại trùng bằng so tiêu đề có thể sót bản ghi trùng có tiêu đề khác hẳn (ví dụ một bản ghi Scholar bị cắt tiêu đề). LDN kiểm lại khi duyệt.
+**Chỉ đổi các số trên nếu:** (a) DAT chạy được IEEE Xplore và bổ sung số (DECISIONS 2026-11-01); (b) LDN sửa quyết định sàng lọc khi duyệt §6; (c) sàng lọc 5 bài tra ngược. Mọi lần đổi ghi ngày ở đây.
 
 ## 5. Tiêu chí chọn/loại (`docs/04` §6) và mã dùng ở đây
 
