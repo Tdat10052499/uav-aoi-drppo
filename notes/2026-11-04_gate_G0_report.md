@@ -1,6 +1,6 @@
 # Báo cáo gate G0 — định vị đóng góp (Form G)
 
-> **Trạng thái: NHÁP** do Claude soạn cho DAT ngày 30/10/2026, cập nhật 01/11 theo kết quả Q1–Q3 của LDN. Owner: DAT. Second reader: LDN (W2-LDN-03). Gate dời từ 01/11 sang **T4 04/11/2026** (DECISIONS 2026-10-30). Đây là lần kéo dài duy nhất được phép.
+> **Trạng thái: NHÁP** do Claude soạn cho DAT ngày 30/10/2026, cập nhật 01/11 theo kết quả Q1–Q3 của LDN, và 02/11 theo phản biện của LDN (`notes/review_log.md` G0-1 … G0-6). Owner: DAT. Second reader: LDN (W2-LDN-03). Gate dời từ 01/11 sang **T4 04/11/2026** (DECISIONS 2026-10-30). Đây là lần kéo dài duy nhất được phép.
 > Mọi nhận định dưới đây đều có nguồn (mục/PT/bảng của Form B, hoặc commit). Báo cáo không đưa thêm số liệu thực nghiệm nào ngoài các số đã có trong repo.
 
 ```text
@@ -8,8 +8,8 @@ Ngày và gate: G0 — định vị đóng góp. Họp gate T4 04/11/2026 (gốc
 
 Bằng chứng xem xét, kể cả lần chạy thất bại (run ID):
   - Tìm kiếm Q1–Q3 (notes/reading/search_log_LDN.md, nháp chờ LDN duyệt): arXiv 17 +
-    OpenAlex 23 + Scholar 300 bản ghi; khoảng 279 bản ghi duy nhất (số "≈", cần số chính
-    xác); giữ 57 bài đọc toàn văn (nhóm A 9, B 12, C 36). IEEE Xplore và Scopus thay bằng
+    OpenAlex 23 + Scholar 300 bản ghi; 279 bản ghi duy nhất (PRISMA đã chốt, search_log §4);
+    giữ 57 bài đọc toàn văn (nhóm A 9, B 12, C 36); thêm 5 bài từ tra ngược Yi 2023. IEEE Xplore và Scopus thay bằng
     OpenAlex (DECISIONS 2026-11-01).
   - Ma trận định vị docs/04 §5: thêm Yi 2020, Sarathchandra 2025, Yi 2023, Xiao 2024,
     Eldeeb 2026 (LDN, 31/10). Thêm cột 6 "đối chứng huấn luyện cố định" (DECISIONS 01/11).
@@ -30,7 +30,8 @@ Baseline có chạy đúng không? Bằng chứng:
 
 Hiệu ứng chính có đạt tiêu chí khai báo trước không? Bằng chứng (bảng tiêu chí):
   Xem bảng "Đối chiếu tiêu chí G0" bên dưới.
-  Tóm tắt: #1 CHƯA ĐẠT; #2 ĐẠT TẠM (chỉ trong 9 công trình đã có); #3 CHỜ GVHD.
+  Tóm tắt (02/11): #1 CHƯA ĐẠT; #2 CHƯA KẾT LUẬN ĐƯỢC (14 bài trong ma trận chưa bài nào đủ 6 cột,
+  nhưng Gong 2024 chưa đọc); #3 CHỜ GVHD.
 
 Giải thích thay thế mạnh nhất còn đứng vững:
   Tìm kiếm đã chạy (01/11), nên "khoảng trống" không còn chỉ dựa trên 9 bài. Nhưng:
@@ -38,7 +39,10 @@ Giải thích thay thế mạnh nhất còn đứng vững:
   nhiều bố trí (Có, Có, Có, Một phần, Không); điểm mới về mô hình không còn. (2) 5 bài nhóm
   A phần DAT chưa đọc, trong đó Gong 2024 (AoI + năng lượng, tối ưu vận tốc, đánh giá trên
   môi trường chưa thấy, theo tóm tắt) có thể đủ nhiều cột. (3) OpenAlex có thể sót bài IEEE
-  thiếu tóm tắt trong chỉ mục (chưa kiểm). Vì vậy chưa loại trừ được khả năng một bài đủ 6 cột.
+  thiếu tóm tắt trong chỉ mục (chưa kiểm). (4) Q1–Q3 không có từ khoá tốc độ (speed, velocity)
+  hay chuyển giao (transfer); tra ngược từ Yi 2023 đã ra 5 bài Q1–Q3 bỏ sót, ví dụ Chu 2022
+  (điều khiển tốc độ + DRL chuyển giao). Đề xuất truy vấn bổ sung Q4 trước G1 (G0-5).
+  Vì vậy chưa loại trừ được khả năng một bài đủ 6 cột.
 
 Trùng lặp với công trình gần nhất còn chưa giải quyết:
   - Bayerlein 2021 đã tổng quát hoá theo tham số kịch bản và có thử ngoại suy tham số
@@ -47,14 +51,14 @@ Trùng lặp với công trình gần nhất còn chưa giải quyết:
     tốc độ (PT (5)), 1 lần huấn luyện mỗi bản đồ (§VI-A), không có đối chứng huấn luyện
     trên kịch bản cố định (§VI-B).
   - Sun 2025 có AoI và mô hình P(v) (PT (4)), nhưng v cố định 5 m/s (§III-A, Bảng IV).
-    Đây là bài gần nhất ở cột "năng lượng phụ thuộc tốc độ". Câu định vị phải nói rõ
-    tốc độ là biến quyết định của chính sách.
+    Cùng với Yi 2023 (tốc độ là hành động), cột "năng lượng phụ thuộc tốc độ" không còn là
+    điểm khác biệt của đề tài (G0-1).
   - Yi 2023 (arXiv 2311.06742, Form B nháp LDN): trùng ở mô hình (AoI + năng lượng đẩy theo
     tốc độ và gia tốc, PT (9)–(10); tốc độ là hành động, §IV-A2; MAML trên nhiều nhiệm vụ,
     §IV-B2). Không có: đánh giá không huấn luyện lại (Fig. 8 là thích nghi khi huấn luyện
     tiếp), dịch chuyển có cấu trúc, đối chứng Fixed, nhiều seed + CI.
   - Gong 2024 (nhóm A1): chưa đọc toàn văn; rủi ro trùng lặp lớn nhất còn mở cùng OH-DRL 2025
-    (chỉ có tóm tắt, chưa xác định được 3/5 cột).
+    (chỉ có tóm tắt, 3 ô "Chưa rõ"; OpenAlex ghi đóng truy cập; chưa có toàn văn qua GVHD hoặc thư viện, G0-6).
 
 Nhu cầu tính toán/thời gian còn lại:
   Ước lượng của FAO (notes/2026-10-21_fao_chi-phi-nhap.md §2, §4; Project Agreement §5):
@@ -73,10 +77,10 @@ Ngày quyết định tiếp theo: G1 — CN 15/11/2026.
 
 ## Đối chiếu tiêu chí G0 (`docs/05` §5)
 
-| # | Tiêu chí | Hiện trạng (30/10) | Bằng chứng | Kết luận |
+| # | Tiêu chí | Hiện trạng (02/11) | Bằng chứng | Kết luận |
 | --- | --- | --- | --- | --- |
 | 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | Tìm kiếm Q1–Q3 xong (nháp, chờ LDN duyệt; PRISMA còn số "≈"). Nhóm A: 5/10 bài phần LDN có Form B nháp và hàng ma trận; 0/5 bài phần DAT đã đọc. Cột 6 mới chưa điền. OH-DRL vẫn chỉ có tóm tắt. | `notes/reading/search_log_LDN.md`, `fulltext_list.md`; `docs/04` §5 | **Chưa đạt (01/11).** Đạt được nếu trước 03/11: DAT đọc Gong, Lu, Toure; LDN duyệt sàng lọc và 5 Form B; điền cột 6. Không được kéo dài lần hai. |
-| 2 | Không công trình nào đủ cả 6 cột (DECISIONS 2026-11-01) | Gần nhất: **Yi 2023** (Có, Có, Có, Một phần, Không; cột 6 Không theo Form B nháp). Các hàng khác đều thiếu từ 2 cột trở lên. Cột "Nhiều seed + CI" là Không ở mọi bài đã đọc toàn văn. | Form B tương ứng | **Đạt tạm**, chỉ trong các bài đã đọc; Gong 2024 chưa đọc. Điểm mới về mô hình (tốc độ là hành động, nhiều bố trí) **không còn**. |
+| 2 | Không công trình nào đủ cả 6 cột (DECISIONS 2026-11-01) | Gần nhất: **Yi 2023** (Có, Có, Có, Một phần, Không; cột 6 Không theo Form B nháp). Các hàng khác đều thiếu từ 2 cột trở lên. Cột "Nhiều seed + CI" là Không ở mọi bài đã đọc toàn văn. | Form B tương ứng | **Chưa kết luận được (02/11, theo LDN).** Trong 14 bài đã có hàng ma trận, không bài nào đủ 6 cột; Gong 2024, Lu 2025, Toure 2026 chưa đọc. Điểm mới về mô hình (tốc độ là hành động, nhiều bố trí) **không còn**. |
 | 3 | Câu định vị `docs/01` §3 được GVHD đồng ý | Có câu bản 2 (nháp 01/11): điểm mới chuyển sang cách đánh giá (không huấn luyện lại, 4 dịch chuyển có cấu trúc, đối chứng Fixed, ≥ 10 seed + CI). Chưa gửi GVHD. | `docs/01` §3 | **Chờ GVHD.** Hỏi GVHD: đóng góp nặng về đánh giá có đủ cho hội nghị đích không. |
 
 ## Việc phải xong trước họp 04/11 để tiêu chí 1 đạt
@@ -93,14 +97,12 @@ Ngày quyết định tiếp theo: G1 — CN 15/11/2026.
 
 ## Đề xuất quyết định (để DAT và GVHD cân nhắc)
 
-- **Nếu trước 04/11 có danh sách Q1–Q3 và 3 hàng "Chưa rõ" được điền, mà vẫn không bài nào đủ 5 cột:** *tiếp tục*. Phạm vi tuyên bố giữ C1–C3 như `docs/01` §6. Câu định vị bản 2 thêm hai ý kiểm chứng được:
-  1. tốc độ là biến quyết định của chính sách (khác Sun 2025, nơi v cố định);
-  2. có đối chứng huấn luyện trên kịch bản cố định và nhiều seed kèm CI, là điều Bayerlein 2021 và Lamenza 2026 không có (§VI-A, §VI-B; §5).
-- **Nếu đến 04/11 vẫn chưa có kết quả tìm kiếm:** *tiếp tục có điều kiện*. EXP-02 (W3) không phụ thuộc định vị nên vẫn chạy. Nhưng mọi câu khẳng định "khoảng trống" bị khoá cho tới khi tìm kiếm xong, và phải xong trước G1 (15/11). Phải ghi vào DECISIONS, vì G0 không được kéo dài lần hai.
-- **Nếu một bài đủ 5 cột:** áp dụng nhánh "không đạt" của tiêu chí 2. Đổi trọng tâm sang A5 (vai trò lựa chọn tốc độ) hoặc đa UAV; GVHD quyết.
+- **Nếu trước 04/11 đọc xong nhóm A (Gong, Lu, Toure) mà vẫn không bài nào đủ 6 cột:** *tiếp tục*. Phạm vi tuyên bố giữ C1–C3 như `docs/01` §6, dùng câu định vị bản 2 (`docs/01` §3): điểm khác biệt là cách đánh giá (không huấn luyện lại; 4 dịch chuyển có cấu trúc; đối chứng huấn luyện trên bố trí cố định, điều Bayerlein 2021 §VI-B và Yi 2023 không có; ≥ 10 seed kèm CI). Không dùng "tốc độ là biến quyết định" làm điểm khác biệt (Yi 2023 đã có, G0-1).
+- **Nếu đến 04/11 nhóm A phần DAT chưa đọc xong hoặc A4, A7, OH-DRL vẫn không có toàn văn:** *tiếp tục có điều kiện*. EXP-02 (W3) không phụ thuộc định vị nên vẫn chạy. Mọi câu khẳng định "khoảng trống" bị khoá cho tới khi đọc xong và chạy truy vấn bổ sung Q4, hạn trước G1 (15/11). Phải ghi vào DECISIONS, vì G0 không được kéo dài lần hai.
+- **Nếu một bài đủ 6 cột:** áp dụng nhánh "không đạt" của tiêu chí 2. Đổi trọng tâm sang A5 (vai trò lựa chọn tốc độ) hoặc đa UAV; GVHD quyết.
 
 ## Cần nói rõ trong buổi họp
 
-- Ma trận và kết luận #2 là **dữ kiện từ các bài đã đọc**, không phải kết luận về toàn bộ tài liệu, cho tới khi có số PRISMA.
-- Hàng Yi 2020 hiện ghi "Có" ở cột AoI và năng lượng nhưng **chưa có nguồn**. Hai ô này không được dùng cho tới khi có Form B.
+- Ma trận và kết luận #2 là **dữ kiện từ các bài đã đọc** trong 57 bài sau sàng lọc (PRISMA ở `search_log_LDN.md` §4), không phải kết luận về toàn bộ tài liệu. Q1–Q3 thiếu từ khoá tốc độ/chuyển giao (G0-5).
+- Hàng Yi 2020 đã có Form B (LDN, e7c652a; DAT chưa second reader vì chưa có PDF).
 - Khoá `lamenza2025` giữ nguyên dù bài xuất bản 2026 (tập 8); trường `year` đã đúng (DECISIONS 2026-10-30).

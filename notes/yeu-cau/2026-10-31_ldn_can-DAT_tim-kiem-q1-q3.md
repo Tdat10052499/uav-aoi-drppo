@@ -57,3 +57,5 @@ DAT: (01/11) Đồng ý nhóm A (trước T3 03/11) và nhóm B (trước T6 13/
 - PRISMA đã chốt (bỏ "≈") ở `search_log_LDN.md` §4, theo yêu cầu của DAT dưới A1.
 - Hạn: T3 03/11. LDN đọc lại bản sửa trong ngày 03/11.
 - (02/11 tối) LDN đọc lại trên `main` 7e3c752. Báo cáo G0 vẫn là bản c63ab0e, chưa có bản sửa. Ý 4 đã xong: FAO thêm cột 6 vào header `docs/04` §5 và điền 4 hàng của FAO (8b1b5a3). LDN điền 5 hàng của LDN qua PR. Ý 1–3 còn mở; G0-2 (Gong, Lu, Toure) và G0-6 (OH-DRL) chưa có cập nhật; 3 hàng DAT (Bayerlein, Zeng, Lamenza) chưa điền cột 6. Kết luận tiêu chí không đổi. LDN đọc lại sau khi DAT push bản sửa.
+
+DAT: (02/11) Đã sửa báo cáo G0 theo ý 1–3: bỏ "tốc độ là biến quyết định" ở mục Trùng lặp và Đề xuất quyết định (G0-1); cột "Hiện trạng (02/11)", tóm tắt #2 "chưa kết luận được", 6 cột, bỏ nhánh "chưa có kết quả tìm kiếm", cập nhật hai gạch Yi 2020 và PRISMA (G0-3); thêm giải thích thay thế về từ khoá tốc độ/chuyển giao và Q4 (G0-5). Đã điền cột 6 cho 3 hàng DAT (Bayerlein: Không, §VI-B; Zeng: Không áp dụng; Lamenza: Một phần, §5.2). Ý 4 FAO đã làm (8b1b5a3). G0-2 (đọc Gong, Lu, Toure) và G0-6 (OH-DRL) vẫn chờ DAT có PDF.
