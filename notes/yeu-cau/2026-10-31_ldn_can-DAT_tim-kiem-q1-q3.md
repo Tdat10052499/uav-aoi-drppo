@@ -56,3 +56,4 @@ DAT: (01/11) Đồng ý nhóm A (trước T3 03/11) và nhóm B (trước T6 13/
 - Kết luận hiện tại của LDN về tiêu chí: #1 **chưa đạt** (nhóm A phần DAT chưa đọc; OH-DRL ◐; cột 6 chưa điền); #2 **chưa kết luận được** (12 bài đã đọc chưa bài nào đủ; cao nhất Yi 2023; Gong 2024 chưa đọc); #3 chờ GVHD.
 - PRISMA đã chốt (bỏ "≈") ở `search_log_LDN.md` §4, theo yêu cầu của DAT dưới A1.
 - Hạn: T3 03/11. LDN đọc lại bản sửa trong ngày 03/11.
+- (02/11 tối) LDN đọc lại trên `main` 7e3c752. Báo cáo G0 vẫn là bản c63ab0e, chưa có bản sửa. Ý 4 đã xong: FAO thêm cột 6 vào header `docs/04` §5 và điền 4 hàng của FAO (8b1b5a3). LDN điền 5 hàng của LDN qua PR. Ý 1–3 còn mở; G0-2 (Gong, Lu, Toure) và G0-6 (OH-DRL) chưa có cập nhật; 3 hàng DAT (Bayerlein, Zeng, Lamenza) chưa điền cột 6. Kết luận tiêu chí không đổi. LDN đọc lại sau khi DAT push bản sửa.
