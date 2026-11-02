@@ -11,7 +11,7 @@
 3. Commit thẳng `main` với message `[NICK] YYYY-MM-DD: yêu cầu <NICK> ...`, rồi push.
 
 ## Trả lời
-- Viết một dòng bắt đầu bằng `<NICK>:` ngay dưới mục, ví dụ `DAT: giữ 200k, chỉ chạy DQN trên máy LDN.` Có thể thêm link commit, PR, run ID.
+- Viết một dòng bắt đầu bằng `<NICK>:` ngay dưới mục, ví dụ `DAT: (30/10) đồng ý, xem PR #30.` Có thể thêm link commit, PR, run ID.
 - Mục có dòng trả lời được coi là đã xử lý. Mục chưa có dòng trả lời hiện trong `python scripts/today.py` của người nhận, ở mục **YÊU CẦU GỬI BẠN**. Người gửi thấy nó ở mục **BẠN ĐANG CHỜ NGƯỜI KHÁC TRẢ LỜI**.
 - Không xoá file hay mục đã trả lời: đây là nhật ký quyết định của nhóm. Quyết định về thiết kế hoặc lịch thì ghi thêm vào `docs/DECISIONS.md`.
 
