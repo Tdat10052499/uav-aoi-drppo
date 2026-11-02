@@ -20,7 +20,7 @@
 | Tuần | Ngày | Mốc | Trọng tâm |
 | --- | --- | --- | --- |
 | W1 | 19–25/10 | — | Tái lập (EXP-01), đọc tài liệu, xác minh hội nghị |
-| W2 | 26/10–01/11 | **G0 · 01/11** | Tổng quan hệ thống, ma trận định vị, công cụ phân tích |
+| W2 | 26/10–01/11 | **G0 · 04/11** (dời từ 01/11) | Tổng quan hệ thống, ma trận định vị, công cụ phân tích |
 | W3 | 02–08/11 | — | EXP-02 pilot: 4 lần huấn luyện |
 | W4 | 09–15/11 | **G1 · 15/11** | Phân tích pilot, Optuna trên ID, khoá PREREG, chọn A/B |
 | W5 | 16–22/11 | — | EXP-03 (10 seed × 2 learner), EXP-04 DQN |
@@ -51,8 +51,8 @@
 | --- | --- | --- | --- |
 | T2–T3 26–27/10 | Đọc toàn văn các bài LDN chọn (chia đôi với LDN). Viết câu định vị bản 2. | Đọc toàn văn phần còn lại; điền ma trận. Đọc Sarathchandra 2025. | Đọc Abd-Elmagid 2019, OH-DRL 2025, Sun 2025 → Form B. Bắt đầu `scripts/plot_trajectory.py` (vẽ quỹ đạo một episode ra `figures/`). |
 | T4–T5 28–29/10 | Hoàn thiện `tune_ppo.py`: không gian tìm kiếm, ngân sách bằng nhau, chỉ đánh giá trên ID. | Mở rộng `analyze.py`: bảng độ suy giảm theo seed và hình F4 (cột + CI). Kiểm thử bằng dữ liệu heuristic. | Chạy thử DR-DQN 10k bước (`--algo dqn`). Hoàn thiện script quỹ đạo. |
-| T6 30/10 | Soạn báo cáo G0 (Form G) `notes/2026-11-04_gate_G0_report.md`. | **Second reader báo cáo G0**: kiểm tra từng dòng ma trận có nguồn. | **Second reader** `tune_ppo.py` (đọc mã, chạy 2 lượt nhỏ). |
-| CN 01/11 | **Gate G0** — họp 45' cả nhóm, gửi GVHD. | | |
+| T6 30/10 → T2 02/11 | Soạn báo cáo G0 (Form G) `notes/2026-11-04_gate_G0_report.md`. | **Second reader báo cáo G0**: kiểm tra từng dòng ma trận có nguồn. | **Second reader** `tune_ppo.py` (đọc mã, chạy 2 lượt nhỏ). |
+| T4 04/11 (dời từ CN 01/11) | **Gate G0** — họp 45' cả nhóm, gửi GVHD. | | |
 
 ---
 
