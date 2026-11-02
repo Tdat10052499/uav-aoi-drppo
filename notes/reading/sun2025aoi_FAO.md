@@ -38,7 +38,7 @@
   - Cả hai phép tính đều dùng số đọc từ hình nên chỉ là xấp xỉ.
 - **Fig. 3a–c:** đường huấn luyện 3000 episode, có vùng tô "variance" (§V-B1).
 - **Fig. 4b:** quét η_le ∈ {0,1; 0,15; 0,2; 0,25; 0,3}.
-  - Tác giả viết MAPPO-TM có peak AoI thấp hơn 5–10% ở mọi η_le (§V-B2).
+  - Tác giả viết: "MAPPO-TM consistently outperforms other algorithms across different η_le values, achieving a 5-10% lower peak AoI" (§V-B2, đoạn bàn Fig. 4(b); kiểm lại 02/11 trên bản HTML arXiv v1). Câu không nêu so với thuật toán nào và không tách theo từng η_le.
   - Trên hình, tại η_le = 0,25 hai đường MAPPO-TM và MAPPO gần như trùng nhau (khoảng 655 và 660).
 
 **Đánh giá trên kịch bản khác tập huấn luyện? Loại dịch chuyển nào?** Không.
@@ -74,6 +74,8 @@ Hàng ma trận đề xuất:
 | Công trình | Mục tiêu AoI | Năng lượng phụ thuộc tốc độ | Huấn luyện trên nhiều bố trí | Đánh giá OOD có cấu trúc | Nhiều seed + CI |
 | --- | --- | --- | --- | --- | --- |
 | Sun 2025 | Có (peak AoI, đa UAV) | Có mô hình P(v) nhưng v cố định 5 m/s, nên không là biến quyết định | Không (IoT cố định) | Không (chỉ quét η_le) | Không (không báo seed; vùng "variance" không rõ n) |
+
+Cột 6 "Đối chứng huấn luyện trên bố trí cố định" (DECISIONS 2026-11-01, điền 02/11): Không (IoT cố định, §III-A, §V-A; chỉ huấn luyện lại khi đổi số UAV, §VI-B; DR là hướng tương lai, §VII).
 
 **Có mã nguồn/dữ liệu không:** Không thấy liên kết mã hay dữ liệu trong bài.
 

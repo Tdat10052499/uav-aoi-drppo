@@ -19,11 +19,11 @@
 - **Quy mô mô phỏng:** M ≤ 3 nút (§IV).
 
 **Cơ chế, diễn đạt bằng lời của mình:**
-- **Mô hình hoá:** bài toán là MDP chân trời hữu hạn. Trạng thái gồm (mức pin, AoI) của từng nút cùng (vị trí UAV, thời gian còn dư so với thời gian cần để về đích) (§II-B).
+- **Mô hình hoá:** bài toán là MDP chân trời hữu hạn. Trạng thái gồm (mức pin, AoI) của từng nút cùng (vị trí UAV, thời gian còn dư so với thời gian cần để về đích) (§II-B). Trạng thái **không chứa vị trí nút**: vị trí nút chỉ xuất hiện trong độ lợi kênh (PT (1)) và chi phí năng lượng truyền (PT (3)–(4)). Vì vậy một chính sách đã học gắn với một bố trí, khớp ô "Không" ở cột nhiều bố trí. Câu "gắn với một bố trí" là suy luận từ định nghĩa trạng thái, không phải câu trong bài.
 - **Thuật toán:** không gian trạng thái quá lớn để giải bằng DP, nên tác giả dùng DQN.
   - Mạng có một lớp fully connected 200 nút, dùng replay memory, ε-greedy và γ = 1 vì bài toán theo episode.
   - Hành động là tổ hợp di chuyển × lập lịch (§III-B, Alg. 1, Fig. 2).
-  - Trọng số được cập nhật một lần sau mỗi episode, trên một batch b mẫu (Alg. 1, dòng 13–17).
+  - Trọng số được cập nhật một lần sau mỗi episode, trên một batch b mẫu (Alg. 1, dòng 14–19 theo bản HTML ar5iv: lấy mẫu dòng 14–15, tính đích dòng 16–18, huấn luyện theo gradient (15) dòng 19; §III-B).
 - **Lý thuyết:** Định lý 1 cho cận trên và cận dưới của tổng chi phí khi các nút đồng nhất (PT (9)–(10)).
 
 **Bằng chứng mạnh nhất (mục/bảng/hình):**
@@ -46,7 +46,7 @@
   - *random walk.*
 - **Đối chứng yếu:**
   - Random walk chỉ là cận tầm thường.
-  - Distance-based không tính đến ràng buộc thời gian τ hay ô đích.
+  - Định nghĩa của distance-based (§IV-C, đoạn đầu) chỉ gồm khoảng cách và AoI, không nhắc τ hay ô đích. Tuy vậy, khi bàn Fig. 5a, tác giả viết chính sách này phải thoả ràng buộc thời gian ("the agent has to satisfy the time constraint"), nên nó dừng cải thiện khi e_max ≥ 2⁵. Bài không mô tả cơ chế thoả ràng buộc đó; đối chứng vì vậy được đặc tả chưa đủ để tái lập (sửa 02/11 theo góp ý LDN).
 - **Những gì bài không làm:**
   - Không so với lời giải DP tối ưu. Ở kịch bản 1–2 (1–2 nút) không gian có thể đủ nhỏ để giải đúng; đây là suy luận.
   - Không so với heuristic quy hoạch đường đi.
@@ -71,6 +71,8 @@ Hàng ma trận đề xuất:
 | Công trình | Mục tiêu AoI | Năng lượng phụ thuộc tốc độ | Huấn luyện trên nhiều bố trí | Đánh giá OOD có cấu trúc | Nhiều seed + CI |
 | --- | --- | --- | --- | --- | --- |
 | Abd-Elmagid 2019 | Có (tổng AoI có trọng số) | Không (UAV chỉ bị ràng buộc thời gian τ; năng lượng là pin của nút) | Không (vị trí nút cố định mỗi kịch bản) | Không (chỉ quét e_max, τ, mật độ) | Không (TB 1000 episode, không seed/CI) |
+
+Cột 6 "Đối chứng huấn luyện trên bố trí cố định" (DECISIONS 2026-11-01, điền 02/11): Không (mỗi kịch bản 1–5 một bố trí nút cố định; không có chính sách huấn luyện trên nhiều bố trí để so; §IV-A–C, Fig. 3).
 
 **Có mã nguồn/dữ liệu không:** Không thấy liên kết mã hay dữ liệu trong bài. Bài chỉ nêu dùng TF-Agents và GPU NVIDIA P100 (§IV).
 

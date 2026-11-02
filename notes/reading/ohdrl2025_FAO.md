@@ -31,7 +31,7 @@ Chưa rõ: thuật toán DRL cụ thể, không gian hành động, phần thư�
 
 Cả hai đều so với "một thuật toán DRL hiện đại"; tóm tắt không nêu tên thuật toán đó.
 
-**Đánh giá trên kịch bản khác tập huấn luyện? Loại dịch chuyển nào?** Chưa rõ. Tóm tắt không nhắc tới tổng quát hoá hay kịch bản chưa thấy.
+**Đánh giá trên kịch bản khác tập huấn luyện? Loại dịch chuyển nào?** Chưa rõ. Tóm tắt chỉ nhắc đánh giá ở nhiều quy mô mạng ("achieves better convergence performance and energy-saving efficiency across different network scales"); không rõ có huấn luyện lại cho mỗi quy mô hay không (sửa 02/11 theo góp ý LDN; tóm tắt đối chiếu trên UniSC và OpenAlex W4408145075, cùng nội dung).
 
 **Số seed / cách báo cáo độ bất định:** Chưa rõ.
 
@@ -51,6 +51,8 @@ Hàng ma trận đề xuất:
 | Công trình | Mục tiêu AoI | Năng lượng phụ thuộc tốc độ | Huấn luyện trên nhiều bố trí | Đánh giá OOD có cấu trúc | Nhiều seed + CI |
 | --- | --- | --- | --- | --- | --- |
 | OH-DRL 2025 (chỉ tóm tắt) | Có (ràng buộc AoI trung bình tối đa; mục tiêu là năng lượng bay) | Chưa rõ (có tối thiểu năng lượng bay; mô hình chưa kiểm) | Chưa rõ | Chưa rõ | Chưa rõ |
+
+Cột 6 "Đối chứng huấn luyện trên bố trí cố định" (DECISIONS 2026-11-01, điền 02/11): Chưa rõ (chỉ tóm tắt).
 
 **Có mã nguồn/dữ liệu không:** Chưa rõ.
 

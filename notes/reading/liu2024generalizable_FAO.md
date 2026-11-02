@@ -28,7 +28,7 @@
 
 **Bằng chứng mạnh nhất (mục/bảng/hình):**
 - **Fig. 10 (§IV-B):** 4 mức độ khó, mỗi mức gồm 100 đường đua ngẫu nhiên × 10 episode. Tỉ lệ thành công khoảng 0,9 ở mức 1 (giống huấn luyện) và giảm còn khoảng 0,4 ở mức 4.
-- **Fig. 6 (§IV-A):** 4 đường đua thiết kế tay, 100 episode mỗi đường. Thành công 98% ở "Kebab" (giống huấn luyện), rồi 55%, 37% và 26% khi đường đua khác dần.
+- **Fig. 6 (§IV-A):** 4 đường đua thiết kế tay, 100 episode mỗi đường. Thành công 98% ở "Kebab" (giống huấn luyện), rồi 55%, 37% và 26% khi đường đua khác dần. **Các tỉ lệ này đọc từ hình**: văn bản §IV-A và chú thích Fig. 6 không nêu số, chỉ viết tỉ lệ thành công cao nhất ở "Kebab" và giảm khi đường đua có nhiều khúc cua gấp hơn.
 - **Fig. 11 (§IV-C):** trên các đường đua khó, tỉ lệ thành công dưới 0,01.
 
 **Đánh giá trên kịch bản khác tập huấn luyện? Loại dịch chuyển nào?** Có, và có cấu trúc (§IV-A, §IV-B). Các loại dịch chuyển gồm:
@@ -47,7 +47,7 @@ Hiệu năng giảm đơn điệu khi môi trường lệch xa phân phối hu�
 
 **Đối chứng gần nhất và độ công bằng của so sánh:** **Không có đối chứng nào.**
 - Không so với chính sách huấn luyện trên môi trường cố định, cũng không so với planner hay phương pháp tối ưu hoá.
-- §III-C3 khẳng định rằng dùng một bộ môi trường ngẫu nhiên cố định khiến chính sách học "chiến lược trung bình", nhưng bài không có ablation để chứng minh.
+- §III-C3 khẳng định rằng, với số môi trường song song nhỏ ("a few hundred"), dùng một bộ môi trường ngẫu nhiên cố định khiến chính sách học "chiến lược trung bình", nhưng bài không có ablation để chứng minh.
 
 **Giới hạn đã biết:**
 - Tác giả thừa nhận chính sách chỉ tổng quát hoá tốt khi môi trường gần phân phối huấn luyện, và thất bại trên đường đua khó (§IV-C, §V).
@@ -65,6 +65,8 @@ Hàng ma trận đề xuất:
 | Công trình | Mục tiêu AoI | Năng lượng phụ thuộc tốc độ | Huấn luyện trên nhiều bố trí | Đánh giá OOD có cấu trúc | Nhiều seed + CI |
 | --- | --- | --- | --- | --- | --- |
 | Liu 2024 (tham khảo DR, ngoài phạm vi) | Không (đua drone) | Không | Có (môi trường mới mỗi rollout) | Có (4 mức khó + 4 đường đua thiết kế tay) | Không (1 chính sách, không seed/CI) |
+
+Cột 6 "Đối chứng huấn luyện trên bố trí cố định" (DECISIONS 2026-11-01, điền 02/11): Không (không có ablation bộ môi trường cố định hay đường đua cố định; lập luận "average strategy" ở §III-C3 không được kiểm).
 
 **Có mã nguồn/dữ liệu không:** Có: https://github.com/ErcBunny/IsaacGymEnvs (theo tóm tắt). Chưa kiểm tra nội dung repo.
 
