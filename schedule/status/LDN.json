@@ -1,11 +1,58 @@
 {
   "nick": "LDN",
-  "reviews": {},
+  "reviews": {
+    "W1-DAT-02": {
+      "date": "2026-11-01",
+      "evidence": "LDN: dưới A1 trong notes/yeu-cau/2026-10-26_dat_can-LDN_second-reader-bayerlein.md; đối chiếu arXiv v3 (ar5iv) 01/11; 3 góp ý nhỏ, không đổi hàng ma trận",
+      "state": "approved"
+    },
+    "W1-DAT-04": {
+      "date": "2026-11-01",
+      "evidence": "Zeng: LDN: dưới A3 (cùng file), chạy lại energy.py khớp; Lamenza: đối chiếu bản Wiley HTML 01/11, Bảng 1 khớp; góp ý nhỏ ghi dưới A3",
+      "state": "approved"
+    },
+    "W2-DAT-03": {
+      "date": "2026-11-02",
+      "evidence": "notes/review_log.md G0-1…G0-6; yêu cầu LDN→DAT 31/10 mục A6 (bản báo cáo c63ab0e)",
+      "state": "changes_requested"
+    },
+    "W2-FAO-01": {
+      "date": "2026-11-02",
+      "evidence": "đối chiếu toàn văn Abd-Elmagid (ar5iv), Liu, Sun (arXiv HTML), tóm tắt OH-DRL (OpenAlex) 01/11; hàng ma trận khớp; góp ý nhỏ ở notes/yeu-cau/2026-11-02_ldn_can-FAO_form-b-w2-fao-01.md",
+      "state": "approved"
+    }
+  },
   "tasks": {
     "W1-LDN-01": {
       "date": "2026-10-19",
       "evidence": "notes/2026-10-19_ldn.md",
       "state": "done"
+    },
+    "W1-LDN-02": {
+      "date": "2026-10-31",
+      "evidence": "notes/reading/agarwal2021deep_LDN.md; notes/reading/yi2020deep_LDN.md; hàng Yi 2020 ở docs/04 §5 không còn 'Chưa rõ' (e7c652a)",
+      "note": "Form B Yi 2020 nháp xong; còn Agarwal 2021",
+      "state": "done"
+    },
+    "W1-LDN-04": {
+      "date": "2026-10-31",
+      "note": "Q1–Q3 đã chạy trên arXiv, OpenAlex, Scholar; sàng lọc nháp chờ LDN duyệt; IEEE Xplore/Scopus không truy cập được (yêu cầu DAT 31/10)",
+      "state": "doing"
+    },
+    "W1-LDN-05": {
+      "date": "2026-10-31",
+      "note": "fulltext_list.md nháp; chờ DAT đồng ý cách chia (yêu cầu 31/10 A4)",
+      "state": "doing"
+    },
+    "W2-LDN-01": {
+      "date": "2026-10-31",
+      "note": "Form B nháp: Sarathchandra 2025, Yi 2023, Eldeeb 2026, Xiao 2024 (cần đối chiếu PDF); hàng ma trận đã điền; chờ LDN duyệt",
+      "state": "doing"
+    },
+    "W2-LDN-03": {
+      "date": "2026-11-02",
+      "note": "Đã phản biện báo cáo G0 (review_log G0-1…6), PRISMA chốt 02/11; chờ DAT sửa báo cáo, đọc lại 03/11; issue #6 chưa đóng",
+      "state": "doing"
     }
   }
 }

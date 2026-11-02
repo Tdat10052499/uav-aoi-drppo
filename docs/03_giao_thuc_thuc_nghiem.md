@@ -26,7 +26,7 @@ Heuristic đọc trạng thái thật (vị trí, AoI), tức thông tin tương
 - **Seed huấn luyện:** 0–9 (10 seed) cho mỗi phương pháp học trong kết quả chính. MVP: tối thiểu 5 seed, ghi rõ là sơ bộ.
 - **Seed đánh giá:** 100 episode cố định, seed 100000–100099 (`scenarios.eval_seeds`), tách biệt hoàn toàn với seed huấn luyện. Cùng bộ seed cho mọi phương pháp ⇒ so sánh theo cặp kịch bản.
 - **Ngân sách bước:** bằng nhau cho mọi phương pháp học (điểm xuất phát 2 triệu bước; chốt sau đo đạc tuần 3).
-- **Tinh chỉnh siêu tham số:** cùng số lượt Optuna (gợi ý 20 lượt × 200k bước) cho DR-PPO và Fixed-PPO, đánh giá tinh chỉnh trên **tập ID**, không bao giờ trên OOD.
+- **Tinh chỉnh siêu tham số:** cùng số lượt Optuna (20 lượt × 200k bước, cùng sampler seed, không pruning) cho DR-PPO, Fixed-PPO và DR-DQN (DECISIONS 2026-10-30), đánh giá tinh chỉnh trên **tập ID** với seed kiểm định 200000–200019, không bao giờ trên OOD hay seed test. A4, A5 dùng bộ của DR-PPO. Giao thức chi tiết: `notes/TUNE_optuna_card.md`.
 
 ## 4. Bộ đánh giá (ID + 4 OOD có cấu trúc)
 | Bộ | Dịch chuyển so với huấn luyện | Tham số | Kiểm tra điều gì |

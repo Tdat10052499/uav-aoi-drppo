@@ -111,7 +111,7 @@
   - **DAT — Hồ Du Tuấn Đạt:** phương pháp DR-PPO (huấn luyện, Optuna, biến thể quan sát cho ablation A2/A3), định vị đóng góp (Gate G0), điều phối với giảng viên và hội nghị, đo thời gian trên máy cố định, chủ trì bản thảo. Second reader: FAO hoặc LDN.
   - Mọi kết quả phải có second reader ký tên trong bảng claim–evidence trước khi vào bài.
 - **Day-0 và các gate:** Day 0 = **thứ Hai 19/10/2026**.
-  - G0 (Day 13) = CN 01/11
+  - G0 (Day 13) = CN 01/11; kéo dài sang **T4 04/11/2026** (DECISIONS 2026-10-30)
   - G1 (Day 27) = CN 15/11
   - G2 (Day 62) = CN 20/12
   - G3 (Day 83) = CN 10/01/2027

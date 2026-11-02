@@ -119,7 +119,7 @@ CHỜ LDN và nhóm (`notes/NOTE_FOR_LDN.md`), phải chốt trước EXP-03. `d
 
 ## 10. Phân bổ máy (W4-FAO-02)
 
-Bản nháp: `notes/2026-10-30_fao_phan-seed-nhap.md` (358,4 bước/s PPO trên laptop DAT; DQN chỉ chạy trên laptop DAT). Nguyên tắc từ `docs/05`: DAT chạy EXP-03 seed 0–4 trên máy cố định; seed 5–9 chạy trên Kaggle hoặc máy FAO. Máy chạy được ghi trong `run_record` và `data/checkpoint_manifest.md`. Số thời gian trong bài chỉ lấy từ máy cố định.
+Bản nháp: `notes/2026-10-30_fao_phan-seed-nhap.md` (358,4 bước/s PPO trên laptop DAT; DQN chỉ chạy trên laptop DAT). Nguyên tắc từ `docs/05`: DAT chạy EXP-03 seed 0–4 trên máy cố định; seed 5–9 chạy trên Kaggle hoặc máy FAO. Máy chạy được ghi trong `run_record` và `data/checkpoint_manifest.md`. Số thời gian trong bài chỉ lấy từ máy cố định, đo trên **CPU** của laptop DAT, không dùng GPU (DECISIONS 2026-11-01).
 
 ## 11. Thay đổi sau ngày khoá
 

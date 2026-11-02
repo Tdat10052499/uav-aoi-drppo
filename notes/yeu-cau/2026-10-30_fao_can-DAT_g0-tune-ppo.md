@@ -7,6 +7,8 @@
 - **Để làm gì:** W2-FAO-04 (second reader `tune_ppo.py`: đọc mã, chạy 2 lượt nhỏ) có hạn 30–31/10 và nằm trên đường tới G1. W2-DAT-02 có hạn 29/10; W1-DAT-06 (khung `tune_ppo.py`, hạn 23/10) cũng chưa xong. Trên GitHub chưa có nhánh hay PR nào chứa `tune_ppo.py`.
 - **Hạn mong muốn:** 31/10, để FAO kịp chạy 2 lượt nhỏ trước khi hết hạn W2-FAO-04.
 
+DAT: (30/10) PR #30 đã mở và merge (81a32e8); FAO đã duyệt (W2-FAO-04).
+
 ## A2. G0 (CN 01/11): có giữ ngày không?
 - **Tình trạng theo `today.py --team`:**
   - W2-DAT-03 (báo cáo G0, Form G) chờ W2-DAT-01 và W2-LDN-01; cả hai đã quá hạn (27/10).
@@ -25,3 +27,5 @@ DAT: (30/10) Kéo dài G0 3 ngày, sang **T4 04/11/2026** (DECISIONS 2026-10-30,
 - Issue #15 (W1-FAO-05, ước lượng chi phí): chờ DAT duyệt.
 - Câu hỏi chưa trả lời: A1–A5 trong `notes/2026-10-21_fao_can-DAT.md` (A4 là máy cố định) và C2–C5 trong `notes/2026-10-22_fao_can-DAT.md`.
 - **PR #28** (quy trình mới) chưa merge, nên `today.py` trên `main` vẫn báo W1-ALL-01 quá hạn và chưa hiện mục *YÊU CẦU GỬI BẠN*.
+
+DAT: (30/10) Đã xử lý: PR #19, #20, #22–#27 merge 30/10; #30, #31 merge; issue #15 (W1-FAO-05) DAT duyệt 30/10. A1–A7 (21/10) và C1–C5 (22/10) đã có dòng `DAT:`. PR #28 đã merge `main` mới, vẫn chờ LDN review.

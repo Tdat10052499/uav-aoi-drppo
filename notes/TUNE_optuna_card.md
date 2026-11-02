@@ -1,0 +1,113 @@
+# TUNE — Tinh chỉnh siêu tham số bằng Optuna, cùng ngân sách cho DR-PPO, Fixed-PPO và DR-DQN
+
+**Owner:** DAT · **Second reader:** FAO · **Task:** W4-DAT-01 (09–13/11/2026), issue #11 · **Gate:** G1 (15/11)
+**Viết:** 30/10/2026, trước khi chạy. **Trạng thái: nháp**, Claude soạn theo yêu cầu của DAT. Cần FAO đọc và DAT duyệt trước khi chạy (quy tắc 1). Giao thức lấy từ `docs/03` §3, `docs/DECISIONS.md` (30/10) và mã `scripts/tune_ppo.py` (PR #30, #32).
+
+## D. Experiment card
+
+```text
+Experiment ID: TUNE
+Owner / second reader: DAT / FAO
+Thăm dò hay khẳng định: THỦ TỤC. Không kiểm định giả thuyết nào. Kết quả duy nhất là bộ
+siêu tham số cho mỗi learner, ghi vào docs/PREREG.md trước khi khoá tại G1. Không đưa
+giá trị mục tiêu của Optuna vào bài như một kết quả.
+
+Câu hỏi: Với cùng ngân sách tinh chỉnh, bộ siêu tham số nào cho AoI trung bình thấp nhất
+trên tập kiểm định id, cho từng learner?
+
+Learner (mỗi learner một study):
+  1. DR-PPO     --train dr    --masked
+  2. Fixed-PPO  --train fixed --masked
+  3. DR-DQN     --algo dqn --train dr  (không mask; n_envs = 1; buffer 200k, learning_starts 20k)
+  Không tinh chỉnh riêng A4, A5 (DECISIONS 30/10, câu C3 của FAO); chúng dùng bộ của DR-PPO.
+
+Ngân sách (bằng nhau cho cả ba, DECISIONS 30/10):
+  20 trial hoàn thành × 200 000 bước/trial; cùng --sampler-seed 0 (TPE); không pruning.
+  Trial lỗi được ghi "failed" và không tính vào 20; script dừng nếu số lỗi vượt 20.
+  Trial có batch_size không chia hết n_steps × n_envs bị loại (TrialPruned) và không tính.
+  Với --n-envs 8 (cố định, mặc định) ràng buộc này không bao giờ kích hoạt, vì
+  n_steps × 8 ≥ 2048 luôn chia hết cho mọi batch_size (góp ý 3 của FAO).
+
+Không gian tìm kiếm (mã: sample_params, sample_dqn_params trong tune_ppo.py):
+  PPO: learning_rate log[1e-5, 1e-3]; n_steps {256, 512, 1024, 2048};
+       batch_size {64, 128, 256, 512}; ent_coef log[1e-4, 5e-2];
+       gamma {0.95, 0.98, 0.99, 0.995}; clip_range {0.1, 0.2, 0.3}
+  DQN: learning_rate; batch_size {64, 128, 256}; gamma; train_freq {1, 4, 8};
+       target_update_interval {1000, 5000, 10000}; exploration_fraction {0.1, 0.2, 0.3}
+
+Seed:
+  Huấn luyện: --seed 1000 cho mọi trial (seed 0–9 của kết quả chính bị script từ chối).
+  Kiểm định: id, 20 episode, seed 200000–200019 (VAL_SEED_BASE + i).
+  Không dùng bộ test 100000–100099 và không dùng bộ OOD nào.
+
+Mục tiêu: mean AoI (khe) trên 20 episode kiểm định id; nhỏ hơn là tốt hơn.
+Chọn cấu hình: best_trial của mỗi study (best_params.json). Không chọn lại bằng tay.
+
+Điều kiện cố định: --n-envs 8 cho PPO (đổi n_envs thì kích thước rollout và không gian
+  tìm kiếm thực tế cũng đổi); configs/env_default.json; λ = 0,1.
+Máy: laptop DAT, CPU, tuần tự (DQN buffer 200k cần ≈ 7,7 GB RAM).
+Chi phí ước lượng (Project Agreement §5, chưa đo DQN trên máy DAT):
+  PPO 2 × 4 M bước ≈ 6,2 giờ (358,4 bước/s); DQN 4 M bước ≈ 3,1–10,9 giờ.
+  Thời gian của TUNE không phải số đo cho bài.
+
+Thất bại: giữ mọi run_record "failed" trong results/raw/TUNE/; Ctrl+C đóng cả record
+  của trial và của study (PR #30).
+Trường raw cần: trials.csv, best_params.json, run_record.json của study và từng trial
+  (kèm SHA256 checkpoint).
+
+Giới hạn phải ghi trong bài (góp ý số 3 của FAO ở PR #30):
+  - Mỗi trial chỉ có 1 seed huấn luyện và 20 episode kiểm định, nên giá trị mục tiêu
+    có nhiễu. Thứ hạng giữa các trial gần nhau có thể không ổn định.
+  - Tinh chỉnh ở 200k bước, còn kết quả chính chạy khoảng 2 M bước, nên Optuna có thể
+    ưu tiên cấu hình học nhanh lúc đầu.
+  - Lịch của DQN co giãn theo tổng số bước (góp ý 2 của FAO): exploration_fraction là tỉ
+    lệ của total_timesteps (0,1 nghĩa là ε giảm trong 20k bước khi tinh chỉnh nhưng trong
+    200k bước ở kết quả chính), và learning_starts 20k chiếm 10% ngân sách khi tinh chỉnh
+    nhưng 1% ở kết quả chính. PPO không có lịch phụ thuộc tổng bước (learning_rate,
+    clip_range là hằng).
+  - Vì vậy hai nhược điểm đầu áp dụng như nhau cho DR-PPO và Fixed-PPO, nên không làm lệch
+    so sánh H1. Nhưng với RQ3 (DR-DQN so với DR-PPO), bộ siêu tham số của DQN chuyển sang
+    2 M bước kém trung thành hơn của PPO, tức sai lệch có thể **bất lợi cho DQN**. Bài phải
+    ghi chiều lệch này khi diễn giải RQ3. Không trường hợp nào chứng minh mỗi learner đạt
+    cấu hình tốt nhất có thể.
+
+Kết quả kỳ vọng: ba file best_params.json; giá trị mục tiêu tốt nhất của mỗi learner
+  thấp hơn Random trên id (126,24 khe, EXP-01). Lưu ý (góp ý 1 của FAO): 126,24 là Random
+  trên 100 seed test 100000–100099 (results/processed/heuristics_summary_2026-10-16.md),
+  còn mục tiêu Optuna tính trên 20 seed 200000–200019; con số chỉ là ngưỡng thô. Đo Random
+  và TSP trên đúng 20 seed kiểm định cần sửa mã (PR riêng), làm trước W4 nếu kịp.
+  Nếu không study nào thấp hơn Random,
+  dừng lại và báo DAT trước G1, vì có thể chính sách suy biến (kiểm bằng
+  check_degenerate.py và plot_trajectory.py trên model của best_trial).
+```
+
+## Lệnh
+
+```bash
+python scripts/tune_ppo.py --experiment-id TUNE --train dr    --n-trials 20 --masked
+python scripts/tune_ppo.py --experiment-id TUNE --train fixed --n-trials 20 --masked
+python scripts/tune_ppo.py --experiment-id TUNE --algo dqn --train dr --n-trials 20
+```
+
+Lưu ý: W4-DAT-01 trong `schedule/tasks.json` ghi lệnh PPO **thiếu `--masked`** và chưa có lệnh DQN. Kết quả chính dùng MaskablePPO, nên card này dùng lệnh có `--masked`; PR #34 sửa lịch cho khớp.
+
+## Second reader
+
+DAT (01/11): đã đưa cả 4 góp ý của FAO vào card (điều kiện cố định n_envs 8, ràng buộc batch, ngưỡng Random thô, chiều lệch của DQN); `docs/03` §3 cập nhật DR-DQN. Không đổi lệnh hay ngân sách, nên chữ ký FAO ngày 31/10 vẫn giữ.
+
+FAO: đọc card, xác nhận lệnh khớp `docs/03` §3 và DECISIONS 30/10, ký dòng dưới trước khi DAT chạy.
+
+Second reader (FAO) đã đọc card: đã đọc; lệnh, ngân sách, seed và không gian tìm kiếm khớp `scripts/tune_ppo.py` (main 3929f64, cộng PR #32), `docs/03` §3 và DECISIONS 30/10. Có 4 góp ý dưới đây, không chặn việc chạy.  ngày: 31/10/2026
+
+### Góp ý của FAO (31/10)
+Đã đối chiếu từng dòng của card với mã:
+- DQN: `n_envs = 1` (dòng 151), `--dqn-buffer-size 200000` (dòng 139), `--dqn-learning-starts 20000` (dòng 141), `--masked` bị từ chối với DQN (dòng 147–148).
+- Seed: 0–9 bị từ chối (dòng 152–153); kiểm định dùng `VAL_SEED_BASE + i` trên `SUITES["id"]`.
+- Dừng khi số trial lỗi vượt `--n-trials` (dòng 225–226). Ctrl+C đóng cả record của trial và của study.
+- Chi phí: 8 M / 358,4 = 6,2 h; 4 M / 358,4 = 3,1 h; 4 M / (358,4 / 3,5) = 10,9 h. Không tính thời gian kiểm định 20 episode mỗi trial.
+
+Góp ý:
+1. **Ngưỡng Random lấy từ bộ seed khác.** 126,24 khe là Random trên `id` với 100 seed test 100000–100099 (`results/processed/heuristics_summary_2026-10-16.md`). Mục tiêu của Optuna tính trên 20 seed kiểm định 200000–200019. Vẫn dùng được làm ngưỡng thô, nhưng card nên ghi rõ điều này. Tốt hơn nữa là đo Random (và TSP) trên đúng 20 seed kiểm định trước khi chạy, để mức "thấp hơn Random" so trên cùng kịch bản.
+2. **Lịch thăm dò của DQN co giãn theo tổng số bước.** `exploration_fraction` là tỉ lệ của `total_timesteps`. Ví dụ 0,1 nghĩa là ε giảm trong 20k bước khi tinh chỉnh (200k), nhưng trong 200k bước ở kết quả chính (2 M). Tương tự, `learning_starts` 20k chiếm 10% ngân sách khi tinh chỉnh nhưng chỉ 1% ở kết quả chính. Đề xuất thêm vào mục "Giới hạn phải ghi trong bài". PPO không có lịch phụ thuộc tổng bước (`learning_rate` và `clip_range` là hằng), nên không bị ảnh hưởng.
+3. **Ràng buộc batch_size không bao giờ kích hoạt với `n_envs 8`.** `n_steps × 8 ≥ 2048` luôn chia hết cho 64, 128, 256 và 512, nên không trial PPO nào bị loại. Câu trong card vẫn đúng nhưng chỉ có tác dụng khi đổi `--n-envs`. Card nên ghi `--n-envs 8` (mặc định) như một điều kiện cố định, vì `n_envs` đổi thì kích thước rollout và không gian tìm kiếm thực tế cũng đổi.
+4. **`docs/03` §3 mới nêu DR-PPO và Fixed-PPO.** Việc tinh chỉnh DR-DQN với cùng ngân sách hiện chỉ có trong DECISIONS 30/10. Đề xuất DAT cập nhật `docs/03` §3, hoặc ghi vào PREREG khi khoá, để người đọc không thấy hai văn bản mâu thuẫn.
