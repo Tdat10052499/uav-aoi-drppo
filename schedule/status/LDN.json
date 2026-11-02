@@ -34,6 +34,11 @@
       "note": "Form B Yi 2020 nháp xong; còn Agarwal 2021",
       "state": "done"
     },
+    "W1-LDN-03": {
+      "date": "2026-11-02",
+      "evidence": "Laptop LDN, commit 8b1b5a3: tests/test_core.py 15/15; smoke PASS (results/raw/SMOKE/20261102-214737, không commit); environment/machine_notes.md dòng LDN 02/11",
+      "state": "done"
+    },
     "W1-LDN-04": {
       "date": "2026-10-31",
       "note": "Q1–Q3 đã chạy trên arXiv, OpenAlex, Scholar; sàng lọc nháp chờ LDN duyệt; IEEE Xplore/Scopus không truy cập được (yêu cầu DAT 31/10)",

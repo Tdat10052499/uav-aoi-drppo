@@ -21,6 +21,8 @@ FAO, 30/10/2026: tốc độ trên Laptop FAO, CPU: MaskablePPO `--n-envs 8`, 10
 
 DAT, 25/10/2026: sửa cấu hình Laptop DAT theo ảnh Settings → System → About (trước đó ghi nhầm i7-13620H / 16 GB): AMD Ryzen AI 7 350, 32 GB RAM, RTX 5060 Laptop 8 GB, SSD 954 GB. Đã chạy 3 lệnh trong venv: Python 3.12.0, NumPy 2.5.4, torch 2.14.1+cpu (`cuda.is_available()` = False), gymnasium 1.4.0, SB3 2.9.0, sb3-contrib 2.9.0; `tests/test_core.py` 14/14, smoke test PASS (`results/raw/SMOKE/20261025-114538`, thư mục không commit). Bản torch có CUDA cho RTX 5060 chưa cài; cài khi đo GPU ở W1-DAT-05.
 
+LDN, 02/11/2026 (W1-LDN-03, issue #13): Laptop LDN, venv `.venv`, commit 8b1b5a3. NumPy 2.4.6, torch 2.14.1+cpu (`cuda.is_available()` = False), khớp dòng bảng ở trên; phiên bản Python không chạy lại lần này. `tests/test_core.py` 15/15, smoke test PASS: digest manifest khớp ở 5 bộ, TSP tái lập tham chiếu ở 5 episode × 5 bộ (`results/raw/SMOKE/20261102-214737`, thư mục không commit). NumPy 2.4.6 khác bản tham chiếu 2.5.3 nhưng không làm lệch kết quả smoke test.
+
 FAO, 20/10/2026: cấu hình Laptop DAT do DAT cung cấp (thêm SSD 512 GB NVMe); OS và phiên bản phần mềm chờ DAT chạy 3 lệnh ở trên. RTX 5060 (thế hệ Blackwell) có thể cần bản torch dựng với CUDA ≥ 12.8 — cần kiểm khi cài.
 
 FAO, 19/10/2026: gymnasium 1.4.0, stable-baselines3 2.9.0, sb3-contrib 2.9.0; pip.exe bị Application Control chặn, dùng python -m pip.
