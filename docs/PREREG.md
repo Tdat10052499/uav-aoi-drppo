@@ -71,7 +71,7 @@ Bất kỳ thay đổi nào sau ngày khoá: ghi vào DECISIONS.md kèm lý do
 | Seed đánh giá | 100 episode, 100000–100099 (`scenarios.eval_seeds`), cùng 100 kịch bản cho mọi phương pháp. Kiểm định H1 không ghép cặp: đơn vị là seed huấn luyện (§7) |
 | Chính sách khi đánh giá | tất định (`deterministic=True`), có action mask với MaskablePPO (`SB3Policy`) |
 
-Seed 0 và 1 trùng với pilot EXP-02 (300k bước). Pilot chỉ dùng để kiểm pipeline, không gộp vào phân tích EXP-03. EXP-02b (DR seed 0, 2M bước, `notes/EXP-02b_diag_2M_card.md`) chỉ là chẩn đoán cho §10: **không** dùng thay EXP-03 seed 0; seed 0 được chạy lại tại commit khoá. Nên merge PR khoá trước khi bất kỳ ai xem số OOD của EXP-02b.
+Seed 0 và 1 trùng với pilot EXP-02 (300k bước). Pilot chỉ dùng để kiểm pipeline, không gộp vào phân tích EXP-03. EXP-02b (DR seed 0, 2M bước, `notes/EXP-02b_diag_2M_card.md`) chỉ là chẩn đoán cho §10: **không** dùng thay EXP-03 seed 0; seed 0 được chạy lại tại commit khoá. Số OOD của EXP-02b (1 seed) đã được ghi vào thẻ trước khi khoá (fffaff5, 03/11). Ngưỡng §8 đã chốt trước đó (d85d7b2), và H1, H2, kiểm định và số seed không đổi sau khi các số này xuất hiện.
 
 ## 5. Learner và ngân sách
 
@@ -135,7 +135,7 @@ Nguồn gốc: LDN chọn ngày 03/11/2026, trước khi LDN thấy bất kỳ s
 
 ## 10. Điều kiện để bắt đầu EXP-03
 
-1. EXP-02b (DR-PPO seed 0, 2M bước, `notes/EXP-02b_diag_2M_card.md`) có Ā(DR, `id`) ≤ 63,1 khe (ngưỡng của tiêu chí G1 số 2, `docs/05` §5). Nếu 63,1 < Ā ≤ 90 thì nhóm quyết định ngày 05/11. Nếu Ā > 90 thì bỏ FJCAI. Pilot EXP-02 (2 seed, 300k bước) **không** đạt "G1 sớm": Ā(DR, `id`) = 126,1 và 123,4 (thẻ EXP-02b, commit f1b3c7c).
+1. EXP-02b (DR-PPO seed 0, 2M bước, `notes/EXP-02b_diag_2M_card.md`) có Ā(DR, `id`) ≤ 63,1 khe (ngưỡng của tiêu chí G1 số 2, `docs/05` §5). Nếu 63,1 < Ā ≤ 90 thì nhóm quyết định ngày 05/11. Nếu Ā > 90 thì bỏ FJCAI. Pilot EXP-02 (2 seed, 300k bước) **không** đạt "G1 sớm": Ā(DR, `id`) = 126,1 và 123,4 (thẻ EXP-02b, commit f1b3c7c). EXP-02b: Ā(DR, `id`) = 49,80, **đạt** (fffaff5).
 2. PR khoá này đã merge và tag `prereg-lock` đã có.
 3. Thẻ `notes/EXP-03_main_card.md` đã được FAO duyệt.
 
