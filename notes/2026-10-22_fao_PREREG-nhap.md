@@ -1,6 +1,6 @@
 # Bản nháp PREREG (chuẩn bị cho W4-FAO-01) — 22/10/2026
 
-> FAO soạn trước, khi chưa có kết quả pilot và tinh chỉnh. **Chưa khoá, chưa có hiệu lực.** Cập nhật 30/10 theo các PR đã merge và `docs/DECISIONS.md` ngày 30/10. Mọi giá trị dưới đây chép từ `docs/01`, `docs/03`, `configs/env_default.json`, `data/eval_manifest.json` và mã nguồn tại commit 63fca04. Không có giá trị nào là số đo mới.
+> FAO soạn trước, khi chưa có kết quả pilot và tinh chỉnh. **Chưa khoá, chưa có hiệu lực.** Cập nhật 30/10 và 03/11 theo các PR đã merge và `docs/DECISIONS.md` (30/10, 01/11). Mọi giá trị dưới đây chép từ `docs/01`, `docs/03`, `configs/env_default.json`, `data/eval_manifest.json` và mã nguồn tại commit 63fca04. Không có giá trị nào là số đo mới.
 >
 > Ô `CHỜ` là phần FAO không được tự quyết: mỗi ô ghi người quyết và task tương ứng. Tại W4 (09–13/11), FAO chép phần đã chốt sang `docs/PREREG.md` theo mẫu `docs/03` §9. Second reader: LDN. Tại G1, DAT tạo tag `prereg-lock`.
 
@@ -11,11 +11,11 @@
 | Ngày khoá | CHỜ: G1, 15/11/2026 |
 | Commit | CHỜ: commit mang tag `prereg-lock` (DAT, W4-ALL-01) |
 | Phương án | CHỜ: A hoặc B, quyết tại G1 và ghi `PLAN: A/B` vào `docs/DECISIONS.md` |
-| PR phải merge trước khi khoá | Đã merge: #18, #20, #23, #29 (bỏ preset `light`), #30 (`tune_ppo.py`), #31 (`evaluate.py` kiểm `single_speed`, 86459a3). Sau mốc khoá không sửa `src/` (W5-DAT-01). |
+| PR phải merge trước khi khoá | Đã merge: #18, #20, #23, #29 (bỏ preset `light`), #30 (`tune_ppo.py`), #31 (`evaluate.py` kiểm `single_speed`, 86459a3), #32 (`_1spd` trong tên study, 8963642), #35 (chú thích `use_action_mask_clip`, 4409cf4). Còn mở (03/11): #33 (chỉ kiểm thử), #34 (lịch), #37 (`evaluate.py --seed-base`). Sau mốc khoá không sửa `src/` (W5-DAT-01). |
 
 ## 2. Cấu hình môi trường (EnvConfig)
 
-- File: `configs/env_default.json`, SHA256 `1b271b22598850b75ce5634130135a66450329e0f0c5fb12979eb4a5becc65fb` (kiểm lại ngày 30/10, không đổi sau #23, #29). A5 dùng `configs/a5_single_speed.json`.
+- File: `configs/env_default.json`, SHA256 `1b271b22598850b75ce5634130135a66450329e0f0c5fb12979eb4a5becc65fb` (kiểm lại ngày 03/11, không đổi sau #23, #29, #35). A5 dùng `configs/a5_single_speed.json`.
 - Giá trị:
 
 | Tham số | Giá trị | Nguồn |
@@ -32,7 +32,7 @@
 | count_norm | 3,0 | thiết kế |
 | single_speed | false (chỉ A5 = true) | PR #23 (đã merge) |
 
-- `use_action_mask_clip` có trong file cấu hình nhưng mã không dùng. CHỜ DAT: xoá trước khi khoá, hoặc ghi chú là trường không có tác dụng.
+- `use_action_mask_clip` có trong file cấu hình nhưng mã không dùng. Giữ trường để SHA256 không đổi; chú thích trong `env.py` ghi rõ là không có tác dụng (DECISIONS 30/10, PR #35).
 
 ## 3. Phân phối huấn luyện và bộ đánh giá
 
@@ -58,7 +58,7 @@ Digest đầy đủ nằm trong `data/eval_manifest.json`, sinh ngày 17/10/2026
 | Seed huấn luyện | 0–9 cho EXP-03, EXP-04; 0–4 cho EXP-05, EXP-06, EXP-07 (Phương án B, `docs/03` §3, §7) |
 | Seed reset môi trường khi huấn luyện | `seed × 1000 + rank`, rank < n_envs (`train_ppo.py`) |
 | Seed đánh giá | 100 episode, 100000–100099, dùng chung mọi phương pháp, nên so sánh được ghép cặp theo kịch bản |
-| Seed đánh giá trong lúc tinh chỉnh | Bộ `id`, seed 200000 + i, i < `--val-episodes` (mặc định 20) (`VAL_SEED_BASE` trong `scripts/tune_ppo.py`). Seed huấn luyện khi tinh chỉnh: 1000 (script từ chối 0–9). |
+| Seed đánh giá trong lúc tinh chỉnh | Bộ `id`, seed 200000 + i, i < `--val-episodes` (mặc định 20) (`VAL_SEED_BASE` trong `scripts/tune_ppo.py`). Seed huấn luyện khi tinh chỉnh: 1000 (script từ chối 0–9). Mức tham chiếu Random/TSP trên cùng 20 seed: `evaluate.py --seed-base 200000` (PR #37, chờ merge). |
 
 ## 5. Learner, thực nghiệm và ngân sách
 
@@ -72,9 +72,10 @@ Digest đầy đủ nằm trong `data/eval_manifest.json`, sinh ngày 17/10/2026
 
 - **Bước mỗi lần huấn luyện:** CHỜ. Điểm xuất phát là 2 M (`docs/03` §3). Chốt theo steps/s của W1-DAT-05 và tiêu chí G1 số 6 (xong EXP-03 đến EXP-07 trước 13/12). Nếu phải giảm thì giảm bước trước, giảm seed sau, tối thiểu 5 seed (`docs/03` §8).
 - **n_envs:** 8 cho PPO (mặc định `train_ppo.py`); 1 cho DQN (script buộc như vậy).
-- **Ngân sách tinh chỉnh:** 20 lượt × 200k bước cho mỗi nhánh DR-PPO, Fixed-PPO và DR-DQN; cùng sampler seed; không pruning; chỉ đánh giá trên `id` (`docs/03` §3, DECISIONS 30/10, `tune_ppo.py`). CHỜ: số lượt cuối cùng ghi trong card TUNE của W4-DAT-01.
+- **Ngân sách tinh chỉnh:** 20 lượt hoàn thành × 200k bước cho mỗi nhánh DR-PPO, Fixed-PPO và DR-DQN; cùng sampler seed 0 (TPE); không pruning; chỉ đánh giá trên `id`; `--n-envs 8` cố định cho PPO (`docs/03` §3, DECISIONS 30/10, `notes/TUNE_optuna_card.md`, FAO đã đọc 31/10).
+- **Giới hạn của tinh chỉnh (card TUNE):** 1 seed huấn luyện và 20 episode mỗi lượt; 200k bước so với ngân sách chính; lịch ε và `learning_starts` của DQN co giãn theo tổng số bước, nên sai lệch có thể bất lợi cho DQN ở RQ3.
 - **DQN:** buffer_size = 200k, learning_starts = 20k; có tinh chỉnh bằng Optuna cùng ngân sách PPO (DECISIONS 30/10, trả lời A1, A2).
-- **Ablation:** mặc định không tinh chỉnh riêng; dùng siêu tham số của DR-PPO. Ghi là giới hạn.
+- **Ablation:** A4, A5 không tinh chỉnh riêng, dùng siêu tham số của DR-PPO (DECISIONS 30/10). Không thêm ablation "pool cố định K bố trí" (DECISIONS 30/10). Ghi là giới hạn.
 
 ## 6. Siêu tham số cuối
 
@@ -98,7 +99,7 @@ CHỜ DAT (W4-DAT-01). Chép bảng từ kết quả Optuna trên `id` vào đâ
 | H1 | deg(DR-PPO) < deg(Fixed-PPO) trên từng bộ OOD | Hoán vị một phía, 20 000 hoán vị; Holm trên 4 bộ; α = 0,05. "Ủng hộ H1" nếu ≥ 3/4 bộ có ý nghĩa sau hiệu chỉnh | 10 seed/nhóm |
 | H2 | Ā(DR-PPO) < Ā(TSP) trên `ood_cluster` | Hoán vị một phía; Cliff's δ | 10 seed so với 100 episode |
 | H3 | Quan sát căn tâm cần cho H1 | Chỉ mô tả (EXP-06) | 5 seed |
-| RQ3 | DR-DQN so với DR-PPO | Chưa đặt hướng (`notes/EXP-04_dqn_card.md`). CHỜ: viết hướng trước EXP-04 hoặc ghi rõ là chỉ mô tả | 10 seed |
+| RQ3 | DR-DQN so với DR-PPO | Chưa đặt hướng (`notes/EXP-04_dqn_card.md`). CHỜ DAT: viết hướng trước EXP-04 hoặc ghi rõ là chỉ mô tả. Khi diễn giải phải nêu chiều lệch của tinh chỉnh (card TUNE) | 10 seed |
 
 - deg_i(s) = (Ā_i(s) − Ā_i(id)) / Ā_i(id), tính theo từng seed. Ā tính trên toàn T, kể cả khi dừng sớm.
 - Luôn báo: trung bình kèm 95% CI bootstrap (10 000 mẫu), IQM, Cliff's δ. Welch t-test chỉ là kiểm tra phụ.
