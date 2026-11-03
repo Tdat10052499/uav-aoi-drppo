@@ -6,6 +6,11 @@
       "evidence": "PR #30 review FAO 30/10: --help/CLI có --experiment-id, --train, --n-trials; chạy trên laptop FAO",
       "state": "approved"
     },
+    "W1-LDN-03": {
+      "date": "2026-11-03",
+      "evidence": "Issue #13 có output; machine_notes dòng LDN 02/11 khớp. FAO chạy lại tại 8b1b5a3 trong container Linux (không torch): tests 15/15, SMOKE TEST PASSED (5 bộ digest khớp, TSP tái lập 5×5)",
+      "state": "approved"
+    },
     "W2-DAT-02": {
       "date": "2026-10-30",
       "evidence": "PR #30 review FAO 30/10: 2 lượt DR + 2 lượt Fixed (mask) chạy không lỗi trên laptop FAO",
