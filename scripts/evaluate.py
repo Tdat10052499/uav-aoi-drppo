@@ -31,6 +31,30 @@ FIELDS = ["method", "train_seed", "suite", "episode_seed", "mean_aoi", "peak_aoi
           "boundary_hits", "early_termination", "N", "L", "E_max", "return"]
 
 
+def _patch_torch_load_buffered() -> None:
+    """Make torch.load read zip-member streams into memory first.
+
+    SB3 passes a ZipExtFile (stream inside model.zip) to torch.load. With torch 2.14.1+cpu on
+    Windows this fails with "PytorchStreamReader failed reading file .data/serialization_id"
+    although the checkpoint is intact (SHA256 matches run_record; see notes 2026-11-03).
+    Reading the member into a BytesIO first gives the same tensors and avoids the bug.
+    """
+    import io
+    import torch
+
+    if getattr(torch.load, "_uavaoi_buffered", False):
+        return
+    _orig = torch.load
+
+    def _load(f, *args, **kwargs):
+        if hasattr(f, "read") and not isinstance(f, io.BytesIO):
+            f = io.BytesIO(f.read())
+        return _orig(f, *args, **kwargs)
+
+    _load._uavaoi_buffered = True
+    torch.load = _load
+
+
 class SB3Policy:
     """Wrap a trained (Maskable)PPO / DQN model; deterministic actions."""
 
@@ -38,6 +62,7 @@ class SB3Policy:
         if not os.path.isfile(path):
             raise FileNotFoundError(f"model file not found: {path} (no silent fallback)")
         self.masked = False
+        _patch_torch_load_buffered()
         try:
             from sb3_contrib import MaskablePPO
             self.model = MaskablePPO.load(path, device="cpu")
