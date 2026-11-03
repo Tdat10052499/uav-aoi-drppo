@@ -11,7 +11,7 @@ Ngày khoá: 04/11/2026 (ngày merge PR khoá)  Commit: commit merge của PR kh
 Cấu hình môi trường (EnvConfig): configs/env_default.json (SHA256 ở §2)
 Siêu tham số cuối: mặc định của scripts/train_ppo.py, KHÔNG tinh chỉnh Optuna (§6)
 Số seed: 10 (0–9) mỗi nhánh  Số bước: 2 000 000  Bộ seed đánh giá: 100000–100099
-Ngưỡng ý nghĩa thực tiễn cho H1: CHỜ LDN (§8)
+Ngưỡng ý nghĩa thực tiễn cho H1: δ = 0,10 trên Δ_s (§8)
 Tiêu chí loại một lần chạy: §9
 Bất kỳ thay đổi nào sau ngày khoá: ghi vào DECISIONS.md kèm lý do
 ```
@@ -113,9 +113,16 @@ Mặc định của `scripts/train_ppo.py` cho cả hai nhánh. Không tinh ch�
 
 ## 8. Ngưỡng ý nghĩa thực tiễn cho H1
 
-**CHỜ LDN** (`notes/yeu-cau/2026-11-03_dat_can-FAO_khoa-PREREG-som.md` B2). Phải điền trước khi merge PR khoá, và chọn khi chưa thấy kết quả EXP-03. Số pilot EXP-02 không được dùng để chọn ngưỡng.
+Với mỗi bộ OOD s, Δ_s = mean_i deg_Fixed,i(s) − mean_i deg_DR,i(s), trung bình qua 10 seed mỗi nhánh (deg theo §7). Bộ s **đạt H1** khi:
 
-Ngưỡng: ____
+- (a) p sau Holm < 0,05 (kiểm định hoán vị một phía trên hiệu trung bình, `stats.permutation_test`), **và**
+- (b) Δ_s ≥ **0,10**, tức DR suy giảm ít hơn Fixed ít nhất 10 điểm phần trăm so với Ā `id` của chính nó.
+
+**"Ủng hộ H1"** khi có ≥ 3/4 bộ đạt. Luôn báo kèm 95% CI bootstrap của Δ_s, IQM của deg từng nhánh và Cliff's δ. CI và IQM là thông tin, không phải điều kiện quyết định.
+
+Ngưỡng: **δ = 0,10** (hiệu tuyệt đối của trung bình deg).
+
+Nguồn gốc: LDN chọn ngày 03/11/2026, trước khi LDN thấy bất kỳ số nào của EXP-02 hoặc EXP-03. DAT đã thấy kết quả pilot EXP-02 (không đạt G1 sớm) nhưng không tham gia chọn ngưỡng. Lý do chọn hiệu tuyệt đối, trung bình, điểm ước lượng và 0,10 ghi ở B2 của `notes/yeu-cau/2026-11-03_dat_can-FAO_khoa-PREREG-som.md`. Ngưỡng không được đổi sau khi khoá.
 
 ## 9. Tiêu chí loại một lần chạy
 
