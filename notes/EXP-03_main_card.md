@@ -46,3 +46,19 @@ foreach ($s in 0..9) { python scripts/train_ppo.py --experiment-id EXP-03 --trai
 ```
 
 Đánh giá từng model theo mẫu lệnh của EXP-02, với `--experiment-id EXP-03`.
+
+## Second reader (FAO), 03/11/2026
+
+Đã đọc card và đối chiếu với `docs/PREREG.md` (PR #38), `notes/EXP-02_pilot_card.md`, `scripts/train_ppo.py` và `scripts/analyze.py` tại 7923c39. Lệnh, ngân sách, seed và bộ đánh giá khớp PREREG. **Duyệt khi DAT xử lý mục 1.** Các mục 2–7 không chặn.
+
+1. **Thiếu 3 trường của Form D** (`notes/workbook_forms.md`, có trong EXP-02): "Kết quả kỳ vọng nếu đúng", "Kết quả làm yếu" và "Tiêu chí tiếp tục/dừng". Card khẳng định nên phải nói trước kết quả nào làm yếu H1. Đề xuất: kỳ vọng = H1 có ý nghĩa sau Holm ở ≥ 3/4 bộ OOD và đạt ngưỡng PREREG §8; làm yếu = < 3/4 bộ, hoặc đạt thống kê nhưng dưới ngưỡng (khi đó bài báo cáo mô tả, không tuyên bố H1); dừng = điều kiện 10/11 ở PREREG §10.
+2. **Chi phí:** 40 M / 358,4 bước/s = 31,0 h nếu chạy tuần tự (`Project Agreement.md` §5), không phải 29 h. Mức 17–20 h khi chạy 2 tiến trình song song chưa đo, vì hai tiến trình × 8 env cùng chia CPU.
+3. **Thời gian:** `steps_per_s` của các lần chạy song song không dùng làm số đo thời gian cho bài (PREREG §5, quy tắc 4 CLAUDE.md).
+4. **Heuristic:** đánh giá lại Random, Greedy-AoI, TSP tại commit `prereg-lock` với `--experiment-id EXP-03`, rồi so với EXP-01 bằng `scripts/compare_events.py`. Lý do: PREREG §9 tiêu chí 4 loại số liệu ở commit khác commit khoá.
+5. **Lệnh đánh giá** nên ghi rõ thay cho "theo mẫu EXP-02", để nhãn không lẫn giữa hai nhánh:
+   `python scripts/evaluate.py --experiment-id EXP-03 --model runs/EXP-03/<run-id>/model.zip --label dr_ppo --train-seed <s>` (Fixed: `--label fixed_ppo`), và
+   `python scripts/analyze.py results/raw/EXP-03/*/events.csv --proposed dr_ppo --fixed fixed_ppo --heuristic tsp --out results/processed/EXP-03_summary.md`.
+6. **PowerShell:** chạy trong venv đã kích hoạt, hoặc thay `python` bằng `.\.venv\Scripts\python.exe`. Vòng `foreach` vẫn chạy tiếp khi một seed lỗi, đúng ý "giữ record failed"; seed thay thế theo PREREG §9 (`seed + 100`).
+7. **Seed 0 và 1 trùng pilot EXP-02** (300k bước). Không gộp model pilot vào EXP-03. Quyết định chạy EXP-03 dựa trên Ā(id) của pilot, không dựa trên deg, nên không ảnh hưởng H1.
+
+Second reader (FAO) đã đọc card: có, chờ mục 1  ngày: 03/11/2026
