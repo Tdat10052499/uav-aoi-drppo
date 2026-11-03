@@ -67,6 +67,10 @@ DAT: (02/11) Đã sửa báo cáo G0 theo ý 1–3: bỏ "tốc độ là biến
   2. Số bài: hàng #2 và dòng tóm tắt ghi "14 bài trong ma trận", nhưng `docs/04` §5 có **12 hàng** (không kể "Đề tài này").
   3. Bảng "Việc phải xong trước họp 04/11": dòng PRISMA vẫn ghi "thay số ≈" (đã xong); dòng cột 6 nên ghi trạng thái (FAO 4, DAT 3, LDN 5 qua PR #40).
   4. Quyết định 03/11 (FJCAI, DECISIONS trong PR #38) chưa vào báo cáo. Báo cáo vẫn ghi "Optuna TUNE (W4)", "Ngày quyết định tiếp theo: G1 15/11" và 163,2 M bước theo Phương án B. GVHD sẽ đọc thấy kế hoạch cũ. Đề xuất: thêm một dòng nêu kế hoạch FJCAI, PREREG khoá 04/11 và điều kiện EXP-02b, hoặc ghi rằng phần tính toán được thay bằng `docs/PREREG.md`.
+  5. (bổ sung 03/11 chiều) LDN đã duyệt sàng lọc (`search_log_LDN.md` §7). Có 2 thay đổi cần đưa vào báo cáo:
+     - Số giữ lại là **58** (A 10, B 13, C 35), loại ở bước tóm tắt **29**. Báo cáo đang ghi 57 (A 9, B 12, C 36).
+     - **A10 Liu et al. 2025 (IEEE TVT)**, trước đây là C1, có AoI, năng lượng UAV và nêu "transferability" trên kịch bản tổng hợp và thành phố thật. Nên thêm vào mục "Giải thích thay thế" và "Trùng lặp" như một rủi ro còn mở cho tiêu chí #2, cạnh Gong 2024. LDN đề xuất tự đọc A10; DAT có thể đổi người đọc.
+     - **Cập nhật 03/11, 17:30: LDN đã đọc toàn văn A10** (`notes/reading/liu2025resource_LDN.md`, bản thảo đã chấp nhận trên Aaltodoc). Chữ "transferability" chỉ là một câu khẳng định ở §VII-A3; bài không có thí nghiệm huấn luyện ở một kịch bản rồi đánh giá ở kịch bản khác mà không huấn luyện lại. Tốc độ cố định 16,67 m/s. Hàng ma trận: Có / Không / Không rõ / Không / Không / Không. **A10 không phải rủi ro cho tiêu chí #2**; báo cáo chỉ cần ghi đã đọc, không cần thêm vào mục "Trùng lặp".
 - Còn mở, không do báo cáo: G0-2 (Gong, Lu, Toure chưa có Form B; hạn 03/11) và G0-6 (OH-DRL).
 - Kết luận của LDN không đổi: #1 **chưa đạt**; #2 **chưa kết luận được**; #3 chờ GVHD. Theo đề xuất trong báo cáo, buổi họp 04/11 rơi vào nhánh "tiếp tục có điều kiện".
 - **Hạn:** trước họp 04/11.

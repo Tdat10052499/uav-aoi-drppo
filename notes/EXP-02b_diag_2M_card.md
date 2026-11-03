@@ -47,3 +47,17 @@ python scripts/train_ppo.py --experiment-id EXP-02b --train dr --masked --seed 0
 # sau khi xong (thay <run> bằng thư mục mới trong runs\EXP-02b):
 python scripts/evaluate.py --experiment-id EXP-02b --run-id eval_dr_s0_2M --model runs\EXP-02b\<run>\model.zip --label dr_ppo --train-seed 0 --episodes 100
 ```
+
+## Kết quả (03/11/2026, đánh giá trên laptop DAT, commit 9152d06 — nhánh PR #39)
+Huấn luyện: `runs/EXP-02b/dr_ppo_mask_lam0.1_s0_20261103-153705`. Đánh giá: `results/raw/EXP-02b/eval_dr_s0_2M` (100 episode mỗi bộ).
+
+| Bộ | DR s0 300k (EXP-02) | DR s0 2M (EXP-02b) | deg 2M |
+|---|---|---|---|
+| id | 126,08 | **49,80** | — |
+| ood_cluster | 124,03 | 40,98 | −0,18 |
+| ood_density | 129,50 | 93,24 | +0,87 |
+| ood_area | 138,91 | 127,04 | +1,55 |
+| ood_energy | 147,69 | 146,36 | +1,94 |
+
+- Theo tiêu chí ghi trước: Ā(DR, id) = 49,80 ≤ 63,1 → **H-a được ủng hộ**; hành động: khoá PREREG, chạy EXP-03 (2M).
+- Giới hạn: 1 seed, mô tả; tương quan số bước–Ā, chưa phải nhân quả; không kết luận H1 (chưa có Fixed 2M). DR vẫn kém TSP/Greedy (~29) khoảng 1,7 lần.
