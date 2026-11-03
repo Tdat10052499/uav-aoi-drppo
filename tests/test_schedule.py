@@ -157,6 +157,37 @@ def test_render_contains_all_tasks():
         assert f"`{t['id']}`" in md, t["id"]
 
 
+def test_parse_requests_answered_by_recipient_line():
+    text = ("# FAO → DAT\n\n## A. Nhóm\n\n### A1. Buffer DQN\n- chi tiết\nDAT: giữ 200k\n\n"
+            "### A2. Optuna cho DQN\n- FAO: nhắc lại\n\n## C1. PR #23\n**DAT:** đã merge\n")
+    items = today.parse_requests(text, "DAT")
+    assert [(i["item"], i["answered"]) for i in items] == [("A1", True), ("A2", False), ("C1", True)]
+
+
+@with_tmp_status
+def test_inbox_and_outbox_from_request_files():
+    old = today.REQ_DIRS
+    with tempfile.TemporaryDirectory() as tmp:
+        with open(os.path.join(tmp, "2026-10-27_ldn_can-DAT_steps.md"), "w", encoding="utf-8") as f:
+            f.write("## A1. steps/s trên máy cố định\n\n## A2. Đã có\nDAT: xong\n")
+        with open(os.path.join(tmp, "2026-10-30_fao_can-DAT_sau.md"), "w", encoding="utf-8") as f:
+            f.write("## A1. Chưa tới ngày\n")
+        today.REQ_DIRS = (tmp,)
+        try:
+            dat = today.build_today(S, "DAT", D("2026-10-28"))
+            ldn = today.build_today(S, "LDN", D("2026-10-28"))
+        finally:
+            today.REQ_DIRS = old
+    assert [(q["from"], q["item"]) for q in dat["inbox"]] == [("LDN", "A1")]
+    assert [(q["to"], q["item"]) for q in ldn["outbox"]] == [("DAT", "A1")]
+
+
+def test_team_days_recurring_tue_wed_fri():
+    hits = {day: [x["id"] for x in quiet(today.build_today, S, "LDN", D(day))["recurring"]]
+            for day in ("2026-10-26", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30")}
+    assert [k for k, v in hits.items() if "R-TEAM" in v] == ["2026-10-27", "2026-10-28", "2026-10-30"]
+
+
 if __name__ == "__main__":
     tests = [v for k, v in dict(globals()).items() if k.startswith("test_") and callable(v)]
     failed = 0
