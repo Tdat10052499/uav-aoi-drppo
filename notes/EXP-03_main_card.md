@@ -34,7 +34,17 @@ Chi phí: 20 × 2M = 40M bước; ước tính 17–29 giờ máy trên laptop D
 Mốc: ≥ 5 seed/nhánh trước 10/11 (điều kiện dừng FJCAI)
 Phân tích: scripts/analyze.py → results/processed/EXP-03_summary.md; LDN
 Trường raw cần: events.csv, run_record.json (checkpoint_digest, steps_per_s)
+
+Kết quả kỳ vọng nếu H1 đúng: ≥ 3/4 bộ OOD có p sau Holm < 0,05 và Δ_s ≥ δ = 0,10
+  (PREREG §8) → "ủng hộ H1".
+Kết quả làm yếu / bác bỏ: < 3/4 bộ đạt, hoặc có ý nghĩa thống kê nhưng Δ_s < 0,10 → bài
+  báo cáo mô tả (CI, IQM, Cliff's δ), không tuyên bố H1. Δ_s ≤ 0 trên đa số bộ → báo cáo
+  là bằng chứng ngược H1 (bản đồ căn tâm tự tổng quát hoá; xem kết quả làm yếu EXP-02).
+Tiêu chí tiếp tục/dừng khai báo trước: PREREG §10 — đến 10/11 chưa đủ ≥ 5 seed/nhánh
+  hoàn tất thì bỏ FJCAI; run hỏng xử lý theo §9 (NaN → chạy lại 1 lần với seed + 100).
 ```
+
+(3 trường cuối thêm 03/11 theo góp ý 1 của FAO, dùng đúng đề xuất của FAO và PREREG §8, §10.)
 
 ## Lệnh (PowerShell, mỗi cửa sổ một nhánh)
 
@@ -45,7 +55,13 @@ foreach ($s in 0..9) { python scripts/train_ppo.py --experiment-id EXP-03 --trai
 foreach ($s in 0..9) { python scripts/train_ppo.py --experiment-id EXP-03 --train fixed --masked --seed $s --timesteps 2000000 }
 ```
 
-Đánh giá từng model theo mẫu lệnh của EXP-02, với `--experiment-id EXP-03`.
+Đánh giá (góp ý 5 của FAO), mỗi model một lệnh, nhãn đúng nhánh, `--run-id` riêng để 2 cửa sổ không trùng thư mục:
+
+```powershell
+python scripts/evaluate.py --experiment-id EXP-03 --run-id eval_dr_s<s> --model runs\EXP-03\<run-id>\model.zip --label dr_ppo --train-seed <s> --episodes 100
+python scripts/evaluate.py --experiment-id EXP-03 --run-id eval_fixed_s<s> --model runs\EXP-03\<run-id>\model.zip --label fixed_ppo --train-seed <s> --episodes 100
+python scripts/analyze.py results/raw/EXP-03/*/events.csv --proposed dr_ppo --fixed fixed_ppo --heuristic tsp --out results/processed/EXP-03_summary.md
+```
 
 ## Second reader (FAO), 03/11/2026
 
