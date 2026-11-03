@@ -107,7 +107,7 @@ Nguồn: AX = arXiv, OA = OpenAlex, GS = Scholar (`GS-Q1-10` = Q1, kết quả t
 | A7 | Zhou et al., *Population-Invariant MADRL for AoI-Aware UAV Trajectory Design and Communication Scheduling in WSNs*, IEEE IoT-J 2024 | GS-Q1-26, OA (tra tiêu đề) | AoI; chuyển chính sách giữa các bài toán có số UAV và số cảm biến khác nhau (HyperQMIX). Năng lượng: chưa rõ |
 | A8 | Eldeeb, Alves, *Resilient UAV/AAV Trajectory Planning via Few-Shot Meta-Offline RL*, IEEE TMLCN 2026 (arXiv 2502.01268) | AX, OA, GS-Q1-21 | AoI + công suất phát; thích nghi môi trường chưa thấy bằng MAML |
 | A9 | Sarathchandra et al., *Age and Power Minimization via Meta-Deep RL in UAV/AAV Networks*, IEEE TVT 2025 (arXiv 2501.14603) | AX, OA, GS-Q1-1 | Đã có trong ma trận, còn ô "Chưa rõ" (W2-LDN-01). AoI + công suất phát; meta theo hàm mục tiêu |
-| A10 | Liu et al., *Resource Allocation for UAV-Enabled Spatio-Temporal Crowdsourcing in Smart Cities*, IEEE TVT 2025 (trước 03/11 là C1) | OA Q1, GS-Q1-73 | Lên A ngày 03/11 (LDN quyết): tóm tắt có AoI + năng lượng UAV, nêu "transferability" và thử trên cả kịch bản tổng hợp lẫn thành phố thật. Có thể đủ nhiều cột ma trận; đọc toàn văn |
+| A10 | Liu et al., *Resource Allocation for UAV-Enabled Spatio-Temporal Crowdsourcing in Smart Cities*, IEEE TVT 2025 (trước 03/11 là C1) | OA Q1, GS-Q1-73 | Lên A ngày 03/11 (LDN quyết): tóm tắt có AoI + năng lượng UAV, nêu "transferability" và thử trên cả kịch bản tổng hợp lẫn thành phố thật. **Đọc toàn văn 03/11** (`liu2025resource_LDN.md`): "transferability" không có thí nghiệm hỗ trợ; chỉ đạt cột AoI; không đe doạ tiêu chí G0 #2 |
 
 ### 6.2 Giữ — nhóm B
 
