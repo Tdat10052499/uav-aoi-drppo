@@ -24,6 +24,8 @@
 - **Cần FAO:** chép vào `docs/PREREG.md` và mở PR khoá. DAT duyệt PR, LDN là second reader.
 - **Hạn:** 04/11, trước 12:00.
 
+FAO: (03/11) Đã chép, PR #38: https://github.com/Tdat10052499/uav-aoi-drppo/pull/38. Theo B1, nhưng có thêm: (a) heuristic chạy lại tại commit khoá và so với EXP-01; (b) `steps_per_s` khi chạy song song không dùng cho bài; (c) seed thay thế khi NaN là `seed + 100`, đề xuất của FAO, chờ DAT duyệt; (d) đề nghị merge #33 và #37 trước khi khoá. `docs/DECISIONS.md` chưa có dòng 03/11 mà hai yêu cầu nhắc tới; nên thêm trước khi khoá.
+
 ## B2. LDN: ngưỡng ý nghĩa thực tiễn cho H1
 - **Cần LDN:** một con số, ví dụ "deg(Fixed) − deg(DR) ≥ 0,10 (10 điểm phần trăm) trên bộ OOD, xét theo IQM qua 10 seed". Con số này phải khoá trước khi thấy kết quả EXP-03.
 - Số pilot EXP-02 (2 seed, 300k bước) được dùng để kiểm tra pipeline, **không** dùng để chọn ngưỡng.
@@ -32,6 +34,8 @@
 ## B3. Thẻ EXP-03
 - Thẻ: `notes/EXP-03_main_card.md` (đã đưa lên main 03/11).
 - **Cần FAO:** duyệt thẻ như đã làm với EXP-02.
+
+FAO: (03/11) Đã đọc, góp ý ghi ở cuối `notes/EXP-03_main_card.md`. Duyệt khi DAT thêm 3 trường Form D còn thiếu (kỳ vọng, làm yếu, tiếp tục/dừng); 6 góp ý khác không chặn.
 
 ## B4. Điều kiện để bắt đầu EXP-03
 1. "G1 sớm" từ pilot đạt: Ā(DR, id) ≤ 63,1 ở cả 2 seed (DAT gửi số).
