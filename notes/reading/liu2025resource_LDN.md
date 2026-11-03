@@ -1,6 +1,6 @@
 # Form B — `liu2025resource`
 
-> Trạng thái: **nháp chờ LDN duyệt.** Claude soạn ngày 03/11/2026 từ toàn văn bản thảo đã chấp nhận (accepted author manuscript, 18 trang kể cả trang bìa Aaltodoc). LDN tải PDF từ kho Aaltodoc của ĐH Aalto, rồi Claude đọc bằng trích văn bản (pdftotext) và kiểm Bảng I bằng ảnh trang. Số trang dưới đây theo bản thảo (trang 1 là trang đầu bài, sau trang bìa). Bản tạp chí có thể khác bản thảo về trình bày.
+> Trạng thái: **LDN đã duyệt 03/11/2026.** Claude soạn ngày 03/11/2026 từ toàn văn bản thảo đã chấp nhận (accepted author manuscript, 18 trang kể cả trang bìa Aaltodoc). LDN tải PDF từ kho Aaltodoc của ĐH Aalto, rồi Claude đọc bằng trích văn bản (pdftotext) và kiểm Bảng I bằng ảnh trang. Số trang dưới đây theo bản thảo (trang 1 là trang đầu bài, sau trang bìa). Bản tạp chí có thể khác bản thảo về trình bày.
 > Người đọc: LDN (nhóm **A10** trong `fulltext_list.md`; trước 03/11 là C1). Second reader: DAT.
 > **Kết luận nhanh: bài không đe doạ định vị.** "Transferability" chỉ là một câu khẳng định ở §VII-A3, kèm link GitHub; bài không có thí nghiệm nào huấn luyện ở một kịch bản rồi đánh giá ở kịch bản khác mà không huấn luyện lại.
 
