@@ -23,8 +23,8 @@ Bất kỳ thay đổi nào sau ngày khoá: ghi vào DECISIONS.md kèm lý do
 | Ngày khoá | Ngày merge PR khoá (dự kiến 04/11/2026) |
 | Commit | Commit merge của PR khoá, gắn tag `prereg-lock` (DAT) |
 | PR đã merge trước khoá | #18, #20, #23, #29, #30, #31, #32, #35 |
-| PR còn mở | #33 (chỉ sửa `tests/`) và #37 (thêm `evaluate.py --seed-base`, mặc định không đổi). Nên merge cả hai **trước** khi khoá; nếu không thì để sau EXP-03 (§9 tiêu chí 4) |
-| Sau khoá | Không sửa `src/`. Không sửa `scripts/train_ppo.py`, `scripts/evaluate.py`, `scripts/analyze.py`, `src/uavaoi/stats.py` cho đến khi EXP-03 phân tích xong |
+| PR phải merge trước khoá | #33 (chỉ sửa `tests/`), #37 (thêm `evaluate.py --seed-base`, mặc định không đổi) và #39 (`evaluate.py` đọc checkpoint vào bộ nhớ trước `torch.load`, sửa lỗi trên Windows). Thiếu #39 thì máy DAT không đánh giá được model của EXP-03 |
+| Sau khoá | Không sửa `src/`. Không sửa `scripts/train_ppo.py`, `scripts/evaluate.py`, `src/uavaoi/stats.py` cho đến khi EXP-03 phân tích xong. Riêng `scripts/analyze.py` được **thêm** phần báo cáo (cột, CI, hình), với điều kiện không đổi H1/H2, không sửa `src/uavaoi/stats.py`, và p-value của bảng H1 giữ nguyên trước và sau khi sửa. Mỗi lần sửa ghi vào DECISIONS |
 
 ## 2. Cấu hình môi trường
 
@@ -68,10 +68,10 @@ Bất kỳ thay đổi nào sau ngày khoá: ghi vào DECISIONS.md kèm lý do
 | --- | --- |
 | Seed huấn luyện | 0–9 cho mỗi nhánh (DR-PPO, Fixed-PPO) |
 | Seed reset môi trường khi huấn luyện | `seed × 1000 + rank`, rank < n_envs (`train_ppo.py`) |
-| Seed đánh giá | 100 episode, 100000–100099 (`scenarios.eval_seeds`), chung cho mọi phương pháp, nên so sánh ghép cặp theo kịch bản |
+| Seed đánh giá | 100 episode, 100000–100099 (`scenarios.eval_seeds`), cùng 100 kịch bản cho mọi phương pháp. Kiểm định H1 không ghép cặp: đơn vị là seed huấn luyện (§7) |
 | Chính sách khi đánh giá | tất định (`deterministic=True`), có action mask với MaskablePPO (`SB3Policy`) |
 
-Seed 0 và 1 trùng với pilot EXP-02 (300k bước). Pilot chỉ dùng cho quyết định "G1 sớm" (§10), không gộp vào phân tích EXP-03.
+Seed 0 và 1 trùng với pilot EXP-02 (300k bước). Pilot chỉ dùng để kiểm pipeline, không gộp vào phân tích EXP-03. EXP-02b (DR seed 0, 2M bước, `notes/EXP-02b_diag_2M_card.md`) chỉ là chẩn đoán cho §10: **không** dùng thay EXP-03 seed 0; seed 0 được chạy lại tại commit khoá. Nên merge PR khoá trước khi bất kỳ ai xem số OOD của EXP-02b.
 
 ## 5. Learner và ngân sách
 
@@ -108,6 +108,7 @@ Mặc định của `scripts/train_ppo.py` cho cả hai nhánh. Không tinh ch�
 - deg_i(s) = (Ā_i(s) − Ā_i(id)) / Ā_i(id), tính theo từng seed. Ā tính trên toàn T, kể cả khi dừng sớm (`docs/02` §6).
 - Luôn báo: trung bình kèm 95% CI bootstrap (10 000 mẫu), IQM, Cliff's δ. Welch t-test chỉ là kiểm tra phụ.
 - Mã: `scripts/analyze.py` và `src/uavaoi/stats.py` tại commit khoá (`n_perm = 20 000`, `n_boot = 10 000`, seed 0).
+- Giới hạn của H2 (ghi trong bài, không đổi kiểm định): hai phía khác đơn vị, 10 trung bình theo seed của DR so với 100 episode của TSP. TSP tất định nên không có biến thiên theo seed; biến thiên phía TSP là giữa các kịch bản.
 - Chỉ số phụ, **chỉ mô tả**, không vào giả thuyết: peak AoI, năng lượng đã dùng, tỷ lệ hết pin, tỷ lệ hover/chậm/nhanh, chạm biên, độ phủ (DAT 03/11).
 - Không thuộc lần khoá này: H3, RQ2 (EXP-05), RQ3 (EXP-04). RQ3 khi chạy sẽ **chỉ mô tả**, không p-value (DAT 03/11).
 
@@ -134,11 +135,11 @@ Nguồn gốc: LDN chọn ngày 03/11/2026, trước khi LDN thấy bất kỳ s
 
 ## 10. Điều kiện để bắt đầu EXP-03
 
-1. "G1 sớm" từ pilot EXP-02 đạt: Ā(DR-PPO, `id`) ≤ 63,1 khe ở cả 2 seed (tiêu chí G1 số 2, `docs/05` §5).
+1. EXP-02b (DR-PPO seed 0, 2M bước, `notes/EXP-02b_diag_2M_card.md`) có Ā(DR, `id`) ≤ 63,1 khe (ngưỡng của tiêu chí G1 số 2, `docs/05` §5). Nếu 63,1 < Ā ≤ 90 thì nhóm quyết định ngày 05/11. Nếu Ā > 90 thì bỏ FJCAI. Pilot EXP-02 (2 seed, 300k bước) **không** đạt "G1 sớm": Ā(DR, `id`) = 126,1 và 123,4 (thẻ EXP-02b, commit f1b3c7c).
 2. PR khoá này đã merge và tag `prereg-lock` đã có.
 3. Thẻ `notes/EXP-03_main_card.md` đã được FAO duyệt.
 
-Nếu điều kiện 1 không đạt thì không chạy EXP-03, và nhóm họp lại về FJCAI. Điều kiện dừng: đến 10/11 chưa đủ 5 seed mỗi nhánh thì bỏ FJCAI.
+Nếu điều kiện 1 không đạt thì không chạy EXP-03 cho FJCAI. Điều kiện dừng: đến 10/11 chưa đủ 5 seed mỗi nhánh thì bỏ FJCAI.
 
 ## 11. Thay đổi sau ngày khoá
 
