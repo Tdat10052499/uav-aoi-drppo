@@ -1,7 +1,7 @@
 # Nhật ký tìm kiếm hệ thống Q1–Q3 (W1-LDN-04, W1-LDN-05)
 
 > Owner: LDN · Second reader: DAT · Giao thức: `docs/04` §6.
-> Trạng thái: **NHÁP chờ LDN duyệt.** Claude chạy truy vấn trên Chrome của LDN và soạn sàng lọc ngày 31/10/2026. Mọi quyết định giữ/loại dưới đây là đề xuất; LDN đọc lại trước khi đánh dấu W1-LDN-04/05 xong. Các thay đổi so với giao thức (mục 1, 2) cần DAT đồng ý: xem `notes/yeu-cau/2026-10-31_ldn_can-DAT_tim-kiem-q1-q3.md`.
+> Trạng thái: **LDN đã duyệt 03/11/2026, kèm giới hạn ở §7.** Ngày 03/11, Claude kiểm lại quyết định giữ/loại bằng tóm tắt (arXiv, OpenAlex) và toàn văn của 4 bài nhóm A; LDN quyết 2 thay đổi: TL-RATS từ E3 sang B13, C1 lên A10 (§6, §7). Bản soạn ban đầu: Claude chạy truy vấn trên Chrome của LDN và soạn sàng lọc ngày 31/10/2026. Mọi quyết định giữ/loại dưới đây là đề xuất; LDN đọc lại trước khi đánh dấu W1-LDN-04/05 xong. Các thay đổi so với giao thức (mục 1, 2) cần DAT đồng ý: xem `notes/yeu-cau/2026-10-31_ldn_can-DAT_tim-kiem-q1-q3.md`.
 
 ## 1. Cơ sở dữ liệu và khả năng truy cập (31/10/2026)
 
@@ -64,10 +64,10 @@ Q3: "UAV" "age of information" ("propulsion energy" OR "rotary-wing") ("PPO" OR 
 | Bản ghi từ nguồn khác: tra ngược danh mục Yi 2023 (chưa sàng lọc, làm sau G0) | 5 |
 | Loại trùng (quy tắc ở dưới) | 61 |
 | Bản ghi duy nhất được sàng lọc | 279 |
-| Loại ở bước tiêu đề (MEC/offloading, xe/vệ tinh/AUV, điều hướng, tổng quan, sách, luận văn), tính bằng hiệu 279 − 30 − 5 − 57 | 187 |
-| Loại ở bước tóm tắt/đoạn trích (E1 10 · E2 4 · E3 16 bài; §6.4) | 30 |
+| Loại ở bước tiêu đề (MEC/offloading, xe/vệ tinh/AUV, điều hướng, tổng quan, sách, luận văn), tính bằng hiệu 279 − 29 − 5 − 58 | 187 |
+| Loại ở bước tóm tắt/đoạn trích (E1 10 · E2 4 · E3 15 bài; §6.4; sửa 03/11: TL-RATS chuyển sang B13) | 29 |
 | Đã có trong ma trận `docs/04` §5 trước tìm kiếm (Bayerlein 2021, Abd-Elmagid 2019, Sun 2025, OH-DRL 2025, Lamenza 2026) | 5 |
-| **Giữ để đọc toàn văn** | **57** (nhóm A 9, B 12, C 36; A9 Sarathchandra 2025 đã có hàng ma trận nhưng còn ô "Chưa rõ") |
+| **Giữ để đọc toàn văn** | **58** (nhóm A 10, B 13, C 35; sửa 03/11: +1 từ E3 (B13), C1 lên A10; A9 Sarathchandra 2025 đã có hàng ma trận nhưng còn ô "Chưa rõ") |
 | Đã đọc toàn văn đến 02/11 | 4 (A2, A6, A8, A9) + Yi 2020 (ngoài Q1–Q3) |
 
 **Quy tắc loại trùng:** hai bản ghi là trùng nếu tiêu đề trùng nhau sau khi viết thường, bỏ mọi ký tự không phải chữ/số, bỏ nhãn [HTML]/[PDF]/[BOOK], coi "AAV" như "UAV", và so 55 ký tự đầu. Bản preprint và bản tạp chí của cùng bài được tính là trùng. Quy tắc này có thể sót bản ghi trùng có tiêu đề khác hẳn; đây là giới hạn được ghi lại, không phải số ước lượng.
@@ -107,6 +107,7 @@ Nguồn: AX = arXiv, OA = OpenAlex, GS = Scholar (`GS-Q1-10` = Q1, kết quả t
 | A7 | Zhou et al., *Population-Invariant MADRL for AoI-Aware UAV Trajectory Design and Communication Scheduling in WSNs*, IEEE IoT-J 2024 | GS-Q1-26, OA (tra tiêu đề) | AoI; chuyển chính sách giữa các bài toán có số UAV và số cảm biến khác nhau (HyperQMIX). Năng lượng: chưa rõ |
 | A8 | Eldeeb, Alves, *Resilient UAV/AAV Trajectory Planning via Few-Shot Meta-Offline RL*, IEEE TMLCN 2026 (arXiv 2502.01268) | AX, OA, GS-Q1-21 | AoI + công suất phát; thích nghi môi trường chưa thấy bằng MAML |
 | A9 | Sarathchandra et al., *Age and Power Minimization via Meta-Deep RL in UAV/AAV Networks*, IEEE TVT 2025 (arXiv 2501.14603) | AX, OA, GS-Q1-1 | Đã có trong ma trận, còn ô "Chưa rõ" (W2-LDN-01). AoI + công suất phát; meta theo hàm mục tiêu |
+| A10 | Liu et al., *Resource Allocation for UAV-Enabled Spatio-Temporal Crowdsourcing in Smart Cities*, IEEE TVT 2025 (trước 03/11 là C1) | OA Q1, GS-Q1-73 | Lên A ngày 03/11 (LDN quyết): tóm tắt có AoI + năng lượng UAV, nêu "transferability" và thử trên cả kịch bản tổng hợp lẫn thành phố thật. **Đọc toàn văn 03/11** (`liu2025resource_LDN.md`): "transferability" không có thí nghiệm hỗ trợ; chỉ đạt cột AoI; không đe doạ tiêu chí G0 #2 |
 
 ### 6.2 Giữ — nhóm B
 
@@ -124,12 +125,13 @@ Nguồn: AX = arXiv, OA = OpenAlex, GS = Scholar (`GS-Q1-10` = Q1, kết quả t
 | B10 | Talukdar et al., *A Dual Map-Based Cooperative DDQN Approach for Trajectory Planning in a UAV-enabled IoT Network*, Physical Communication 2025 | GS-Q2-10 | Thu dữ liệu đa UAV; thích nghi điều kiện thay đổi (cần kiểm) |
 | B11 | Kumar, Misra, *ARDDQN: Attention Recurrent DDQN for UAV Coverage Path Planning and Data Harvesting*, arXiv 2405.11013 | GS-Q2-21 | Dòng bài bản đồ của Bayerlein; cần kiểm có thử tham số kịch bản mới |
 | B12 | Kumar et al., *Transformer based DDQN for UAV Coverage Path Planning and Data Harvesting*, IEEE Access 2026 | GS-Q2-34 | Như B11 |
+| B13 | *A Two-Layered Reinforcement Learning Framework for AoI-Aware Trajectory Planning and Scheduling Optimization in Multi-UAV Networks* (TL-RATS), 2025 ✱ | GS-Q1-28, GS-Q3-28 | Chuyển từ E3 ngày 03/11 (LDN quyết): tóm tắt nói thử trên nhiều phân bố nút cảm biến; AoI; RL hai tầng. Cần kiểm các phân bố đó có khác tập huấn luyện không |
 
 ### 6.3 Giữ — nhóm C (AoI + năng lượng đẩy, chưa thấy OOD)
 
 | # | Bài | Nguồn |
 | --- | --- | --- |
-| C1 | Liu et al., *Resource Allocation for UAV-Enabled Spatio-Temporal Crowdsourcing in Smart Cities*, IEEE TVT 2025 (TD3/PPO/SAC; có kịch bản tổng hợp và thành phố thật) | OA Q1, GS-Q1-73 |
+| C1 | ~~Liu et al. 2025~~ → chuyển lên **A10** ngày 03/11 | — |
 | C2 | Ferdowsi, Abd-Elmagid, Saad et al., *Neural Combinatorial DRL for Age-Optimal Joint Trajectory and Scheduling Design*, IEEE JSAC 2021 | GS-Q1-38 |
 | C3 | Alam et al., *Integrated Trajectory, Association, and Fair Resource Allocation for AoI and Energy-Aware Data Collection*, IEEE OJCOMS 2026 | GS-Q1-45 |
 | C4 | Li, Wu, Wang, *Multi-Agent DRL-Driven Age-Energy Efficiency Optimization in STAR-RIS Assisted Consumer-Grade Unmanned Vehicle Applications*, IEEE TCE 2025 | GS-Q1-50, GS-Q3-37 |
@@ -168,12 +170,30 @@ Nguồn: AX = arXiv, OA = OpenAlex, GS = Scholar (`GS-Q1-10` = Q1, kết quả t
 
 ✱ = tên tạp chí/hội nghị bị Scholar cắt ngắn, chưa kiểm thông tin xuất bản.
 
-### 6.4 Loại ở bước tóm tắt/đoạn trích (30)
+### 6.4 Loại ở bước tóm tắt/đoạn trích (29)
 
 | Mã | Bài (nguồn) |
 | --- | --- |
 | E1 | Hu et al. 2020, U2D underlay (AX 2003.05830); Hu et al. 2020, Cooperative Internet of UAVs (AX 2007.14297, GS-Q1-76); DSC-UAV semantic communication (AX 2601.01430); GDM-MADDPG DNN task assignment (AX 2411.08299, GS-Q1-22); Peake et al. 2021 adaptive exploration, "AoI" = vùng quan tâm (AX 2105.01606, GS-Q1-5); AERO federated (OA Q1); UAV-RIS covert ISCC (OA Q1); Wu et al. 2026 UAV swarms sampling–buffering–routing (GS-Q1-3); Wu et al. 2026 age-driven UAV swarms (GS-Q1-12); MetaComm crowd sensing (GS-Q1-41) |
 | E2 | FRSICL, LLM in-context learning, DRL chỉ là đối chứng (AX 2507.10134, OA Q1) — **đáng nhắc trong Related Work vì tối ưu vận tốc UAV cho AoI**; Luo et al. network AoI, tìm kiếm cây/Hamilton (GS-Q1-82; OA khớp bản WCNC 2022 ✱); Ndiaye et al. 2023 ensemble DNN (GS-Q1-97); Pan et al. 2018 dynamic speed control, giải tích (GS-Q2-97) |
-| E3 | Ndiaye et al. 2024 decentralized MARL, "generalized AoI" là dạng công thức (AX 2312.15778, OA, GS-Q1-9); Long et al. 2025 semantic-aware AoI (GS-Q1-16); Fan et al. 2022 RIS-UAV 3D urban, tổng quát hoá chỉ là hướng tương lai (GS-Q1-18, GS-Q3-100); MA-HEAD-Net (GS-Q1-23); TL-RATS (GS-Q1-28, GS-Q3-28); Li et al. 2024 MAPPO data collection (GS-Q2-9); Bulusu et al. NOMA (GS-Q2-11); Qi et al. 2026 game-theoretic (GS-Q2-15, GS-Q3-19); Jin et al. 2024 urban accessibility (GS-Q2-16); Nguyen et al. 2022 3D trajectory (GS-Q2-17); Esrafilian et al. 2021 model-aided DRL (GS-Q2-23); Baba et al. SAC agriculture (GS-Q2-24); Li et al. 2022 DDRL-RA WPSN (GS-Q2-27); Wang et al. 2026 survival-aware DRL-NMPC (GS-Q2-36, GS-Q3-20); Chen et al. 2023 model-aided FedQMIX (GS-Q2-50); Bao et al. 2026 MAPPO energy-aware (GS-Q2-61) |
+| E3 | Ndiaye et al. 2024 decentralized MARL, "generalized AoI" là dạng công thức (AX 2312.15778, OA, GS-Q1-9); Long et al. 2025 semantic-aware AoI (GS-Q1-16); Fan et al. 2022 RIS-UAV 3D urban, tổng quát hoá chỉ là hướng tương lai (GS-Q1-18, GS-Q3-100); MA-HEAD-Net (GS-Q1-23); Li et al. 2024 MAPPO data collection (GS-Q2-9); Bulusu et al. NOMA (GS-Q2-11); Qi et al. 2026 game-theoretic (GS-Q2-15, GS-Q3-19); Jin et al. 2024 urban accessibility (GS-Q2-16); Nguyen et al. 2022 3D trajectory (GS-Q2-17); Esrafilian et al. 2021 model-aided DRL (GS-Q2-23); Baba et al. SAC agriculture (GS-Q2-24); Li et al. 2022 DDRL-RA WPSN (GS-Q2-27); Wang et al. 2026 survival-aware DRL-NMPC (GS-Q2-36, GS-Q3-20); Chen et al. 2023 model-aided FedQMIX (GS-Q2-50); Bao et al. 2026 MAPPO energy-aware (GS-Q2-61) |
 
 Ghi nhận ngoài tiêu chí, có ích cho chương 2: các tổng quan Amodu et al. 2023 (Drones), 2024 (IEEE Access), sách Amodu et al. 2025; Lee et al. 2026 (Drones); Zhao et al. 2025 (COMST); Chen et al. 2025 (ACM CSUR); luận văn Emami 2023 (điều khiển hành trình + thu dữ liệu, liên quan biến tốc độ). Dùng để tra ngược tài liệu, không đưa vào số PRISMA.
+
+## 7. Kiểm lại sàng lọc (03/11/2026) và giới hạn
+
+Claude kiểm lại sàng lọc theo mức LDN chọn: toàn bộ nhóm A, B và 30 bài loại ở bước tóm tắt, cộng mẫu nhóm C. Nguồn là trang arXiv abs và OpenAlex API (tóm tắt), cùng toàn văn của A2, A6, A8, A9.
+
+| Phần | Đã kiểm | Kết quả |
+| --- | --- | --- |
+| Nhóm A (9) | 9: 4 toàn văn, 5 tóm tắt | Giữ đúng cả 9. Lưu ý: A3 dùng Decision Transformer (học tăng cường ngoại tuyến), không phải DRL theo nghĩa hẹp; vẫn giữ vì có thích nghi kịch bản mới. A4: tóm tắt không nói về tổng quát hoá, quyết định giữ dựa trên đoạn trích Scholar |
+| Nhóm B (12) | 7 có tóm tắt; B3, B7, B8, B9, B10 không có tóm tắt trên OpenAlex | Giữ đúng. Dấu hiệu tổng quát hoá yếu ở B4, B5, B11, B12 (chỉ "adaptable" hoặc thử trên 2 kịch bản); vẫn giữ để không bỏ sót |
+| Loại ở bước tóm tắt (30) | 12 tra được: E1 5 (Hu U2D, Hu Cooperative IoU, DSC-UAV, GDM-MADDPG, Peake), E2 1 (FRSICL), E3 6 (Ndiaye 2024, Long 2025, MA-HEAD-Net, Esrafilian 2021, Chen 2023 FedQMIX, TL-RATS) | 11 bài loại đúng. **TL-RATS** có thử trên nhiều phân bố nút → chuyển sang B13 |
+| Nhóm C (36) | Mẫu 3: C1, C2 (Ferdowsi 2021), C12 (Fu 2023) | C2, C12 đúng nhóm C. **C1** nêu "transferability", có AoI + năng lượng UAV → lên A10 |
+
+**Giới hạn (ghi vào chương 2 nếu dùng số PRISMA):**
+1. 18 bài loại ở bước tóm tắt **không tra lại được**, vì §6.4 chỉ ghi nhãn viết tắt ("Bulusu NOMA", "Qi 2026 game-theoretic", …) chứ không ghi tiêu đề đầy đủ. Quyết định loại các bài này chưa được kiểm độc lập.
+2. Repo không lưu bản ghi thô của 340 kết quả (arXiv, OpenAlex, Scholar). Vì vậy 187 bài loại ở bước tiêu đề và quy tắc loại trùng không kiểm lại được. Nếu LDN còn danh sách Scholar gốc, nên lưu vào `notes/reading/` để tái lập.
+3. 5 bài nhóm B (B3, B7, B8, B9, B10) không có tóm tắt trên OpenAlex; quyết định giữ dựa trên đoạn trích Scholar.
+4. Nhóm C chỉ kiểm mẫu 3/36; 1/3 bị chuyển nhóm. Khi đọc nhóm C (hạn 30/11), cần để ý bài nào có đánh giá ngoài phân phối thì chuyển lên A ngay (`fulltext_list.md`).
+

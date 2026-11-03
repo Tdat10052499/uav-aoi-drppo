@@ -40,19 +40,22 @@
       "state": "done"
     },
     "W1-LDN-04": {
-      "date": "2026-10-31",
+      "date": "2026-11-03",
+      "evidence": "search_log_LDN.md đã duyệt 03/11 (kiểm lại §7: A 9/9, B 12/12, loại 12/30 tra được, mẫu C 3); TL-RATS sang B13",
       "note": "Q1–Q3 đã chạy trên arXiv, OpenAlex, Scholar; sàng lọc nháp chờ LDN duyệt; IEEE Xplore/Scopus không truy cập được (yêu cầu DAT 31/10)",
-      "state": "doing"
+      "state": "done"
     },
     "W1-LDN-05": {
-      "date": "2026-10-31",
+      "date": "2026-11-03",
+      "evidence": "fulltext_list.md đã duyệt 03/11: 58 bài (A10, B13, C35), có cột người đọc; C1 lên A10",
       "note": "fulltext_list.md nháp; chờ DAT đồng ý cách chia (yêu cầu 31/10 A4)",
-      "state": "doing"
+      "state": "done"
     },
     "W2-LDN-01": {
-      "date": "2026-10-31",
+      "date": "2026-11-03",
+      "evidence": "5 Form B LDN đã đối chiếu toàn văn và duyệt 03/11 (yi2020deep, sarathchandra2025age, yi2023meta, eldeeb2026resilient, xiao2024meta); hàng ma trận docs/04 §5 đủ, cột 6 qua PR #40; issue #12 chờ DAT second reader",
       "note": "Form B nháp: Sarathchandra 2025, Yi 2023, Eldeeb 2026, Xiao 2024 (cần đối chiếu PDF); hàng ma trận đã điền; chờ LDN duyệt",
-      "state": "doing"
+      "state": "done"
     },
     "W2-LDN-03": {
       "date": "2026-11-02",

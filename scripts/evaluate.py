@@ -9,6 +9,9 @@ Examples
   python scripts/evaluate.py --experiment-id EXP-01 --method tsp greedy_aoi random --episodes 100
   python scripts/evaluate.py --experiment-id EXP-02 --model runs/dr_ppo_mask_lam0.1_s0/model.zip \
          --label dr_ppo --train-seed 0
+  # reference heuristics on the Optuna validation seeds of tune_ppo.py (200000-200019), id only
+  python scripts/evaluate.py --experiment-id TUNE --method random tsp --suites id --episodes 20 \
+         --seed-base 200000
 """
 from __future__ import annotations
 
@@ -23,12 +26,37 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 
 import numpy as np
 
-from uavaoi import HEURISTICS, SUITES, EnvConfig, UAVAoIEnv, eval_seeds, run_episode
+from uavaoi import HEURISTICS, SUITES, EnvConfig, UAVAoIEnv, run_episode
+from uavaoi.scenarios import EVAL_SEED_BASE
 from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 
 FIELDS = ["method", "train_seed", "suite", "episode_seed", "mean_aoi", "peak_aoi", "energy_used_J",
           "energy_frac", "collections", "coverage", "hover_frac", "slow_frac", "fast_frac",
           "boundary_hits", "early_termination", "N", "L", "E_max", "return"]
+
+
+def _patch_torch_load_buffered() -> None:
+    """Make torch.load read zip-member streams into memory first.
+
+    SB3 passes a ZipExtFile (stream inside model.zip) to torch.load. With torch 2.14.1+cpu on
+    Windows this fails with "PytorchStreamReader failed reading file .data/serialization_id"
+    although the checkpoint is intact (SHA256 matches run_record; see notes 2026-11-03).
+    Reading the member into a BytesIO first gives the same tensors and avoids the bug.
+    """
+    import io
+    import torch
+
+    if getattr(torch.load, "_uavaoi_buffered", False):
+        return
+    _orig = torch.load
+
+    def _load(f, *args, **kwargs):
+        if hasattr(f, "read") and not isinstance(f, io.BytesIO):
+            f = io.BytesIO(f.read())
+        return _orig(f, *args, **kwargs)
+
+    _load._uavaoi_buffered = True
+    torch.load = _load
 
 
 class SB3Policy:
@@ -38,6 +66,7 @@ class SB3Policy:
         if not os.path.isfile(path):
             raise FileNotFoundError(f"model file not found: {path} (no silent fallback)")
         self.masked = False
+        _patch_torch_load_buffered()
         try:
             from sb3_contrib import MaskablePPO
             self.model = MaskablePPO.load(path, device="cpu")
@@ -103,6 +132,8 @@ def main():
     ap.add_argument("--train-seed", type=int, default=-1)
     ap.add_argument("--suites", nargs="*", default=list(SUITES))
     ap.add_argument("--episodes", type=int, default=100)
+    ap.add_argument("--seed-base", type=int, default=EVAL_SEED_BASE,
+                    help="first episode seed; default = test seeds. 200000 = validation seeds of tune_ppo.py")
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides")
     args = ap.parse_args()
 
@@ -121,7 +152,9 @@ def main():
     if not policies:
         ap.error("give --method and/or --model")
 
-    seeds = eval_seeds(args.episodes)
+    seeds = [args.seed_base + i for i in range(args.episodes)]
+    if args.seed_base != EVAL_SEED_BASE:
+        print(f"NOTE: episode seeds {seeds[0]}-{seeds[-1]}, not the test seeds", flush=True)
     run_id, run_dir = new_run_dir(args.experiment_id, args.run_id)
     rr = RunRecord(args.experiment_id, run_dir, run_id,
                    config={"args": vars(args), "env_cfg": cfg.to_dict(),

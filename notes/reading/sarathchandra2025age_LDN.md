@@ -1,6 +1,6 @@
 # Form B — `sarathchandra2025age`
 
-> Trạng thái: **nháp chờ LDN duyệt**, Claude soạn ngày 31/10/2026 từ toàn văn bản HTML arXiv:2501.14603v1. Người đọc: LDN (W2-LDN-01). Second reader: DAT. Bản tạp chí (IEEE TVT 2025, tiêu đề đổi "UAV" thành "AAV") chưa đọc; mọi số mục/hình dưới đây theo bản arXiv v1.
+> Trạng thái: **LDN đã duyệt 03/11/2026.** Claude soạn ngày 31/10/2026 từ toàn văn bản HTML arXiv:2501.14603v1. Ngày 03/11, Claude đối chiếu lại với toàn văn và sửa 3 chỗ: mô tả PT (2), đối chứng, giới hạn 2. Người đọc: LDN (W2-LDN-01). Second reader: DAT. Bản tạp chí (IEEE TVT 2025, tiêu đề đổi "UAV" thành "AAV") chưa đọc; mọi số mục/hình dưới đây theo bản arXiv v1.
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Age and Power Minimization via Meta-Deep Reinforcement Learning in UAV Networks*, 2025.
 - **Tác giả:** Sankani Sarathchandra, Eslam Eldeeb, Mohammad Shehab, Hirley Alves, Konstantin Mikhaylov, Mohamed-Slim Alouini (ĐH Oulu, KAUST).
@@ -15,7 +15,7 @@
 **Giả định hệ thống:**
 - **Quy mô:** một UAV, độ cao 100 m, lưới 10 × 10 ô trên vùng 1000 m × 1000 m; 5 hoặc 10 thiết bị đặt ngẫu nhiên (§II, §V, Bảng II).
 - **Chuyển động:** mỗi bước UAV sang một ô kề (Bắc, Nam, Đông, Tây) hoặc treo (PT (7)). Không có lựa chọn tốc độ.
-- **Kênh:** LoS, suy hao theo bình phương khoảng cách (PT (1)). Công suất phát của thiết bị là công suất tối thiểu để gửi gói M = 5 Mb trong một bước (PT (2)).
+- **Kênh:** LoS; độ lợi kênh g₀/(h_u² + r²), tức tỉ lệ nghịch với bình phương khoảng cách (PT (1)). Công suất phát của thiết bị tính theo PT (2) từ kích thước gói M = 5 Mb và độ lợi kênh. Bài chỉ viết công suất "is calculated as follows", không gọi đó là công suất tối thiểu.
 - **Năng lượng:** chỉ có **công suất phát của thiết bị IoT**. **Không có mô hình năng lượng bay của UAV** (§II, PT (4a), (6)).
 - **AoI:** về 1 khi thiết bị được lập lịch, ngược lại tăng 1, bị chặn trên A_max = 30 (PT (3), Bảng II).
 - **Mục tiêu:** AoI trung bình + λ × tổng công suất phát (PT (4a), phần thưởng PT (6)). Mỗi giá trị λ là một "nhiệm vụ" (§II-A, §IV).
@@ -40,15 +40,15 @@
 **Số seed / cách báo cáo độ bất định:** Không báo số seed. Fig. 3–6 là một đường cho mỗi cấu hình, không có vùng tin cậy hay kiểm định. Fig. 3 có trung bình meta-loss trên lô 6 môi trường, nhưng đó là trung bình trong một lần chạy.
 
 **Đối chứng gần nhất và độ công bằng của so sánh:**
-- Đối chứng duy nhất là cùng DQN với khởi tạo ngẫu nhiên, tinh chỉnh cùng số episode (§V).
+- Đối chứng duy nhất là cùng DQN với khởi tạo Q-network ngẫu nhiên (§V: "baseline RL model with random Q-network initialization"), so trên 500 episode (Fig. 4) và 30 episode (Fig. 5).
 - So sánh này thiên về meta-learning: khởi tạo MAML đã được tiếp xúc nhiều nhiệm vụ trong 500 epoch meta-training, còn khởi tạo ngẫu nhiên chỉ có ngân sách tinh chỉnh. Bài không có đối chứng "huấn luyện chung trên mọi λ" (multi-task không MAML) hay đối chứng có λ trong trạng thái, nên không tách được tác dụng của MAML với tác dụng của việc thấy nhiều nhiệm vụ.
 - Không có heuristic.
 
 **Giới hạn đã biết:**
 1. Mâu thuẫn §IV và §V về việc vị trí thiết bị có đổi giữa các môi trường.
-2. Bảng ký hiệu (Bảng I) dùng I cho cả số nhiệm vụ và số epoch; ràng buộc (4b) về ngân sách few-shot E_max không được nêu giá trị.
+2. Ràng buộc (4b) về ngân sách few-shot E_max không được nêu giá trị ở đâu trong bài. (Bản nháp 31/10 ghi "I dùng cho cả số nhiệm vụ và số epoch"; kiểm lại 03/11 thấy sai: I chỉ là số nhiệm vụ, epoch đánh chỉ số bằng N trong Algorithm 2–3.)
 3. Bảng II ghi g₀ = 30 dB (dương) cho độ lợi kênh tại 1 m; thường là giá trị âm. Có thể là lỗi in.
-4. Phần thưởng (6) chia AoI cho D nhưng không chia công suất cho D, khác với PT (4a).
+4. Chuẩn hoá không nhất quán: PT (4a) chia công suất cho D nhưng không chia AoI; phần thưởng (6) thì ngược lại, chia AoI cho D nhưng không chia công suất.
 5. Không công bố mã.
 
 **Khác biệt với đề tài (điền thẳng vào ma trận docs/04 §5):**
