@@ -78,3 +78,8 @@ python scripts/analyze.py results/raw/EXP-03/*/events.csv --proposed dr_ppo --fi
 7. **Seed 0 và 1 trùng pilot EXP-02** (300k bước). Không gộp model pilot vào EXP-03. Quyết định chạy EXP-03 dựa trên Ā(id) của pilot, không dựa trên deg, nên không ảnh hưởng H1.
 
 Second reader (FAO) đã đọc card: có, chờ mục 1  ngày: 03/11/2026
+
+**Duyệt (FAO, 03/11/2026, tối).** Mục 1 đã xử lý (a30531b): 3 trường Form D khớp PREREG §8, §10. PREREG đã khoá: PR #38 merge tại b5cd784, tag `prereg-lock` trỏ đúng b5cd784 (FAO push). Cả 3 điều kiện của PREREG §10 đã đạt (EXP-02b Ā(DR, id) = 49,80, fffaff5), nên EXP-03 được chạy.
+Còn nhắc, không chặn: (a) mục 4: chạy lại heuristic tại `prereg-lock`, `python scripts/evaluate.py --experiment-id EXP-03 --method random greedy_aoi tsp --episodes 100`, rồi `scripts/compare_events.py` với EXP-01; (b) mục 2: dòng "Chi phí" vẫn ghi 17–29 h, trong khi chạy tuần tự là 31,0 h; (c) chạy từ commit `prereg-lock` (`git checkout prereg-lock`) hoặc một commit con không sửa `src/` và các script ở PREREG §1.
+
+Second reader (FAO) đã duyệt card: có  ngày: 03/11/2026
