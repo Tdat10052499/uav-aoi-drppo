@@ -22,8 +22,8 @@ Bất kỳ thay đổi nào sau ngày khoá: ghi vào DECISIONS.md kèm lý do
 | --- | --- |
 | Ngày khoá | Ngày merge PR khoá (dự kiến 04/11/2026) |
 | Commit | Commit merge của PR khoá, gắn tag `prereg-lock` (DAT) |
-| PR đã merge trước khoá | #18, #20, #23, #29, #30, #31, #32, #35 |
-| PR phải merge trước khoá | #33 (chỉ sửa `tests/`), #37 (thêm `evaluate.py --seed-base`, mặc định không đổi) và #39 (`evaluate.py` đọc checkpoint vào bộ nhớ trước `torch.load`, sửa lỗi trên Windows). Thiếu #39 thì máy DAT không đánh giá được model của EXP-03 |
+| PR đã merge trước khoá | #18, #20, #23, #29, #30, #31, #32, #33, #35, #37, #39 |
+| Ghi chú | #39 (`evaluate.py` đọc checkpoint vào bộ nhớ trước `torch.load`) cần cho máy DAT đánh giá được model của EXP-03 |
 | Sau khoá | Không sửa `src/`. Không sửa `scripts/train_ppo.py`, `scripts/evaluate.py`, `src/uavaoi/stats.py` cho đến khi EXP-03 phân tích xong. Riêng `scripts/analyze.py` được **thêm** phần báo cáo (cột, CI, hình), với điều kiện không đổi H1/H2, không sửa `src/uavaoi/stats.py`, và p-value của bảng H1 giữ nguyên trước và sau khi sửa. Mỗi lần sửa ghi vào DECISIONS |
 
 ## 2. Cấu hình môi trường
