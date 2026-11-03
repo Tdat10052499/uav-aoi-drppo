@@ -61,3 +61,9 @@ Huấn luyện: `runs/EXP-02b/dr_ppo_mask_lam0.1_s0_20261103-153705`. Đánh gi�
 
 - Theo tiêu chí ghi trước: Ā(DR, id) = 49,80 ≤ 63,1 → **H-a được ủng hộ**; hành động: khoá PREREG, chạy EXP-03 (2M).
 - Giới hạn: 1 seed, mô tả; tương quan số bước–Ā, chưa phải nhân quả; không kết luận H1 (chưa có Fixed 2M). DR vẫn kém TSP/Greedy (~29) khoảng 1,7 lần.
+
+## Second reader (FAO), 03/11
+1. Phép tính deg trong bảng đúng: (40,98 − 49,80)/49,80 = −0,177; 93,24 → +0,872; 127,04 → +1,551; 146,36 → +1,939. Quyết định theo tiêu chí ghi trước là đúng: 49,80 ≤ 63,1, nên hành động là khoá PREREG và chạy EXP-03.
+2. **Chưa kiểm được với dữ liệu thô:** trên `main` (9215979 + fffaff5) chưa có `results/raw/EXP-02b/` (và chưa có `results/raw/EXP-02/`). Cần DAT push cả hai, gồm `run_record.json` của lần huấn luyện. Khi có, FAO tính lại Ā từ `events.csv` và kiểm `checkpoint_digest`. Đến lúc đó, con số 49,80 chỉ là số DAT báo, chưa được kiểm độc lập.
+3. Số OOD xuất hiện trước khi khoá PREREG. Ngưỡng H1 đã chốt trước đó (d85d7b2), nên không ảnh hưởng §8. FAO đã ghi điều này vào PR #38 §4 (8dadf95) để minh bạch.
+4. Chỉ mô tả, 1 seed: trên `ood_cluster`, DR 2M đạt 40,98, còn TSP đạt 22,94 [21,72; 24,18] (`results/processed/heuristics_summary_2026-10-16.md`). Không kết luận gì về H2 và không đổi PREREG.
