@@ -1,6 +1,6 @@
 # Form B — `yi2023meta`
 
-> Trạng thái: **nháp chờ LDN duyệt**, Claude soạn ngày 31/10/2026 từ toàn văn bản HTML ar5iv của arXiv:2311.06742v1. Người đọc: LDN (nhóm A2 trong `fulltext_list.md`). Second reader: DAT. Bản tạp chí 2025 (Scholar ghi "IEEE Transactions on …", tiêu đề dùng "AAV") chưa đọc; số mục/hình theo bản arXiv.
+> Trạng thái: **LDN đã duyệt 03/11/2026.** Claude soạn ngày 31/10/2026 từ toàn văn bản HTML ar5iv của arXiv:2311.06742v1. Ngày 03/11, Claude đối chiếu lại với bản HTML arXiv (https://arxiv.org/html/2311.06742v1; bản ar5iv hôm đó chỉ hiện tới §III-B). Bảng I–II, PT (9)–(10), §IV-A1, §IV-B1–B2, §V-A, Fig. 5–8 và các tham chiếu [6], [17], [39], [40], [45], [46] đều khớp; không phải sửa nội dung. Bổ sung: bài không mô tả cách huấn luyện TLCADRL (nhiệm vụ nguồn, ngân sách). Người đọc: LDN (nhóm A2 trong `fulltext_list.md`). Second reader: DAT. Bản tạp chí 2025 (Scholar ghi "IEEE Transactions on …", tiêu đề dùng "AAV") chưa đọc; số mục/hình theo bản arXiv.
 > **Mức độ liên quan: cao.** Bài có cả AoI, năng lượng đẩy phụ thuộc tốc độ với tốc độ là hành động, và trạng thái chứa vị trí nút. Xem mục "Khác biệt với đề tài".
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Meta-Reinforcement Learning for Timely and Energy-efficient Data Collection in Solar-powered UAV-assisted IoT Networks*, 2023.

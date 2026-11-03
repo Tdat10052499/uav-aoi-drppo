@@ -1,6 +1,6 @@
 # Form B — `eldeeb2026resilient`
 
-> Trạng thái: **nháp chờ LDN duyệt**, Claude soạn ngày 31/10/2026 từ toàn văn HTML arXiv:2502.01268v1. Người đọc: LDN (nhóm A8 trong `fulltext_list.md`). Second reader: DAT. Bản tạp chí (IEEE TMLCN 2026, DOI 10.1109/TMLCN.2026.3656262 theo OpenAlex ✱) có tóm tắt viết lại; chưa đọc. Số mục/hình theo bản arXiv.
+> Trạng thái: **LDN đã duyệt 03/11/2026.** Claude soạn ngày 31/10/2026 từ toàn văn HTML arXiv:2502.01268v1. Ngày 03/11, Claude đối chiếu lại với toàn văn và sửa 4 chỗ: vận tốc U, PT (3), bố trí giữa các nhiệm vụ, giới hạn 2. Thêm giới hạn 5 và 6. Người đọc: LDN (nhóm A8 trong `fulltext_list.md`). Second reader: DAT. Bản tạp chí (IEEE TMLCN 2026, DOI 10.1109/TMLCN.2026.3656262 theo OpenAlex ✱) có tóm tắt viết lại; chưa đọc. Số mục/hình theo bản arXiv.
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Resilient UAV Trajectory Planning via Few-Shot Meta-Offline Reinforcement Learning*, Eslam Eldeeb, Hirley Alves (ĐH Oulu), 2025 (arXiv) / 2026 (tạp chí, tiêu đề dùng "AAV") ✱. Cùng nhóm và cùng mô hình hệ thống với Sarathchandra 2025.
 
@@ -11,9 +11,9 @@
 **Bài báo trả lời câu hỏi gì:** Có thể học chính sách quỹ đạo và lập lịch cho UAV chỉ từ một tập dữ liệu ngoại tuyến nhỏ (không tương tác trực tuyến), rồi thích nghi nhanh với mục tiêu mới hoặc với vùng mất kết nối (mưa lớn) chưa thấy hay không, bằng cách kết hợp CQL với MAML (§I-D, bài toán P1, PT (5a)–(5c)).
 
 **Giả định hệ thống:**
-- **Quy mô:** một UAV cánh quay **bay với vận tốc cố định U**, độ cao 100 m; vùng 1000 m × 1000 m chia 10 × 10 ô; K = 10 thiết bị IoT đặt ngẫu nhiên ở tâm ô; T = 100 bước; UAV xuất phát ở vị trí ngẫu nhiên mỗi episode (§II, §V-A, Bảng I).
+- **Quy mô:** một UAV cánh quay **bay với vận tốc cố định U** (§II; bài không nêu giá trị U, mỗi bước dời r = 100 m theo PT (1)), độ cao 100 m; vùng 1000 m × 1000 m chia 10 × 10 ô; K = 10 thiết bị IoT đặt ngẫu nhiên ở tâm ô; T = 100 bước; UAV xuất phát ở vị trí ngẫu nhiên mỗi episode (§II, §V-A, Bảng I).
 - **Chuyển động:** 4 hướng hoặc đứng yên (PT (1)).
-- **Kênh:** LoS (PT (2)); công suất phát tối thiểu của thiết bị theo khoảng cách (PT (3)); thêm suy hao do mưa γ_R = φR^ϕ với R = 12,5 mm/h trong vùng mưa (§II).
+- **Kênh:** LoS (PT (2)); công suất phát của thiết bị theo khoảng cách (PT (3); bài không gọi là công suất tối thiểu); suy hao do mưa γ_R = φR^ϕ với R = 12,5 mm/h trong vùng mưa (§II). Bài không đưa γ_R vào PT (2) hay (3), và tham số khớp hàm lấy từ tham chiếu [42].
 - **Năng lượng:** chỉ công suất phát của thiết bị; **không có năng lượng bay của UAV** (PT (5a)).
 - **Mục tiêu:** AoI có trọng số + λ × công suất phát trung bình (PT (5a), phần thưởng PT (6)). Mỗi giá trị λ là một nhiệm vụ.
 
@@ -31,7 +31,7 @@
 **Đánh giá trên kịch bản khác tập huấn luyện? Loại dịch chuyển nào?** Có, nhưng có tinh chỉnh.
 - Dịch chuyển: (a) trọng số mục tiêu λ mới (§V-B); (b) vùng mất kết nối do mưa, chưa có khi meta-training, vị trí thay đổi (§V-C).
 - Mọi đánh giá đều sau một số epoch tinh chỉnh ngoại tuyến trên dữ liệu của nhiệm vụ mới; không có đánh giá ngay khi gặp nhiệm vụ mới.
-- Không thay đổi bố trí hay số thiết bị.
+- Số thiết bị không đổi (K = 10). Thiết bị đặt ngẫu nhiên một lần (§II); bài không nói bố trí có đổi giữa các nhiệm vụ hay không. Trong thử nghiệm khả năng chống chịu, chỉ vị trí vùng mưa đổi (§V-C).
 
 **Số seed / cách báo cáo độ bất định:** Không báo số seed huấn luyện. Fig. 4–8 một đường mỗi phương pháp. Fig. 9b có trung bình 1000 vòng Monte Carlo nhưng không có khoảng tin cậy và không rõ đó là vòng đánh giá hay vòng huấn luyện độc lập.
 
@@ -42,12 +42,14 @@
 
 **Giới hạn đã biết:**
 1. Mục I-D gọi khung là "meta-offline MARL" dù hệ thống chỉ có một UAV.
-2. Ký hiệu γ dùng cho cả hệ số chiết khấu và suy hao do mưa; Bảng I liệt kê γ hai lần.
+2. Ký hiệu gần trùng: γ là hệ số chiết khấu (PT (7)), suy hao do mưa là γ_R. Bảng I liệt kê γ = 0,99 hai lần.
 3. Ràng buộc (5c) viết |𝒟| ≤ D_const nhưng lời giải thích nói kích thước tập dữ liệu "lớn hơn hoặc bằng" ngưỡng.
 4. Không công bố mã.
+5. Dấu của số hạng công suất trong phần thưởng PT (6) có vẻ ngược: phần thưởng cộng +(λ/K)ΣP_k, trong khi mục tiêu là tối thiểu công suất.
+6. PT (14) cộng tổn thất CQL qua các nhiệm vụ, không có tập truy vấn riêng như mô tả MAML ở §III-C.
 
 **Khác biệt với đề tài (điền thẳng vào ma trận docs/04 §5):**
-- **Eldeeb 2026:** học ngoại tuyến + meta-learning, thích nghi có tinh chỉnh theo λ và theo vùng mất kết nối; không có năng lượng bay; một bố trí; không seed/CI.
+- **Eldeeb 2026:** học ngoại tuyến + meta-learning, thích nghi có tinh chỉnh theo λ và theo vùng mất kết nối; không có năng lượng bay; không mô tả việc đổi bố trí (trạng thái không chứa vị trí thiết bị); không seed/CI.
 - **Đề tài:** học trực tuyến PPO với DR theo bố trí, đánh giá không tinh chỉnh trên 4 dịch chuyển bố trí/tài nguyên, có năng lượng đẩy phụ thuộc tốc độ, 10 seed + CI.
 - Bài không đe doạ định vị; có thể trích ở Related Work cùng Sarathchandra 2025 như nhóm "thích nghi theo mục tiêu/điều kiện kênh bằng meta-learning".
 
