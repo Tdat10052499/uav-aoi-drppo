@@ -50,9 +50,10 @@
       "state": "doing"
     },
     "W2-LDN-01": {
-      "date": "2026-10-31",
+      "date": "2026-11-03",
+      "evidence": "5 Form B LDN đã đối chiếu toàn văn và duyệt 03/11 (yi2020deep, sarathchandra2025age, yi2023meta, eldeeb2026resilient, xiao2024meta); hàng ma trận docs/04 §5 đủ, cột 6 qua PR #40; issue #12 chờ DAT second reader",
       "note": "Form B nháp: Sarathchandra 2025, Yi 2023, Eldeeb 2026, Xiao 2024 (cần đối chiếu PDF); hàng ma trận đã điền; chờ LDN duyệt",
-      "state": "doing"
+      "state": "done"
     },
     "W2-LDN-03": {
       "date": "2026-11-02",

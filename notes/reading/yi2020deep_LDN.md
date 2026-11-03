@@ -1,10 +1,10 @@
 # Form B — `yi2020deep`
 
-> Trạng thái: **nháp chờ LDN duyệt**, Claude soạn ngày 31/10/2026 từ toàn văn bản HTML ar5iv của arXiv:2003.00391v1 (6 trang). Người đọc: LDN. Second reader: DAT (W1-LDN-02). Phương trình đọc từ bản HTML; những chỗ ghi "cần đối chiếu PDF" có thể do lỗi chuyển đổi.
+> Trạng thái: **LDN đã duyệt 03/11/2026.** Claude soạn ngày 31/10/2026 từ toàn văn bản HTML ar5iv của arXiv:2003.00391v1 (6 trang). Ngày 03/11, Claude đối chiếu lại từng nhận định với toàn văn ar5iv và trang arXiv abs, rồi sửa 3 chỗ: tác giả, nơi công bố, vai trò của P(V) trong trạng thái. Người đọc: LDN. Second reader: DAT (W1-LDN-02). Phương trình đọc từ bản HTML; những chỗ ghi "cần đối chiếu PDF" có thể do lỗi chuyển đổi.
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *Deep Reinforcement Learning for Fresh Data Collection in UAV-assisted IoT Networks*, 2020.
-- **Tác giả:** Mengjie Yi, Xijun Wang, Juan Liu, Yan Zhang, Bo Bai (ĐH Tây An Điện tử, ĐH Trung Sơn, ĐH Ninh Ba, Huawei).
-- **Nơi công bố:** trang arXiv ghi "Accepted by IEEE INFOCOM 2020-AoI workshop". DOI và số trang trong kỷ yếu chưa kiểm ✱.
+- **Tác giả:** Mengjie Yi, Xijun Wang, Juan Liu, Yan Zhang, Bo Bai (ĐH Tây An Điện tử, ĐH Trung Sơn, Viện Vi hệ thống và Công nghệ Thông tin Thượng Hải thuộc Viện Hàn lâm Khoa học Trung Quốc, ĐH Ninh Ba, Huawei Theory Lab Hồng Kông).
+- **Nơi công bố:** chưa xác minh ✱. Trang arXiv abs (kiểm 03/11) không có trường Comments, journal-ref hay DOI; chỉ có v1 nộp ngày 01/03/2020. Bản nháp 31/10 ghi "Accepted by IEEE INFOCOM 2020-AoI workshop", nhưng câu này không thấy trên trang arXiv; cần tìm trên IEEE Xplore hoặc DBLP trước khi trích.
 
 **URL nguồn gốc và phiên bản/ngày truy cập:** https://arxiv.org/abs/2003.00391 (v1, 01/03/2020); toàn văn đọc tại https://ar5iv.labs.arxiv.org/html/2003.00391, truy cập 31/10/2026.
 
@@ -15,7 +15,7 @@
 **Giả định hệ thống:**
 - **Quy mô:** một UAV, N cảm biến vị trí ngẫu nhiên; lưới 20 × 20 ô cạnh 25 m (vùng 500 m × 500 m); độ cao 120 m; T = 70 khe (§II-A, §IV, Bảng I). Độ dài khe τ không có trong Bảng I.
 - **Chuyển động:** mỗi khe UAV treo hoặc bay sang một ô kề với **tốc độ hằng số V = 25 m/s** (§II-A, Bảng I). Không gian hành động: {Bắc, Nam, Đông, Tây, Treo} × {cảm biến được lập lịch} (§III-A2).
-- **Năng lượng đẩy:** dạng P(V) của Zeng 2019, gồm thành phần cánh quạt, cảm ứng và ký sinh (PT (1)). Chỉ dùng trong **ràng buộc** năng lượng (PT (7)), không nằm trong mục tiêu. Vì V cố định nên năng lượng chỉ khác nhau giữa bay và treo (PT (13)).
+- **Năng lượng đẩy:** dạng P(V) của Zeng 2019, gồm thành phần cánh quạt, cảm ứng và ký sinh (PT (1)). Dùng trong **ràng buộc** năng lượng (PT (7)) và trong biến trạng thái "năng lượng dư" Δ_t (§III-A1); không nằm trong mục tiêu (PT (6)). Vì V cố định nên năng lượng chỉ khác nhau giữa bay và treo; theo PT (13), Δ_t chỉ đổi khi UAV treo.
 - **Kênh:** LoS thuần, suy hao theo bình phương khoảng cách (PT (2)). Cảm biến truyền thành công trong một khe khi UAV ở trong bán kính phủ R (PT (3)); mỗi khe chỉ một cảm biến truyền.
 - **AoI:** về 1 khi được thu, ngược lại tăng 1 (PT (4)–(5)). Mục tiêu là AoI có trọng số θ_n trung bình theo thời gian (PT (6)); mô phỏng dùng trọng số bằng nhau (§IV).
 
