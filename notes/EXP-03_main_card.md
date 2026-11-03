@@ -30,7 +30,9 @@ Thống kê: bootstrap 95% CI, IQM, kiểm định hoán vị một phía, Holm 
 Thứ tự chạy: 2 tiến trình song song, một tiến trình DR và một tiến trình Fixed, seed tăng dần
   0→9 (cả hai nhánh luôn ở cùng seed, tránh trôi máy lệch một nhánh)
 Thất bại: theo tiêu chí loại của PREREG; mọi lần chạy hỏng hoặc chạy lại được liệt kê
-Chi phí: 20 × 2M = 40M bước; ước tính 17–29 giờ máy trên laptop DAT (chưa đo ở 2M)
+Chi phí: 20 × 2M = 40M bước. Đo trên laptop DAT 03/11: 1 tiến trình 2M = 5444,8 s (367,3 bước/s, EXP-02b)
+  → tuần tự ≈ 30,2 h; 2 tiến trình song song ở pilot đạt 243,7 + 244,2 bước/s (EXP-02 s1)
+  → ≈ 22,8 h (ước tính, chưa đo ở 2M; không dùng làm số thời gian cho bài)
 Mốc: ≥ 5 seed/nhánh trước 10/11 (điều kiện dừng FJCAI)
 Phân tích: scripts/analyze.py → results/processed/EXP-03_summary.md; LDN
 Trường raw cần: events.csv, run_record.json (checkpoint_digest, steps_per_s)
