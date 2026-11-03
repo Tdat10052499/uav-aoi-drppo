@@ -13,110 +13,107 @@
 % =====================================================================================
 
 \section{Related Work}
-%% Owner: FAO. Built from the positioning matrix (docs/04 sec. 5).
+%% Owner: FAO. Built from the positioning matrix (docs/04 sec. 5, 6 columns, DECISIONS 2026-11-01).
+%% Bản 03/11 cho bài FJCAI (≤ 1 trang IEEE, yêu cầu DAT 03/11 A3). Thay bản 22/10.
+%% CHỜ: (1) hàng Gong 2024, Lu 2025, Toure 2026 (DAT đọc, chưa có trên main 03/11);
+%%      (2) câu định vị bản 3 (docs/01 §3, chưa có trên main 03/11) — đoạn Positioning đang dùng bản 2.
 
 \paragraph{DRL for UAV-assisted data collection.}
-Deep reinforcement learning (DRL) has become a common tool for joint UAV trajectory and
-scheduling problems, which are non-convex and combinatorial; recent surveys cover the
-breadth of this line of work~\cite{luong2019applications,zhao2025survey,amodu2025survey}.
-%%CHECK: ba survey đều ◐; câu chỉ dẫn chung, không trích kết luận cụ thể của survey.
-Closest to our setting, Bayerlein et~al.~\cite{bayerlein2021multi} train double deep
-Q-networks for single- and multi-UAV data harvesting on map-based observations centred
-on the agent, and show that one policy can serve a range of scenario parameters,
-including the number, positions and data volumes of sensors, the flight time and the
-start position, with additional tests beyond the training range.
-%%SRC: docs/04 §1 (✔ toàn văn, DAT đọc). DAT kiểm lại câu này với §IV–§V của [B21].
-Their objective is the amount of data collected in a single mission, and the flight
-energy per step is modelled as constant, a choice they motivate by the small difference
-between hovering and horizontal flight.
-%%SRC: docs/04 §1; docs/01 §3. %%CHECK: câu "khoảng 10%" trong docs/04 chưa có số mục; DAT ghi mục.
-de Souza Lamenza et~al.~\cite{lamenza2025} also target a model that handles a flexible
-number of sensors, in a visit-once data collection task.
-%%CHECK: ◐, chưa mở được toàn văn (docs/04 §2). Bỏ câu này nếu tới W10 vẫn chưa đọc được.
+Deep reinforcement learning (DRL) is widely used for joint UAV trajectory and scheduling
+problems, which are non-convex and combinatorial~\cite{luong2019applications,zhao2025survey,amodu2025survey}.
+%%CHECK: ba survey đều ◐; chỉ dẫn chung, không trích kết luận cụ thể.
+Bayerlein et~al.~\cite{bayerlein2021multi} train one double deep Q-network policy over a
+range of scenario parameters (number, positions and data volumes of sensors, flight time,
+start position) for single-shot data harvesting, with constant energy per step; they do
+not compare against a policy trained on a fixed scenario.
+%%SRC: docs/04 §5 hàng Bayerlein (PT (5), (13), §II-A, §VI-A, §VI-B). DAT là người đọc; DAT kiểm câu.
+De~Souza Lamenza et~al.~\cite{lamenza2025} randomize sensor positions and the sensor count
+in a visit-once task without an energy model.
+%%SRC: docs/04 §5 hàng Lamenza (§1, §3.4, §4, PT (7)).
 
-\paragraph{Age of information in UAV networks.}
-Age of information (AoI)~\cite{kaul2012realtime} measures the freshness of the most recent
-update received from a source.
-%%CHECK: kaul2012realtime ✱ (VERIFY trong references.bib).
-Abd-Elmagid et~al.~\cite{abdelmagid2019deep} formulate the joint choice of UAV moves and
-update scheduling as a finite-horizon MDP that minimises the weighted sum of AoI, and solve
-it with a deep Q-network. The UAV has no propulsion-energy model, only a flight-time
-budget, and each scenario uses a fixed placement of at most three ground nodes; results
-are averaged over 1000 episodes without training seeds or confidence intervals.
-%%SRC: notes/reading/abdelmagid2019deep_FAO.md (§II-A, §II-B, §III-B, §IV).
-Yi et~al.~\cite{yi2020deep} combine trajectory and scheduling decisions to reduce
-weighted AoI under an energy constraint.
-%%CHECK: ◐ (ar5iv), docs/04 §1. Kiểm toàn văn: năng lượng là của UAV hay của cảm biến? bố trí cố định?
-Sun et~al.~\cite{sun2025aoi} minimise the peak AoI of a multi-UAV network with laser
-charging using MAPPO extended with temporal memory. Their energy model follows the
-rotary-wing propulsion power, but the flight speed is held constant, so speed is not a
-decision variable; sensor positions are fixed and robustness is examined only by
-sweeping one physical parameter. The authors list domain randomization as future work.
-%%SRC: notes/reading/sun2025aoi_FAO.md (§III-A, Bảng IV, §V-A, Fig. 4b, §VII).
-OH-DRL~\cite{ohdrl2025} reverses the roles of the two quantities: it minimises UAV flight
-energy subject to a maximum average-AoI constraint, with a hierarchical design in which DRL
-selects the UAV's visiting policy and semidefinite relaxation handles scheduling and
-STAR-RIS beamforming.
-%%CHECK: CHỈ tóm tắt (notes/reading/ohdrl2025_FAO.md). Không nêu gì về tổng quát hoá của OH-DRL
-%%       cho tới khi có toàn văn (câu hỏi A3 trong notes/2026-10-21_fao_can-DAT.md).
-Sarathchandra et~al.~\cite{sarathchandra2025age} use meta-learning so that a DQN adapts
-when the weighting between age and transmit power changes, i.e., the shift is in the
-objective rather than in the deployment.
-%%CHECK: ◐ (docs/04 §2, ma trận §5). Kiểm toàn văn trước khi giữ câu "objective rather than deployment".
+\paragraph{AoI-oriented UAV policies.}
+Abd-Elmagid et~al.~\cite{abdelmagid2019deep} minimise weighted sum-AoI with a deep
+Q-network for a fixed placement of at most three ground nodes, with a flight-time budget
+instead of a propulsion model.
+%%SRC: notes/reading/abdelmagid2019deep_FAO.md (§II-A, §II-B, §IV).
+Yi et~al.~\cite{yi2020deep} use the rotary-wing power model only in a constraint and
+fly at a fixed speed or hover; Sun et~al.~\cite{sun2025aoi} minimise the peak AoI
+of laser-charged UAVs with a propulsion model but a constant speed, and list domain
+randomization as future work.
+%%SRC: docs/04 §5 hàng Yi 2020 (PT (1), (7), §II-A, Bảng I); notes/reading/sun2025aoi_FAO.md (§III-A, Bảng IV, §VII).
+OH-DRL~\cite{ohdrl2025} reverses the roles of the two quantities, minimising flight energy
+under a maximum average-AoI constraint.
+%%CHECK: CHỈ tóm tắt (notes/reading/ohdrl2025_FAO.md). Không nêu gì thêm khi chưa có toàn văn.
+The closest work is Yi et~al.~\cite{yi2023meta}: the UAV chooses its speed and heading,
+propulsion energy depends on speed and acceleration, and a meta-learned policy is trained
+over tasks with different sensor numbers and positions. Its generalization is measured as
+the speed of adaptation with further training after a single task change, not as
+performance without retraining under structured shifts.
+%%SRC: notes/reading/yi2023meta_LDN.md (PT (9)–(10), (15a), §IV-A1, §IV-A2, §IV-B2, Fig. 8).
+%%CHECK: Form B Yi 2023 còn là nháp chờ LDN duyệt; bản tạp chí 2025 chưa đọc.
+Other meta-learning approaches adapt to relocated sensors~\cite{xiao2024meta}, to new
+objective weights~\cite{sarathchandra2025age}, or to new weights and unseen rain
+regions~\cite{eldeeb2026resilient}, again with further training on the new task.
+%%SRC: docs/04 §5 hàng Xiao (Fig. 2–3), Sarathchandra (Fig. 4–6), Eldeeb (§V-B, §V-C, Fig. 5, 9).
+%%CHECK: Xiao "cần đối chiếu PDF" (docs/04). Eldeeb: "vùng mưa chưa thấy" (docs/04) — LDN kiểm chữ "rain regions".
 
-\paragraph{Generalization of DRL policies.}
-Domain randomization trains on a distribution of simulated environments so that the
-learned policy transfers to conditions not seen during training~\cite{tobin2017domain}.
-%%CHECK: tobin2017domain ✱ (VERIFY).
-In drone racing, Liu~\cite{liu2024generalizable} regenerates randomized tracks and
-obstacles for every rollout of PPO and evaluates one policy on increasingly shifted
-tracks; its success rate decreases as the test tracks move away from the training
-distribution, and no fixed-environment baseline or multi-seed analysis is reported.
+\paragraph{Generalization and evaluation practice.}
+Domain randomization trains on a distribution of simulated environments so that a policy
+transfers to unseen conditions~\cite{tobin2017domain}; in drone racing,
+Liu~\cite{liu2024generalizable} finds that success decreases as test tracks move away from
+the training distribution, without a fixed-environment baseline.
 %%SRC: notes/reading/liu2024generalizable_FAO.md (§III-C3, §IV-A, §IV-B, Fig. 6, Fig. 10).
-%%     Bài ngoài phạm vi tổng quan hệ thống (docs/04 §6); chỉ dùng làm tham khảo phương pháp DR.
-Because DRL results vary strongly across training runs, we follow the recommendations of
-Agarwal et~al.~\cite{agarwal2021deep} and report per-seed bootstrap confidence intervals
-and interquartile means.
-%%CHECK: agarwal2021deep ◐. Câu này có thể chuyển sang Experimental Setup (LDN quyết).
+%%CHECK: tobin2017domain ✱ (VERIFY).
+None of the works above reports results over multiple training seeds with confidence
+intervals, which Agarwal et~al.~\cite{agarwal2021deep} recommend for DRL.
+%%SRC: cột "Nhiều seed + CI" = Không ở mọi hàng docs/04 §5 đã đọc toàn văn (03/11). Kiểm lại khi có Gong, Lu, Toure.
 
 \paragraph{Positioning.}
-Table~\ref{tab:positioning} summarises how the closest works relate to the five properties
-our study combines.
-While parameter generalization has been shown for single-shot data
-harvesting~\cite{bayerlein2021multi}, it remains unclear whether such policies stay robust
-under structured distribution shifts when the objective is continual information freshness
-and the propulsion energy depends on speed.
-%%SRC: câu định vị nháp ở docs/01 §3, giữ nguyên chữ. Phải được G0 xác nhận lại.
-Among the AoI-oriented works we read in full, none trains on a distribution of layouts and
-evaluates under structured shifts with multiple training seeds; the gap is also noted
-as future work by~\cite{sun2025aoi}.
-%%SRC: ma trận docs/04 §5 (hàng Abd-Elmagid, Sun). Câu chỉ đúng cho các bài "read in full";
-%%     nếu OH-DRL/Yi/Lamenza có toàn văn trước W10, cập nhật câu này. KHÔNG đổi thành "first".
+Table~\ref{tab:positioning} compares these works on six properties.
+%%CHECK: thay câu dưới bằng câu định vị bản 3 (docs/01 §3) khi DAT viết. Hiện là bản 2 rút gọn.
+Prior work has shown that one DRL policy can cover a range of scenario parameters for data
+harvesting~\cite{bayerlein2021multi}, and that AoI- and energy-aware policies with speed as
+an action can be adapted to new sensor layouts through meta-learning with further
+training~\cite{yi2023meta}. What remains untested is whether a policy trained once with
+domain randomization keeps its information freshness, without retraining, under structured
+shifts in sensor layout, density, area and energy budget, compared with the same learner
+trained on a fixed layout, over multiple training seeds.
+%% KHÔNG viết "first" (CLAUDE.md quy tắc 7).
 
 \begin{table}[t]
-\caption{Positioning against the closest works (\checkmark: yes; --: no; ?: not determinable
-from the text available to us).}
+\caption{Positioning against the closest works (\checkmark: yes; $\circ$: partly; --: no;
+?: not determinable from the text available to us).}
 \label{tab:positioning}
 \centering
-\begin{tabular}{lccccc}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
 \toprule
-Work & AoI & Speed-dep.\ energy & Multi-layout training & Structured OOD & Seeds + CI \\
+Work & AoI & Speed-dep. & Multi- & Structured & Fixed- & Seeds \\
+     &     & energy     & layout & OOD        & layout & + CI  \\
+     &     &            & train  & test       & control &      \\
 \midrule
-\cite{bayerlein2021multi}   & --         & --  & \checkmark & partial    & -- \\
-\cite{abdelmagid2019deep}   & \checkmark & --  & --         & --         & -- \\
-\cite{sun2025aoi}           & \checkmark & --$^{a}$ & --    & --         & -- \\
-\cite{ohdrl2025}$^{b}$      & \checkmark & ?   & ?          & ?          & ? \\
-\cite{liu2024generalizable}$^{c}$ & -- & --  & \checkmark & \checkmark & -- \\
-Ours                        & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\cite{bayerlein2021multi}   & --         & --          & \checkmark & $\circ$    & --      & -- \\
+\cite{lamenza2025}          & --         & --          & \checkmark & $\circ$    & $\circ$ & -- \\
+\cite{abdelmagid2019deep}   & \checkmark & --          & --         & --         & --      & -- \\
+\cite{yi2020deep}           & \checkmark & --          & --         & --         & ?       & -- \\
+\cite{sun2025aoi}           & \checkmark & --$^{a}$    & --         & --         & --      & -- \\
+\cite{ohdrl2025}$^{b}$      & \checkmark & ?           & ?          & ?          & ?       & ? \\
+\cite{yi2023meta}           & \checkmark & \checkmark  & \checkmark & $\circ$    & --      & -- \\
+\cite{xiao2024meta}         & \checkmark & --          & $\circ$    & --         & ?       & -- \\
+\cite{eldeeb2026resilient}  & \checkmark & --          & --         & $\circ$    & ?       & -- \\
+% CHỜ: Gong 2024, Lu 2025, Toure 2026 (DAT)
+Ours                        & \checkmark & \checkmark  & \checkmark & \checkmark & \checkmark & \checkmark \\
 \bottomrule
 \end{tabular}
 
 \smallskip
-{\footnotesize $^{a}$Propulsion model present, but speed fixed.
-$^{b}$Abstract only. $^{c}$Drone racing; reference for domain randomization only.}
+{\footnotesize $^{a}$Propulsion model present, but speed fixed. $^{b}$Abstract only.}
 \end{table}
-%%SRC: docs/04 §5. Bayerlein "Seeds + CI": ma trận ghi "Monte Carlo trên kịch bản" → "--" ở đây;
-%%     DAT xác nhận. Yi, Sarathchandra, Lamenza không đưa vào bảng vì còn nhiều ô "Chưa rõ".
+%%SRC: docs/04 §5 (03/11). Cột "Fixed-layout control" = cột 6 (DECISIONS 2026-11-01).
+%%     "?" ở Yi 2020, Xiao, Eldeeb = cột 6 người đọc chưa điền (LDN); điền rồi sửa bảng.
+%%     Yi 2023 cột 6 "--" theo Form B nháp (yi2023meta_LDN.md: "Yi 2023 không có").
+%%     Sarathchandra bỏ khỏi bảng (dịch chuyển ở mục tiêu, không ở bố trí; nhắc trong văn bản).
+%%     Liu 2024 bỏ khỏi bảng cho bài FJCAI (ngoài phạm vi, chỉ trích DR).
 
 
 \section{Discussion and Limitations}
@@ -149,16 +146,16 @@ does not imply robustness to other shifts, such as different channel conditions 
 sensor traffic; in the larger-area suite the physical size of a grid cell also changes.
 
 \emph{Baselines and tuning.} The heuristics read the true sensor positions and ages at
-full resolution, which favours them over the learned policies. Hyper-parameters were tuned
-with an equal budget for DR-PPO and Fixed-PPO on the in-distribution suite only; the
-ablation variants reuse the DR-PPO hyper-parameters without separate tuning, so their
-reported degradation is an upper bound on the harm of removing each component.
-%%SRC: docs/03 §2, §3, §10; notes/EXP-07_ablation_card.md. Câu DQN: CHỜ quyết định A2 (tinh chỉnh DQN).
+full resolution, which favours them over the learned policies. DR-PPO and Fixed-PPO share
+the same default PPO hyper-parameters, without tuning; the comparison is therefore
+balanced, but neither learner is shown to be at its best configuration.
+%%SRC: docs/03 §2, §10; docs/PREREG.md §6 (PR #38, bài FJCAI không tinh chỉnh Optuna, DAT 03/11).
+%%     Bản đầy đủ (có Optuna, ablation): khôi phục câu "equal budget ... ablation reuse" từ bản 22/10.
 
-\emph{Statistical power.} Each learned method is trained with [n] seeds
-([n] for ablations and the $\lambda$ sweep); with samples of this size we rely on
+\emph{Statistical power.} Each learned method is trained with 10 seeds; with samples of
+this size we rely on
 permutation tests and bootstrap intervals and avoid strong claims when intervals overlap.
-%%Điền [n] từ docs/PREREG.md sau G1.
+%%SRC: docs/PREREG.md §4–§5 (PR #38). Bản đầy đủ thêm số seed của ablation và quét λ.
 
 \emph{Design parameters.} Several environment parameters (slot length, packet size,
 grid resolution, reward weights) are design choices rather than values from the
