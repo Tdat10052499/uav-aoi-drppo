@@ -31,6 +31,16 @@ FAO: (03/11) Đã chép, PR #38: https://github.com/Tdat10052499/uav-aoi-drppo/p
 - Số pilot EXP-02 (2 seed, 300k bước) được dùng để kiểm tra pipeline, **không** dùng để chọn ngưỡng.
 - **Hạn:** 04/11, trước 12:00.
 
+LDN: (03/11) Chốt **δ = 0,10**, tính theo **hiệu tuyệt đối của trung bình**, áp trên chính các bộ có ý nghĩa. Chọn ngày 03/11, khi LDN và nhóm **chưa thấy số nào** của pilot EXP-02 hay EXP-03. GVHD chưa được hỏi về ngưỡng; đề nghị DAT gửi GVHD cùng PR khoá. Đề xuất chép vào §8 của PR #38:
+
+> **Ngưỡng ý nghĩa thực tiễn cho H1.** Với mỗi bộ OOD s, Δ_s = mean_i deg_Fixed,i(s) − mean_i deg_DR,i(s), trung bình qua 10 seed mỗi nhánh (deg theo `docs/03` §5). Bộ s **đạt H1** khi (a) p sau Holm < 0,05 (kiểm định hoán vị một phía trên hiệu trung bình, `stats.permutation_test`), **và** (b) Δ_s ≥ **0,10**, tức DR suy giảm ít hơn Fixed ít nhất 10 điểm phần trăm AoI `id` của chính nó. **"Ủng hộ H1"** khi có ≥ 3/4 bộ đạt. Luôn báo kèm 95% CI bootstrap của Δ_s, IQM của deg từng nhánh và Cliff's δ; CI và IQM là thông tin, không phải điều kiện quyết định. Ngưỡng chọn ngày 03/11/2026, trước khi nhóm thấy bất kỳ số nào của EXP-02 hoặc EXP-03, và không được đổi sau khi khoá.
+
+- **Vì sao hiệu tuyệt đối, không phải "giảm ≥ 10% độ suy giảm" (`docs/03` §6):** deg có thể ≤ 0, khi đó tỉ lệ không xác định hoặc đổi dấu. Ví dụ heuristic tham chiếu: TSP trên `ood_cluster` có deg ≈ (22,94 − 28,64)/28,64 ≈ −0,20 (`results/processed/heuristics_summary_2026-10-16.md`).
+- **Vì sao trung bình, không phải IQM như ví dụ trong B2:** kiểm định hoán vị dùng hiệu trung bình, nên ngưỡng áp lên cùng đại lượng. Với n = 10, IQM chỉ giữ 5 giá trị giữa.
+- **Vì sao điểm ước lượng, không phải cận dưới CI ≥ 0,10:** với 10 seed, điều kiện CI đòi hiệu ứng rất lớn. Ý nghĩa thống kê đã được kiểm bằng (a); (b) chỉ chặn hiệu ứng có ý nghĩa thống kê nhưng nhỏ về thực tiễn. CI của Δ_s vẫn báo, theo khuyến nghị Agarwal 2021 (`notes/reading/agarwal2021deep_LDN.md`).
+- **Vì sao 0,10:** khớp ví dụ ở `docs/03` §6. Để đối chiếu thang đo (đây là số **heuristic** tham chiếu, không phải learner, không phải EXP-02 hay EXP-03): deg của TSP là +0,24 (`ood_area`), −0,20 (`ood_cluster`), +0,52 (`ood_density`), +1,11 (`ood_energy`). So với độ lớn các dịch chuyển, 0,10 là mức khiêm tốn.
+- **Việc cho `analyze.py` (LDN, A3):** thêm cột Δ_s, CI bootstrap của Δ_s và cột "đạt (a) và (b)" vào bảng H1.
+
 ## B3. Thẻ EXP-03
 - Thẻ: `notes/EXP-03_main_card.md` (đã đưa lên main 03/11).
 - **Cần FAO:** duyệt thẻ như đã làm với EXP-02.

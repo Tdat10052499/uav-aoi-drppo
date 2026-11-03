@@ -17,3 +17,5 @@
 
 ## A4. Ngưỡng ý nghĩa thực tiễn cho H1 (ô PREREG của LDN)
 - **Cần:** chốt ngưỡng trước khi khoá PREREG ngày **05/11**, thay vì 13/11 như trước.
+
+LDN: (03/11) Đã chốt δ = 0,10 (hiệu tuyệt đối của trung bình deg, áp trên các bộ có ý nghĩa sau Holm). Chi tiết và đoạn đề xuất cho §8 PREREG ở B2 của `2026-11-03_dat_can-FAO_khoa-PREREG-som.md`. LDN theo hạn 04/11 trước 12:00 của file đó, vì file đó thay hạn 05/11 ở đây.
