@@ -59,3 +59,15 @@ DAT: (01/11) Đồng ý nhóm A (trước T3 03/11) và nhóm B (trước T6 13/
 - (02/11 tối) LDN đọc lại trên `main` 7e3c752. Báo cáo G0 vẫn là bản c63ab0e, chưa có bản sửa. Ý 4 đã xong: FAO thêm cột 6 vào header `docs/04` §5 và điền 4 hàng của FAO (8b1b5a3). LDN điền 5 hàng của LDN qua PR. Ý 1–3 còn mở; G0-2 (Gong, Lu, Toure) và G0-6 (OH-DRL) chưa có cập nhật; 3 hàng DAT (Bayerlein, Zeng, Lamenza) chưa điền cột 6. Kết luận tiêu chí không đổi. LDN đọc lại sau khi DAT push bản sửa.
 
 DAT: (02/11) Đã sửa báo cáo G0 theo ý 1–3: bỏ "tốc độ là biến quyết định" ở mục Trùng lặp và Đề xuất quyết định (G0-1); cột "Hiện trạng (02/11)", tóm tắt #2 "chưa kết luận được", 6 cột, bỏ nhánh "chưa có kết quả tìm kiếm", cập nhật hai gạch Yi 2020 và PRISMA (G0-3); thêm giải thích thay thế về từ khoá tốc độ/chuyển giao và Q4 (G0-5). Đã điền cột 6 cho 3 hàng DAT (Bayerlein: Không, §VI-B; Zeng: Không áp dụng; Lamenza: Một phần, §5.2). Ý 4 FAO đã làm (8b1b5a3). G0-2 (đọc Gong, Lu, Toure) và G0-6 (OH-DRL) vẫn chờ DAT có PDF.
+
+## A7. (03/11) Đọc lại báo cáo G0 bản a656d71: còn 4 chỗ cần sửa trước họp 04/11
+- LDN đọc lại `notes/2026-11-04_gate_G0_report.md` tại a656d71, trên `main` 851ed1f. G0-1 và G0-5 đã xử lý; G0-3 mới xử lý một phần. Chi tiết ở `notes/review_log.md`, dòng G0-7.
+- Cần sửa:
+  1. Bảng "Đối chiếu tiêu chí G0", hàng #1: tiêu đề cột đã đổi thành "Hiện trạng (02/11)" nhưng nội dung vẫn là bản cũ ("PRISMA còn số ≈", "Cột 6 mới chưa điền", "Chưa đạt (01/11)"). Cập nhật: PRISMA chốt 02/11; cột 6 đủ 12/12 hàng khi PR #40 merge; còn Gong, Lu, Toure và OH-DRL.
+  2. Số bài: hàng #2 và dòng tóm tắt ghi "14 bài trong ma trận", nhưng `docs/04` §5 có **12 hàng** (không kể "Đề tài này").
+  3. Bảng "Việc phải xong trước họp 04/11": dòng PRISMA vẫn ghi "thay số ≈" (đã xong); dòng cột 6 nên ghi trạng thái (FAO 4, DAT 3, LDN 5 qua PR #40).
+  4. Quyết định 03/11 (FJCAI, DECISIONS trong PR #38) chưa vào báo cáo. Báo cáo vẫn ghi "Optuna TUNE (W4)", "Ngày quyết định tiếp theo: G1 15/11" và 163,2 M bước theo Phương án B. GVHD sẽ đọc thấy kế hoạch cũ. Đề xuất: thêm một dòng nêu kế hoạch FJCAI, PREREG khoá 04/11 và điều kiện EXP-02b, hoặc ghi rằng phần tính toán được thay bằng `docs/PREREG.md`.
+- Còn mở, không do báo cáo: G0-2 (Gong, Lu, Toure chưa có Form B; hạn 03/11) và G0-6 (OH-DRL).
+- Kết luận của LDN không đổi: #1 **chưa đạt**; #2 **chưa kết luận được**; #3 chờ GVHD. Theo đề xuất trong báo cáo, buổi họp 04/11 rơi vào nhánh "tiếp tục có điều kiện".
+- **Hạn:** trước họp 04/11.
+
