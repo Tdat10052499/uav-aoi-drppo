@@ -69,6 +69,11 @@
     "W3-FAO-01": {
       "date": "2026-11-04",
       "state": "doing"
+    },
+    "W4-FAO-01": {
+      "date": "2026-11-05",
+      "evidence": "docs/PREREG.md khoá sớm: PR #38 merge b5cd784 (03/11), tag prereg-lock; LDN duyệt 950a4bb",
+      "state": "done"
     }
   }
 }
