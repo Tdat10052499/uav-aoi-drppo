@@ -12,9 +12,8 @@ Bằng chứng xem xét, kể cả lần chạy thất bại (run ID):
     OpenAlex 23 + Scholar 300 bản ghi; 279 bản ghi duy nhất (PRISMA đã chốt, search_log §4);
     giữ 58 bài đọc toàn văn (nhóm A 10, B 13, C 35), loại 29 ở bước tóm tắt; thêm 5 bài từ tra
     ngược Yi 2023. IEEE Xplore và Scopus thay bằng OpenAlex (DECISIONS 2026-11-01).
-  - Ma trận định vị docs/04 §5: 12 hàng trên main (không kể "Đề tài này"); thêm Liu 2025 khi PR #40
-    merge và Gong, Lu, Toure qua PR DAT/tong-quan-nhom-a, tổng 16 hàng. Cột 6 "đối chứng huấn
-    luyện cố định" (DECISIONS 01/11).
+  - Ma trận định vị docs/04 §5: 13 hàng trên main (không kể "Đề tài này", đã gồm Liu 2025, PR #40); thêm
+    Gong, Lu, Toure qua PR #49, tổng 16 hàng. Cột 6 "đối chứng huấn luyện cố định" (DECISIONS 01/11).
   - Form B toàn văn đã duyệt: bayerlein2021multi_DAT, zeng2019energy_DAT, lamenza2025_DAT
     (LDN second reader 01/11); abdelmagid2019deep_FAO, sun2025aoi_FAO, liu2024generalizable_FAO.
     Form B phần LDN: yi2020deep, sarathchandra2025age, yi2023meta, eldeeb2026, xiao2024meta,
@@ -91,7 +90,7 @@ Ngày quyết định tiếp theo: G1 — T6 20/11/2026.
 
 | # | Tiêu chí | Hiện trạng (02/11) | Bằng chứng | Kết luận |
 | --- | --- | --- | --- | --- |
-| 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | Tìm kiếm Q1–Q3 xong; PRISMA chốt 02/11; LDN duyệt sàng lọc 03/11. Nhóm A: 3/5 bài phần DAT có Form B nháp và hàng ma trận (PR DAT/tong-quan-nhom-a); phần LDN đủ (Liu 2025 qua PR #40). Cột 6 đủ khi PR #40 merge. Còn thiếu: A4, A7 (IEEE), OH-DRL (chỉ tóm tắt). | `notes/reading/search_log_LDN.md`, `fulltext_list.md`; `docs/04` §5 | **Chưa đạt (06/11).** Phần còn lại phụ thuộc quyền truy cập toàn văn. Nếu không có thì ghi rõ là giới hạn; nhóm quyết định có chấp nhận không. Không được kéo dài lần hai. |
+| 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | Tìm kiếm Q1–Q3 xong; PRISMA chốt 02/11; LDN duyệt sàng lọc 03/11. Nhóm A: 3/5 bài phần DAT có Form B nháp và hàng ma trận (PR #49); phần LDN đủ (Liu 2025, PR #40 đã merge). Cột 6 đủ ở các hàng trên main. Còn thiếu: A4, A7 (IEEE), OH-DRL (chỉ tóm tắt). | `notes/reading/search_log_LDN.md`, `fulltext_list.md`; `docs/04` §5 | **Chưa đạt (06/11).** Phần còn lại phụ thuộc quyền truy cập toàn văn. Nếu không có thì ghi rõ là giới hạn; nhóm quyết định có chấp nhận không. Không được kéo dài lần hai. |
 | 2 | Không công trình nào đủ cả 6 cột (DECISIONS 2026-11-01) | Gần nhất về mô hình: **Yi 2023** (Có, Có, Có, Một phần, Không, Không) và **Gong 2024** (Có, Có, Không rõ, Một phần, Không, Không; nháp). Không hàng nào "Có" ở cột OOD có cấu trúc trừ Liu 2024 (đua drone, ngoài phạm vi). Về thống kê, cao nhất là Toure 2026: 3 seed, không CI. | Form B tương ứng | **Không bài nào đủ 6 cột trong 16 hàng (06/11; 3 hàng mới chờ DAT duyệt).** Chưa loại trừ hẳn: A4, A7, OH-DRL chưa đọc; Q4 (G0-5) chưa chạy. Điểm mới về mô hình (tốc độ là hành động, nhiều bố trí) **không còn**. |
 | 3 | Câu định vị `docs/01` §3 được cả nhóm thống nhất (đổi 06/11; GVHD góp ý ở bản nháp bài) | Có câu bản 2 (nháp 01/11), viết cho DR-PPO; sẽ được thay khi chốt bản cho PG-TG-PPO (`docs/01` §3, ghi chú 06/11). Đọc Lu và Toure cho thấy không được nêu "không huấn luyện lại" như điểm khác biệt riêng. | `docs/01` §3 | **Chờ nhóm.** Cần nhóm xem đóng góp nặng về đánh giá có đủ cho hội nghị đích không. |
 
@@ -101,7 +100,7 @@ Ngày quyết định tiếp theo: G1 — T6 20/11/2026.
 | --- | --- | --- |
 | Đọc Gong 2024, Lu 2025, Toure 2026, Form B + hàng ma trận | DAT (W2-DAT-01) | Nháp xong; DAT đọc lại, rồi second reader |
 | Chen–Hanzo 2024 (A4), Zhou 2024 (A7), OH-DRL 2025: toàn văn qua thư viện; nếu không được thì giữ "chỉ tóm tắt" và ghi rủi ro | DAT | Chưa có; không thấy bản arXiv của A4, A7 |
-| Merge PR #40 (cột 6 của 5 hàng LDN, hàng Liu 2025) | DAT review | Đang mở |
+| Merge PR #49 (hàng Gong, Lu, Toure) | LDN review | Đang mở; PR #40 đã merge 06/11 (cột 6, hàng Liu 2025) |
 | Truy vấn bổ sung Q4 (G0-5) | Nhóm chốt owner | Chưa chạy |
 | Chốt câu định vị cho PG-TG-PPO | DAT, nhóm | Chưa chốt |
 | Họp G0, điền mục "Quyết định" (W2-ALL-01) | Cả nhóm | Chưa có biên bản |
