@@ -51,7 +51,7 @@ Mục tiêu: hai ngữ cảnh khác nhau về E_max hoặc L phải cho **quan s
 | Kích thước ô | L/16 (đổi theo vùng) | **cố định 62,5 m** (= 1000/16, nên ở L = 1000 m bản đồ giống hệt hiện tại) |
 | Cửa sổ | 31×31 căn tâm UAV | giữ 31×31; cảm biến ngoài cửa sổ dồn lên ô biên theo hướng |
 | Kênh năng lượng | E / E_max | **ρ_E = (E / e_Vme) / (T − t)**, cắt [0, 2]. e_Vme là năng lượng một khe bay ở V_me (công suất thấp nhất). ρ_E = 1 nghĩa là "vừa đủ bay tới hết chu kỳ". |
-| Kênh thời gian (thêm) | không có | (T − t)/T |
+| Kênh thời gian | **đã có** (kênh 4, `env.py`; sửa 06/11, bản trước ghi nhầm "không có") | giữ nguyên (T − t)/T |
 
 Hệ quả kiểm được: ở L = 1000 m, mọi kênh trừ kênh năng lượng giống hệt quan sát cũ. Cần một kiểm thử đơn vị cho điều này.
 

@@ -71,3 +71,68 @@ Chỉ số phụ: năng lượng dùng, early_termination, coverage, peak AoI; d
 Chi phí: ≈ 40–55 giờ máy (ước tính; đo lại ở pilot).
 Kết quả và hành động: theo PREREG phụ lục B §5.
 ```
+
+## Cài đặt trong mã (PR `DAT/pilot-pg-tg-ppo`, 06/11/2026) — cần duyệt cùng card
+
+Các điểm dưới đây là lựa chọn lúc viết mã. Thiết kế để ngỏ hoặc đánh ✱ ở những chỗ này. DAT và LDN xác nhận khi ký card. Muốn đổi thì đổi trước khi chạy pilot.
+
+1. **Không gian hành động là Discrete(2K + 1) = 11**, không phải 2K + 2.
+   - Hành động "kết thúc sớm có chủ đích" bị bỏ.
+   - Lý do: env đã phạt chi phí xấu nhất cho mọi khe mất khi kết thúc sớm, nên hành động này không bao giờ có lợi.
+2. **Phần thưởng một quyết định là tổng phần thưởng các khe, không chiết khấu bên trong.** Đây là lựa chọn (b) của thiết kế §3. PPO dùng γ = 0,99 cho mỗi quyết định.
+3. **"Chờ" là hover một khe** (hành động 0 của env). Nếu có cảm biến trong tầm thì env vẫn thu.
+4. **Mask:**
+   - ứng viên × tốc độ được phép khi năng lượng còn ≥ năng lượng bay tới mép tầm r_eff ở tốc độ đó, cộng một khe hover + truyền;
+   - ô ứng viên trống (N < K) luôn bị che;
+   - "chờ" luôn được phép.
+5. **Ứng viên:**
+   - c₁, c₂ là hai điểm kế tiếp trên tour.
+   - c₃–c₅ là ba cảm biến có AoI / (số khe bay ở V_me + 1) cao nhất.
+   - Tour tiến khi thu được c₁, hoặc thu được c₂ (khi đó c₁ bị bỏ qua). Rẽ sang c₃–c₅ không làm tour tiến.
+6. **Đặc trưng ứng viên (K × 4):**
+   - Nhánh **grounded** (M1, M2, M4) dùng số khe bay ở V_me / T, AoI/Δmax, năng lượng cần / năng lượng còn (cắt ở 2), cờ tour.
+   - Nhánh **legacy** (M3) dùng khoảng cách / (L√2) và năng lượng cần / E_max, để M3 không nhận thông tin ngân sách tuyệt đối qua vector ứng viên. Đây là lựa chọn quan trọng cho H7, cần LDN đồng ý.
+7. **Kênh thời gian (T − t)/T đã có sẵn trong quan sát cũ** (kênh 4 của `env.py`). Bảng ở thiết kế §2 ghi "không có" là nhầm. Quan sát neo vì vậy chỉ đổi kích thước ô và kênh năng lượng.
+8. **Giá trị ρ_E đo được** ở cấu hình mặc định, tính từ mã:
+   - năng lượng một khe ở V_me (21,5 m/s) là 2,81 kJ;
+   - E_max = 1 MJ cho ρ_E ≈ 1,19 lúc bắt đầu;
+   - TRAIN_DR (0,8–1,2 MJ) có ρ_E ban đầu khoảng 0,95–1,43;
+   - ood_energy (0,5–0,7 MJ) khoảng 0,59–0,83;
+   - ood_energy_low (0,35–0,45 MJ) khoảng 0,42–0,53.
+
+   Như vậy bộ pin thấp nằm **ngoài** dải ρ_E ban đầu lúc huấn luyện. ρ_E giảm dần trong episode nên policy vẫn gặp các giá trị nhỏ, nhưng ở cuối episode, không phải ở đầu. Đây là rủi ro cho H5 (giả thuyết, chưa kiểm). Pilot sẽ cho dấu hiệu đầu tiên.
+9. **Số quyết định cho M1** (card để ✱):
+   - M4 2M bước tương đương khoảng 6 700 episode.
+   - Tầng cao greedy cần khoảng 60–180 quyết định mỗi episode trên các bộ cũ (đo trên 20 episode mỗi bộ, kiểm tra mã, không phải kết quả).
+   - Đề xuất M1 = 700 000 quyết định, tức khoảng 5 000–10 000 episode. FAO điều chỉnh sau khi đo bước/s.
+10. **Chặn bộ khẳng định trong mã:** `evaluate.py` từ chối seed 300000–300099 nếu thiếu `--confirmatory` hoặc chưa có tag `prereg-B-lock`.
+
+## Lệnh pilot EXP-08p trên laptop DAT (chỉ chạy sau khi card được ký và PR mã đã merge)
+
+Chạy từ thư mục repo trên `main` sau khi merge. Mỗi lệnh một dòng, dùng được trong PowerShell.
+
+```text
+# 0. kiểm tra
+git pull
+python tests/test_core.py
+python scripts/run_smoke_test.py
+
+# 1. baseline không học, trên bộ cũ (seed 100000–100099)
+python scripts/evaluate.py --experiment-id EXP-08p --method random greedy_aoi tsp tsp_eco tsp_adaptive hl_greedy --config configs/env_grounded.json
+
+# 2. M4: DR + quan sát neo + PPO phẳng, seed 0 và 1 (2M bước)
+python scripts/train_ppo.py --experiment-id EXP-08p --masked --train dr --seed 0 --timesteps 2000000 --config configs/env_grounded.json
+python scripts/train_ppo.py --experiment-id EXP-08p --masked --train dr --seed 1 --timesteps 2000000 --config configs/env_grounded.json
+
+# 3. M1: DR + quan sát neo + tour-guided, seed 0 và 1 (700 000 quyết định ✱)
+python scripts/train_ppo.py --experiment-id EXP-08p --policy options --masked --train dr --seed 0 --timesteps 700000 --config configs/env_grounded.json
+python scripts/train_ppo.py --experiment-id EXP-08p --policy options --masked --train dr --seed 1 --timesteps 700000 --config configs/env_grounded.json
+
+# 4. đánh giá từng model trên bộ cũ (thay <run-id> và seed)
+python scripts/evaluate.py --experiment-id EXP-08p --model runs/EXP-08p/<run-id>/model.zip --label m1 --train-seed 0 --config configs/env_grounded.json
+```
+
+- Ghi run ID vào card này.
+- Bước/s nằm trong `results/raw/EXP-08p/<run-id>/run_record.json` (`metrics.steps_per_s`).
+- Push `results/raw/EXP-08p/` sau khi xong.
+- **Không** chạy bộ id2, ood_energy_low, ood_area_2000, ood_combo trên seed 300000–300099 ở pilot. `evaluate.py` sẽ từ chối.
