@@ -82,6 +82,16 @@
       "date": "2026-11-06",
       "note": "Không còn cần: DAT đã tự đánh giá 4 model pilot EXP-02 (results/raw/EXP-02/eval_*, 9152d06); G1 sớm thay bằng EXP-02b (PREREG §10). DAT đồng ý: yêu cầu DAT 06/11 phuong-phap-moi mục 4 (LDN skip W3-LDN-01)",
       "state": "skipped"
+    },
+    "W4-LDN-03": {
+      "date": "2026-11-06",
+      "note": "Bắt đầu sớm 06/11 (raw EXP-03 trên main); PR #50 chờ FAO; chưa báo DAT",
+      "state": "doing"
+    },
+    "W4-LDN-04": {
+      "date": "2026-11-06",
+      "note": "06/11: số H1/H2 chính thức đã chạy (chờ merge #43 để commit processed); heuristics_lock khớp EXP-01 1500/1500; power §4b, PR #51",
+      "state": "doing"
     }
   }
 }
