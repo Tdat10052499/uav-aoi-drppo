@@ -24,6 +24,7 @@ Các lựa chọn, kèm tính chất. FAO không chọn thay nhóm:
 - (b) **Suy giảm tuyệt đối** Ā_ood − Ā_id: tránh chia cho Ā_id. Vẫn chịu hiệu ứng trần (Ā bị chặn khoảng 135–150 khi pin cạn sớm, theo `notes/2026-11-06_dat_EXP-03-so-bo.md` §4).
 - (c) **Điểm chuẩn hoá theo heuristic** trên từng bộ, ví dụ (Ā_Random − Ā)/(Ā_Random − Ā_TSP), tương tự điểm chuẩn hoá trong Agarwal 2021. Khử thang đo và trần khác nhau giữa các bộ. Nhược điểm: phụ thuộc hai heuristic tham chiếu.
 - (d) **deg so với phân phối huấn luyện của từng nhánh:** với Fixed, mốc là bố trí huấn luyện của nó (TRAIN_FIXED, fixed_seed 0), không phải `id`. Lý do độc lập với kết quả: `docs/03` §4 đã ghi rằng `id` là OOD với Fixed.
+- **Dữ kiện cho cả 4 lựa chọn (FAO tính 06/11 từ `src/uavaoi/env.py`, dòng 87, 150, 178, 213):** AoI mỗi cảm biến bắt đầu bằng 1, mỗi khe tăng 1 và bị chặn ở Δ_max = T = 300. Ā tính trên toàn T, kể cả sau khi hết pin. Vì vậy một chính sách **không thu lần nào** có Ā = (Σ_{t=1..300} min(1+t, 300))/300 = **151,5 khe**, trên mọi bộ. Đây là trần cứng, không chỉ là "khoảng 135–150". EXP-02b DR s0 trên `ood_energy` đạt Ā = 146,36 với độ phủ 0,06, tức gần trần. Trên `ood_area` là 127,04 với độ phủ 0,39; 98% episode hết pin sớm (`events.csv`, 30913ce). Lựa chọn (c) có thể dùng 151,5 làm mốc "tệ nhất" thay cho Random, nên không phụ thuộc vào heuristic Random.
 - **Ngưỡng ý nghĩa thực tiễn** cho chỉ số được chọn: LDN, chốt trước khi chạy, như §8.
 - DAT/LDN:
 
