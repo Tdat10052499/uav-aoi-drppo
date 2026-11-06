@@ -125,12 +125,17 @@ def test_plan_condition(tmp_decisions=None):
         f.write("# Decisions\n- PLAN: B\n")
     try:
         today.DECISIONS = f.name
-        r = today.build_today(S, "DAT", D("2026-11-24"))
-        assert "W6-DAT-02" not in [t["id"] for t in r["today"] + r["blocked"]]
+        # Lịch thật có thể không còn task điều kiện, nên kiểm trên một task giả.
+        fake = {"id": "W6-DAT-99", "owner": "DAT", "start": "2026-11-23", "due": "2026-11-29", "kind": "writing",
+                "issue": None, "gate": None, "reviewer": None, "depends": [], "condition": "PLAN: A",
+                "title": "task điều kiện (giả)", "steps": ["x"], "done_when": "x"}
+        S2 = {**S, "tasks": S["tasks"] + [fake]}
+        r = today.build_today(S2, "DAT", D("2026-11-24"))
+        assert "W6-DAT-99" not in [t["id"] for t in r["today"] + r["blocked"]]
         with open(f.name, "w", encoding="utf-8") as g:
             g.write("- PLAN: A\n")
-        r = today.build_today(S, "DAT", D("2026-11-24"))
-        assert "W6-DAT-02" in [t["id"] for t in r["today"] + r["blocked"]]
+        r = today.build_today(S2, "DAT", D("2026-11-24"))
+        assert "W6-DAT-99" in [t["id"] for t in r["today"] + r["blocked"]]
     finally:
         today.DECISIONS = old
         os.unlink(f.name)

@@ -47,6 +47,9 @@ def main():
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides (same for both panels)")
     ap.add_argument("--out", default=None, help="default figures/F6_<suite>_<seed>.pdf")
     args = ap.parse_args()
+    if 300_000 <= args.seed < 300_100:   # EXP-08 confirmatory seeds: not before the PREREG appendix B lock
+        ap.error("seed 300000-300099 is the EXP-08 confirmatory set; plot it only through evaluate.py "
+                 "--confirmatory after the tag prereg-B-lock")
     if bool(args.model) == bool(args.right_method):
         ap.error("give exactly one of --model or --right-method")
     if args.config and not os.path.isfile(args.config):

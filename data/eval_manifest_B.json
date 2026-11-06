@@ -1,0 +1,86 @@
+{
+  "eval_seed_range": [
+    300000,
+    300099
+  ],
+  "n_episodes": 100,
+  "suites": {
+    "id2": {
+      "spec": {
+        "name": "id2",
+        "layout": "uniform",
+        "n_range": [
+          10,
+          30
+        ],
+        "n_choices": null,
+        "L": 1000.0,
+        "E_range": [
+          800000.0,
+          1200000.0
+        ],
+        "random_start": true,
+        "fixed_seed": null
+      },
+      "sha256": "17bdf481d1ddbe4b46db4e93e8b07bbd3bb4e1e5fad3151b4d1cf0b8f97bc1b6"
+    },
+    "ood_energy_low": {
+      "spec": {
+        "name": "ood_energy_low",
+        "layout": "uniform",
+        "n_range": [
+          10,
+          30
+        ],
+        "n_choices": null,
+        "L": 1000.0,
+        "E_range": [
+          350000.0,
+          450000.0
+        ],
+        "random_start": true,
+        "fixed_seed": null
+      },
+      "sha256": "25f278db582a23f6928c89973b61e9e74bfa1063bc37cbf61140ce4de2b3b7c7"
+    },
+    "ood_area_2000": {
+      "spec": {
+        "name": "ood_area_2000",
+        "layout": "uniform",
+        "n_range": [
+          10,
+          30
+        ],
+        "n_choices": null,
+        "L": 2000.0,
+        "E_range": [
+          800000.0,
+          1200000.0
+        ],
+        "random_start": true,
+        "fixed_seed": null
+      },
+      "sha256": "b1a70ef25ffe2f1212cfbbe7404263dce4d51c3994758103f23a2950f1c98321"
+    },
+    "ood_combo": {
+      "spec": {
+        "name": "ood_combo",
+        "layout": "clustered",
+        "n_range": [
+          10,
+          30
+        ],
+        "n_choices": null,
+        "L": 1000.0,
+        "E_range": [
+          500000.0,
+          700000.0
+        ],
+        "random_start": true,
+        "fixed_seed": null
+      },
+      "sha256": "c2607cfc1d6492c52f0ab177e309fecdc72166aa32f9342ebc72aa017c8690dc"
+    }
+  },
+  "generated_at": "2026-11-06T14:51:00+07:00"
+}

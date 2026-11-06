@@ -1,0 +1,121 @@
+{
+  "args": {
+    "experiment_id": "EXP-03",
+    "run_id": "eval_fixed_ppo_s7",
+    "method": [],
+    "model": "D:\\github\\uav-aoi-drppo\\runs\\EXP-03\\fixed_ppo_mask_lam0.1_s7_20261105-234214\\model.zip",
+    "label": "fixed_ppo",
+    "train_seed": 7,
+    "suites": [
+      "id",
+      "ood_cluster",
+      "ood_density",
+      "ood_area",
+      "ood_energy"
+    ],
+    "episodes": 100,
+    "seed_base": 100000,
+    "config": null
+  },
+  "env_cfg": {
+    "T": 300,
+    "dt": 3.0,
+    "H": 100.0,
+    "B": 1000000.0,
+    "gamma0_db": 60.0,
+    "packet_bits": 15000000.0,
+    "Pc": 50.0,
+    "rotor_preset": "zeng2019_arxiv_v1",
+    "G": 16,
+    "lam": 0.1,
+    "mu": 0.1,
+    "count_norm": 3.0,
+    "use_action_mask_clip": true,
+    "single_speed": false
+  },
+  "suites": {
+    "id": {
+      "name": "id",
+      "layout": "uniform",
+      "n_range": [
+        10,
+        30
+      ],
+      "n_choices": null,
+      "L": 1000.0,
+      "E_range": [
+        800000.0,
+        1200000.0
+      ],
+      "random_start": true,
+      "fixed_seed": null
+    },
+    "ood_cluster": {
+      "name": "ood_cluster",
+      "layout": "clustered",
+      "n_range": [
+        10,
+        30
+      ],
+      "n_choices": null,
+      "L": 1000.0,
+      "E_range": [
+        800000.0,
+        1200000.0
+      ],
+      "random_start": true,
+      "fixed_seed": null
+    },
+    "ood_density": {
+      "name": "ood_density",
+      "layout": "uniform",
+      "n_range": [
+        10,
+        30
+      ],
+      "n_choices": [
+        40,
+        50
+      ],
+      "L": 1000.0,
+      "E_range": [
+        800000.0,
+        1200000.0
+      ],
+      "random_start": true,
+      "fixed_seed": null
+    },
+    "ood_area": {
+      "name": "ood_area",
+      "layout": "uniform",
+      "n_range": [
+        10,
+        30
+      ],
+      "n_choices": null,
+      "L": 1500.0,
+      "E_range": [
+        800000.0,
+        1200000.0
+      ],
+      "random_start": true,
+      "fixed_seed": null
+    },
+    "ood_energy": {
+      "name": "ood_energy",
+      "layout": "uniform",
+      "n_range": [
+        10,
+        30
+      ],
+      "n_choices": null,
+      "L": 1000.0,
+      "E_range": [
+        500000.0,
+        700000.0
+      ],
+      "random_start": true,
+      "fixed_seed": null
+    }
+  }
+}

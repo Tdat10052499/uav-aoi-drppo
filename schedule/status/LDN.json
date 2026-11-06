@@ -20,6 +20,11 @@
       "date": "2026-11-02",
       "evidence": "đối chiếu toàn văn Abd-Elmagid (ar5iv), Liu, Sun (arXiv HTML), tóm tắt OH-DRL (OpenAlex) 01/11; hàng ma trận khớp; góp ý nhỏ ở notes/yeu-cau/2026-11-02_ldn_can-FAO_form-b-w2-fao-01.md",
       "state": "approved"
+    },
+    "W4-FAO-01": {
+      "date": "2026-11-06",
+      "evidence": "LDN review PR #38: request changes 2e5a24a, approve 950a4bb (03/11); 8dadf95 chỉ thêm 2 câu công khai EXP-02b, không đổi H1/H2/ngưỡng; PREREG khoá b5cd784, tag prereg-lock",
+      "state": "approved"
     }
   },
   "tasks": {
@@ -57,10 +62,21 @@
       "note": "Form B nháp: Sarathchandra 2025, Yi 2023, Eldeeb 2026, Xiao 2024 (cần đối chiếu PDF); hàng ma trận đã điền; chờ LDN duyệt",
       "state": "done"
     },
+    "W2-LDN-02": {
+      "date": "2026-11-06",
+      "evidence": "analyze.py mở rộng ở PR #43 (40d88f8): bảng deg theo seed, quyết định H1 theo PREREG §8, hình F4 + alt text; tests/test_analyze.py 6/6; FAO second reader; issue #14 đóng khi merge",
+      "state": "done"
+    },
     "W2-LDN-03": {
-      "date": "2026-11-02",
+      "date": "2026-11-06",
+      "evidence": "Phản biện báo cáo G0: review_log G0-1…G0-7 (02–03/11), yêu cầu A6, A7; PRISMA chốt và kiểm lại search_log §7 (9fd804c); cột 6 ma trận 13/13 hàng qua PR #40. Báo cáo G0 chưa được DAT sửa theo A7; issue #6 đóng khi DAT xác nhận kết luận G0",
       "note": "Đã phản biện báo cáo G0 (review_log G0-1…6), PRISMA chốt 02/11; chờ DAT sửa báo cáo, đọc lại 03/11; issue #6 chưa đóng",
-      "state": "doing"
+      "state": "done"
+    },
+    "W3-LDN-01": {
+      "date": "2026-11-06",
+      "note": "Không còn cần: DAT đã tự đánh giá 4 model pilot EXP-02 (results/raw/EXP-02/eval_*, 9152d06); G1 sớm thay bằng EXP-02b (PREREG §10). DAT đồng ý: yêu cầu DAT 06/11 phuong-phap-moi mục 4 (LDN skip W3-LDN-01)",
+      "state": "skipped"
     }
   }
 }
