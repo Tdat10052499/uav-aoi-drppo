@@ -66,6 +66,11 @@ Lưu ý: kết quả (b) là dữ liệu đã thấy trên bộ OOD mới, chỉ
   (--probe-b) và phụ lục B §1.
 ```
 
+**Second reader (FAO), 06/11/2026: đồng ý chạy EXP-08a-b, kèm 3 điểm (không chặn).**
+1. **"Năng lượng mỗi mét" không tính được từ `events.csv`.** Không có cột quãng đường hay số khe đã hành động. `*_frac` chia cho số hành động (`env.py:260–261`), còn `energy_used_J` gồm cả năng lượng treo và truyền. Đề xuất bỏ chỉ số này. Nếu giữ, ghi công thức trước khi chạy, ví dụ năng lượng bay ≈ energy_used_J − hover_frac·n·4264,0 J, quãng đường = (21,49·slow_frac + 38,27·fast_frac)·3·n. Khi đó phải thêm cột n (số khe đã hành động); hiện chỉ biết n = 300 khi không `early_termination`.
+2. **Kiểm nhất quán miễn phí.** `configs/env_grounded.json` chỉ khác `env_default.json` ở phần quan sát (`obs_mode`, `cell_m`, `rho_clip`). Vì vậy, với (a), nên chạy thêm `scripts/compare_events.py results/raw/EXP-03/heuristics_lock/events.csv <run (a)>/events.csv --methods random tsp`. Lệch, nếu có, sẽ đến từ biên năng lượng mới của mask trong PR #45 (`_flight_slots` chia cos(π/8), thêm 1 khe dự phòng), và có thể nằm ở các bộ năng lượng. Ghi số dòng lệch theo bộ. Đây là mô tả, không phải tiêu chí dừng.
+3. **Heuristic tốt nhất** = argmin Ā **trung bình theo bộ** (100 episode), không lấy min theo từng episode. Chọn sau tag trên seed khẳng định, chỉ từ heuristic, ghi DECISIONS trước khi đánh giá M1 (xem B4 trong `notes/yeu-cau/2026-11-06_ldn_can-DAT-FAO_power-va-H5.md`).
+
 ## EXP-08p: pilot (thăm dò, 2 seed)
 
 ```text
