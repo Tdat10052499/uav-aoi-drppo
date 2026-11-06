@@ -223,6 +223,51 @@ def test_tour_guided_wrapper_runs_and_masks():
         assert mg["decisions"] >= 1
 
 
+def test_tour_guided_flight_estimate_is_an_upper_bound():
+    """The energy mask uses _flight_slots + 1; the low level must never need more slots than
+    that, otherwise the mask would allow targets the UAV cannot reach."""
+    from uavaoi.options import TourGuidedEnv
+    w = TourGuidedEnv(cfg=EnvConfig(obs_mode="grounded"))
+    rng = np.random.default_rng(3)
+    for trial in range(40):
+        w.reset(seed=1000 + trial)
+        b = w.base
+        b.energy = 1e9                                   # isolate geometry from energy
+        c = int(rng.integers(b.N))
+        for a, V in ((c, b.V_slow), (w.K + c, b.V_fast)):
+            w.reset(seed=1000 + trial)
+            w.base.energy = 1e9
+            w.cand = np.array([c] + [-1] * (w.K - 1))
+            est = w._flight_slots(c, V)
+            _, _, te, tr, info = w.step(0 if a == c else w.K)
+            assert info["macro_slots"] - 1 <= est + 1, (trial, info["macro_slots"], est)   # +1 = margin in _energy_need
+
+
+def test_tour_advances_only_when_target_served():
+    from uavaoi.options import TourGuidedEnv
+    w = TourGuidedEnv(cfg=EnvConfig(obs_mode="grounded"))
+    # two sensors close together, the tour target has the lower AoI: the env serves the other one
+    scn = {"L": 1000.0, "sensors": np.array([[500.0, 500.0], [520.0, 500.0], [900.0, 900.0]]),
+           "E_max": 1e6, "start": np.array([510.0, 500.0])}
+    w.reset(seed=0, options={"scenario": scn})
+    c1 = int(w.cand[0])
+    other = 1 - c1 if c1 in (0, 1) else 0
+    w.base.aoi[:] = 1.0
+    w.base.aoi[other] = 50.0                          # the other close sensor is staler
+    k0 = w.k
+    w.step(0)                                         # fly to c1 (already in range): one collect slot
+    assert w.base.n_served[other] == 1 and w.base.n_served[c1] == 0
+    assert w.k == k0, "tour advanced although its target was not served"
+
+
+def test_option_episodes_are_deterministic():
+    from uavaoi.options import TourGuidedEnv, HighLevelGreedy, run_option_episode
+    w = TourGuidedEnv(scenario=SUITES["ood_cluster"], cfg=EnvConfig(obs_mode="grounded"))
+    a = run_option_episode(w, HighLevelGreedy(), seed=100003)
+    b = run_option_episode(w, HighLevelGreedy(), seed=100003)
+    assert a == b
+
+
 def test_eval_guards_confirmatory_seeds():
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
     from evaluate import check_confirmatory
@@ -273,6 +318,24 @@ def test_eval_refuses_single_speed_mismatch():
         assert errors and "single_speed" in errors[0]
         errors, warnings = check_model_cfg(model, EnvConfig(single_speed=True), raw_base=os.path.join(tmp, "raw"))
         assert not errors and not warnings
+
+
+def test_eval_obs_mode_mismatch_is_an_error():
+    import json
+    import tempfile
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+    from evaluate import check_model_cfg
+    with tempfile.TemporaryDirectory() as tmp:
+        raw = os.path.join(tmp, "raw", "EXP-T", "r_2")
+        os.makedirs(raw)
+        old = {k: v for k, v in EnvConfig().to_dict().items() if k not in ("obs_mode", "cell_m", "rho_clip")}
+        with open(os.path.join(raw, "config.json"), "w") as f:      # an EXP-03 config: no obs_mode key
+            json.dump({"env_cfg": old}, f)
+        model = os.path.join(tmp, "runs", "EXP-T", "r_2", "model.zip")
+        errors, _ = check_model_cfg(model, EnvConfig(), raw_base=os.path.join(tmp, "raw"))
+        assert not errors                                           # legacy model, legacy eval: fine
+        errors, _ = check_model_cfg(model, EnvConfig(obs_mode="grounded"), raw_base=os.path.join(tmp, "raw"))
+        assert errors and "obs_mode" in errors[0]
 
 
 def test_eval_manifest_matches_samplers():

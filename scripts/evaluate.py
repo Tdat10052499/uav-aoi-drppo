@@ -222,6 +222,9 @@ def main():
                            "suites": {s: ALL_SUITES[s].to_dict() for s in args.suites}},
                    seeds={"eval_episode_seeds": [seeds[0], seeds[-1]], "train_seed": args.train_seed})
     rr.data["warnings"] += cfg_warnings
+    if any(s in SUITES_B for s in args.suites):
+        rr.data["data_manifest_path"] = "data/eval_manifest_B.json" if all(s in SUITES_B for s in args.suites) \
+            else "data/eval_manifest.json + data/eval_manifest_B.json"
     if args.model:
         rr.data["checkpoint_digest"] = "sha256:" + sha256_file(args.model)
     events = os.path.join(run_dir, "events.csv")

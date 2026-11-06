@@ -29,6 +29,7 @@ from .baselines import _move_towards, tsp_tour
 from .env import EnvConfig, UAVAoIEnv
 from .scenarios import ScenarioSpec
 
+_COS_PI_8 = float(np.cos(np.pi / 8))
 N_FEAT = 4  # per candidate: flight slots at V_me / T, AoI / Delta_max, energy need / energy left, on-tour flag
 
 
@@ -53,6 +54,7 @@ class TourGuidedEnv(gym.Env):
             self.observation_space = {"map": self.base.observation_space,
                                       "cand": spaces.Box(0.0, np.inf, (self.K * N_FEAT,))}
         self.decisions = 0
+        self.total_slots = 0   # base-env slots simulated since construction (budget comparisons)
 
     # ------------------------------------------------------------------ API
     def reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None):
@@ -99,10 +101,12 @@ class TourGuidedEnv(gym.Env):
             while slots < self.max_macro_slots:
                 m = b.action_masks()
                 if np.linalg.norm(target - b.pos) <= b.r_eff and m[0]:
+                    before = int(b.n_served[c])
                     _, r, term, trunc, info = b.step(0)      # collect (env serves max-AoI sensor in range)
                     total_r += r
                     slots += 1
-                    self._advance_tour(c)
+                    if b.n_served[c] > before:               # the tour advances only if c itself was served
+                        self._advance_tour(c)
                     break
                 _, r, term, trunc, info = b.step(_move_towards(b, target, m, speed))
                 total_r += r
@@ -110,6 +114,7 @@ class TourGuidedEnv(gym.Env):
                 if term or trunc:
                     break
         self.decisions += 1
+        self.total_slots += slots
         self._done = bool(term or trunc)
         self._last_info = info
         if self._done and "episode_metrics" in info:
@@ -122,13 +127,19 @@ class TourGuidedEnv(gym.Env):
 
     # ------------------------------------------------------------ helpers
     def _flight_slots(self, c: int, V: float) -> float:
+        """Estimate of the slots needed to bring c within r_eff: straight-line distance over the
+        worst per-slot progress of an 8-direction move, V*dt*cos(pi/8). Close to the target the
+        real count can be one higher; _energy_need adds that slot."""
         b = self.base
         d = max(float(np.linalg.norm(b.sensors[c] - b.pos)) - b.r_eff, 0.0)
-        return float(np.ceil(d / (V * b.cfg.dt) - 1e-9))
+        return float(np.ceil(d / (V * b.cfg.dt * _COS_PI_8) - 1e-9))
 
     def _energy_need(self, c: int, P_move: float, V: float) -> float:
+        """Energy to reach c and collect once. One spare flight slot on top of _flight_slots:
+        near the target the 8-direction low level can need one slot more than the estimate
+        (measured 06/11: 5 of 1600 macro-actions, never 2; tests/test_core.py)."""
         b = self.base
-        return self._flight_slots(c, V) * P_move * b.cfg.dt + b.E_hover_tx
+        return (self._flight_slots(c, V) + 1.0) * P_move * b.cfg.dt + b.E_hover_tx
 
     def _advance_tour(self, served: int):
         n = len(self.order)

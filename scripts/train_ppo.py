@@ -105,6 +105,11 @@ def main():
                     help="flat = 17 primitive actions (EXP-01..03, arm M4); options = tour-guided "
                          "semi-MDP of src/uavaoi/options.py (arms M1-M3; --timesteps counts decisions)")
     ap.add_argument("--K", type=int, default=5, help="candidates per decision (--policy options)")
+    ap.add_argument("--reset-seed-scheme", choices=["spaced", "sb3"], default="spaced",
+                    help="spaced: env rank r resets with seed*1000 + r (independent scenario streams per "
+                         "training seed). sb3: seed + r, what SB3 does when the model gets seed=seed; "
+                         "this is what EXP-01..03 actually used (adjacent training seeds share 7 of 8 "
+                         "scenario streams). Found 06/11/2026, see notes/EXP-08_PG-TG-PPO_card.md")
     ap.add_argument("--lam", type=float, default=None, help="override energy weight")
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides")
     ap.add_argument("--models-dir", default=os.path.join(REPO_ROOT, "runs"),
@@ -136,7 +141,10 @@ def main():
     rr = RunRecord(args.experiment_id, raw_dir, run_id,
                    config={"args": vars(args), "env_cfg": cfg.to_dict(),
                            "scenario": (TRAIN_DR if args.train == "dr" else TRAIN_FIXED).to_dict()},
-                   seeds={"train_seed": args.seed, "env_reset_seeds": f"seed*1000 + rank, rank < n_envs"})
+                   seeds={"train_seed": args.seed,
+                          "env_reset_seeds": ("seed*1000 + rank" if args.reset_seed_scheme == "spaced"
+                                              else "seed + rank (SB3 VecEnv.seed)") + ", rank < n_envs",
+                          "reset_seed_scheme": args.reset_seed_scheme})
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -172,6 +180,12 @@ def main():
                     policy_kwargs=policy_kwargs, seed=args.seed, verbose=1,
                     tensorboard_log=os.path.join(run_dir, "tb"))
 
+    # SB3 calls venv.seed(seed) inside the model constructor, which makes the next reset use
+    # seed + rank and overrides the reset in make_env. Re-seed explicitly so the record is true.
+    if args.reset_seed_scheme == "spaced":
+        venv.seed(args.seed * 1000)
+    rr.data["seeds"]["env_reset_seed_list"] = [int(x) for x in venv.venv._seeds] if hasattr(venv.venv, "_seeds") else None
+
     import time as _t
     t0 = _t.time()
     try:
@@ -184,7 +198,10 @@ def main():
     rr.data["checkpoint_digest"] = "sha256:" + sha256_file(model_path)
     rr.data["metrics"] = {"wall_time_s": round(_t.time() - t0, 1),
                           "steps_per_s": round(args.timesteps / max(_t.time() - t0, 1e-9), 1)}
-    rr.data["counts"] = {"timesteps": args.timesteps, "n_envs": n_envs}
+    rr.data["counts"] = {"timesteps": args.timesteps, "n_envs": n_envs,
+                         "timestep_unit": "decision" if args.policy == "options" else "slot"}
+    if args.policy == "options":
+        rr.data["counts"]["base_env_slots"] = int(sum(venv.get_attr("total_slots")))
     rr.data["model_path"] = os.path.relpath(model_path, REPO_ROOT)
     rr.finish("completed")
     print("saved", model_path)
