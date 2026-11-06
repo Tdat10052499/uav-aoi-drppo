@@ -77,9 +77,10 @@
       "state": "done"
     },
     "W1-DAT-08": {
-      "date": "2026-10-30",
+      "date": "2026-11-06",
+      "evidence": "DCOSS-IoT 2027 kiểm trên dcoss.org 06/11 (nộp 27/01/2027); docs/04 §7 PR #48; issue #7 comment. Còn mở: hỏi khoa mốc 18–19/01",
       "note": "Ứng viên: notes/2026-10-30_dat_hoi-nghi-ung-vien.md (DCOSS-IoT 2027 hạn 27/01/2027). Chờ khoa giải thích mốc 18–19/01",
-      "state": "doing"
+      "state": "done"
     },
     "W2-DAT-02": {
       "date": "2026-10-30",
