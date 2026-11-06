@@ -75,3 +75,5 @@ DAT: (02/11) Đã sửa báo cáo G0 theo ý 1–3: bỏ "tốc độ là biến
 - Kết luận của LDN không đổi: #1 **chưa đạt**; #2 **chưa kết luận được**; #3 chờ GVHD. Theo đề xuất trong báo cáo, buổi họp 04/11 rơi vào nhánh "tiếp tục có điều kiện".
 - **Hạn:** trước họp 04/11.
 
+LDN: (06/11) Đọc lại báo cáo tại 2dd9a95 (`main` de8f81c). **Cả 5 điểm của A7 đã sửa**: số 58 (A 10, B 13, C 35); 16 hàng ma trận; Liu 2025 ghi là không phải rủi ro định vị; bỏ chữ FJCAI, Optuna, 163,2 M; G1 20/11; hàng #1 ghi "Chưa đạt (06/11)". A6 và A7 đóng. Phần còn mở là việc của DAT/nhóm, ghi ở bảng "Việc còn lại để đóng G0" của báo cáo: Form B Gong, Lu, Toure (G0-2), A4 Chen–Hanzo, A7 Zhou, OH-DRL (G0-6), merge PR #40, truy vấn Q4, câu định vị PG-TG-PPO, biên bản họp G0. Kết luận của LDN không đổi: #1 chưa đạt, #2 chưa kết luận được, #3 chờ nhóm; nhánh "tiếp tục có điều kiện".
+
