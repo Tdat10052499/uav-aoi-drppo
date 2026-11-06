@@ -5,7 +5,9 @@ The map shows the area, the sensors (filled = served at least once, number = tim
 served, dashed circle = collection radius), the UAV path coloured by speed (V_me slow,
 V_mr fast), hover slots (collect or idle), start and end. Episode metrics go in the
 title; degenerate-behaviour flags (one action class >= 90 %, boundary hits with the
-action mask on) are printed and drawn in red. The file type follows --out (.png, .pdf
+action mask on) are printed and drawn in red. Behaviour notes (camping on one sensor, long
+idle hovering; see behaviour_notes) are printed and drawn in brown; they help the visual
+check and are not a gate criterion. The file type follows --out (.png, .pdf
 or .svg). Requires matplotlib.
 
 Examples
@@ -57,6 +59,31 @@ def degeneracy_flags(m: dict, masked: bool) -> list:
     return flags
 
 
+CAMP_SHARE, CAMP_COVERAGE, CAMP_MIN, IDLE_SHARE = 0.5, 0.5, 10, 0.3
+
+
+def behaviour_notes(served, kinds: list, coverage: float) -> list:
+    """Descriptive notes for the visual check, NOT the G1 #4 degeneracy criterion (docs/05 §5).
+
+    Found on EXP-03 trajectories (FAO, 06/11/2026): models that fail without any flag above,
+    e.g. serving one sensor over and over (Fixed s5 on id: 179 of 180 collections) or hovering
+    with no sensor in range for most of the episode. Thresholds are for reading plots only.
+      camping : one sensor has >= 50 % of >= 10 collections while coverage < 0.5
+      idle    : hover slots with nothing collected >= 30 % of executed slots
+    """
+    notes = []
+    served = np.asarray(served)
+    total = int(served.sum())
+    if total >= CAMP_MIN and served.max() >= CAMP_SHARE * total and coverage < CAMP_COVERAGE:
+        notes.append(f"camping: sensor {int(served.argmax())} has {int(served.max())}/{total} collections, "
+                     f"coverage {coverage:.2f}")
+    if kinds:
+        idle = sum(k == "idle" for k in kinds) / len(kinds)
+        if idle >= IDLE_SHARE:
+            notes.append(f"idle hover {idle:.2f} of slots")
+    return notes
+
+
 def draw(ax, env: UAVAoIEnv, ep: dict, title: str, flags: list, show_legend: bool = True):
     """Draw one episode on an existing matplotlib axis (env must be the one that ran it)."""
     import matplotlib.pyplot as plt
@@ -93,6 +120,10 @@ def draw(ax, env: UAVAoIEnv, ep: dict, title: str, flags: list, show_legend: boo
     if flags:
         ax.text(0.01, 0.99, "DEGENERATE? " + "; ".join(flags), transform=ax.transAxes, va="top",
                 fontsize=8, color="#c53030")
+    notes = ep.get("notes") or []
+    if notes:
+        ax.text(0.01, 0.94 if flags else 0.99, "NOTE: " + "; ".join(notes), transform=ax.transAxes,
+                va="top", fontsize=8, color="#975a16")
     legend = [Line2D([], [], color=SLOW, lw=2, label=f"fly V_me ({env.V_slow:.1f} m/s)"),
               Line2D([], [], color=FAST, lw=2, label=f"fly V_mr ({env.V_fast:.1f} m/s)"),
               Line2D([], [], color=COLLECT, marker="o", ls="", label="hover + collect"),
@@ -146,6 +177,7 @@ def main():
     ep = rollout(env, policy, args.seed)
     # heuristics always respect the mask; DQN / plain PPO models do not see it
     flags = degeneracy_flags(ep["metrics"], masked=getattr(policy, "masked", True))
+    ep["notes"] = behaviour_notes(env.n_served, ep["kinds"], ep["metrics"]["coverage"])
 
     out = args.out or os.path.join(REPO_ROOT, "figures", f"traj_{label}_{args.suite}_{args.seed}.png")
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
@@ -155,6 +187,7 @@ def main():
           f"hover/slow/fast {m['hover_frac']:.2f}/{m['slow_frac']:.2f}/{m['fast_frac']:.2f}, "
           f"boundary hits {m['boundary_hits']}, early end {m['early_termination']}")
     print("degenerate: " + ("; ".join(flags) if flags else "no flags"))
+    print("behaviour: " + ("; ".join(ep["notes"]) if ep["notes"] else "no notes"))
     print("saved", out)
 
 

@@ -394,6 +394,19 @@ def test_stats_helpers():
     assert abs(adj[0] - 0.03) < 1e-9 and all(0 <= p <= 1 for p in adj)
 
 
+def test_trajectory_behaviour_notes():
+    """plot_trajectory.behaviour_notes: camping on one sensor and long idle hovering are noted;
+    a well-spread episode gets no note (descriptive aid, not the G1 #4 criterion)."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+    from plot_trajectory import behaviour_notes, rollout
+    assert behaviour_notes([179, 1, 0, 0], ["collect"] * 180, coverage=0.5 - 1e-9)[0].startswith("camping")
+    assert behaviour_notes([179, 1, 0, 0], ["collect"] * 180, coverage=0.5) == []
+    assert behaviour_notes([5, 4, 0], ["collect"] * 9, coverage=0.1) == []          # < 10 collections
+    assert behaviour_notes([1, 1], ["idle"] * 3 + ["slow"] * 7, coverage=1.0) == ["idle hover 0.30 of slots"]
+    env = UAVAoIEnv(scenario=SUITES["id"])
+    ep = rollout(env, HEURISTICS["tsp"](), seed=100000)
+    assert behaviour_notes(env.n_served, ep["kinds"], ep["metrics"]["coverage"]) == []
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     failed = 0
