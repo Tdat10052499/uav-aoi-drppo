@@ -96,3 +96,12 @@ Các task cũ đã bỏ khỏi lịch không cần đánh dấu. Một số task
 - **FAO:** W3-FAO-01.
 - **LDN:** W2-LDN-02, W2-LDN-03, W3-LDN-01.
 - **DAT:** W1-DAT-07, W1-DAT-08, W2-DAT-01, W2-DAT-03, W3-DAT-01, W3-DAT-02.
+
+## 5. Cập nhật 06/11 chiều: mã pilot đã có ở PR #45
+
+DAT chọn để Claude viết luôn ba phần mã của W4 (W4-FAO-03, W4-FAO-04, W4-DAT-03) trong **PR #45** (`DAT/pilot-pg-tg-ppo`), nhằm kéo pilot sớm lên khoảng 10–11/11.
+- **FAO:** không cần viết `fao/grounded-obs` và `fao/tsp-manh` nữa. Thay vào đó, review PR #45 với vai trò second reader mã.
+- **LDN:** đọc mục "Cài đặt trong mã" ở cuối `notes/EXP-08_PG-TG-PPO_card.md`, nhất là mục 6 (đặc trưng ứng viên của M3), rồi ký card cùng DAT.
+- Lệnh pilot nằm ở cuối card. Chỉ chạy sau khi card được ký và PR #45 đã merge.
+- FAO:
+- LDN:
