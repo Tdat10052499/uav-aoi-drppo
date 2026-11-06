@@ -92,7 +92,8 @@
       "state": "done"
     },
     "W3-FAO-01": {
-      "date": "2026-11-04",
+      "date": "2026-11-06",
+      "note": "bước 1 manifest xong (e13b1fd); bước 2–3 làm trên EXP-03 s7/s5 (phương án (a)), 4/6 quỹ đạo hỏng; chờ DAT xác nhận (a) hay gửi model EXP-02",
       "state": "doing"
     },
     "W4-FAO-01": {
