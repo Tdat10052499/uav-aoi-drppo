@@ -22,8 +22,8 @@ Model:
   5 bộ id, ood_cluster, ood_density, ood_area, ood_energy; 100 episode, seed 100000–100099;
   nhãn dr_ppo / fixed_ppo, train_seed 7 / 5 (giống config.json của eval_dr_ppo_s7, eval_fixed_ppo_s5)
 Đối chứng: results/raw/EXP-03/eval_dr_ppo_s7/events.csv, results/raw/EXP-03/eval_fixed_ppo_s5/events.csv
-Khác biệt có chủ ý: máy (laptop FAO thay vì LAPTOP-21KJQDU4 của DAT); phiên bản thư viện ghi trong
-  environment.json. Run gốc: Python 3.12.0, numpy 2.5.4, torch 2.14.1+cpu, SB3 / sb3_contrib 2.9.0.
+Khác biệt có chủ ý: máy (laptop FAO thay vì LAPTOP-21KJQDU4 của DAT); venv Python 3.12 riêng (xem
+  "Sửa trước khi chạy"); phiên bản thư viện ghi trong environment.json. Run gốc: Python 3.12.0, numpy 2.5.4, torch 2.14.1+cpu, SB3 / sb3_contrib 2.9.0.
 Chỉ số: so từng dòng bằng scripts/compare_events.py (khoá method, train_seed, suite, episode_seed;
   atol 1e-9, rtol 0), 500 dòng mỗi model.
 Kết quả kỳ vọng: MATCH 500/500 cho cả hai model.
@@ -63,6 +63,14 @@ $py = "..\uav-aoi-drppo\.venv\Scripts\python.exe"
 & $py scripts\compare_events.py ..\uav-aoi-drppo\results\raw\EXP-03\eval_dr_ppo_s7\events.csv results\raw\EXP-03R\reeval_dr_ppo_s7\events.csv
 & $py scripts\compare_events.py ..\uav-aoi-drppo\results\raw\EXP-03\eval_fixed_ppo_s5\events.csv results\raw\EXP-03R\reeval_fixed_ppo_s5\events.csv
 ```
+
+## Sửa trước khi chạy (06/11, 20:30)
+
+Lần chạy đầu trên venv chính của laptop FAO (Python 3.14.3) **không tạo run nào**: `MaskablePPO.load` làm Python dừng với "Windows fatal exception: access violation" (exit −1073741819 = 0xC0000005). `faulthandler` chỉ ra khung `D:\github\uav-aoi-drppo\scripts\train_ppo.py ... in __init__`, tức `SmallCNN.__init__`.
+- Nguyên nhân (suy luận từ traceback, chưa kiểm trên máy khác): `SmallCNN` định nghĩa trong `scripts/train_ppo.py`, chạy dưới tên `__main__`, nên cloudpickle lưu lớp này **theo giá trị**, kèm bytecode của Python 3.12 (máy DAT). Bytecode không tương thích giữa các bản Python phụ, nên nạp bằng 3.14 thì sập.
+- Hệ quả: model EXP-03 chỉ nạp được bằng Python 3.12. Laptop LDN (3.11.9) cũng sẽ gặp lỗi này.
+- Cách xử lý cho EXP-03R: tạo venv Python 3.12 riêng với đúng phiên bản thư viện của run gốc (numpy 2.5.4, torch 2.14.1+cpu, gymnasium 1.4.0, SB3 và sb3_contrib 2.9.0, scipy 1.18.1). Mã và lệnh không đổi; chỉ đổi đường dẫn `$py`. Không sửa `evaluate.py` (phải chạy ở commit khoá).
+- Không có thư mục raw nào được tạo ở lần lỗi: `evaluate.py` nạp model trước `new_run_dir`.
 
 ## Kết quả
 
