@@ -53,3 +53,4 @@ Diff thật của PR sau bản FAO duyệt (e56173a) chỉ là dòng đính chí
 
 - Chấp nhận cách chọn của DAT. Claude chạy lại `random.Random("641922ca…9637")`, `randrange(10)` × 2 và ra 7, 5.
 - Card: `notes/EXP-03R_reeval_card.md`. Chạy trên laptop FAO tại `prereg-lock`, experiment id riêng EXP-03R để không lẫn vào glob `results/raw/EXP-03/*`.
+- **Kết quả (06/11 tối):** DR s7 và Fixed s5 MATCH 500/500, `events.csv` trùng từng byte với run gốc (raw c9b1896). Venv Python 3.12.10, vì model không nạp được bằng 3.14. Một run DR dở (67/500, cửa sổ bị đóng) được giữ lại và loại. Theo quy tắc 3, số EXP-03 qua được bước second reader này.

@@ -87,8 +87,9 @@
     },
     "W5-FAO-04": {
       "date": "2026-11-06",
+      "evidence": "notes/EXP-03R_reeval_card.md: DR s7 + Fixed s5 MATCH 500/500, events.csv trùng từng byte; raw results/raw/EXP-03R (c9b1896); review_log dòng W5-FAO-04",
       "note": "model DR s7, Fixed s5 đã tải; card notes/EXP-03R_reeval_card.md; chờ chạy trên laptop FAO",
-      "state": "doing"
+      "state": "done"
     }
   }
 }
