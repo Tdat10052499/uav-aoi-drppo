@@ -17,3 +17,11 @@
    - DAT:
 3. **Ghim bản Python.** `environment/requirements.txt` không ghi bản Python. Đề xuất thêm dòng chú thích "Python 3.12 (model EXP-01..03)", kèm bản thư viện của run EXP-03: numpy 2.5.4, torch 2.14.1+cpu, gymnasium 1.4.0, SB3 và sb3_contrib 2.9.0, scipy 1.18.1.
    - DAT:
+4. **W3-FAO-01 bước 2 (quỹ đạo ≥ 3/model) cần model EXP-02**, nhưng 4 model pilot chưa có trên Drive.
+   - Đã xong bước 1: `data/checkpoint_manifest.md` có 4 dòng EXP-02 và 20 dòng EXP-03, lấy SHA256 từ `run_record.json`. Chỉ s7 và s5 của EXP-03 được FAO băm lại từ file thật.
+   - Bước 3 (suy biến) đã làm từ `events.csv`: `results/processed/EXP-02_degenerate.md`.
+   - Đề xuất, DAT chọn:
+     - (a) EXP-02 đã bị EXP-03 thay, nên bước 2 dùng 2 model EXP-03 FAO đang có (DR s7, Fixed s5), 3 bộ mỗi model;
+     - (b) DAT gửi 4 `model.zip` EXP-02 qua Drive.
+   - FAO làm (a) trước, vì đã có model và venv Python 3.12.
+   - DAT:
