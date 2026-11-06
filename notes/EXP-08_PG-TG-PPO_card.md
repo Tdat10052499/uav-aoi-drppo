@@ -1,7 +1,7 @@
 # EXP-08: PG-TG-PPO (quan sát neo vật lý + PPO tầng cao trên nền tour)
 
-> **Nháp.** Claude soạn 06/11/2026; chưa ai duyệt.
-> **Owner (đề xuất):**
+> **Đã duyệt 06/11/2026:** DAT (thiết kế), LDN (thống kê), FAO (mã, PR #45). Claude soạn. Chữ ký ở cuối card.
+> **Owner:**
 > - DAT: huấn luyện, máy cố định.
 > - FAO: mã môi trường và wrapper.
 > - LDN: thống kê.
@@ -39,7 +39,7 @@ Thăm dò hay khẳng định: THĂM DÒ. 2 seed, chỉ mô tả, không p-value
 Câu hỏi: wrapper tour-guided có học được không, tốc độ máy bao nhiêu, cần bao nhiêu bước?
 Nhánh: M1 (DR, quan sát neo, tour-guided) và M4 (DR, quan sát neo, phẳng); seed 0, 1.
   (seed 0–9 đã dùng ở EXP-03 cho nhánh khác; pilot dùng lại 0–1 được vì là thăm dò.)
-Số bước: M4 2M; M1 theo số quyết định tương đương ✱ (FAO đề xuất sau khi đo).
+Số bước: M4 2M; M1 700 000 quyết định (mục 9; DAT chốt khi ký 06/11). Số bước của EXP-08 chính chốt sau pilot.
 Bộ đánh giá: CHỈ bộ cũ (id + 4 OOD), seed 100000–100099. KHÔNG chạy bộ OOD mới ở pilot.
 Đo thêm: bước/s và thời gian huấn luyện trên máy DAT (quy tắc 4).
 Tiêu chí hành động (ghi trước):
@@ -105,15 +105,15 @@ Các điểm dưới đây là lựa chọn lúc viết mã. Thiết kế để 
    - M4 2M bước tương đương khoảng 6 700 episode.
    - Tầng cao greedy cần khoảng 60–180 quyết định mỗi episode trên các bộ cũ (đo trên 20 episode mỗi bộ, kiểm tra mã, không phải kết quả).
    - Đề xuất M1 = 700 000 quyết định, tức khoảng 5 000–10 000 episode. FAO điều chỉnh sau khi đo bước/s.
+10. **Chặn bộ khẳng định trong mã:** `evaluate.py` từ chối seed 300000–300099 nếu thiếu `--confirmatory` hoặc chưa có tag `prereg-B-lock`.
 11. **Rà soát mã 06/11 (commit 7d60d5e):**
     - **Seed reset lúc huấn luyện.** SB3 tự gọi `venv.seed(seed)` khi tạo model, nên env rank r reset bằng seed + r, không phải seed·1000 + r như `make_env` và run record ghi. Claude đã kiểm bằng cách dựng lại kịch bản đầu tiên của từng env.
       - **Hệ quả cho EXP-01 đến EXP-03:** với n_envs = 8, hai seed huấn luyện liền nhau dùng chung 7/8 chuỗi kịch bản DR. Ví dụ seed 1 rank 0 lặp lại chuỗi của seed 0 rank 1. Các seed vẫn khác nhau ở khởi tạo mạng và ở hành động lấy mẫu. Nhánh Fixed không bị ảnh hưởng vì kịch bản cố định. Mức ảnh hưởng tới CI của nhánh DR chưa định lượng.
       - **Việc cần làm:** ghi vào DECISIONS và phần giới hạn của bài. Không chạy lại EXP-03.
       - **Từ EXP-08:** `--reset-seed-scheme spaced` (mặc định mới) reset đúng seed·1000 + r, và run record ghi danh sách seed thật.
     - **Mask năng lượng.** Số khe bay được ước lượng theo tiến độ xấu nhất của 8 hướng. Mask cộng thêm 1 khe dự phòng: đo trên 1 600 macro-action, số khe thật vượt ước lượng tối đa 1 khe.
-    - **Tiến tour.** Tour chỉ tiến khi chính điểm đó được thu. Env có thể phục vụ một cảm biến khác cũ hơn trong cùng tầm.
+    - **Tiến tour.** Tour chỉ tiến khi chính điểm đó được thu. Env có thể phục vụ một cảm biến khác cũ hơn trong cùng tầm. *(Đã thay bằng mục 12: tour tiến theo cảm biến được thu thật.)*
     - **Chặn seed khẳng định.** `plot_trajectory.py` và `plot_f6.py` cũng từ chối seed 300000–300099.
-10. **Chặn bộ khẳng định trong mã:** `evaluate.py` từ chối seed 300000–300099 nếu thiếu `--confirmatory` hoặc chưa có tag `prereg-B-lock`.
 12. **Sau review của FAO và LDN trên PR #45** (0c207f2, cd62a0b):
     - **Tiến tour.** Tour tiến theo cảm biến được thu thật: thu c₂ thì bỏ qua c₁; thu một cảm biến ngoài tour thì tour đứng yên.
     - **Chặn bộ mới.** Bốn bộ mới bị chặn trên **mọi** seed khi chưa có tag. `--probe-b` chỉ cho heuristic và được ghi vào run record. Phép thử độ khả thi của FAO (heuristic, seed 900000–900029, mã ngoài `evaluate.py`) và mọi lần dùng `--probe-b` phải khai trong PREREG phụ lục B §1.
@@ -137,7 +137,7 @@ python scripts/evaluate.py --experiment-id EXP-08p --method random greedy_aoi ts
 python scripts/train_ppo.py --experiment-id EXP-08p --masked --train dr --seed 0 --timesteps 2000000 --config configs/env_grounded.json
 python scripts/train_ppo.py --experiment-id EXP-08p --masked --train dr --seed 1 --timesteps 2000000 --config configs/env_grounded.json
 
-# 3. M1: DR + quan sát neo + tour-guided, seed 0 và 1 (700 000 quyết định ✱)
+# 3. M1: DR + quan sát neo + tour-guided, seed 0 và 1 (700 000 quyết định)
 python scripts/train_ppo.py --experiment-id EXP-08p --policy options --masked --train dr --seed 0 --timesteps 700000 --config configs/env_grounded.json
 python scripts/train_ppo.py --experiment-id EXP-08p --policy options --masked --train dr --seed 1 --timesteps 700000 --config configs/env_grounded.json
 
@@ -191,3 +191,27 @@ python scripts/evaluate.py --experiment-id EXP-08p --model runs/EXP-08p/<run-id>
 - power cho δ₅–δ₇ từ độ lệch chuẩn theo seed của EXP-03 (cần raw EXP-03).
 
 Chữ ký: **LDN (Dương Ngọc Linh Đan), second reader thống kê, 06/11/2026.**
+
+## DAT (thiết kế), 06/11/2026
+
+DAT xác nhận:
+1. **Tiêu chí hành động ghi trước** của EXP-08a và EXP-08p, gồm Quyết định 2 của LDN: pilot chỉ đạt khi **cả hai seed** cùng đạt. Dấu ✱ ở `docs/05` §5 G1 #3 được thay bằng quy tắc này qua PR #46 (LDN review).
+2. **Lựa chọn thiết kế** ở "Cài đặt trong mã", các mục 1–5 và 7.
+3. **Hai con số của pilot:**
+   - M1 = 700 000 quyết định (mục 9). Dấu ✱ đã bỏ.
+   - Seed thay thế của pilot = seed + 1000 (mục 12). Quy tắc này chỉ thay `seed + 100` của PREREG §9 trong pilot.
+4. **Hai yếu tố gây nhiễu khi so M1 với M4** (γ tính theo quyết định, ngân sách tính toán khác nhau; mục 9 và 12) được ghi kèm mỗi khi báo cáo phép so sánh này. H7 (M1 so M3) không bị ảnh hưởng.
+
+**Còn ✱:** L = 2000 m của `ood_area_2000` thuộc EXP-08 chính, chốt khi khoá phụ lục B tại G1.
+
+**Điều kiện chạy còn lại:**
+- EXP-08a (W4-LDN-03) cần raw EXP-03 trên `main` (W3-DAT-03).
+- EXP-08p chạy sau khi EXP-08a không bác bỏ thành phần A.
+- EXP-08 chính chạy sau khi có tag `prereg-B-lock`.
+
+**Thay đổi sau chữ ký của LDN** (ký tại 188565d):
+- LDN đồng ý mục 11 trong review PR #45 (góp ý 3).
+- Mục 12 viết theo review của FAO và LDN; LDN chưa xác nhận lại trên card.
+- Lần ký này chỉ đổi chữ và thứ tự (mục 10 đặt trước mục 11), không đổi nội dung đã ký.
+
+Chữ ký: **DAT (Hồ Du Tuấn Đạt), thiết kế, 06/11/2026** (xác nhận qua Claude).
