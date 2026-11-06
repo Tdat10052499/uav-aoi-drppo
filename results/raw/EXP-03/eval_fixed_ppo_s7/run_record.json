@@ -1,0 +1,48 @@
+{
+  "run_id": "eval_fixed_ppo_s7",
+  "experiment_id": "EXP-03",
+  "status": "completed",
+  "code_revision": "b5cd784a154799775424f900485e4cd839040d81",
+  "uncommitted_patch_path": null,
+  "config_path": "config.json",
+  "environment_path": "environment.json",
+  "data_manifest_path": "data\\eval_manifest.json",
+  "checkpoint_digest": "sha256:a0b6f40236125771f38c8dbd10e550dea077922518aaa9fbb883977e393c7014",
+  "seeds": {
+    "eval_episode_seeds": [
+      100000,
+      100099
+    ],
+    "train_seed": 7
+  },
+  "started_at": "2026-11-06T08:15:15+07:00",
+  "finished_at": "2026-11-06T08:17:09+07:00",
+  "counts": {
+    "id/fixed_ppo": 100,
+    "ood_cluster/fixed_ppo": 100,
+    "ood_density/fixed_ppo": 100,
+    "ood_area/fixed_ppo": 100,
+    "ood_energy/fixed_ppo": 100
+  },
+  "metrics": {
+    "id/fixed_ppo": {
+      "mean_aoi_mean": 118.77567122400573
+    },
+    "ood_cluster/fixed_ppo": {
+      "mean_aoi_mean": 86.38157382508524
+    },
+    "ood_density/fixed_ppo": {
+      "mean_aoi_mean": 134.31271116666667
+    },
+    "ood_area/fixed_ppo": {
+      "mean_aoi_mean": 138.66839203213112
+    },
+    "ood_energy/fixed_ppo": {
+      "mean_aoi_mean": 139.0598031613951
+    },
+    "wall_time_s": 113.5
+  },
+  "raw_events_path": "events.csv",
+  "warnings": [],
+  "failure_reason": null
+}
