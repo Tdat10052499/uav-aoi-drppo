@@ -1,0 +1,29 @@
+{
+  "run_id": "dr_ppo_mask_lam0.1_s0_20261104-143805",
+  "experiment_id": "EXP-03",
+  "status": "completed",
+  "code_revision": "b5cd784a154799775424f900485e4cd839040d81",
+  "uncommitted_patch_path": null,
+  "config_path": "config.json",
+  "environment_path": "environment.json",
+  "data_manifest_path": "data\\eval_manifest.json",
+  "checkpoint_digest": "sha256:13f9346caa31431f789ed5eae10e5e858a7ba55e9e29d2163ef745658b27e0b6",
+  "seeds": {
+    "train_seed": 0,
+    "env_reset_seeds": "seed*1000 + rank, rank < n_envs"
+  },
+  "started_at": "2026-11-04T14:38:06+07:00",
+  "finished_at": "2026-11-04T16:31:09+07:00",
+  "counts": {
+    "timesteps": 2000000,
+    "n_envs": 8
+  },
+  "metrics": {
+    "wall_time_s": 6782.0,
+    "steps_per_s": 294.9
+  },
+  "raw_events_path": null,
+  "warnings": [],
+  "failure_reason": null,
+  "model_path": "runs\\EXP-03\\dr_ppo_mask_lam0.1_s0_20261104-143805\\model.zip"
+}
