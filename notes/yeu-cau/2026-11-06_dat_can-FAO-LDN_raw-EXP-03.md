@@ -4,7 +4,7 @@
    - 42 run: 21 run train (DR 11, Fixed 10), 20 run eval (DR và Fixed, mỗi nhánh seed 0–9), cộng `heuristics_lock`. 41 run `completed`, 1 run `running`. (Đính chính 06/11: báo cáo đầu ghi nhầm 41 run.)
    - **DR seed 3 có hai run train.** Chỉ dùng `dr_ppo_mask_lam0.1_s3_20261105-140316` (completed). Run `..._s3_20261104-202500` vẫn ghi `running`: DAT đóng cửa sổ terminal khoảng 20:26 ngày 04/11, ở bước 16 384. Run này loại khỏi phân tích nhưng phải liệt kê trong bài (PREREG §9 mục 1, 5; card EXP-03 cuối file).
    - Không có file `episode_metrics` riêng; chỉ số theo episode nằm trong `events.csv` của các run eval.
-   - **Chưa có tb log** (nằm trong `runs/EXP-03/*/tb/` trên máy DAT, `runs/` bị gitignore). EXP-08a không cần tb log.
+   - **Tb log đã lên `main`** (c834009, cập nhật 06/11): `results/raw_tb/EXP-02b/` (1 run) và `results/raw_tb/EXP-03/` (21 run, gồm run s3 dở), mỗi thư mục có `SHA256SUMS.txt`. Để ngoài `results/raw/` để không lẫn vào các glob `results/raw/EXP-03/*`. FAO dùng để kiểm đường học (yêu cầu P1). EXP-08a không cần tb log.
    - `model.zip` không có trên git. 2 model cho W5-FAO-04, DAT gửi qua Drive (link: DAT điền):
      - Đề xuất chọn cơ học, không xem kết quả: `random.Random("641922ca31c32fc442a9ddd0f6fe19b9e04f9637")`, gọi `randrange(10)` hai lần, ra DR seed 7 rồi Fixed seed 5.
      - `dr_ppo_mask_lam0.1_s7_20261105-234718`: SHA256 `617efd7caa545dde2b0e47f395def741a0e135ca32fd08b9cd73c8c44d1b83d9`.
