@@ -50,7 +50,8 @@ Lệnh:
          --config configs/env_grounded.json
   python scripts/evaluate.py --experiment-id EXP-08a-b --method random tsp tsp_eco tsp_adaptive \
          --suites ood_energy_low --probe-b --config configs/env_grounded.json
-Chỉ số: Ā, coverage, early_termination, slow_frac, fast_frac, năng lượng mỗi mét, theo bộ × heuristic.
+Chỉ số: Ā, coverage, early_termination, slow_frac, fast_frac, t_end, J_per_m, theo bộ × heuristic.
+  Chạy sau khi PR #53 merge, để events.csv có cột t_end và J_per_m (góp ý FAO ở #53).
 Dự đoán (từ mô hình năng lượng, chưa đo): trên ood_energy và ood_energy_low,
   Ā(TSP-adaptive) ≥ Ā(TSP).
 Hành động (ghi trước):
@@ -78,7 +79,10 @@ Số bước: M4 2M; M1 700 000 quyết định (mục 9; DAT chốt khi ký 06/
 Bộ đánh giá: CHỈ bộ cũ (id + 4 OOD), seed 100000–100099. KHÔNG chạy bộ OOD mới ở pilot.
 Đo thêm: bước/s và thời gian huấn luyện trên máy DAT (quy tắc 4).
 Đo thêm (DAT chọn 06/11 sau EXP-08a): t_end (khe dừng) và J_per_m (năng lượng di chuyển / quãng đường
-  bay thật) cho M1, M4 và heuristic; cột mới trong events.csv (PR DAT/pilot-metrics).
+  bay thật) cho M1, M4 và heuristic; cột mới trong events.csv (PR #53).
+  Cách đọc (góp ý FAO ở #53): J_per_m tính trên quãng đường sau khi kẹp ở biên nên tăng theo
+  boundary_hits; khi so với 31,3 / 43,5 J/m thì báo kèm boundary_hits. J_per_m = NaN khi episode
+  không di chuyển; bảng mô tả báo số episode NaN.
 Quy tắc ghi trước cho phần thưởng: nếu trên ood_energy M1 có slow_frac > fast_frac ở CẢ HAI seed
   (bay chủ yếu ở V_me như PPO cũ, EXP-08a) thì trước khi khoá phụ lục B nhóm xét thêm một nhánh
   λ = 0 (thăm dò, sửa card trước khi chạy, ghi DECISIONS). Không thêm nhánh này nếu điều kiện
