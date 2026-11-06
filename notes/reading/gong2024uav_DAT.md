@@ -1,6 +1,8 @@
 # Form B — `gong2024uav` (A1)
 
 > Trạng thái: **NHÁP Claude soạn cho DAT 06/11/2026, chờ DAT đọc lại, rồi second reader.** Soạn từ toàn văn HTML ar5iv của arXiv 2312.00334 v1. Mục, phương trình và số liệu dưới đây đã đối chiếu với văn bản đó. Chưa đối chiếu với bản IEEE đã xuất bản.
+>
+> **Cập nhật 06/11/2026:** DAT gửi PDF (15 trang, ghi `arXiv:2312.00334v1`, SHA256 `5246c1fa…38fe7ef`, không đưa vào repo). Đây cùng là bản arXiv v1, không phải bản IEEE, nên các mục ✱ vẫn giữ. Đã đối chiếu thêm văn bản §V-A1 trên PDF và 7 hình kết quả (Fig. 7, 8, 10–14, ảnh trên ar5iv; chưa xem Fig. 9). Không ô nào trong ma trận đổi.
 
 **Tiêu đề / tác giả / năm / nơi công bố hoặc trạng thái preprint:** *UAV-Aided Lifelong Learning for AoI and Energy Optimization in Non-Stationary IoT Networks*. Zhenzhen Gong, Omar Hashash, Yingze Wang, Qimei Cui, Wei Ni, Walid Saad, Kei Sakaguchi.
 - arXiv 01/12/2023 (15 trang, 14 hình).
@@ -32,13 +34,20 @@
 - Fig. 12–13, §V-B: quét tốc độ 10–40 m/s. Năng lượng giảm rồi tăng theo tốc độ, đúng dạng PT (4). AoI giảm 26,30% khi tốc độ tăng.
 - Fig. 14, §V-B: quét N từ 5 đến 30, AoI trung bình tăng từ 4,81 lên 9,81.
 
+**Đọc trên hình (số đọc từ hình là ước lượng của người soạn):**
+- Fig. 12 (cột năng lượng UAV) có dạng chữ U: cực tiểu khoảng 2300 kJ ở 15 m/s, đúng dạng PT (4). Fig. 11 báo 2292 kJ cho phương pháp đề xuất, gần cực tiểu đó. Đây chỉ là gợi ý rằng chính sách chọn tốc độ gần mức tiết kiệm; bài không báo tốc độ học được.
+- **Fig. 12–13 lấy tốc độ làm trục hoành**, kể cả với phương pháp đề xuất. Bài không nói ở các hình này tốc độ được đặt cố định hay chỉ là giới hạn, trong khi §IV coi tốc độ là hành động. Vì vậy các hình này không cho thấy chính sách *chọn* tốc độ ra sao. Ô "tốc độ là biến quyết định" vẫn là "Có" theo PT (9) và §IV.
+- Fig. 7(d): khoảng 15 khe đầu, lifelong RL không nhỉnh hơn PG thường, thậm chí thấp hơn ở điểm đầu; khác với ba panel còn lại và với nhận định chung về khởi tạo tốt hơn.
+- Fig. 10(a) "Proposed": đọc khoảng 4,1 so với 4,8, tức chênh gần 15%, trong khi văn bản ghi 7,69%. Bài không nói con số đó tính trên cột nào.
+- Fig. 14(a): năng lượng CPU khoảng 9,9 mJ ở N = 5 và 4,7 mJ ở N = 10, trong khi Fig. 10(c) khoảng 1,2 mJ ở N = 6 và Fig. 13 khoảng 1–2,3 mJ. Thang đo có vẻ không nhất quán; bài không giải thích.
+
 **Đánh giá trên kịch bản khác tập huấn luyện? Loại dịch chuyển nào?**
 - Có, nhưng dịch chuyển nằm ở **tham số hàng đợi và CPU của thiết bị** (§III-C, Fig. 7–8), kèm quét N (Fig. 14).
 - Không thấy dịch chuyển phân bố không gian (phân cụm), diện tích, hay ngân sách năng lượng.
 - Zero-shot ở đây chỉ cho **chính sách khởi tạo**; các hình Fig. 7–8 đo đường học sau đó, nên không phải triển khai không huấn luyện lại.
 - Bài không nói Fig. 14 có huấn luyện lại actor-critic của UAV cho từng N hay không.
 
-**Số seed / cách báo cáo độ bất định:** Từ "seed" không xuất hiện trong toàn văn. Không thấy khoảng tin cậy hay dải sai số theo seed.
+**Số seed / cách báo cáo độ bất định:** Từ "seed" không xuất hiện trong toàn văn. Fig. 7, 8, 10–14 đều chỉ có một đường hoặc một cột cho mỗi phương pháp, không có dải sai số hay khoảng tin cậy.
 
 **Đối chứng gần nhất và độ công bằng của so sánh:** PG thường cho từng môi trường, UAV bay ngẫu nhiên 20 m/s, phương pháp force 20 m/s, và bộ điều khiển dựa trên giá trị (§V-A2). **Không có đối chứng cùng learner huấn luyện trên một bố trí cố định.**
 
@@ -59,7 +68,7 @@
 
 **Có mã nguồn/dữ liệu không:** Không thấy liên kết mã nguồn trong văn bản đã đọc.
 
-**Câu hỏi đặt cho nhóm:** Ô "Không rõ" ở cột nhiều bố trí có cần kiểm thêm bằng bản IEEE không? Bản arXiv là v1 duy nhất; bản xuất bản có thể khác.
+**Câu hỏi đặt cho nhóm:** Ô "Không rõ" ở cột nhiều bố trí có cần kiểm thêm bằng bản IEEE không? Bản arXiv là v1 duy nhất; bản xuất bản có thể khác. §V-A1 trên PDF nói thiết bị và môi trường của chúng được chọn ngẫu nhiên ở pha thử, nhưng không nói vị trí thiết bị có đổi giữa pha huấn luyện và pha thử không.
 
 **Đối chiếu với PDF (06/11/2026).** DAT tải lên bản PDF arXiv 2312.00334v1 (dấu "arXiv:2312.00334v1 [cs.NI] 1 Dec 2023", 15 trang). Đây cùng phiên bản với bản HTML đã dùng, chưa phải bản IEEE. Claude đối chiếu lại các chỗ còn nghi vấn:
 - **"Môi trường" (§II-B, Definition 1, tr. 4):** z_{i,t} = (λ_{i,t}, ā_{i,t}, σ²_{i,t}, κ_i, ε_{i,max}), tức tham số đến gói, kích thước gói và CPU. Không có vị trí. Khớp với nhận định ở trên.
