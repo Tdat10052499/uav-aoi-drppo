@@ -77,6 +77,13 @@ Nhánh: M1 (DR, quan sát neo, tour-guided) và M4 (DR, quan sát neo, phẳng);
 Số bước: M4 2M; M1 700 000 quyết định (mục 9; DAT chốt khi ký 06/11). Số bước của EXP-08 chính chốt sau pilot.
 Bộ đánh giá: CHỈ bộ cũ (id + 4 OOD), seed 100000–100099. KHÔNG chạy bộ OOD mới ở pilot.
 Đo thêm: bước/s và thời gian huấn luyện trên máy DAT (quy tắc 4).
+Đo thêm (DAT chọn 06/11 sau EXP-08a): t_end (khe dừng) và J_per_m (năng lượng di chuyển / quãng đường
+  bay thật) cho M1, M4 và heuristic; cột mới trong events.csv (PR DAT/pilot-metrics).
+Quy tắc ghi trước cho phần thưởng: nếu trên ood_energy M1 có slow_frac > fast_frac ở CẢ HAI seed
+  (bay chủ yếu ở V_me như PPO cũ, EXP-08a) thì trước khi khoá phụ lục B nhóm xét thêm một nhánh
+  λ = 0 (thăm dò, sửa card trước khi chạy, ghi DECISIONS). Không thêm nhánh này nếu điều kiện
+  không xảy ra. Đây là phép kiểm giả thuyết "phạt năng lượng theo khe nghiêng về V_me" (EXP-08a §3.4),
+  chưa phải kết luận.
 Tiêu chí hành động (ghi trước):
 - M1 trên id có Ā ≤ 1,2 × Ā(TSP-adaptive) VÀ điểm chuẩn hoá trên ood_energy > 0,2
     → khoá PREREG phụ lục B, chạy EXP-08.

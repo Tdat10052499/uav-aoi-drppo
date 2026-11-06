@@ -102,6 +102,9 @@ class UAVAoIEnv(gym.Env):
         self.action_counts = np.zeros(3, dtype=int)  # hover, slow, fast
         self.boundary_hits = 0
         self.energy_used = 0.0
+        self.move_energy = 0.0      # energy spent on moving slots only [J]
+        self.dist = 0.0             # distance actually flown, after clipping at the border [m]
+        self.t_end = None           # slot at which the episode stopped (T if it ran to the horizon)
         self.early_terminated = False
         return self._obs(), self._info()
 
@@ -151,8 +154,10 @@ class UAVAoIEnv(gym.Env):
                 self.boundary_hits += 1
                 penalty = cfg.mu
                 nxt = np.clip(nxt, 0.0, self.L)
+            self.dist += float(np.linalg.norm(nxt - self.pos))
             self.pos = nxt
             e = self.E_move[a - 1]
+            self.move_energy += e
 
         self.energy -= e
         self.energy_used += e
@@ -191,6 +196,7 @@ class UAVAoIEnv(gym.Env):
             self.peak_aoi = max(self.peak_aoi, float(np.minimum(self.aoi.max() + extra_slots, self.Delta_max)))
         r_extra = -float(extra_slots) * self.worst_step_cost
         self.early_terminated = True
+        self.t_end = self.t
         self.t = self.cfg.T
         info = self._info(final=True, early=True)
         return self._obs(), r_extra, True, False, info
@@ -263,5 +269,10 @@ class UAVAoIEnv(gym.Env):
                 "boundary_hits": self.boundary_hits,
                 "early_termination": bool(early),
                 "N": self.N, "L": self.L, "E_max": self.E_max,
+                # EXP-08p extra metrics (card EXP-08p, DAT 06/11): stop slot and energy per metre moved
+                "t_end": int(self.t_end if self.t_end is not None else self.t),
+                "dist_m": self.dist,
+                "move_energy_J": self.move_energy,
+                "J_per_m": (self.move_energy / self.dist) if self.dist > 0 else float("nan"),
             }
         return info
