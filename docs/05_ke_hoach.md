@@ -20,13 +20,13 @@
 | Tuần | Ngày | Mốc | Trọng tâm |
 | --- | --- | --- | --- |
 | W1 | 19–25/10 | — | Tái lập (EXP-01), đọc tài liệu, xác minh hội nghị |
-| W2 | 26/10–01/11 | **G0 · 01/11** | Tổng quan hệ thống, ma trận định vị, công cụ phân tích |
-| W3 | 02–08/11 | — | EXP-02 pilot: 4 lần huấn luyện |
-| W4 | 09–15/11 | **G1 · 15/11** | Phân tích pilot, Optuna trên ID, khoá PREREG, chọn A/B |
-| W5 | 16–22/11 | — | EXP-03 (10 seed × 2 learner), EXP-04 DQN |
-| W6 | 23–29/11 | (A: nộp bài MVP) | EXP-03 tiếp, viết Setup/System Model |
-| W7 | 30/11–06/12 | — | EXP-05 quét λ, EXP-06/07 ablation |
-| W8 | 07–13/12 | — | Hoàn tất ablation, hình F3–F6, claim–evidence |
+| W2 | 26/10–01/11 | **G0 · 04/11** | Tổng quan hệ thống, ma trận định vị, công cụ phân tích |
+| W3 | 02–08/11 | — | EXP-02b chẩn đoán, khoá PREREG gốc, EXP-03 (theo lịch nén FJCAI); 06/11 đổi phương pháp |
+| W4 | 09–15/11 | — | Báo cáo EXP-03; EXP-08a; mã quan sát neo, wrapper tour-guided, TSP-eco/adaptive |
+| W5 | 16–22/11 | **G1 · 20/11** | Pilot EXP-08p, khoá PREREG phụ lục B |
+| W6 | 23–29/11 | — | EXP-08: 4 nhánh × 10 seed; viết System Model, Setup |
+| W7 | 30/11–06/12 | — | Đánh giá EXP-08, second reader provenance |
+| W8 | 07–13/12 | — | Hình F3–F6, claim–evidence, mục Method |
 | W9 | 14–20/12 | **G2 · 20/12** | Đóng băng kết quả, tái lập độc lập |
 | W10 | 21–27/12 | — | Viết bài đầy đủ |
 | W11 | 28/12–03/01 | — | Đồ án, phản biện nội bộ vòng 1 |
@@ -58,26 +58,25 @@
 
 ## 4. Tuần 3–12 theo thành viên
 
+> **Sửa 06/11/2026** (DECISIONS 2026-11-06): sau EXP-03, nhóm đổi sang phương pháp PG-TG-PPO (quan sát neo vật lý + PPO tầng cao dẫn hướng theo tour TSP). W4–W9 dưới đây là lịch mới. EXP-04 đến EXP-07 hoãn. Nguồn sự thật vẫn là `schedule/tasks.json`.
+
 | Tuần | DAT | LDN | FAO |
 | --- | --- | --- | --- |
 | **W3** 02–08/11 | Huấn luyện EXP-02 trên máy cố định: s0-DR, s0-Fixed, s1-DR, s1-Fixed. | Chạy `evaluate.py` cho từng model ngay khi xong. Viết bảng mô tả tạm. | Ghi `data/checkpoint_manifest.md` cho 4 model. Second reader quỹ đạo: xem ≥ 3 quỹ đạo mỗi model, tìm hành vi suy biến. |
-| **W4** 09–15/11 | Optuna trên ID (DR và Fixed, cùng số lượt). Đề xuất siêu tham số cho EXP-03. | Báo cáo G1 (Form G) `notes/2026-11-15_gate_G1_report.md` trước 14/11. Viết EXP-03 card. | Điền `docs/PREREG.md` (cấu hình, seed, ngân sách). Lập lịch phân seed giữa các máy. |
-| | **Gate G1 · CN 15/11** — chọn phương án A/B, khoá PREREG (ghi commit). | | |
-| **W5** 16–22/11 | Chạy EXP-03 seed 0–4 trên máy cố định. Viết mục System Model (từ `docs/02`). | Hoàn thiện pipeline phân tích EXP-03; viết mục Experimental Setup. | Chạy EXP-03 seed 5–9 (Kaggle hoặc máy FAO); bắt đầu EXP-04 DR-DQN 10 seed. |
-| **W6** 23–29/11 | Cài biến thể quan sát A2 (lưới tuyệt đối) và A3 (vector padding) cho EXP-06; viết card. | Phân tích tạm EXP-03 (≥ 5 seed): bảng H1/H2, CI. | EXP-04 tiếp; vẽ F6 (quỹ đạo TSP vs DR-PPO trên cùng kịch bản cụm). |
-| **W7** 30/11–06/12 | Chạy EXP-06 (5 seed/biến thể). | Chạy EXP-05 quét λ ∈ {0; 0,05; 0,1; 0,2; 0,5}, 5 seed mỗi λ. | Chạy EXP-07 (A4 bỏ mask, A5 một tốc độ), 5 seed. |
-| **W8** 07–13/12 | Second reader EXP-05; viết mục Method. | Hình F3 (đường học), F4, F5 từ raw; cập nhật claim–evidence → *measured*. | Second reader EXP-06; cập nhật manifest checkpoint đầy đủ. |
-| **W9** 14–20/12 | Báo cáo G2. | Phân tích cuối từ commit khoá; kiểm định H1/H2 (Holm). | **Tái lập độc lập**: chạy lại toàn bộ `evaluate.py` từ commit khoá trên máy khác, so khớp `events.csv`. |
+| **W4** 09–15/11 | Kiểm lại Bayerlein 2021 (pin trong quan sát) + Form B Theile ~2020. PR `dat/tour-guided`: wrapper semi-MDP, tầng cao greedy, `train_ppo.py --policy options`. | EXP-08a: chẩn đoán từ dữ liệu EXP-03. Báo cáo chính thức H1/H2 của EXP-03 (PR #43). Power analysis cho δ₅–δ₇. | PR `fao/grounded-obs` (`obs_mode`). PR `fao/tsp-manh`: TSP-eco, TSP-adaptive, bộ đánh giá mới seed 300000–300099. |
+| **W5** 16–22/11 | Pilot EXP-08p (M1, M4; seed 0–1) trên máy cố định, đo bước/s. Viết mục System Model. | Báo cáo G1 (Form G) `notes/2026-11-20_gate_G1_report.md`. Bắt đầu mục Experimental Setup. | Đưa PREREG phụ lục B vào `docs/PREREG.md` (PR). Second reader EXP-03. |
+| | **Gate G1 · T6 20/11** — duyệt pilot, khoá PREREG phụ lục B (tag `prereg-B-lock`). | | |
+| **W6** 23–29/11 | EXP-08: huấn luyện M1, M2 (seed 10–19) trên laptop DAT (21/11–02/12). | `analyze.py` cho H5–H7 (PR). Experimental Setup. | EXP-08: huấn luyện M3, M4 (seed 10–19) trên máy FAO hoặc Kaggle (21/11–02/12). |
+| **W7** 30/11–06/12 | Đánh giá 40 model + 6 baseline trên bộ chính và bộ phụ; push raw. | Mô tả tạm EXP-08 và phân tích thăm dò. | Second reader EXP-08: provenance từng run, chạy lại đánh giá 2 model. |
+| **W8** 07–13/12 | Second reader phân tích EXP-08; viết mục Method. | Hình F3, F4, F5 từ raw; cập nhật claim–evidence → *measured*. | Hình F6 (quỹ đạo TSP-adaptive và M1), bảng hành vi; manifest checkpoint đầy đủ. |
+| **W9** 14–20/12 | Báo cáo G2. | Phân tích cuối từ commit khoá: H5–H7 và H1/H2 của EXP-03. | **Tái lập độc lập**: chạy lại toàn bộ `evaluate.py` từ commit khoá trên máy khác, so khớp `events.csv`. |
 | | **Gate G2 · CN 20/12** — đóng băng kết quả. | | |
 | **W10** 21–27/12 | Viết Introduction, Method, Discussion. | Viết Results, Experimental Setup. | Viết Related Work (từ ma trận), Limitations. |
 | **W11** 28/12–03/01 | Đồ án: Chương 3 (phương pháp). Phản biện mục của LDN. | Đồ án: Chương 4 (thực nghiệm). Phản biện mục của FAO. | Đồ án: Chương 1 (lý thuyết), Chương 2 (tổng quan). Phản biện mục của DAT. |
 | **W12** 04–10/01 | Abstract (viết cuối). Kiểm tra định dạng hội nghị. Nộp cho GVHD. | Đối chiếu mọi con số với claim–evidence (*independently checked*). | Bàn giao artifact (Form J): smoke test từ clone sạch, tag `submission-<venue>`. |
 | | **Gate G3 · CN 10/01/2027** | | |
 
-**Phương án A (MVP)**, nếu chọn tại G1 vì có hội nghị hạn cuối tháng 11 – đầu tháng 12:
-- Tuần W5–W6 dùng EXP-03 với ≥ 5 seed.
-- Viết bài 6–8 trang (DAT chủ trì; LDN viết Results; FAO viết Related Work).
-- Phần còn lại của lịch giữ nguyên cho bản đầy đủ và đồ án. Bản đầy đủ phải mở rộng đáng kể và trích dẫn bản MVP.
+**Phương án dự phòng** (quyết định tại G1 nếu pilot EXP-08p cho thấy M1 không học được, Ā ≈ Random): bỏ tầng tour, chỉ giữ quan sát neo vật lý với PPO phẳng (nhánh M4). Lịch W6–W12 giữ nguyên; thay M1 bằng M4 trong H5–H7 và ghi DECISIONS trước khi khoá.
 
 ---
 
@@ -91,24 +90,24 @@
 | 2 | Không có công trình nào đủ cả 5 cột: AoI, năng lượng theo tốc độ, huấn luyện nhiều bố trí, OOD có cấu trúc, nhiều seed + CI | Đổi trọng tâm: A5 (vai trò lựa chọn tốc độ) hoặc đa UAV — GVHD quyết |
 | 3 | Câu định vị (`docs/01` §3) được GVHD đồng ý | Viết lại |
 
-### G1 · 15/11 — pilot (owner LDN viết báo cáo, DAT huấn luyện, FAO second reader)
-Ngưỡng tính từ kết quả tham chiếu: Random trên `id` = 126,24 khe; TSP trên `id` = 28,64 khe (`results/processed/heuristics_summary_2026-10-16.md`).
+### G1 · T6 20/11 — pilot PG-TG-PPO (owner LDN viết báo cáo, DAT huấn luyện, FAO second reader)
+> **Thay ngày 06/11/2026.** Tiêu chí G1 cũ (pilot EXP-02, ngày 15/11) không còn áp dụng vì EXP-03 đã chạy theo lịch nén FJCAI; xem lịch sử git của file này. Ngưỡng 1,2 × TSP-adaptive và 0,2 lấy từ `notes/EXP-08_PG-TG-PPO_card.md` (EXP-08p), là ngưỡng hành động của pilot, **không** phải ngưỡng giả thuyết.
 
 | # | Điều kiện | Ngưỡng | Nếu không đạt |
 | --- | --- | --- | --- |
-| 1 | Tái lập | Smoke test PASS trên ≥ 2 máy; EXP-01 không lệch dòng nào | **Dừng mọi thứ**, debug |
-| 2 | PPO học được | Ā(DR-PPO, `id`) ≤ 63,1 khe (0,5 × Random) ở **cả 2 seed** | Debug reward/quan sát/siêu tham số; không mở rộng |
-| 3 | Mức cạnh tranh | Ā(DR-PPO, `id`) ≤ 43,0 khe (1,5 × TSP) ở ≥ 1 seed | Không chặn; bỏ claim C2 "thắng heuristic" |
-| 4 | Tín hiệu hiệu ứng chính | deg(DR) < deg(Fixed) trên `ood_cluster` và ≥ 1 bộ OOD khác, ở **cả 2 seed** | Thu hẹp hoặc đổi trọng tâm (A5 / đa UAV) — GVHD quyết |
-| 5 | Không suy biến | Chạm biên = 0 khi có mask; không loại hành động nào chiếm ≥ 90%; FAO đã xem ≥ 3 quỹ đạo mỗi model | Debug |
-| 6 | Ngân sách | steps/s đo được cho phép EXP-03 đến EXP-07 xong trước 13/12 | Giảm số bước trước; giảm seed sau (tối thiểu 5, ghi rõ) |
+| 1 | Tái lập | Smoke test PASS trên ≥ 2 máy; EXP-01 chạy lại với `obs_mode = legacy` không lệch dòng nào | **Dừng mọi thứ**, debug |
+| 2 | Chẩn đoán EXP-08a | Đã chạy; kết luận khớp hoặc không khớp dự đoán của card đều được ghi | Không khớp: xem lại thành phần A trước khi pilot |
+| 3 | Tour-guided học được | Ā(M1, `id`) ≤ 1,2 × Ā(TSP-adaptive, `id`) **và** S(M1, `ood_energy`) > 0,2 (cách gộp 2 seed: LDN chốt trước khi chạy pilot ✱) | Học được nhưng chưa đạt: một vòng chỉnh siêu tham số, pilot lại 1 lần. Ā ≈ Random: phương án dự phòng (§4) |
+| 4 | Không suy biến | Không loại quyết định nào chiếm ≥ 90%; FAO đã xem ≥ 3 quỹ đạo mỗi model | Debug |
+| 5 | Ngân sách | bước/s đo trên laptop DAT cho phép EXP-08 (40 model) xong trước 06/12 | Giảm số bước trước; giảm seed sau (tối thiểu theo power analysis, ghi rõ) |
+| 6 | PREREG phụ lục B đầy đủ | δ₅–δ₇ có lý do độc lập với số EXP-03 (GVHD hoặc nhóm xác nhận); power ≥ 0,8 hoặc đã tăng seed; SHA256 cấu hình và manifest bộ đánh giá đã điền | Không khoá; dời G1 tối đa 3 ngày, báo DAT |
 
-Đây là pilot **thăm dò** (2 seed): chỉ mô tả, không đưa p-value vào bài.
+Đây là pilot **thăm dò** (2 seed): chỉ mô tả, không đưa p-value vào bài. Bộ đánh giá mới (seed 300000–300099) không được chạy trước khi khoá.
 
 ### G2 · 20/12 — đóng băng (owner DAT, second reader FAO)
 | # | Điều kiện |
 | --- | --- |
-| 1 | EXP-03 và EXP-04 đủ 10 seed mỗi learner; EXP-05 đến EXP-07 đủ 5 seed |
+| 1 | EXP-03 đủ 10 seed mỗi nhánh (đã có); EXP-08 đủ 10 seed mỗi nhánh M1–M4 (hoặc số seed theo power analysis ghi trong PREREG phụ lục B) |
 | 2 | FAO tái lập toàn bộ đánh giá từ commit khoá và `events.csv` khớp |
 | 3 | Mọi claim ở trạng thái *measured*; hình sinh từ script, không chỉnh tay |
 | 4 | Lần chạy thất bại được liệt kê kèm lý do |
