@@ -1,0 +1,25 @@
+{
+  "run_id": "reeval_dr_ppo_s7",
+  "experiment_id": "EXP-03R",
+  "status": "running",
+  "code_revision": "b5cd784a154799775424f900485e4cd839040d81",
+  "uncommitted_patch_path": null,
+  "config_path": "config.json",
+  "environment_path": "environment.json",
+  "data_manifest_path": "data\\eval_manifest.json",
+  "checkpoint_digest": "not-applicable",
+  "seeds": {
+    "eval_episode_seeds": [
+      100000,
+      100099
+    ],
+    "train_seed": 7
+  },
+  "started_at": "2026-11-06T20:52:09+07:00",
+  "finished_at": null,
+  "counts": {},
+  "metrics": {},
+  "raw_events_path": null,
+  "warnings": [],
+  "failure_reason": null
+}
