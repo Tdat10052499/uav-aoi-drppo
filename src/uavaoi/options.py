@@ -15,6 +15,9 @@ Candidates (re-computed at every decision point):
 The low level is deterministic (baselines._move_towards with the chosen speed forced).
 The decision reward is the sum of the base-env slot rewards of the macro-action
 (no discounting inside; option (b) of the design note ✱ to be fixed in the EXP-08 card).
+PPO's gamma then applies per decision (~2.7 slots each for hl_greedy on id), so the effective
+horizon of arms M1-M3 is longer than that of the flat arm M4: a known difference besides the
+tour layer (FAO review of PR #45).
 The optional "end early on purpose" action of the design note is left out: the base env
 charges the worst-case cost for every slot lost to an early end, so it can never pay.
 """
@@ -101,12 +104,13 @@ class TourGuidedEnv(gym.Env):
             while slots < self.max_macro_slots:
                 m = b.action_masks()
                 if np.linalg.norm(target - b.pos) <= b.r_eff and m[0]:
-                    before = int(b.n_served[c])
+                    before = b.n_served.copy()
                     _, r, term, trunc, info = b.step(0)      # collect (env serves max-AoI sensor in range)
                     total_r += r
                     slots += 1
-                    if b.n_served[c] > before:               # the tour advances only if c itself was served
-                        self._advance_tour(c)
+                    served = np.flatnonzero(b.n_served > before)
+                    if served.size:                          # advance by the sensor actually served
+                        self._advance_tour(int(served[0]))   # (only moves if it is c_1 or c_2)
                     break
                 _, r, term, trunc, info = b.step(_move_towards(b, target, m, speed))
                 total_r += r

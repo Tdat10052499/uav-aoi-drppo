@@ -246,18 +246,29 @@ def test_tour_guided_flight_estimate_is_an_upper_bound():
 def test_tour_advances_only_when_target_served():
     from uavaoi.options import TourGuidedEnv
     w = TourGuidedEnv(cfg=EnvConfig(obs_mode="grounded"))
-    # two sensors close together, the tour target has the lower AoI: the env serves the other one
-    scn = {"L": 1000.0, "sensors": np.array([[500.0, 500.0], [520.0, 500.0], [900.0, 900.0]]),
-           "E_max": 1e6, "start": np.array([510.0, 500.0])}
+    # three sensors close together; a staler one that is neither c_1 nor c_2 gets served instead
+    scn = {"L": 1000.0, "sensors": np.array([[500.0, 500.0], [520.0, 500.0], [540.0, 500.0], [900.0, 900.0]]),
+           "E_max": 1e6, "start": np.array([520.0, 500.0])}
     w.reset(seed=0, options={"scenario": scn})
-    c1 = int(w.cand[0])
-    other = 1 - c1 if c1 in (0, 1) else 0
+    c1, c2 = int(w.cand[0]), int(w.cand[1])
+    other = next(i for i in range(3) if i not in (c1, c2))
     w.base.aoi[:] = 1.0
     w.base.aoi[other] = 50.0                          # the other close sensor is staler
     k0 = w.k
     w.step(0)                                         # fly to c1 (already in range): one collect slot
-    assert w.base.n_served[other] == 1 and w.base.n_served[c1] == 0
+    assert w.base.n_served[other] == 1 and w.base.n_served[c1] == 0 and w.base.n_served[c2] == 0
     assert w.k == k0, "tour advanced although its target was not served"
+    # the served sensor is c_2: the tour moves past c_2 (c_1 skipped), as TSPPolicy would not
+    w2 = TourGuidedEnv(cfg=EnvConfig(obs_mode="grounded"))
+    scn2 = {"L": 1000.0, "sensors": np.array([[500.0, 500.0], [520.0, 500.0], [540.0, 500.0]]),
+            "E_max": 1e6, "start": np.array([520.0, 500.0])}
+    w2.reset(seed=0, options={"scenario": scn2})
+    c1, c2 = int(w2.cand[0]), int(w2.cand[1])
+    w2.base.aoi[:] = 1.0
+    w2.base.aoi[c2] = 50.0
+    k0 = w2.k
+    w2.step(0)
+    assert w2.base.n_served[c2] == 1 and w2.k == (k0 + 2) % 3
 
 
 def test_option_episodes_are_deterministic():
@@ -271,12 +282,19 @@ def test_option_episodes_are_deterministic():
 def test_eval_guards_confirmatory_seeds():
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
     from evaluate import check_confirmatory
-    new = list(range(300000, 300100))
+    new, old, other = list(range(300000, 300100)), list(range(100000, 100100)), list(range(900000, 900030))
     assert check_confirmatory(new, ["id2"], False, False)                 # needs --confirmatory
     assert check_confirmatory(new, ["id2"], True, False)                  # needs the lock tag
     assert not check_confirmatory(new, ["id2"], True, True)
-    assert not check_confirmatory(list(range(100000, 100100)), ["ood_area_2000"], False, False)
-    assert check_confirmatory(list(range(100000, 100100)), ["id"], True, True)   # wrong seeds
+    assert check_confirmatory(new, ["id"], False, True)                   # protected seeds on any suite
+    assert check_confirmatory(old, ["id"], True, True)                    # --confirmatory on wrong seeds
+    assert not check_confirmatory(old, ["id"], False, False)              # EXP-01..03 use: untouched
+    # EXP-08 suites on any seed before the lock: refused, except heuristics with --probe-b
+    assert check_confirmatory(other, ["ood_area_2000"], False, False)
+    assert not check_confirmatory(other, ["ood_area_2000"], False, False, probe_b=True)
+    assert check_confirmatory(other, ["ood_area_2000"], False, False, probe_b=True, has_model=True)
+    assert not check_confirmatory(other, ["ood_area_2000"], False, True, has_model=True)   # after lock
+    assert check_confirmatory(new, ["ood_combo"], False, False, probe_b=True)              # still not 300000+
 
 
 def test_eval_manifest_b_matches_samplers():

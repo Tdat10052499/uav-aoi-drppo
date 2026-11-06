@@ -41,6 +41,8 @@ LOCK_TAG = "prereg-B-lock"
 PROTECTED = range(EVAL_SEED_BASE_B, EVAL_SEED_BASE_B + 100)   # EXP-08 confirmatory episode seeds
 from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 
+# "decisions" (number of high-level decisions) is filled only for option-level policies
+# (TourGuidedEnv: hl_greedy and --policy options models); empty for flat policies.
 FIELDS = ["method", "train_seed", "suite", "episode_seed", "mean_aoi", "peak_aoi", "energy_used_J",
           "energy_frac", "collections", "coverage", "hover_frac", "slow_frac", "fast_frac",
           "boundary_hits", "early_termination", "N", "L", "E_max", "return", "decisions"]
@@ -56,11 +58,22 @@ def lock_tag_exists() -> bool:
     return out.strip() == LOCK_TAG
 
 
-def check_confirmatory(seeds: list, suites: list, confirmatory: bool, tag_ok: bool) -> list:
-    """Errors if the call would touch the EXP-08 confirmatory seeds 300000-300099 before the
-    PREREG appendix B is locked (tag prereg-B-lock), or without --confirmatory."""
+def check_confirmatory(seeds: list, suites: list, confirmatory: bool, tag_ok: bool,
+                       probe_b: bool = False, has_model: bool = False) -> list:
+    """Guards for the EXP-08 confirmatory evaluation (PREREG appendix B section 1):
+    - episode seeds 300000-300099 need --confirmatory and the tag prereg-B-lock;
+    - the EXP-08 suites (SUITES_B) on ANY seed need the tag, because running them reveals how
+      hard the new distributions are. Before the lock, --probe-b allows heuristics only
+      (e.g. the T = 300 feasibility check for L = 2000 m); it is recorded in the run record."""
     touches = any(s in PROTECTED for s in seeds)
+    uses_b = [s for s in suites if s in SUITES_B]
     errs = []
+    if uses_b and not tag_ok:
+        if not probe_b:
+            errs.append(f"suites {uses_b} are the EXP-08 suites; before the tag {LOCK_TAG} they can only be "
+                        "probed with heuristics via --probe-b (recorded in run_record)")
+        elif has_model:
+            errs.append(f"--probe-b is for heuristics only; no learned policy on {uses_b} before {LOCK_TAG}")
     if touches and not confirmatory:
         errs.append(f"episode seeds overlap {PROTECTED.start}-{PROTECTED.stop - 1} (EXP-08 confirmatory set); "
                     "pass --confirmatory, only after the PREREG appendix B lock")
@@ -178,6 +191,9 @@ def main():
                     help=f"default: the EXP-01..03 suites; EXP-08 suites: {list(SUITES_B)}")
     ap.add_argument("--confirmatory", action="store_true",
                     help=f"allow episode seeds {PROTECTED.start}-{PROTECTED.stop - 1}; needs tag {LOCK_TAG}")
+    ap.add_argument("--probe-b", action="store_true",
+                    help="before the lock: allow heuristics (no --model) on the EXP-08 suites, off the "
+                         "confirmatory seeds; written to run_record warnings")
     ap.add_argument("--K", type=int, default=5, help="candidates for option-level heuristics")
     ap.add_argument("--episodes", type=int, default=100)
     ap.add_argument("--seed-base", type=int, default=EVAL_SEED_BASE,
@@ -210,8 +226,10 @@ def main():
         ap.error("give --method and/or --model")
 
     seeds = [args.seed_base + i for i in range(args.episodes)]
+    needs_tag = args.confirmatory or any(s in SUITES_B for s in args.suites)
     conf_errors = check_confirmatory(seeds, args.suites, args.confirmatory,
-                                     lock_tag_exists() if args.confirmatory else False)
+                                     lock_tag_exists() if needs_tag else False,
+                                     probe_b=args.probe_b, has_model=bool(args.model))
     if conf_errors:
         ap.error("; ".join(conf_errors))
     if args.seed_base != EVAL_SEED_BASE:
@@ -222,6 +240,9 @@ def main():
                            "suites": {s: ALL_SUITES[s].to_dict() for s in args.suites}},
                    seeds={"eval_episode_seeds": [seeds[0], seeds[-1]], "train_seed": args.train_seed})
     rr.data["warnings"] += cfg_warnings
+    if args.probe_b and any(s in SUITES_B for s in args.suites):
+        rr.data["warnings"].append(f"--probe-b: heuristics run on EXP-08 suites before {LOCK_TAG} "
+                                   f"(seeds {seeds[0]}-{seeds[-1]}); declare in PREREG appendix B section 1")
     if any(s in SUITES_B for s in args.suites):
         rr.data["data_manifest_path"] = "data/eval_manifest_B.json" if all(s in SUITES_B for s in args.suites) \
             else "data/eval_manifest.json + data/eval_manifest_B.json"
