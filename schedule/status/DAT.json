@@ -92,6 +92,10 @@
       "evidence": "Card EXP-08 có chữ ký DAT (thiết kế, 1954c6c) và LDN (thống kê, b799900); FAO review mã PR #45",
       "state": "done"
     },
+    "W4-DAT-02": {
+      "date": "2026-11-06",
+      "state": "doing"
+    },
     "W4-DAT-03": {
       "date": "2026-11-06",
       "evidence": "PR #45 merge cb018c9 (wrapper tour-guided src/uavaoi/options.py, 27/27 kiểm thử; FAO review mã, ngoại lệ PREREG §1 trong DECISIONS)",

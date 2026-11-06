@@ -133,3 +133,22 @@ Hàng ma trận đề xuất (thay hàng hiện có):
 **Có mã nguồn/dữ liệu không:** Có: https://github.com/hbayerlein/uav_data_harvesting (chú thích trang 1 và §VI-A). Chưa kiểm tra mã có chạy được hay không.
 
 **Một câu hỏi cho nhóm:** Câu định vị nháp ở `docs/01` §3 viết *"While parameter generalization has been shown for single-shot data harvesting [B21] …"*. Câu này khớp với §I-B và §VI-E của bài. Có nên thêm ý "without a fixed-scenario control or multiple training seeds" (§VI-A, §VI-B) không? Ý này là dữ kiện kiểm chứng được, và làm rõ đóng góp về giao thức đánh giá. Nhưng phải viết trung tính, không biến thành phê phán.
+
+## Kiểm lại cho W4-DAT-02 (06/11/2026, nháp Claude, DAT chưa đọc lại)
+
+Câu hỏi: quan sát của bài có chứa ngân sách pin ở dạng tuyệt đối không? Thành phần A của PG-TG-PPO dựa đúng vào ý này.
+
+- **Có.** Quan sát của mỗi tác nhân kết thúc bằng **số vô hướng b_i(t), thời gian bay còn lại** tính bằng số bước (§IV-B, PT (34)). Thời gian bay còn lại cũng được ghi ở ô trung tâm của bản đồ cục bộ, nên tác nhân nhận giá trị này hai lần (§IV-B). Mạng nối vector đặc trưng bản đồ với "the scalar input indicating battery content or remaining flight time" (§V-D).
+- **b₀ không được đưa vào trực tiếp.** Mạng chỉ thấy giá trị hiện tại b_i(t). Vì b_i(0) = b₀ ∈ [50, 150] (Manhattan32, §VI-C), ở bước đầu mạng thấy đúng b₀ tuyệt đối. Bài **không** chuẩn hoá theo b₀ như kênh E/E_max của quan sát legacy trong đề tài.
+- **Tại sao số bước là đủ trong bài này:** năng lượng giảm 1 đơn vị mỗi bước, không phụ thuộc hành động (PT (5), §II-A), nên số bước còn lại tương đương với năng lượng còn lại.
+- Nguồn kiểm: toàn văn arXiv:2010.12461 đọc qua công cụ tải trang của Claude ngày 06/11. Form B gốc đã ghi ý này ở mục "Quan sát" ("Thêm một số vô hướng là thời gian bay còn lại của chính UAV").
+
+### Hệ quả cho định vị (quy tắc 7)
+
+- Hai bài cùng nhóm tác giả, Bayerlein 2021 và Theile 2020 ✱ (`theile2020_DAT.md`), **đã đưa ngân sách còn lại ở dạng tuyệt đối vào quan sát** và huấn luyện trên dải ngân sách khác nhau. Vì vậy **không** được trình bày "đưa ngân sách tuyệt đối vào quan sát" là điểm mới của thành phần A.
+- Phần còn đứng được của thành phần A:
+  - Trong hai bài trên, năng lượng không đổi theo bước nên "số bước còn lại" đã đủ. Đề tài có năng lượng đẩy phụ thuộc tốc độ, nên cần quy đổi: ρ_E = năng lượng còn lại tính bằng số khe bay ở V_me, chia cho số khe còn lại (T − t).
+  - Ô lưới cố định theo mét khi diện tích L đổi. Bayerlein dùng ô cố định c = 10 m nhưng **không** đổi kích thước vùng khi đánh giá (§VI-A), nên chưa đo được tác dụng của việc này.
+  - Phép đo vai trò của quan sát neo bằng ablation M1 so với M3 (H7), trên bộ OOD năng lượng và diện tích.
+- **Cách viết đề xuất:** thành phần A là *đưa lại* (reinstate) thông tin ngân sách tuyệt đối mà quan sát legacy của đề tài đã chuẩn hoá mất, và *mở rộng* sang năng lượng phụ thuộc tốc độ, theo cách của [B21] và [Theile 2020]. Phải trích cả hai bài ở phần phương pháp.
+- Việc cần làm theo: sửa câu định vị trong `notes/2026-11-06_dat_thiet-ke_PG-TG-PPO.md` (§1, G1 và §2) và `docs/01` §3. DAT duyệt trước khi sửa.
