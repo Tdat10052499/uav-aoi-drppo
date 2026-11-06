@@ -39,6 +39,11 @@
       "note": "Đã gửi lời mời Yui-Mika, F4ol4n (theo DAT, 17/10; chưa xác minh qua API). Còn: tên GVHD.",
       "state": "done"
     },
+    "W1-ALL-01": {
+      "date": "2026-11-06",
+      "note": "Từ 25/10 nhóm không dùng biên bản họp (quy-trinh-nhom); khởi động đã diễn ra, phân công nằm trong tasks.json",
+      "state": "skipped"
+    },
     "W1-DAT-01": {
       "date": "2026-10-20",
       "evidence": "notes/2026-10-19_gvhd.md, mục Nhật ký (gửi 20/10 theo DAT)",
@@ -86,6 +91,16 @@
       "date": "2026-10-30",
       "note": "Nháp notes/2026-11-04_gate_G0_report.md; gate dời 04/11",
       "state": "doing"
+    },
+    "W3-DAT-01": {
+      "date": "2026-11-06",
+      "evidence": "raw EXP-02 seed 0 (DR, Fixed) trên main, commit 30913ce; run_record completed",
+      "state": "done"
+    },
+    "W3-DAT-02": {
+      "date": "2026-11-06",
+      "evidence": "raw EXP-02 seed 1 (DR, Fixed) trên main, commit 30913ce; run_record completed",
+      "state": "done"
     },
     "W3-DAT-05": {
       "date": "2026-11-06",
