@@ -85,8 +85,9 @@
     },
     "W4-LDN-03": {
       "date": "2026-11-06",
-      "note": "Bắt đầu sớm 06/11 (raw EXP-03 trên main); PR #50 chờ FAO; chưa báo DAT",
-      "state": "doing"
+      "evidence": "PR #50 (scripts/diag_exp08a.py, results/processed/EXP-08a_diag.md, notes/2026-11-06_ldn_EXP-08a_chan-doan.md); dự đoán card sai một nửa → báo DAT (Zalo 06/11 20:36, comment PR #50, yêu cầu B4)",
+      "note": "Chờ FAO review PR #50",
+      "state": "done"
     },
     "W4-LDN-04": {
       "date": "2026-11-06",
