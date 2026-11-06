@@ -26,7 +26,7 @@
 - **Kênh năng lượng chuẩn hoá theo ngân sách.** Quan sát dùng kênh 3 = E/E_max (`env.py` dòng 204), nên mọi episode đều bắt đầu ở giá trị 1,0.
 - **Kích thước ô thay đổi theo vùng.** Ô lưới = L/16 (`env.py` dòng 191).
 - **TRAIN_DR giữ L cố định.** L luôn bằng 1000 m (`docs/PREREG.md` §3).
-- **TSP bay nhanh khi còn xa mục tiêu.** `TSPPolicy` dùng `_move_towards`, hàm này chọn V_mr khi khoảng cách > V_mr·δt (`baselines.py` dòng 18). TSP vì vậy không tiết kiệm năng lượng.
+- **TSP bay nhanh khi còn xa mục tiêu.** `TSPPolicy` dùng `_move_towards`, hàm này chọn V_mr khi khoảng cách > V_mr·δt (`baselines.py` dòng 18). ~~TSP vì vậy không tiết kiệm năng lượng.~~ **[Sửa 06/11, B4 (4)]:** câu này sai theo chính mô hình năng lượng của repo. Với preset `zeng2019_arxiv_v1`, V_mr = 38,3 m/s tốn 31,3 J/m, còn V_me = 21,5 m/s tốn 43,5 J/m (EXP-08a, PR #50). V_mr là tốc độ tiết kiệm nhất **khi di chuyển**, nên TSP đã chọn đúng tốc độ khi bay xa. Không đưa câu cũ vào bài.
 
 ### Giả thuyết G1: quan sát che ngữ cảnh
 
@@ -38,7 +38,9 @@ PPO phẳng phải tự học định tuyến từng ô, trong khi TSP giải ph
 
 ### Giả thuyết G3: chỗ một policy học được có thể thắng TSP
 
-Vì TSP không biết tiết kiệm pin, một policy biết chọn tốc độ, bỏ qua điểm, chờ hoặc rẽ khỏi tour có thể thắng TSP khi ngân sách pin thấp.
+~~Vì TSP không biết tiết kiệm pin, một policy biết chọn tốc độ, bỏ qua điểm, chờ hoặc rẽ khỏi tour có thể thắng TSP khi ngân sách pin thấp.~~
+
+**[Viết lại 06/11, B4 (4); thăm dò, chờ EXP-08a-b]:** TSP không biết ngân sách pin, nên khi pin không đủ cho cả tour nó vẫn đi hết theo thứ tự cố định và dừng giữa chừng. Một policy biết ngân sách có thể thắng TSP khi pin thấp bằng **thứ tự thăm, bỏ điểm, hoặc dùng thời gian treo**. Tốc độ bay xa có lẽ không phải chỗ thắng, vì TSP đã bay ở V_mr. Mức chênh so với **heuristic tốt nhất trên từng bộ** (B4 (2)) mới là thước đo, không phải so riêng với TSP-adaptive. Theo EXP-08a, PPO cũ thua chủ yếu vì phủ kém (coverage 0,07 so với 1,00), không vì hết pin sớm; đây là tương quan trên dữ liệu đã thấy.
 
 Phương pháp gộp hai thành phần: **A** đánh vào G1, **B** đánh vào G2 và G3.
 
