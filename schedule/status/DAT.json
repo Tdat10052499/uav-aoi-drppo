@@ -94,12 +94,12 @@
     },
     "W3-DAT-01": {
       "date": "2026-11-06",
-      "evidence": "raw EXP-02 seed 0 (DR, Fixed) trên main, commit 30913ce; run_record completed",
+      "evidence": "results/raw/EXP-02: dr_ppo_mask_lam0.1_s0_20261103-131752, fixed_ppo_mask_lam0.1_s0_20261103-133603 completed, co run_record + SHA256 (commit ab17c93); danh dau muon 06/11",
       "state": "done"
     },
     "W3-DAT-02": {
       "date": "2026-11-06",
-      "evidence": "raw EXP-02 seed 1 (DR, Fixed) trên main, commit 30913ce; run_record completed",
+      "evidence": "results/raw/EXP-02: dr_ppo_mask_lam0.1_s1_20261103-142030, fixed_ppo_mask_lam0.1_s1_20261103-142041 completed, co run_record + SHA256 (commit ab17c93); danh dau muon 06/11",
       "state": "done"
     },
     "W3-DAT-05": {
