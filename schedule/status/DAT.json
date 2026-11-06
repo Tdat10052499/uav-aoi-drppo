@@ -108,6 +108,11 @@
       "evidence": "results/raw/EXP-02: dr_ppo_mask_lam0.1_s1_20261103-142030, fixed_ppo_mask_lam0.1_s1_20261103-142041 completed, co run_record + SHA256 (commit ab17c93); danh dau muon 06/11",
       "state": "done"
     },
+    "W3-DAT-03": {
+      "date": "2026-11-06",
+      "evidence": "Raw EXP-03 641922c; tb log c834009 (results/raw_tb); PR #41 merge 5e09aa1 (LDN duyệt d97a169), #42 merge 9f50692; #34 đóng; yêu cầu FAO/LDN 80b721a",
+      "state": "done"
+    },
     "W3-DAT-05": {
       "date": "2026-11-06",
       "evidence": "Card EXP-08 có chữ ký DAT (thiết kế, 1954c6c) và LDN (thống kê, b799900); FAO review mã PR #45",

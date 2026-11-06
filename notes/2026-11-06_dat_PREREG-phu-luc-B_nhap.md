@@ -72,7 +72,7 @@ Cả ba giả thuyết dùng chung các điều kiện sau:
 
 | Ngưỡng | Đề xuất của Claude | Lý do cần nhóm xác nhận |
 |---|---|---|
-| δ₅ | 0,10 | Giảm 10% AoI so với heuristic là mức thường được xem là có ý nghĩa vận hành ✱. GVHD xác nhận. |
+| δ₅ | 0,10 | Giảm 10% AoI so với heuristic là mức thường được xem là có ý nghĩa vận hành ✱. Nhóm xác nhận trước khi khoá (DECISIONS 06/11: GVHD duyệt ở bản thảo). |
 | δ₆ | 0,10 | Cho phép thua TSP tối đa 10% trên phân phối huấn luyện. |
 | δ₇ | 0,10 | Thu hẹp thêm 10% khoảng Random→TSP. |
 
@@ -85,7 +85,7 @@ Các ngưỡng phải được biện minh bằng ý nghĩa thực tế, ví d�
 | H5, H6, H7 đều đạt | Phương pháp thắng heuristic mạnh khi pin thay đổi, không kém trên id; quan sát neo là nguyên nhân (trong mô phỏng) |
 | H5, H6 đạt; H7 không | Thắng heuristic; vai trò của quan sát neo chưa được chứng minh, nên chỉ báo cáo dưới dạng thăm dò |
 | H7 đạt; H5 không | Đóng góp về cơ chế: làm lộ ngữ cảnh giúp zero-shot; chưa thắng TSP-adaptive |
-| Không giả thuyết nào đạt | Kết quả âm có kiểm soát lần hai; báo cáo đầy đủ; xem lại hướng với GVHD |
+| Không giả thuyết nào đạt | Kết quả âm có kiểm soát lần hai; báo cáo đầy đủ; nhóm xem lại hướng |
 
 ## 7. Tiêu chí loại một lần chạy
 

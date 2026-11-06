@@ -21,6 +21,11 @@
       "evidence": "đối chiếu toàn văn Abd-Elmagid (ar5iv), Liu, Sun (arXiv HTML), tóm tắt OH-DRL (OpenAlex) 01/11; hàng ma trận khớp; góp ý nhỏ ở notes/yeu-cau/2026-11-02_ldn_can-FAO_form-b-w2-fao-01.md",
       "state": "approved"
     },
+    "W3-DAT-05": {
+      "date": "2026-11-06",
+      "evidence": "Card EXP-08 đã đọc đủ: ký phần thống kê 06/11 (mốc S Random, pilot cần cả 2 seed đạt); xác nhận lại mục 11, 12 và phần ký thiết kế DAT; diff L1 0c207f2..cd62a0b đúng",
+      "state": "approved"
+    },
     "W4-FAO-01": {
       "date": "2026-11-06",
       "evidence": "LDN review PR #38: request changes 2e5a24a, approve 950a4bb (03/11); 8dadf95 chỉ thêm 2 câu công khai EXP-02b, không đổi H1/H2/ngưỡng; PREREG khoá b5cd784, tag prereg-lock",
@@ -69,14 +74,24 @@
     },
     "W2-LDN-03": {
       "date": "2026-11-06",
-      "evidence": "Phản biện báo cáo G0: review_log G0-1…G0-7 (02–03/11), yêu cầu A6, A7; PRISMA chốt và kiểm lại search_log §7 (9fd804c); cột 6 ma trận 13/13 hàng qua PR #40. Báo cáo G0 chưa được DAT sửa theo A7; issue #6 đóng khi DAT xác nhận kết luận G0",
-      "note": "Đã phản biện báo cáo G0 (review_log G0-1…6), PRISMA chốt 02/11; chờ DAT sửa báo cáo, đọc lại 03/11; issue #6 chưa đóng",
+      "evidence": "Phản biện báo cáo G0: review_log G0-1…G0-7, yêu cầu A6, A7; PRISMA chốt, kiểm lại search_log §7 (9fd804c); cột 6 ma trận qua PR #40. 06/11: đọc lại báo cáo 2dd9a95 (main de8f81c), A7 đủ 5 điểm, G0-7 đóng; issue #6 đóng. Việc còn mở của G0 thuộc DAT/nhóm (bảng 'Việc còn lại để đóng G0')",
+      "note": "Second reader G0 xong; G0-2, G0-6 vẫn mở, owner DAT",
       "state": "done"
     },
     "W3-LDN-01": {
       "date": "2026-11-06",
       "note": "Không còn cần: DAT đã tự đánh giá 4 model pilot EXP-02 (results/raw/EXP-02/eval_*, 9152d06); G1 sớm thay bằng EXP-02b (PREREG §10). DAT đồng ý: yêu cầu DAT 06/11 phuong-phap-moi mục 4 (LDN skip W3-LDN-01)",
       "state": "skipped"
+    },
+    "W4-LDN-03": {
+      "date": "2026-11-06",
+      "note": "Bắt đầu sớm 06/11 (raw EXP-03 trên main); PR #50 chờ FAO; chưa báo DAT",
+      "state": "doing"
+    },
+    "W4-LDN-04": {
+      "date": "2026-11-06",
+      "note": "06/11: số H1/H2 chính thức đã chạy (chờ merge #43 để commit processed); heuristics_lock khớp EXP-01 1500/1500; power §4b, PR #51",
+      "state": "doing"
     }
   }
 }

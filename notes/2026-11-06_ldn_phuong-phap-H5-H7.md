@@ -1,6 +1,6 @@
 # Cách kiểm H5–H7 và power analysis cho PREREG phụ lục B (nháp W4-LDN-04)
 
-> Trạng thái: **nháp chờ LDN duyệt.** Claude soạn ngày 06/11/2026 cho LDN, trước khi raw EXP-03 lên `main`. Mọi bảng power dưới đây dùng **lưới CV giả định**, không dùng số EXP-03. Khi có raw, chạy lại `scripts/power_b.py --from-exp03 ...` rồi thay bảng (nhánh `ldn/power-b`).
+> Trạng thái: **nháp chờ LDN duyệt** (cập nhật 06/11 tối: §4b dùng CV đo trên raw EXP-03). Claude soạn ngày 06/11/2026 cho LDN, trước khi raw EXP-03 lên `main`. Mọi bảng power dưới đây dùng **lưới CV giả định**, không dùng số EXP-03. Khi có raw, chạy lại `scripts/power_b.py --from-exp03 ...` rồi thay bảng (nhánh `ldn/power-b`).
 > Nguồn định nghĩa: `notes/2026-11-06_dat_PREREG-phu-luc-B_nhap.md` §4–5. Mốc S là Random, đã ký ở card EXP-08 ("Second reader LDN").
 
 ## 1. H5: so M1 với TSP-adaptive (heuristic tất định)
@@ -70,7 +70,60 @@ Bảng (2 000 mô phỏng, seed 0, δ = 0,10, gap = (Ā_Random − Ā_TSPa)/Ā_M
 - **H6:** khó nhất khi M1 ngang TSPa. Với CV 0,20, cả 20 seed cũng chỉ cho 0,64. Nếu nhóm kỳ vọng M1 xấp xỉ TSPa trên id2 thì H6 cần CV thấp hoặc nhiều seed.
 - **H7:** yếu nhất, vì S khuếch đại nhiễu khi gap nhỏ. Với CV 0,20 và gap 1, n = 10 chỉ có 0,48 ở hiệu 2δ. Trên các bộ cũ, gap ước lượng từ heuristic (TSP thay TSPa, Ā_M1 = Ā_TSP) là 1,2 (`ood_energy`) đến 4,9 (`ood_cluster`). Riêng `ood_energy_low` chưa biết và có thể nhỏ hơn.
 
+## 4b. Cập nhật 06/11 tối: CV đo trên raw EXP-03
+
+Chạy `power_b.py --from-exp03 'results/raw/EXP-03/eval_*/events.csv'` (nhánh `ldn/power-b`, b7535aa). Kết quả là CV của trung bình Ā theo seed, 10 seed mỗi nhánh:
+
+| Bộ | DR | Fixed |
+| --- | --- | --- |
+| id | 0,070 | 0,081 |
+| ood_cluster | 0,054 | **0,118** |
+| ood_density | 0,068 | 0,053 |
+| ood_area | 0,049 | 0,020 |
+| ood_energy | 0,022 | 0,031 |
+
+**CV dùng cho power: 0,10 (điển hình) và 0,15 (thận trọng).** 0,15 ≈ 1,25 × 0,118, tức CV lớn nhất đo được, nhân thêm vì CV của DR có thể bị đánh giá thấp (7/8 chuỗi kịch bản dùng chung). Lưu ý: M1 là phương pháp khác, trên bộ khác, nên CV của nó có thể khác; pilot EXP-08p cho thêm 2 điểm để kiểm.
+
+Bảng (2 000 mô phỏng, seed 0, δ = 0,10; tệp đầy đủ do `power_b.py --n 10 15 20 --cv 0.10 0.15 --gap {1.0, 0.6}` sinh ra):
+
+**H5** (cả 2 bộ phải đạt), power tại mức giảm thật ρ:
+
+| n | CV | ρ = 0,15 | ρ = 0,20 |
+| --- | --- | --- | --- |
+| 10 | 0,10 | 0,94 | 1,00 |
+| 10 | 0,15 | 0,79 | 0,99 |
+| 15 | 0,15 | 0,88 | 1,00 |
+
+**H6**, power tại tỉ số thật Ā_M1/Ā_TSPa:
+
+| n | CV | 0,95 | 1,00 | 1,05 |
+| --- | --- | --- | --- | --- |
+| 10 | 0,10 | 1,00 | 0,90 | 0,37 |
+| 10 | 0,15 | 0,93 | 0,59 | 0,24 |
+| 20 | 0,15 | 1,00 | 0,87 | 0,34 |
+
+**H7** (cả 2 bộ), power tại hiệu thật S_M1 − S_M3:
+
+| n | CV | gap | 0,15 | 0,20 | 0,30 |
+| --- | --- | --- | --- | --- | --- |
+| 10 | 0,10 | 1,0 | 0,72 | 0,97 | 1,00 |
+| 10 | 0,15 | 1,0 | 0,44 | 0,78 | 0,99 |
+| 10 | 0,15 | 0,6 | 0,10 | 0,28 | 0,68 |
+| 20 | 0,15 | 1,0 | 0,73 | 0,96 | 1,00 |
+| 20 | 0,15 | 0,6 | 0,34 | 0,64 | 0,95 |
+
+**Gap trên dữ liệu cũ.** gap = (Ā_Random − Ā_TSP)/Ā_M1. Nếu M1 chỉ ngang TSP: `ood_energy` (133,9 − 60,5)/60,5 = 1,21; `ood_area` (137,9 − 35,6)/35,6 = 2,87. Nếu M1 chỉ ngang DR-PPO cũ trên `ood_energy` (147,6), gap = 0,50. Bộ `ood_energy_low` còn ít pin hơn nên gap có thể nhỏ hơn 1.
+
+**Đề xuất của LDN (nhóm quyết định trước khi khoá phụ lục B):**
+1. **Hiệu ứng mục tiêu 1,5δ = 0,15** cho H5, H7; tỉ số thật 0,95 cho H6.
+2. **H5:** n = 10 đủ (0,79–0,94 tại ρ = 0,15).
+3. **H6:** n = 10 đủ nếu M1 tốt hơn TSPa ít nhất 5% trên id2 (0,93–1,00). Nếu M1 chỉ ngang TSPa thì power 0,59–0,90; ghi rõ là giới hạn.
+4. **H7:** n = 10 chỉ đủ khi CV ≤ 0,10 và gap ≥ 1. Với CV 0,15 thì kể cả 20 seed cũng chỉ 0,73 tại 0,15. Đề xuất ghi power thấp của H7 vào phụ lục B và báo cáo H7 kèm CI, không tăng seed trước pilot. Sau pilot, nếu gap của `ood_energy_low` < 1, nhóm chọn giữa 15–20 seed cho M1 và M3, hoặc hạ H7 xuống thăm dò. Việc chọn phải xong **trước** khoá.
+
 ## 5. Việc khi có raw EXP-03 (W4-LDN-04)
+
+> 06/11 tối: bước 1 đã làm (§4b). Bước 2 chờ nhóm trả lời §6. Bước 3 chờ pilot.
+
 
 1. Chạy `python scripts/power_b.py --from-exp03 'results/raw/EXP-03/*/events.csv' --n 10 15 20 --cv <CV đo được>`.
    - Lấy **CV lớn hơn** giữa nhánh DR và Fixed. CV của DR có thể bị đánh giá thấp vì 7/8 chuỗi kịch bản dùng chung (DECISIONS 06/11).
