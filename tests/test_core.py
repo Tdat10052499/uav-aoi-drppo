@@ -139,6 +139,112 @@ def test_fixed_scenario_is_fixed():
     assert np.allclose(a, b) and len(a) == 20
 
 
+# ---------------------------------------------------------------- EXP-08 (PG-TG-PPO)
+def test_grounded_obs_equals_legacy_map_at_1000m():
+    """At L = G * cell_m (1000 m) the grounded map channels equal the legacy ones; only the
+    energy channel differs (design note section 2)."""
+    a, b = _env(), _env(obs_mode="grounded")
+    rng = np.random.default_rng(0)
+    for s in range(10):
+        oa, _ = a.reset(seed=s)
+        ob, _ = b.reset(seed=s)
+        for _ in range(30):
+            act = int(rng.choice(np.flatnonzero(a.action_masks())))
+            oa, *_ = a.step(act)
+            ob, *_ = b.step(act)
+            assert np.array_equal(oa[[0, 1, 2, 4]], ob[[0, 1, 2, 4]])
+
+
+def test_grounded_energy_channel_sees_absolute_budget():
+    """Same state, different E_max: legacy obs differ only through E/E_max at equal absolute
+    energy; grounded obs are identical (the proposition of design note section 2). At t = 0
+    with different E_max, legacy shows 1.0 for both while grounded differs."""
+    sens = np.array([[200.0, 300.0], [700.0, 800.0]])
+    scn = lambda E: {"L": 1000.0, "sensors": sens, "E_max": E, "start": np.array([500.0, 500.0])}
+    for mode, same_at_t0 in (("legacy", True), ("grounded", False)):
+        e1, e2 = _env(obs_mode=mode), _env(obs_mode=mode)
+        o1, _ = e1.reset(seed=0, options={"scenario": scn(0.5e6)})
+        o2, _ = e2.reset(seed=0, options={"scenario": scn(1.0e6)})
+        assert np.array_equal(o1, o2) == same_at_t0, mode
+    g1, g2 = _env(obs_mode="grounded"), _env(obs_mode="grounded")
+    g1.reset(seed=0, options={"scenario": scn(0.5e6)})
+    g2.reset(seed=0, options={"scenario": scn(1.0e6)})
+    g2.energy = g1.energy                       # same absolute energy left, same everything else
+    assert np.array_equal(g1._obs(), g2._obs())
+
+
+def test_grounded_obs_shows_larger_area():
+    from uavaoi import ScenarioSpec
+    e = UAVAoIEnv(scenario=ScenarioSpec(L=2000.0), cfg=EnvConfig(obs_mode="grounded"))
+    o, _ = e.reset(seed=3)
+    assert o.shape == e.observation_space.shape
+    assert abs(o[1].sum() * e.cfg.count_norm - e.N) < 1e-4      # every sensor still on the map
+    inside = (o[2] == 0).sum()
+    assert inside > 16 * 16                                      # more in-area cells than at 1000 m
+
+
+def test_tsp_variants_respect_speed_rule():
+    env = UAVAoIEnv()
+    eco = HEURISTICS["tsp_eco"]()
+    obs, _ = env.reset(seed=5)
+    eco.reset(env)
+    for _ in range(60):
+        a = eco.act(env)
+        m = env.action_masks()
+        assert a == 0 or a <= 8 or not m[1:9].any(), "tsp_eco used V_mr while a V_me move was allowed"
+        env.step(a)
+    ad = HEURISTICS["tsp_adaptive"]()
+    env.reset(seed=5, options={"scenario": {**env._scn, "E_max": 0.3e6}})
+    ad.reset(env)
+    assert env.rho_E() < 1.0 and ad._speed(env) == "slow"
+
+
+def test_tour_guided_wrapper_runs_and_masks():
+    from uavaoi.options import TourGuidedEnv, HighLevelGreedy, run_option_episode
+    for mode in ("grounded", "legacy"):
+        w = TourGuidedEnv(scenario=SUITES["ood_energy"], cfg=EnvConfig(obs_mode=mode))
+        rng = np.random.default_rng(1)
+        o, _ = w.reset(seed=11)
+        assert o["map"].shape == (5, 31, 31) and o["cand"].shape == (w.K * 4,)
+        done, slots = False, 0
+        while not done:
+            m = w.action_masks()
+            assert m[w.WAIT] and m.shape == (2 * w.K + 1,)
+            for i, c in enumerate(w.cand):          # empty candidate slots are never allowed
+                if c < 0:
+                    assert not m[i] and not m[w.K + i]
+            o, r, te, tr, info = w.step(int(rng.choice(np.flatnonzero(m))))
+            slots += info["macro_slots"]
+            done = te or tr
+        em = info["episode_metrics"]
+        assert 1.0 <= em["mean_aoi"] <= 151.5 + 1e-9 and em["decisions"] >= 1
+        assert slots <= w.cfg.T
+        mg = run_option_episode(w, HighLevelGreedy(), seed=11)
+        assert mg["decisions"] >= 1
+
+
+def test_eval_guards_confirmatory_seeds():
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+    from evaluate import check_confirmatory
+    new = list(range(300000, 300100))
+    assert check_confirmatory(new, ["id2"], False, False)                 # needs --confirmatory
+    assert check_confirmatory(new, ["id2"], True, False)                  # needs the lock tag
+    assert not check_confirmatory(new, ["id2"], True, True)
+    assert not check_confirmatory(list(range(100000, 100100)), ["ood_area_2000"], False, False)
+    assert check_confirmatory(list(range(100000, 100100)), ["id"], True, True)   # wrong seeds
+
+
+def test_eval_manifest_b_matches_samplers():
+    import json
+    from uavaoi.scenarios import SUITES_B, EVAL_SEED_BASE_B, suite_digest
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "eval_manifest_B.json")
+    m = json.load(open(path))
+    seeds = [EVAL_SEED_BASE_B + i for i in range(m["n_episodes"])]
+    assert m["eval_seed_range"] == [300000, 300099]
+    for name, spec in SUITES_B.items():
+        assert suite_digest(spec, seeds) == m["suites"][name]["sha256"], name
+
+
 # ---------------------------------------------------------------- provenance
 def test_raw_dirs_are_append_only():
     import tempfile

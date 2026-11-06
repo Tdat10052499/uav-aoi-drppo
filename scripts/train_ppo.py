@@ -11,6 +11,12 @@ Examples
   python scripts/train_ppo.py --experiment-id EXP-02 --train fixed --seed 0 --timesteps 2000000 --masked
   # algorithm baseline
   python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 2000000
+  # EXP-08 (PG-TG-PPO): tour-guided semi-MDP + grounded observation; --timesteps counts DECISIONS
+  python scripts/train_ppo.py --experiment-id EXP-08p --policy options --masked --train dr --seed 0 \
+         --config configs/env_grounded.json --timesteps <decisions>
+  # EXP-08 arm M4: grounded observation, flat 17 actions
+  python scripts/train_ppo.py --experiment-id EXP-08p --masked --train dr --seed 0 \
+         --config configs/env_grounded.json --timesteps 2000000
   # DQN pipeline check (small buffer, updates start early)
   python scripts/train_ppo.py --experiment-id EXP-04 --algo dqn --train dr --seed 0 --timesteps 10000 \
          --dqn-buffer-size 20000 --dqn-learning-starts 1000
@@ -31,6 +37,7 @@ from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor
 
 from uavaoi import TRAIN_DR, TRAIN_FIXED, EnvConfig, UAVAoIEnv
+from uavaoi.options import TourGuidedEnv
 from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 
 
@@ -54,10 +61,29 @@ class SmallCNN(BaseFeaturesExtractor):
         return self.head(self.cnn(x))
 
 
-def make_env(train: str, cfg: EnvConfig, seed: int, rank: int, masked: bool):
+class MapCandExtractor(BaseFeaturesExtractor):
+    """Dict observation of TourGuidedEnv: SmallCNN on 'map' + MLP on the K x 4 candidate
+    features 'cand', concatenated (EXP-08 arms M1-M3)."""
+
+    def __init__(self, observation_space, features_dim: int = 256, cand_dim: int = 64):
+        super().__init__(observation_space, features_dim)
+        self.map_net = SmallCNN(observation_space["map"], features_dim=features_dim)
+        n_cand = int(np.prod(observation_space["cand"].shape))
+        self.cand_net = nn.Sequential(nn.Linear(n_cand, cand_dim), nn.ReLU())
+        self.head = nn.Sequential(nn.Linear(features_dim + cand_dim, features_dim), nn.ReLU())
+
+    def forward(self, obs):
+        return self.head(torch.cat([self.map_net(obs["map"]), self.cand_net(obs["cand"])], dim=1))
+
+
+def make_env(train: str, cfg: EnvConfig, seed: int, rank: int, masked: bool,
+             policy: str = "flat", K: int = 5):
     def _thunk():
         scenario = TRAIN_DR if train == "dr" else TRAIN_FIXED
-        env = UAVAoIEnv(scenario=scenario, cfg=cfg)
+        if policy == "options":
+            env = TourGuidedEnv(scenario=scenario, cfg=cfg, K=K)
+        else:
+            env = UAVAoIEnv(scenario=scenario, cfg=cfg)
         if masked:
             from sb3_contrib.common.wrappers import ActionMasker
             env = ActionMasker(env, lambda e: e.action_masks())
@@ -75,6 +101,10 @@ def main():
     ap.add_argument("--timesteps", type=int, default=2_000_000)
     ap.add_argument("--n-envs", type=int, default=8)
     ap.add_argument("--masked", action="store_true", help="MaskablePPO (ppo only)")
+    ap.add_argument("--policy", choices=["flat", "options"], default="flat",
+                    help="flat = 17 primitive actions (EXP-01..03, arm M4); options = tour-guided "
+                         "semi-MDP of src/uavaoi/options.py (arms M1-M3; --timesteps counts decisions)")
+    ap.add_argument("--K", type=int, default=5, help="candidates per decision (--policy options)")
     ap.add_argument("--lam", type=float, default=None, help="override energy weight")
     ap.add_argument("--config", default=None, help="JSON with EnvConfig overrides")
     ap.add_argument("--models-dir", default=os.path.join(REPO_ROOT, "runs"),
@@ -91,11 +121,14 @@ def main():
     if args.algo == "dqn" and args.dqn_learning_starts >= args.timesteps:
         ap.error(f"--dqn-learning-starts ({args.dqn_learning_starts}) >= --timesteps ({args.timesteps}): "
                  "DQN would never update; lower --dqn-learning-starts")
+    if args.policy == "options" and not (args.algo == "ppo" and args.masked):
+        ap.error("--policy options needs --algo ppo --masked (candidate slots can be empty)")
     over = json.load(open(args.config)) if args.config else {}
     if args.lam is not None:
         over["lam"] = args.lam
     cfg = EnvConfig(**over)
     tag = (f"{args.train}_{args.algo}{'_mask' if args.masked else ''}"
+           f"{'_opt' if args.policy == 'options' else ''}{'_grd' if cfg.obs_mode == 'grounded' else ''}"
            f"{'_1spd' if cfg.single_speed else ''}_lam{cfg.lam}_s{args.seed}")
     run_id, raw_dir = new_run_dir(args.experiment_id, f"{tag}_{__import__('time').strftime('%Y%m%d-%H%M%S')}")
     run_dir = os.path.join(args.models_dir, args.experiment_id, run_id)
@@ -109,20 +142,21 @@ def main():
     np.random.seed(args.seed)
     masked = args.masked and args.algo == "ppo"
     n_envs = 1 if args.algo == "dqn" else args.n_envs
-    fns = [make_env(args.train, cfg, args.seed, i, masked) for i in range(n_envs)]
+    fns = [make_env(args.train, cfg, args.seed, i, masked, args.policy, args.K) for i in range(n_envs)]
     venv = SubprocVecEnv(fns) if (args.subproc and n_envs > 1) else DummyVecEnv(fns)
     venv = VecMonitor(venv)
 
-    policy_kwargs = dict(features_extractor_class=SmallCNN,
+    policy_kwargs = dict(features_extractor_class=MapCandExtractor if args.policy == "options" else SmallCNN,
                          features_extractor_kwargs=dict(features_dim=256),
                          normalize_images=False)
+    policy_name = "MultiInputPolicy" if args.policy == "options" else "CnnPolicy"
     if args.algo == "ppo":
         if masked:
             from sb3_contrib import MaskablePPO as Algo
         else:
             from stable_baselines3 import PPO as Algo
         # Starting hyper-parameters (tune with an equal Optuna budget for every learner).
-        model = Algo("CnnPolicy", venv, n_steps=1024, batch_size=256, n_epochs=10,
+        model = Algo(policy_name, venv, n_steps=1024, batch_size=256, n_epochs=10,
                      gamma=0.99, gae_lambda=0.95, clip_range=0.2, ent_coef=0.01,
                      learning_rate=3e-4, policy_kwargs=policy_kwargs, seed=args.seed,
                      verbose=1, tensorboard_log=os.path.join(run_dir, "tb"))
