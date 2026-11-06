@@ -21,6 +21,11 @@
       "evidence": "đối chiếu toàn văn Abd-Elmagid (ar5iv), Liu, Sun (arXiv HTML), tóm tắt OH-DRL (OpenAlex) 01/11; hàng ma trận khớp; góp ý nhỏ ở notes/yeu-cau/2026-11-02_ldn_can-FAO_form-b-w2-fao-01.md",
       "state": "approved"
     },
+    "W3-DAT-05": {
+      "date": "2026-11-06",
+      "evidence": "Card EXP-08 đã đọc đủ: ký phần thống kê 06/11 (mốc S Random, pilot cần cả 2 seed đạt); xác nhận lại mục 11, 12 và phần ký thiết kế DAT; diff L1 0c207f2..cd62a0b đúng",
+      "state": "approved"
+    },
     "W4-FAO-01": {
       "date": "2026-11-06",
       "evidence": "LDN review PR #38: request changes 2e5a24a, approve 950a4bb (03/11); 8dadf95 chỉ thêm 2 câu công khai EXP-02b, không đổi H1/H2/ngưỡng; PREREG khoá b5cd784, tag prereg-lock",

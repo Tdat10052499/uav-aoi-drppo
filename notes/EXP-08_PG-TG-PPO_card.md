@@ -192,6 +192,12 @@ python scripts/evaluate.py --experiment-id EXP-08p --model runs/EXP-08p/<run-id>
 
 Chữ ký: **LDN (Dương Ngọc Linh Đan), second reader thống kê, 06/11/2026.**
 
+**Xác nhận lại (LDN, 06/11 tối, `main` cd25d04):** đã đọc mục 11, 12 và phần ký thiết kế của DAT. Đồng ý cả hai mục:
+- Mục 12, seed thay thế pilot = seed + 1000: khớp việc chặn dải seed đánh giá trong `train_ppo.py` (cd62a0b). LDN đã đọc diff `0c207f2..cd62a0b`; sửa đúng và có kiểm thử.
+- Mục 12, γ theo quyết định: H7 không bị ảnh hưởng; khi so M1 với M4 phải ghi kèm yếu tố gây nhiễu, như ghi ở mục 9 phần LDN.
+
+Card không còn mục thống kê nào chờ LDN. W3-DAT-05 được LDN approve trong `schedule/status/LDN.json`.
+
 ## DAT (thiết kế), 06/11/2026
 
 DAT xác nhận:
