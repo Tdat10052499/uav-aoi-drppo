@@ -82,6 +82,11 @@
       "note": "Ứng viên: notes/2026-10-30_dat_hoi-nghi-ung-vien.md (DCOSS-IoT 2027 hạn 27/01/2027). Chờ khoa giải thích mốc 18–19/01",
       "state": "done"
     },
+    "W2-DAT-01": {
+      "date": "2026-11-06",
+      "note": "Nhom A: Gong, Lu, Toure co Form B nhap (06/11), cho DAT doc lai; A4, A7 chua co toan van; nhom B han 13/11, nhom C han 30/11",
+      "state": "doing"
+    },
     "W2-DAT-02": {
       "date": "2026-10-30",
       "evidence": "PR #30 merged 81a32e8; FAO approve (W2-FAO-04); smoke PPO/Fixed/DQN; #32 thêm tag _1spd",
