@@ -282,7 +282,7 @@
      "done_when": "Mục System Model đầy đủ phương trình, biên dịch không lỗi."},
     {"id": "W5-DAT-03", "owner": "DAT", "start": "2026-11-16", "due": "2026-11-18", "kind": "experiment", "issue": null, "gate": "G1", "reviewer": "LDN", "depends": ["W4-DAT-03", "W4-FAO-03", "W4-FAO-04", "W4-LDN-03", "W4-LDN-04"],
      "title": "EXP-08p: pilot M1 và M4, seed 0–1, đo bước/s trên máy cố định",
-     "steps": ["Chỉ chạy khi card EXP-08 đã duyệt và EXP-08a không bác bỏ thành phần A", "M4 2M bước; M1 theo số quyết định tương đương (FAO đề xuất sau khi đo)", "Đánh giá CHỈ trên bộ cũ (seed 100000–100099); không đụng bộ mới", "Ghi bước/s và thời gian huấn luyện (quy tắc 4)"],
+     "steps": ["Chỉ chạy khi card EXP-08 đã duyệt và EXP-08a không bác bỏ thành phần A", "M4 2M bước; M1 700 000 quyết định (DAT chốt khi ký card 06/11); seed thay thế = seed + 1000", "Đánh giá CHỈ trên bộ cũ (seed 100000–100099); không đụng bộ mới", "Ghi bước/s và thời gian huấn luyện (quy tắc 4)"],
      "outputs": ["results/raw/EXP-08p/"],
      "done_when": "4 run có run_record.json; bảng mô tả theo tiêu chí hành động của card."},
     {"id": "W5-LDN-02", "owner": "LDN", "start": "2026-11-21", "due": "2026-11-27", "kind": "writing", "issue": null, "gate": "G3", "reviewer": "DAT", "depends": ["W5-ALL-01"],

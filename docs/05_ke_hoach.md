@@ -97,7 +97,7 @@
 | --- | --- | --- | --- |
 | 1 | Tái lập | Smoke test PASS trên ≥ 2 máy; EXP-01 chạy lại với `obs_mode = legacy` không lệch dòng nào | **Dừng mọi thứ**, debug |
 | 2 | Chẩn đoán EXP-08a | Đã chạy; kết luận khớp hoặc không khớp dự đoán của card đều được ghi | Không khớp: xem lại thành phần A trước khi pilot |
-| 3 | Tour-guided học được | Ā(M1, `id`) ≤ 1,2 × Ā(TSP-adaptive, `id`) **và** S(M1, `ood_energy`) > 0,2 (cách gộp 2 seed: LDN chốt trước khi chạy pilot ✱) | Học được nhưng chưa đạt: một vòng chỉnh siêu tham số, pilot lại 1 lần. Ā ≈ Random: phương án dự phòng (§4) |
+| 3 | Tour-guided học được | Ā(M1, `id`) ≤ 1,2 × Ā(TSP-adaptive, `id`) **và** S(M1, `ood_energy`) > 0,2 (gộp 2 seed: **cả hai** seed 0, 1 đều phải đạt cả hai điều kiện; đúng 1 seed đạt tính là "học được nhưng chưa đạt". LDN chốt 06/11, card EXP-08) | Học được nhưng chưa đạt: một vòng chỉnh siêu tham số, pilot lại 1 lần. Ā ≈ Random: phương án dự phòng (§4) |
 | 4 | Không suy biến | Không loại quyết định nào chiếm ≥ 90%; FAO đã xem ≥ 3 quỹ đạo mỗi model | Debug |
 | 5 | Ngân sách | bước/s đo trên laptop DAT cho phép EXP-08 (40 model) xong trước 06/12 | Giảm số bước trước; giảm seed sau (tối thiểu theo power analysis, ghi rõ) |
 | 6 | PREREG phụ lục B đầy đủ | δ₅–δ₇ có lý do độc lập với số EXP-03 (GVHD hoặc nhóm xác nhận); power ≥ 0,8 hoặc đã tăng seed; SHA256 cấu hình và manifest bộ đánh giá đã điền | Không khoá; dời G1 tối đa 3 ngày, báo DAT |
