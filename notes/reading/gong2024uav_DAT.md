@@ -60,3 +60,14 @@
 **Có mã nguồn/dữ liệu không:** Không thấy liên kết mã nguồn trong văn bản đã đọc.
 
 **Câu hỏi đặt cho nhóm:** Ô "Không rõ" ở cột nhiều bố trí có cần kiểm thêm bằng bản IEEE không? Bản arXiv là v1 duy nhất; bản xuất bản có thể khác.
+
+**Đối chiếu với PDF (06/11/2026).** DAT tải lên bản PDF arXiv 2312.00334v1 (dấu "arXiv:2312.00334v1 [cs.NI] 1 Dec 2023", 15 trang). Đây cùng phiên bản với bản HTML đã dùng, chưa phải bản IEEE. Claude đối chiếu lại các chỗ còn nghi vấn:
+- **"Môi trường" (§II-B, Definition 1, tr. 4):** z_{i,t} = (λ_{i,t}, ā_{i,t}, σ²_{i,t}, κ_i, ε_{i,max}), tức tham số đến gói, kích thước gói và CPU. Không có vị trí. Khớp với nhận định ở trên.
+- **Trạng thái UAV (§IV, tr. 10):** X^u ∈ ℝ^{N+2} = {l_m, ϖ_0, ϖ_1, …, ϖ_N}, gồm vị trí UAV và thời gian từ khi môi trường hiện tại đến ở từng thiết bị. Không có toạ độ thiết bị. Ký hiệu tự mâu thuẫn nhẹ: l_m có 2 chiều, cộng N+1 giá trị ϖ thì ra N+3 chiều, không phải N+2.
+- **Hành động UAV (§IV, tr. 10; §V-A1, tr. 11):** Y^u = {v_m, l_{m+1}}. Đầu ra Softmax chọn thiết bị kế tiếp, tốc độ bị kẹp trong [v_min, v_max] = [10, 40] m/s. Fig. 12–13 lại vẽ kết quả *theo* tốc độ 10–40 m/s như một tham số quét. Bài không nói rõ khi đó tốc độ do AC chọn hay bị cố định, nên kết luận "tốc độ là biến quyết định" đúng ở mức bài toán (PT (9)), còn ở mức thực nghiệm thì chưa rõ.
+- **Bố trí (§V-A, tr. 11):** "N = 6 IoT devices distributed within a square region with a side length of 1km". Ở pha kiểm thử: "the devices and their associated environment are considered to be randomly chosen", câu này có thể hiểu là chọn ngẫu nhiên thiết bị và môi trường được thăm, không nhất thiết là sinh lại vị trí. Không có câu nào nói sinh lại vị trí giữa các episode. Giữ **Không rõ**.
+- **Đối chứng (§V-A2, tr. 11–12):** regular PG; Random và Force đều bay cố định 20 m/s; Q-learning hai lớp. Khớp.
+- **Seed và CI:** không có trong §V. Khớp.
+- **Câu tự nhận của tác giả (§I-B, tr. 2):** "To the best of our knowledge, this is the first work that considers the joint optimization of both IoT devices and UAV in non-stationary environments." Chỉ ghi lại để biết, không dùng làm bằng chứng.
+
+Kết luận: các ô ở ma trận docs/04 không cần sửa. DAT vẫn cần tự xác nhận các điểm trên.
