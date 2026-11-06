@@ -128,6 +128,14 @@ def main():
                  "DQN would never update; lower --dqn-learning-starts")
     if args.policy == "options" and not (args.algo == "ppo" and args.masked):
         ap.error("--policy options needs --algo ppo --masked (candidate slots can be empty)")
+    from uavaoi.scenarios import reserved_overlap, train_reset_seeds
+    n_envs_planned = 1 if args.algo == "dqn" else args.n_envs
+    planned = train_reset_seeds(args.seed, n_envs_planned, args.reset_seed_scheme)
+    hit = reserved_overlap(planned)
+    if hit:
+        ap.error(f"training seed {args.seed} resets envs with seeds {planned[0]}-{planned[-1]}, which are "
+                 f"evaluation scenarios ({'; '.join(hit)}); pick another seed (PREREG section 9 "
+                 "replacement seed + 100 must also avoid this)")
     over = json.load(open(args.config)) if args.config else {}
     if args.lam is not None:
         over["lam"] = args.lam
@@ -185,6 +193,9 @@ def main():
     if args.reset_seed_scheme == "spaced":
         venv.seed(args.seed * 1000)
     rr.data["seeds"]["env_reset_seed_list"] = [int(x) for x in venv.venv._seeds] if hasattr(venv.venv, "_seeds") else None
+    if rr.data["seeds"]["env_reset_seed_list"] != planned:   # never train on an unchecked seed list
+        rr.finish("failed", failure_reason=f"env reset seeds {rr.data['seeds']['env_reset_seed_list']} != planned {planned}")
+        raise RuntimeError("env reset seeds differ from the checked plan")
 
     import time as _t
     t0 = _t.time()

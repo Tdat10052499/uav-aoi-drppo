@@ -91,6 +91,27 @@ EVAL_SEED_BASE_B = 300_000
 EVAL_SEED_BASE = 100_000
 
 
+# Episode seeds reserved for evaluation. A training env reset with one of these seeds would
+# start on exactly that evaluation scenario (TRAIN_DR and id / id2 share the spec), so
+# scripts/train_ppo.py refuses training seeds whose env reset seeds fall in these ranges.
+RESERVED_EVAL_SEEDS = {
+    "test 100000-100099 (EXP-01..03 suites)": range(100_000, 100_100),
+    "Optuna validation 200000-200019 (tune_ppo.py)": range(200_000, 200_020),
+    "EXP-08 confirmatory 300000-300099": range(300_000, 300_100),
+}
+
+
+def train_reset_seeds(seed: int, n_envs: int, scheme: str = "spaced") -> list:
+    """Env reset seeds that train_ppo.py actually uses (see --reset-seed-scheme)."""
+    base = seed * 1000 if scheme == "spaced" else seed
+    return [base + r for r in range(n_envs)]
+
+
+def reserved_overlap(seeds) -> list:
+    """Names of the reserved evaluation seed ranges that `seeds` touch (empty = safe)."""
+    return [name for name, rng in RESERVED_EVAL_SEEDS.items() if any(s in rng for s in seeds)]
+
+
 def eval_seeds(n_episodes: int = 100) -> list:
     return [EVAL_SEED_BASE + i for i in range(n_episodes)]
 

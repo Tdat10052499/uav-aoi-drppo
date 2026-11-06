@@ -297,6 +297,20 @@ def test_eval_guards_confirmatory_seeds():
     assert check_confirmatory(new, ["ood_combo"], False, False, probe_b=True)              # still not 300000+
 
 
+def test_training_seeds_never_reset_onto_eval_scenarios():
+    """LDN review of PR #45 (L1): with the spaced scheme, training seed 100 / 200 / 300 would
+    reset its envs on evaluation scenarios 100000+ / 200000+ / 300000+ (TRAIN_DR = id spec)."""
+    from uavaoi.scenarios import reserved_overlap, train_reset_seeds, TRAIN_DR
+    assert np.allclose(TRAIN_DR.sample(np.random.default_rng(100000))["sensors"],
+                       SUITES["id"].sample(np.random.default_rng(100000))["sensors"])   # the leak is real
+    for bad in (100, 200, 300):
+        assert reserved_overlap(train_reset_seeds(bad, 8, "spaced")), bad
+    for ok in list(range(0, 20)) + list(range(110, 120)) + [101, 201]:
+        assert not reserved_overlap(train_reset_seeds(ok, 8, "spaced")), ok
+    assert reserved_overlap(train_reset_seeds(99_999, 8, "sb3"))          # sb3 scheme checked too
+    assert not reserved_overlap(train_reset_seeds(10, 8, "sb3"))
+
+
 def test_eval_manifest_b_matches_samplers():
     import json
     from uavaoi.scenarios import SUITES_B, EVAL_SEED_BASE_B, suite_digest
