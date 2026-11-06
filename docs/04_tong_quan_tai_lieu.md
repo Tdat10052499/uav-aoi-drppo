@@ -81,6 +81,7 @@ Q3: ("UAV") AND ("age of information") AND ("propulsion energy" OR "rotary-wing"
 | --- | --- | --- |
 | [INISCOM 2027](https://iniscom.eai-conferences.org/2027/call-for-papers/) (Late Track 2) | 31/10/2026 | Springer LNICST; 6–11 trang (short) hoặc 12–20 trang (full) |
 | [ICISN 2027](https://www.icisn.com/) | Chưa công bố trên trang | 20–21/03/2027, ĐH Hải Dương; Springer LNNS (Scopus) |
-| FJCAI 2027 (HT quốc gia về AI, VKU đăng cai) | Chưa công bố | Bản 2026: hạn 01/12/2025, thông báo 15/01/2026; 6–8 trang IEEE; kỷ yếu ISBN |
+| **[DCOSS-IoT 2027](https://dcoss.org/)** (đích hiện tại, DECISIONS 06/11) | Tóm tắt 20/01/2027; bài 27/01/2027 | Kiểm trang chính thức 06/11/2026. Thông báo 28/03/2027; camera-ready 15/04/2027; hội nghị 21–23/06/2027, Montréal (ETS). Tối đa 8 trang (thêm 2 trang phụ lục có phí), phản biện double-blind ([CFP](https://dcoss.org/call-for-papers/)). IEEE đồng tài trợ kỹ thuật, kỷ yếu IEEE Xplore. Trang không nói có bắt buộc trình bày trực tiếp ✱ |
+| FJCAI 2027 (HT quốc gia về AI, VKU đăng cai) — **đã bỏ 06/11** | Chưa công bố | Bản 2026: hạn 01/12/2025, thông báo 15/01/2026; 6–8 trang IEEE; kỷ yếu ISBN |
 | [AIEI 2027](https://www.aiei2027.org/) | 15/02/2027 | ĐH Văn Lang |
 | IEEE SMC 2027 (TP.HCM) | 15/04/2027 theo trang tổng hợp, chưa có trang chính thức | |
