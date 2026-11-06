@@ -13,9 +13,12 @@
      - W5-FAO-04 giao FAO chọn ngẫu nhiên. FAO muốn chọn cách khác thì nhắn DAT gửi model khác, và ghi cách chọn vào `review_log`.
      - Đánh giá lại tại commit `prereg-lock` (DECISIONS 06/11, ngoại lệ PREREG §1), rồi so với `eval_dr_ppo_s7`, `eval_fixed_ppo_s5` bằng `scripts/compare_events.py`.
    - LDN: EXP-08a (W4-LDN-03) và W4-LDN-04 bắt đầu được ngay.
+   - FAO: (06/11) Đã kiểm 42 run: cùng b5cd784, không patch, digest eval khớp train, `heuristics_lock` MATCH 1500/1500 với EXP-01. Tb log: SHA256SUMS OK; đường học P1 ở `notes/2026-11-06_fao_kiem-raw-EXP-03.md` §3. Đã tải 2 model; chấp nhận cách chọn (ra 7, 5). Card `notes/EXP-03R_reeval_card.md`; đánh giá lại trên laptop FAO, kết quả ghi vào `review_log`.
 2. **PR #41** (DECISIONS sau khoá): FAO đã duyệt bản e56173a. Sau đó có thêm dòng đính chính giờ dừng và nguyên nhân của run DR seed 3. Nhờ FAO hoặc LDN duyệt lại để DAT merge.
+   - FAO: (06/11) PR đã merge (5e09aa1). Dòng đính chính khớp raw và tb log (log cuối 20:25:36, bước 16 384). Duyệt sau merge, comment trên PR. Chi tiết: ghi chú kiểm §4.
 3. **PR #46** đã merge (7a06bff) **trước khi LDN review**. Nhờ LDN xem lại sau merge. Phát hiện gì thì DAT sửa qua PR mới.
    - Phụ thuộc lịch theo review #44 của LDN.
    - Bỏ các task hỏi GVHD (DAT quyết: GVHD duyệt ở bản thảo), nên `docs/05` §5 G0 #2, G0 #3, G1 #6 đổi thành "nhóm chốt".
    - Ghi chú định vị thành phần A: Bayerlein 2021 và Theile 2020 đã có ngân sách tuyệt đối trong quan sát (`notes/reading/theile2020_DAT.md`).
 4. **PR #45** (mã pilot) đã merge theo ngoại lệ PREREG §1 (DECISIONS). Commit cd62a0b (sửa L1) chưa được approve lại; nhờ FAO, LDN xem diff `0c207f2..cd62a0b`.
+   - FAO: (06/11) Đã xem `0c207f2..cd62a0b`: kiểm seed reset dự kiến khớp seed thật, test 27/27, smoke PASS. Duyệt sau merge, comment trên PR. Đánh dấu W4-FAO-03, W4-FAO-04 xong.

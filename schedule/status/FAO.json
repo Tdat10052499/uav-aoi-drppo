@@ -74,6 +74,21 @@
       "date": "2026-11-05",
       "evidence": "docs/PREREG.md khoá sớm: PR #38 merge b5cd784 (03/11), tag prereg-lock; LDN duyệt 950a4bb",
       "state": "done"
+    },
+    "W4-FAO-03": {
+      "date": "2026-11-06",
+      "evidence": "PR #45 (DAT viết thay, merge cb018c9): FAO second reader, review f6a0290 + 0c207f2, duyệt sau merge 0c207f2..cd62a0b; notes/2026-11-06_fao_kiem-raw-EXP-03.md §5",
+      "state": "done"
+    },
+    "W4-FAO-04": {
+      "date": "2026-11-06",
+      "evidence": "PR #45 (DAT viết thay, merge cb018c9): FAO second reader; T=300 đủ cho L=2000 (notes/2026-11-06_fao_review_PG-TG-PPO.md mục 5); notes/2026-11-06_fao_kiem-raw-EXP-03.md §5",
+      "state": "done"
+    },
+    "W5-FAO-04": {
+      "date": "2026-11-06",
+      "note": "model DR s7, Fixed s5 đã tải; card notes/EXP-03R_reeval_card.md; chờ chạy trên laptop FAO",
+      "state": "doing"
     }
   }
 }
