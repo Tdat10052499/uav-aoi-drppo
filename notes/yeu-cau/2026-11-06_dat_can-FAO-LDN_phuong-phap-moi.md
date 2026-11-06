@@ -44,7 +44,14 @@ Bài phải trích Gao et al. 2026 (arXiv 2611.03884) và không nhận "phân t
 - **Cần FAO xác nhận:**
   - Có kịp hai PR mã trong W4 không? Nếu không, đề xuất đổi TSP-adaptive sang DAT.
   - Máy FAO hoặc Kaggle có chạy được M3, M4 (20 run) không? Quan sát Dict của M3/M4 nhỏ, không dùng buffer lớn như DQN.
-- FAO:
+- FAO: (06/11) Đã đọc cả ba nháp ở góc môi trường: `notes/2026-11-06_fao_review_PG-TG-PPO.md`, 7 mục. Mục 1 (kênh thời gian đã có sẵn) và mục 2 (đơn vị ρ_E) nên sửa trước khi duyệt card. T = 300 đủ cho L = 2000 m (mục 5), nên có thể bỏ ✱. Nhận lịch W3–W8.
+  - Hai PR mã trong W4: kịp. FAO làm W4-FAO-03 (`obs_mode`) trước, rồi W4-FAO-04. Tham số ép tốc độ của `_move_towards` sẽ có sớm để DAT dùng cho `options.py`.
+  - Máy cho M3, M4 (W6-FAO-03): **Kaggle** (FAO chọn 06/11). Điều kiện provenance:
+    - notebook clone repo đúng tag khoá phụ lục B và chạy qua `train_ppo.py`, để `run_record.json` ghi commit, cấu hình, seed và SHA256 checkpoint;
+    - tải về cả `runs/EXP-08/<run>/` và `results/raw/EXP-08/<run>/`;
+    - FAO kiểm `code_revision` và digest trước khi push.
+
+    Giới hạn thời gian mỗi phiên và số CPU của Kaggle chưa kiểm (✱); FAO kiểm trước W6. Một run 2M bước phải xong trong một phiên, vì `train_ppo.py` chưa có resume. Nếu không kịp thì báo DAT ngay. Lưu ý: số thời gian chỉ lấy từ máy DAT (quy tắc 4); run trên máy FAO chỉ cho kết quả, không cho số đo thời gian.
 
 ## 2. Nhiệm vụ của LDN
 
@@ -62,7 +69,7 @@ Bài phải trích Gao et al. 2026 (arXiv 2611.03884) và không nhận "phân t
   - Review PR `DAT/phuong-phap-moi` (lịch).
   - Ký second reader card EXP-08 cùng DAT trước 09/11, để EXP-08a chạy được từ 10/11.
   - Chốt cách gộp 2 seed cho tiêu chí pilot (`docs/05` §5 G1 #3) trước khi pilot chạy.
-- LDN:
+- LDN: (06/11) Đã ký second reader phần thống kê của card EXP-08 (mục "Second reader LDN" ở cuối card): mốc S là **Random**; gộp 2 seed cho G1 #3 là **cả hai seed đều đạt**. Review lịch PR #44: request changes vì 3 phụ thuộc còn thiếu (W5-DAT-03 ← W4-LDN-04; W5-FAO-03 ← W4-LDN-04, W5-DAT-03; W4-LDN-04 ← W3-DAT-03). DAT thay ✱ ở `docs/05` §5 G1 #3 bằng quy tắc 2 seed.
 
 ## 3. Nhiệm vụ của DAT (để hai bạn biết đang chờ gì)
 
@@ -89,3 +96,17 @@ Các task cũ đã bỏ khỏi lịch không cần đánh dấu. Một số task
 - **FAO:** W3-FAO-01.
 - **LDN:** W2-LDN-02, W2-LDN-03, W3-LDN-01.
 - **DAT:** W1-DAT-07, W1-DAT-08, W2-DAT-01, W2-DAT-03, W3-DAT-01, W3-DAT-02.
+
+## 5. Cập nhật 06/11 chiều: mã pilot đã có ở PR #45
+
+DAT chọn để Claude viết luôn ba phần mã của W4 (W4-FAO-03, W4-FAO-04, W4-DAT-03) trong **PR #45** (`DAT/pilot-pg-tg-ppo`), nhằm kéo pilot sớm lên khoảng 10–11/11.
+- **FAO:** không cần viết `fao/grounded-obs` và `fao/tsp-manh` nữa. Thay vào đó, review PR #45 với vai trò second reader mã.
+- **LDN:** đọc mục "Cài đặt trong mã" ở cuối `notes/EXP-08_PG-TG-PPO_card.md`, nhất là mục 6 (đặc trưng ứng viên của M3), rồi ký card cùng DAT.
+- Lệnh pilot nằm ở cuối card. Chỉ chạy sau khi card được ký và PR #45 đã merge.
+- FAO: (06/11) Nhận. Đã review PR #45: **CHANGES_REQUESTED**, 2 điểm nhỏ.
+  - A1: tour tiến theo mục tiêu chứ không theo cảm biến được phục vụ thật; 2,9% macro thu bị ảnh hưởng.
+  - A2: `evaluate.py` mới chặn seed 300000–300099, chưa chặn 4 bộ mới trên seed khác.
+  - A3: thứ tự merge theo PREREG §1 là raw EXP-03 → #43 → phân tích → #45.
+
+  FAO approve khi A1 và A2 sửa xong. Cũng đã duyệt PR #43 (analyze.py): 42 dòng đầu giống bản khoá; cần một dòng DECISIONS khi merge (PREREG §1). Khi #45 merge, FAO đánh dấu W4-FAO-03 và W4-FAO-04 với bằng chứng là review này.
+- LDN: (06/11) Đã đọc mục "Cài đặt trong mã". Đồng ý mục 6 (đặc trưng ứng viên M3), kèm một giới hạn phải ghi vào phụ lục B: M3 vẫn có thông tin ngân sách qua mask và qua phép chia hai kênh, nên H7 chỉ kiểm quan sát neo khi đã có cùng mask và tầng tour. Mục 8, 9 ghi là rủi ro và thăm dò. Chi tiết trong card. Review mã PR #45 làm riêng.
