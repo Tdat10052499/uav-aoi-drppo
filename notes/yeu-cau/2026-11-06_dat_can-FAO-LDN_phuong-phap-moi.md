@@ -103,5 +103,10 @@ DAT chọn để Claude viết luôn ba phần mã của W4 (W4-FAO-03, W4-FAO-0
 - **FAO:** không cần viết `fao/grounded-obs` và `fao/tsp-manh` nữa. Thay vào đó, review PR #45 với vai trò second reader mã.
 - **LDN:** đọc mục "Cài đặt trong mã" ở cuối `notes/EXP-08_PG-TG-PPO_card.md`, nhất là mục 6 (đặc trưng ứng viên của M3), rồi ký card cùng DAT.
 - Lệnh pilot nằm ở cuối card. Chỉ chạy sau khi card được ký và PR #45 đã merge.
-- FAO:
+- FAO: (06/11) Nhận. Đã review PR #45: **CHANGES_REQUESTED**, 2 điểm nhỏ.
+  - A1: tour tiến theo mục tiêu chứ không theo cảm biến được phục vụ thật; 2,9% macro thu bị ảnh hưởng.
+  - A2: `evaluate.py` mới chặn seed 300000–300099, chưa chặn 4 bộ mới trên seed khác.
+  - A3: thứ tự merge theo PREREG §1 là raw EXP-03 → #43 → phân tích → #45.
+
+  FAO approve khi A1 và A2 sửa xong. Cũng đã duyệt PR #43 (analyze.py): 42 dòng đầu giống bản khoá; cần một dòng DECISIONS khi merge (PREREG §1). Khi #45 merge, FAO đánh dấu W4-FAO-03 và W4-FAO-04 với bằng chứng là review này.
 - LDN: (06/11) Đã đọc mục "Cài đặt trong mã". Đồng ý mục 6 (đặc trưng ứng viên M3), kèm một giới hạn phải ghi vào phụ lục B: M3 vẫn có thông tin ngân sách qua mask và qua phép chia hai kênh, nên H7 chỉ kiểm quan sát neo khi đã có cùng mask và tầng tour. Mục 8, 9 ghi là rủi ro và thăm dò. Chi tiết trong card. Review mã PR #45 làm riêng.
