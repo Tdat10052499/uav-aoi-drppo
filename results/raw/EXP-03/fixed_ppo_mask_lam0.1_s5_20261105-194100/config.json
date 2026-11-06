@@ -1,0 +1,51 @@
+{
+  "args": {
+    "experiment_id": "EXP-03",
+    "algo": "ppo",
+    "train": "fixed",
+    "seed": 5,
+    "timesteps": 2000000,
+    "n_envs": 8,
+    "masked": true,
+    "lam": null,
+    "config": null,
+    "models_dir": "D:\\github\\uav-aoi-drppo\\runs",
+    "subproc": false,
+    "dqn_buffer_size": 200000,
+    "dqn_learning_starts": 20000
+  },
+  "env_cfg": {
+    "T": 300,
+    "dt": 3.0,
+    "H": 100.0,
+    "B": 1000000.0,
+    "gamma0_db": 60.0,
+    "packet_bits": 15000000.0,
+    "Pc": 50.0,
+    "rotor_preset": "zeng2019_arxiv_v1",
+    "G": 16,
+    "lam": 0.1,
+    "mu": 0.1,
+    "count_norm": 3.0,
+    "use_action_mask_clip": true,
+    "single_speed": false
+  },
+  "scenario": {
+    "name": "train_fixed",
+    "layout": "uniform",
+    "n_range": [
+      10,
+      30
+    ],
+    "n_choices": [
+      20
+    ],
+    "L": 1000.0,
+    "E_range": [
+      1000000.0,
+      1000000.0
+    ],
+    "random_start": false,
+    "fixed_seed": 0
+  }
+}

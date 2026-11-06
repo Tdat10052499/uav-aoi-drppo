@@ -7,6 +7,8 @@ Checks, in order:
   2. the scenario samplers still generate exactly the manifest's scenarios (SHA256)
   3. the TSP heuristic reproduces the reference per-episode AoI exactly on 5 episodes
      per suite (deterministic environment -> any difference is a behaviour change)
+  4. the EXP-08 suites (seeds 300000-300099) still match data/eval_manifest_B.json
+     (digests only: no policy is run on those seeds here)
 Writes a run record under results/raw/SMOKE/<run-id>/.
 """
 from __future__ import annotations
@@ -21,10 +23,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 from uavaoi import SUITES, EnvConfig, UAVAoIEnv, eval_seeds, run_episode
 from uavaoi.baselines import TSPPolicy
 from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir
-from uavaoi.scenarios import suite_digest
+from uavaoi.scenarios import EVAL_SEED_BASE_B, SUITES_B, suite_digest
 
 CONFIG = os.path.join(REPO_ROOT, "configs", "env_default.json")
 MANIFEST = os.path.join(REPO_ROOT, "data", "eval_manifest.json")
+MANIFEST_B = os.path.join(REPO_ROOT, "data", "eval_manifest_B.json")
 REFERENCE = os.path.join(REPO_ROOT, "results", "raw", "heuristics", "heuristics_100ep_2026-10-16.csv")
 N_CHECK = 5
 
@@ -35,7 +38,7 @@ def fail(msg: str):
 
 
 def main():
-    for p in (CONFIG, MANIFEST, REFERENCE):
+    for p in (CONFIG, MANIFEST, MANIFEST_B, REFERENCE):
         if not os.path.isfile(p):
             fail(f"required file missing: {os.path.relpath(p, REPO_ROOT)}")
     cfg = EnvConfig(**json.load(open(CONFIG)))
@@ -49,6 +52,11 @@ def main():
     for name, spec in SUITES.items():
         if suite_digest(spec, seeds) != manifest["suites"][name]["sha256"]:
             problems.append(f"scenario digest mismatch for suite '{name}'")
+    manifest_b = json.load(open(MANIFEST_B))
+    seeds_b = [EVAL_SEED_BASE_B + i for i in range(manifest_b["n_episodes"])]
+    for name, spec in SUITES_B.items():
+        if suite_digest(spec, seeds_b) != manifest_b["suites"][name]["sha256"]:
+            problems.append(f"scenario digest mismatch for EXP-08 suite '{name}'")
 
     ref = {}
     with open(REFERENCE) as f:
@@ -69,7 +77,7 @@ def main():
         rr.finish("failed", failure_reason=f"{len(problems)} check(s) failed")
         fail("\n  " + "\n  ".join(problems))
     rr.finish("completed")
-    print(f"SMOKE TEST PASSED: manifest digests match for {len(SUITES)} suites; "
+    print(f"SMOKE TEST PASSED: manifest digests match for {len(SUITES)} + {len(SUITES_B)} suites; "
           f"TSP reproduces reference on {N_CHECK} episodes x {len(SUITES)} suites. Record: {run_dir}")
 
 

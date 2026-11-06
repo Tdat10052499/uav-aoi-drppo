@@ -7,15 +7,22 @@ import numpy as np
 from .env import DIRECTIONS, UAVAoIEnv
 
 
-def _move_towards(env: UAVAoIEnv, target: np.ndarray, mask: np.ndarray) -> int:
+def _move_towards(env: UAVAoIEnv, target: np.ndarray, mask: np.ndarray, speed: str = "auto") -> int:
     """Pick the feasible move whose direction is closest to the target bearing.
-    Fast speed when far away, slow speed when close (avoid overshooting)."""
+    speed="auto" (TSP, Greedy since EXP-01): fast when far away, slow when close (avoid
+    overshooting). speed="slow" / "fast" prefers V_me / V_mr; the other speed is only used
+    when the preferred one is masked."""
     vec = target - env.pos
     dist = float(np.linalg.norm(vec))
     if dist < 1e-9:
         return 0
     cos = DIRECTIONS @ (vec / dist)
-    fast = dist > env.V_fast * env.cfg.dt
+    if speed == "auto":
+        fast = dist > env.V_fast * env.cfg.dt
+    elif speed in ("slow", "fast"):
+        fast = speed == "fast"
+    else:
+        raise ValueError(f"unknown speed {speed!r}")
     order = np.argsort(-cos)
     for k in order:
         a = int(k) + (9 if fast else 1)
@@ -112,6 +119,9 @@ class TSPPolicy:
         self.order = tsp_tour(env.sensors, env.pos)
         self.k = 0
 
+    def _speed(self, env: UAVAoIEnv) -> str:
+        return "auto"
+
     def act(self, env: UAVAoIEnv) -> int:
         mask = env.action_masks()
         target_idx = self.order[self.k % len(self.order)]
@@ -120,10 +130,31 @@ class TSPPolicy:
             # env serves the max-AoI sensor in range; advance past every tour stop now fresh
             self.k += 1
             return 0
-        return _move_towards(env, target, mask)
+        return _move_towards(env, target, mask, self._speed(env))
 
 
-HEURISTICS = {"random": RandomPolicy, "greedy_aoi": GreedyAoIPolicy, "tsp": TSPPolicy}
+class TSPEcoPolicy(TSPPolicy):
+    """Same tour, always V_me (lowest propulsion power): the obvious energy-saving fix."""
+    name = "tsp_eco"
+
+    def _speed(self, env: UAVAoIEnv) -> str:
+        return "slow"
+
+
+class TSPAdaptivePolicy(TSPPolicy):
+    """Same tour; V_mr while the budget allows flying to the end of the horizon
+    (rho_E > threshold), V_me otherwise. Hand rule from the design note, section 4."""
+    name = "tsp_adaptive"
+
+    def __init__(self, threshold: float = 1.0):
+        self.threshold = threshold
+
+    def _speed(self, env: UAVAoIEnv) -> str:
+        return "fast" if env.rho_E() > self.threshold else "slow"
+
+
+HEURISTICS = {"random": RandomPolicy, "greedy_aoi": GreedyAoIPolicy, "tsp": TSPPolicy,
+              "tsp_eco": TSPEcoPolicy, "tsp_adaptive": TSPAdaptivePolicy}
 
 
 def run_episode(env: UAVAoIEnv, policy, seed: int) -> dict:

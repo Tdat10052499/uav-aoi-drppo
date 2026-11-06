@@ -31,3 +31,5 @@ FAO: (03/11) Nhận, hạn 08/11, từ nháp `notes/2026-10-22_fao_related-work-
 - **Cần:** đọc toàn bài, kiểm định dạng IEEE ≤ 8 trang, và kiểm mọi số liệu có nguồn.
 
 FAO: (03/11) Nhận phản biện nội bộ ngày 12/11: kiểm định dạng IEEE ≤ 8 trang và nguồn của mọi số liệu (đối chiếu `results/analysis/claim_evidence.md`).
+
+FAO: (06/11) DECISIONS 06/11 (PR #42) bỏ FJCAI, nên A3 (Related Work hạn 08/11) và A4 (phản biện 12/11) dừng. Bản Related Work 03/11 giữ trong `notes/2026-10-22_fao_related-work-limitations-nhap.tex` cho hội nghị sau.
