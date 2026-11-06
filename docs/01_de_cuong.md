@@ -38,6 +38,10 @@ Cơ sở và giới hạn của bản 2:
 - Câu không viết "first" hay "đầu tiên" (quy tắc 7). Nếu một bài nhóm A còn lại đủ 6 cột ma trận (DECISIONS 2026-11-01), câu này bị huỷ và áp dụng nhánh "không đạt" của tiêu chí G0 số 2.
 - Rủi ro phản biện: đóng góp nặng về phương pháp đánh giá hơn về thuật toán. Nhóm cân nhắc tại G0 xem như vậy có đủ cho hội nghị đích không.
 
+**Kiểm sau khi đọc Gong 2024, Lu 2025, Toure 2026 (nháp 06/11/2026, chờ DAT và nhóm; `docs/04` §5):** không bài nào đủ 6 cột, nên câu bản 2 chưa bị huỷ; A4, A7, OH-DRL vẫn chưa đọc. Hai điều phải tránh khi viết bản tiếp theo:
+- Không nêu riêng "không huấn luyện lại" như điểm khác biệt: Lu 2025 (không cập nhật θ, có prompt trực tuyến; §IV, Fig. 3–4) và Toure 2026 (§V-D, Fig. 6) đã làm trên số người dùng hoặc số thiết bị. Khác biệt còn lại là **loại dịch chuyển**, nhất là phân bố không gian và diện tích.
+- Không nêu riêng AoI cùng P(v) và tốc độ là hành động: Gong 2024 cũng có (PT (4)–(6), (9)), dù AoI ở đó theo hàng đợi CPU và UAV chỉ cập nhật chính sách.
+
 **Ghi chú 06/11/2026 (phương pháp PG-TG-PPO, `notes/2026-11-06_dat_thiet-ke_PG-TG-PPO.md`):** câu định vị bản 2 viết cho DR-PPO và sẽ được thay khi chốt bản cho PG-TG-PPO. Hai ràng buộc đã biết cho bản mới:
 - Không nhận "phân tầng" là điểm mới (Gao et al. 2026, arXiv 2611.03884).
 - Không nhận "đưa ngân sách pin tuyệt đối vào quan sát" là điểm mới: Bayerlein 2021 (§IV-B, PT (34)) và Theile 2020 ✱ (§III-C) đã đưa ngân sách còn lại, tính bằng số bước, vào mạng. Quan sát neo chỉ là đưa lại thông tin này và mở rộng sang năng lượng phụ thuộc tốc độ.
