@@ -76,8 +76,40 @@ SUITES = {
     "ood_energy": ScenarioSpec(name="ood_energy", E_range=(0.5e6, 0.7e6)),
 }
 
+# ---- EXP-08 confirmatory suites (PREREG appendix B, notes/2026-11-06_dat_PREREG-phu-luc-B_nhap.md)
+# Evaluated only on seeds 300000-300099 and only after the tag prereg-B-lock exists
+# (scripts/evaluate.py refuses them otherwise). id2 = the training distribution on new seeds.
+SUITES_B = {
+    "id2": ScenarioSpec(name="id2"),
+    "ood_energy_low": ScenarioSpec(name="ood_energy_low", E_range=(0.35e6, 0.45e6)),
+    "ood_area_2000": ScenarioSpec(name="ood_area_2000", L=2000.0),
+    "ood_combo": ScenarioSpec(name="ood_combo", layout="clustered", E_range=(0.5e6, 0.7e6)),
+}
+EVAL_SEED_BASE_B = 300_000
+
 # Evaluation episode seeds are disjoint from any training seed range.
 EVAL_SEED_BASE = 100_000
+
+
+# Episode seeds reserved for evaluation. A training env reset with one of these seeds would
+# start on exactly that evaluation scenario (TRAIN_DR and id / id2 share the spec), so
+# scripts/train_ppo.py refuses training seeds whose env reset seeds fall in these ranges.
+RESERVED_EVAL_SEEDS = {
+    "test 100000-100099 (EXP-01..03 suites)": range(100_000, 100_100),
+    "Optuna validation 200000-200019 (tune_ppo.py)": range(200_000, 200_020),
+    "EXP-08 confirmatory 300000-300099": range(300_000, 300_100),
+}
+
+
+def train_reset_seeds(seed: int, n_envs: int, scheme: str = "spaced") -> list:
+    """Env reset seeds that train_ppo.py actually uses (see --reset-seed-scheme)."""
+    base = seed * 1000 if scheme == "spaced" else seed
+    return [base + r for r in range(n_envs)]
+
+
+def reserved_overlap(seeds) -> list:
+    """Names of the reserved evaluation seed ranges that `seeds` touch (empty = safe)."""
+    return [name for name, rng in RESERVED_EVAL_SEEDS.items() if any(s in rng for s in seeds)]
 
 
 def eval_seeds(n_episodes: int = 100) -> list:
@@ -97,6 +129,16 @@ def suite_digest(spec: ScenarioSpec, seeds: list) -> str:
         h.update(np.float64(scn["E_max"]).tobytes())
         h.update(np.float64(scn["L"]).tobytes())
     return h.hexdigest()
+
+
+def build_manifest_b(n_episodes: int = 100) -> dict:
+    seeds = [EVAL_SEED_BASE_B + i for i in range(n_episodes)]
+    return {
+        "eval_seed_range": [seeds[0], seeds[-1]],
+        "n_episodes": n_episodes,
+        "suites": {name: {"spec": spec.to_dict(), "sha256": suite_digest(spec, seeds)}
+                   for name, spec in SUITES_B.items()},
+    }
 
 
 def build_manifest(n_episodes: int = 100) -> dict:

@@ -39,6 +39,13 @@ class EnvConfig:
     # their SHA256 still load unchanged.
     use_action_mask_clip: bool = True
     single_speed: bool = False    # ablation A5: only V_me moves (actions 9..16 always masked)
+    # Observation encoding (EXP-08, notes/2026-11-06_dat_thiet-ke_PG-TG-PPO.md section 2):
+    #   "legacy"   cell = L/G, energy channel = E/E_max (EXP-01 to EXP-03)
+    #   "grounded" cell = cell_m metres whatever L is, energy channel = rho_E (see rho_E()).
+    # At L = G * cell_m (1000 m by default) both modes give the same map channels.
+    obs_mode: str = "legacy"
+    cell_m: float = 62.5
+    rho_clip: float = 2.0
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -67,6 +74,9 @@ class UAVAoIEnv(gym.Env):
                                       self.cfg.gamma0_db)
         if self.r_eff < 0:
             raise ValueError("packet cannot be delivered within one slot even directly overhead")
+        if self.cfg.obs_mode not in ("legacy", "grounded"):
+            raise ValueError(f"unknown obs_mode {self.cfg.obs_mode!r}")
+        self.E_slot_slow = self.P_slow * self.cfg.dt   # energy of one slot at V_me (lowest power)
         self.Delta_max = float(self.cfg.T)
         M = 2 * self.cfg.G - 1
         self.observation_space = spaces.Box(low=0.0, high=np.inf, shape=(5, M, M), dtype=np.float32)
@@ -185,7 +195,15 @@ class UAVAoIEnv(gym.Env):
         info = self._info(final=True, early=True)
         return self._obs(), r_extra, True, False, info
 
+    def rho_E(self) -> float:
+        """Energy budget in physical units: slots still flyable at V_me divided by slots left.
+        rho_E = 1 means 'just enough to keep flying at V_me until the end of the horizon'."""
+        slots_left = max(self.cfg.T - self.t, 1)
+        return float(max(self.energy, 0.0) / self.E_slot_slow / slots_left)
+
     def _obs(self) -> np.ndarray:
+        if self.cfg.obs_mode == "grounded":
+            return self._obs_grounded()
         G = self.cfg.G
         M = 2 * G - 1
         cell = self.L / G
@@ -202,6 +220,29 @@ class UAVAoIEnv(gym.Env):
         obs[1, ox:ox + G, oy:oy + G] = cnt_map
         obs[2, ox:ox + G, oy:oy + G] = 0.0
         obs[3, :, :] = max(self.energy, 0.0) / self.E_max
+        obs[4, :, :] = (self.cfg.T - self.t) / self.cfg.T
+        return obs
+
+    def _obs_grounded(self) -> np.ndarray:
+        """Same 5 x (2G-1) x (2G-1) egocentric layout as the legacy map, but a cell is always
+        cell_m metres, so a larger area shows up as a larger area. Sensors farther than the
+        window are piled on the border cell in their direction (still visible). Channel 3 is
+        rho_E clipped to [0, rho_clip]; channel 4 (time left) is unchanged."""
+        G, cell = self.cfg.G, self.cfg.cell_m
+        M = 2 * G - 1
+        n_cells = max(int(np.ceil(self.L / cell - 1e-9)), 1)      # cells per side of the area
+        ux, uy = np.clip((self.pos // cell).astype(int), 0, n_cells - 1)
+        idx = np.clip((self.sensors // cell).astype(int), 0, n_cells - 1)
+        wx = np.clip(idx[:, 0] - ux + G - 1, 0, M - 1)
+        wy = np.clip(idx[:, 1] - uy + G - 1, 0, M - 1)
+        obs = np.zeros((5, M, M), dtype=np.float32)
+        np.add.at(obs[0], (wx, wy), self.aoi / self.Delta_max)   # same summation as legacy
+        np.add.at(obs[1], (wx, wy), 1.0 / self.cfg.count_norm)
+        gx = np.arange(M) - (G - 1) + ux                            # global cell index of each row
+        gy = np.arange(M) - (G - 1) + uy
+        inside = ((gx >= 0) & (gx < n_cells))[:, None] & ((gy >= 0) & (gy < n_cells))[None, :]
+        obs[2] = (~inside).astype(np.float32)
+        obs[3, :, :] = min(self.rho_E(), self.cfg.rho_clip)
         obs[4, :, :] = (self.cfg.T - self.t) / self.cfg.T
         return obs
 
