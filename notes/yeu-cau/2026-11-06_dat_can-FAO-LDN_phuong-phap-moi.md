@@ -69,7 +69,7 @@ Bài phải trích Gao et al. 2026 (arXiv 2611.03884) và không nhận "phân t
   - Review PR `DAT/phuong-phap-moi` (lịch).
   - Ký second reader card EXP-08 cùng DAT trước 09/11, để EXP-08a chạy được từ 10/11.
   - Chốt cách gộp 2 seed cho tiêu chí pilot (`docs/05` §5 G1 #3) trước khi pilot chạy.
-- LDN:
+- LDN: (06/11) Đã ký second reader phần thống kê của card EXP-08 (mục "Second reader LDN" ở cuối card): mốc S là **Random**; gộp 2 seed cho G1 #3 là **cả hai seed đều đạt**. Review lịch PR #44: request changes vì 3 phụ thuộc còn thiếu (W5-DAT-03 ← W4-LDN-04; W5-FAO-03 ← W4-LDN-04, W5-DAT-03; W4-LDN-04 ← W3-DAT-03). DAT thay ✱ ở `docs/05` §5 G1 #3 bằng quy tắc 2 seed.
 
 ## 3. Nhiệm vụ của DAT (để hai bạn biết đang chờ gì)
 
@@ -104,4 +104,4 @@ DAT chọn để Claude viết luôn ba phần mã của W4 (W4-FAO-03, W4-FAO-0
 - **LDN:** đọc mục "Cài đặt trong mã" ở cuối `notes/EXP-08_PG-TG-PPO_card.md`, nhất là mục 6 (đặc trưng ứng viên của M3), rồi ký card cùng DAT.
 - Lệnh pilot nằm ở cuối card. Chỉ chạy sau khi card được ký và PR #45 đã merge.
 - FAO:
-- LDN:
+- LDN: (06/11) Đã đọc mục "Cài đặt trong mã". Đồng ý mục 6 (đặc trưng ứng viên M3), kèm một giới hạn phải ghi vào phụ lục B: M3 vẫn có thông tin ngân sách qua mask và qua phép chia hai kênh, nên H7 chỉ kiểm quan sát neo khi đã có cùng mask và tầng tour. Mục 8, 9 ghi là rủi ro và thăm dò. Chi tiết trong card. Review mã PR #45 làm riêng.

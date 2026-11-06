@@ -136,3 +136,45 @@ python scripts/evaluate.py --experiment-id EXP-08p --model runs/EXP-08p/<run-id>
 - Bước/s nằm trong `results/raw/EXP-08p/<run-id>/run_record.json` (`metrics.steps_per_s`).
 - Push `results/raw/EXP-08p/` sau khi xong.
 - **Không** chạy bộ id2, ood_energy_low, ood_area_2000, ood_combo trên seed 300000–300099 ở pilot. `evaluate.py` sẽ từ chối.
+
+## Second reader LDN (thống kê), 06/11/2026
+
+> LDN ký **phần thống kê** của card: chỉ số, tiêu chí pilot, cách kiểm và mục "Cài đặt trong mã" ở góc ảnh hưởng tới H5–H7. Phần mã do FAO review ở PR #45; phần thiết kế do DAT chốt (W3-DAT-05). Ký tại `main` 188565d.
+
+**Quyết định 1: mốc "tệ nhất" của S là Random** (câu P4 của FAO; W4-LDN-04).
+- S = (Ā_Random − Ā)/(Ā_Random − Ā_TSP-adaptive), tính theo từng bộ. Ā_Random đo trên **cùng** các seed đánh giá của bộ đó. Random tất định khi đã cố định seed, nên không thêm phương sai.
+- **Lý do, độc lập với số EXP-03:**
+  - khớp định nghĩa S đã ghi sẵn trong card (EXP-08, "Chỉ số chính");
+  - khớp lý do của δ₇ trong PREREG phụ lục B §5 ("thu hẹp thêm 10% khoảng Random→TSP");
+  - giữ nghĩa cho ngưỡng pilot S > 0,2. Với mốc trần 151,5, một policy ngang Random đã có S ≈ 0,19 trên `ood_energy`; con số này tính bằng Random 133,9 và TSP 60,5 của EXP-01, TSP thay tạm cho TSP-adaptive.
+- **Hệ quả cần ghi khi báo cáo:**
+  - S có thể âm, nghĩa là kém hơn Random.
+  - Nếu Ā_Random − Ā_TSP-adaptive < 10 khe trên một bộ thì S không ổn định. Khi đó vẫn báo S nhưng kèm cờ, và đọc Ā là chính.
+  - S theo mốc 151,5 chỉ báo như **phân tích độ nhạy**, không dùng để kiểm định.
+
+**Quyết định 2: gộp 2 seed cho tiêu chí pilot (G1 #3) = cả hai seed đều phải đạt.**
+- Mỗi seed i ∈ {0, 1} phải thoả **cả hai** điều kiện: Ā(M1_i, `id`) ≤ 1,2 × Ā(TSP-adaptive, `id`) và S(M1_i, `ood_energy`) > 0,2.
+- Ánh xạ sang nhánh hành động của card:
+  - cả 2 seed đạt → khoá phụ lục B và chạy EXP-08;
+  - đúng 1 seed đạt, hoặc cả 2 có Ā rõ ràng thấp hơn Random nhưng chưa đạt → "học được nhưng chưa đạt": một vòng chỉnh siêu tham số, pilot lại 1 lần;
+  - cả 2 seed có Ā ≈ Random → phương án dự phòng.
+- **Lý do:** tránh khoá PREREG và chạy 40 model (khoảng 40–55 giờ máy) chỉ nhờ một seed may mắn. Cái giá nếu quá chặt chỉ là thêm một vòng pilot.
+- Pilot là thăm dò: chỉ mô tả, không p-value (quy tắc 5).
+- **Cần sửa theo:** `docs/05` §5 G1 #3 (PR #44) đang ghi "cách gộp 2 seed: LDN chốt trước khi chạy pilot ✱". DAT thay ✱ bằng quy tắc trên.
+
+**Nhận xét về "Cài đặt trong mã" (góc thống kê):**
+- **Mục 6 (đặc trưng ứng viên của M3): đồng ý.** Dùng khoảng cách/(L√2) và năng lượng cần/E_max giữ M3 ở cùng kiểu chuẩn hoá với quan sát legacy, nên so M1 với M3 (H7) đúng là so hai cách quan sát.
+  - Cần ghi rõ giới hạn trong PREREG phụ lục B §4 (H7): M3 **vẫn** có một phần thông tin ngân sách. Có hai đường:
+    - (a) **mask** che ứng viên theo năng lượng tuyệt đối, và mask áp dụng cho mọi nhánh;
+    - (b) policy có thể tự suy ra năng lượng cần/năng lượng còn bằng cách chia (năng lượng cần/E_max) cho kênh E/E_max.
+  - Vì vậy H7 kiểm "quan sát neo (ô cố định + ρ_E + đặc trưng neo) **khi đã có cùng mask và cùng tầng tour**". H7 không kiểm "có hay không có thông tin ngân sách". Câu kết luận của H7 trong bài phải giữ đúng phạm vi này.
+- **Mục 8 (ρ_E ban đầu của `ood_energy_low` nằm ngoài dải huấn luyện): đồng ý ghi là rủi ro cho H5.** Không đổi giả thuyết vì điều này. Nếu H5 không đạt, phần thảo luận phải nêu dải ρ_E ban đầu như một giải thích khả dĩ (giả thuyết, không phải nhân quả).
+- **Mục 9 (M1 700 000 quyết định so với M4 2M bước):** hai nhánh không cùng ngân sách tính toán. So M1 với M4 chỉ là thăm dò (đúng như PREREG phụ lục B §4). Khi báo cáo, ghi kèm số episode và thời gian máy của từng nhánh.
+- **Mục 1–5, 7, 10: không có ý kiến thống kê.** Mục 10 (chặn bộ khẳng định trong mã) đúng ý PREREG phụ lục B §3.
+
+**Việc thống kê còn mở, không chặn pilot** (W4-LDN-04, hạn 13/11):
+- cách kiểm H5 (heuristic tất định so với 10 giá trị seed);
+- kiểm không thua cho H6;
+- power cho δ₅–δ₇ từ độ lệch chuẩn theo seed của EXP-03 (cần raw EXP-03).
+
+Chữ ký: **LDN (Dương Ngọc Linh Đan), second reader thống kê, 06/11/2026.**
