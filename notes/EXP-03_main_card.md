@@ -85,3 +85,13 @@ Second reader (FAO) đã đọc card: có, chờ mục 1  ngày: 03/11/2026
 Còn nhắc, không chặn: (a) mục 4: chạy lại heuristic tại `prereg-lock`, `python scripts/evaluate.py --experiment-id EXP-03 --method random greedy_aoi tsp --episodes 100`, rồi `scripts/compare_events.py` với EXP-01; (b) mục 2: dòng "Chi phí" vẫn ghi 17–29 h, trong khi chạy tuần tự là 31,0 h; (c) chạy từ commit `prereg-lock` (`git checkout prereg-lock`) hoặc một commit con không sửa `src/` và các script ở PREREG §1.
 
 Second reader (FAO) đã duyệt card: có  ngày: 03/11/2026
+
+## Lần chạy bị loại hoặc chạy lại (PREREG §9 mục 1, 5), ghi 06/11/2026
+
+| Run ID | Trạng thái | Lý do | Thay bằng |
+| --- | --- | --- | --- |
+| `dr_ppo_mask_lam0.1_s3_20261104-202500` | `running` (không có `finished_at`, không có model) | Laptop DAT chuyển sang chế độ ngủ trong đêm 04/11, nên tiến trình huấn luyện dừng (DAT xác nhận 06/11) | `dr_ppo_mask_lam0.1_s3_20261105-140316` (completed). `eval_dr_ppo_s3` dùng model này; SHA256 checkpoint trong hai record khớp nhau |
+
+- Run bị ngắt không phải phân kỳ NaN và không sinh model. Vì vậy chạy lại bằng **cùng seed 3**, không dùng quy tắc `seed + 100` của §9 mục 2 (quy tắc đó chỉ dành cho NaN).
+- Cả hai run đều ở commit `prereg-lock` (b5cd784). Raw của cả hai được giữ trong `results/raw/EXP-03/` (commit 641922c).
+- Khi phân tích, lọc `status = completed`. Run bị ngắt vẫn phải liệt kê trong bài.
