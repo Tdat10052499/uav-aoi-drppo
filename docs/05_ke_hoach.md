@@ -52,7 +52,7 @@
 | T2–T3 26–27/10 | Đọc toàn văn các bài LDN chọn (chia đôi với LDN). Viết câu định vị bản 2. | Đọc toàn văn phần còn lại; điền ma trận. Đọc Sarathchandra 2025. | Đọc Abd-Elmagid 2019, OH-DRL 2025, Sun 2025 → Form B. Bắt đầu `scripts/plot_trajectory.py` (vẽ quỹ đạo một episode ra `figures/`). |
 | T4–T5 28–29/10 | Hoàn thiện `tune_ppo.py`: không gian tìm kiếm, ngân sách bằng nhau, chỉ đánh giá trên ID. | Mở rộng `analyze.py`: bảng độ suy giảm theo seed và hình F4 (cột + CI). Kiểm thử bằng dữ liệu heuristic. | Chạy thử DR-DQN 10k bước (`--algo dqn`). Hoàn thiện script quỹ đạo. |
 | T6 30/10 | Soạn báo cáo G0 (Form G) `notes/2026-11-01_gate_G0_report.md`. | **Second reader báo cáo G0**: kiểm tra từng dòng ma trận có nguồn. | **Second reader** `tune_ppo.py` (đọc mã, chạy 2 lượt nhỏ). |
-| CN 01/11 | **Gate G0** — họp 45' cả nhóm, gửi GVHD. | | |
+| CN 01/11 | **Gate G0** — họp 45' cả nhóm. | | |
 
 ---
 
@@ -80,15 +80,15 @@
 
 ---
 
-## 5. Tiêu chí gate (khai báo trước — **đề xuất, GVHD duyệt trước 25/10**)
+## 5. Tiêu chí gate (khai báo trước — **nhóm chốt; GVHD góp ý và duyệt cùng bản thảo paper**, DECISIONS 06/11)
 
 ### G0 · 01/11 — định vị đóng góp (owner DAT, second reader LDN)
 > **Đã kéo dài sang T4 04/11/2026** theo điều khoản của tiêu chí 1 (DECISIONS 2026-10-30). Đây là lần kéo dài duy nhất được phép.
 | # | Điều kiện | Nếu không đạt |
 | --- | --- | --- |
 | 1 | Ma trận `docs/04` §5 đủ các công trình gần nhất; mỗi ô có nguồn (mục/bảng) | Kéo dài tối đa 3 ngày |
-| 2 | Không có công trình nào đủ cả 5 cột: AoI, năng lượng theo tốc độ, huấn luyện nhiều bố trí, OOD có cấu trúc, nhiều seed + CI | Đổi trọng tâm: A5 (vai trò lựa chọn tốc độ) hoặc đa UAV — GVHD quyết |
-| 3 | Câu định vị (`docs/01` §3) được GVHD đồng ý | Viết lại |
+| 2 | Không có công trình nào đủ cả 5 cột: AoI, năng lượng theo tốc độ, huấn luyện nhiều bố trí, OOD có cấu trúc, nhiều seed + CI | Đổi trọng tâm: A5 (vai trò lựa chọn tốc độ) hoặc đa UAV — nhóm quyết |
+| 3 | Câu định vị (`docs/01` §3) được cả nhóm thống nhất | Viết lại |
 
 ### G1 · T6 20/11 — pilot PG-TG-PPO (owner LDN viết báo cáo, DAT huấn luyện, FAO second reader)
 > **Thay ngày 06/11/2026.** Tiêu chí G1 cũ (pilot EXP-02, ngày 15/11) không còn áp dụng vì EXP-03 đã chạy theo lịch nén FJCAI; xem lịch sử git của file này. Ngưỡng 1,2 × TSP-adaptive và 0,2 lấy từ `notes/EXP-08_PG-TG-PPO_card.md` (EXP-08p), là ngưỡng hành động của pilot, **không** phải ngưỡng giả thuyết.
@@ -100,7 +100,7 @@
 | 3 | Tour-guided học được | Ā(M1, `id`) ≤ 1,2 × Ā(TSP-adaptive, `id`) **và** S(M1, `ood_energy`) > 0,2 (gộp 2 seed: **cả hai** seed 0, 1 đều phải đạt cả hai điều kiện; đúng 1 seed đạt tính là "học được nhưng chưa đạt". LDN chốt 06/11, card EXP-08) | Học được nhưng chưa đạt: một vòng chỉnh siêu tham số, pilot lại 1 lần. Ā ≈ Random: phương án dự phòng (§4) |
 | 4 | Không suy biến | Không loại quyết định nào chiếm ≥ 90%; FAO đã xem ≥ 3 quỹ đạo mỗi model | Debug |
 | 5 | Ngân sách | bước/s đo trên laptop DAT cho phép EXP-08 (40 model) xong trước 06/12 | Giảm số bước trước; giảm seed sau (tối thiểu theo power analysis, ghi rõ) |
-| 6 | PREREG phụ lục B đầy đủ | δ₅–δ₇ có lý do độc lập với số EXP-03 (GVHD hoặc nhóm xác nhận); power ≥ 0,8 hoặc đã tăng seed; SHA256 cấu hình và manifest bộ đánh giá đã điền | Không khoá; dời G1 tối đa 3 ngày, báo DAT |
+| 6 | PREREG phụ lục B đầy đủ | δ₅–δ₇ có lý do độc lập với số EXP-03 (nhóm xác nhận); power ≥ 0,8 hoặc đã tăng seed; SHA256 cấu hình và manifest bộ đánh giá đã điền | Không khoá; dời G1 tối đa 3 ngày, báo DAT |
 
 Đây là pilot **thăm dò** (2 seed): chỉ mô tả, không đưa p-value vào bài. Bộ đánh giá mới (seed 300000–300099) không được chạy trước khi khoá.
 
@@ -119,7 +119,7 @@ Danh sách `docs/06` §3 + Form J (`notes/workbook_forms.md`). Mọi claim *inde
 
 ## 6. Nhịp làm việc
 - **Họp nhóm:** thứ Hai 20:00, 30'. Mỗi người mang 1 hình hoặc 1 bảng mới.
-- **Họp GVHD:** 2 tuần/lần và tại mỗi gate. Mang theo 1 kết quả, 1 diễn giải, 1 câu hỏi chưa giải quyết, 1 đề xuất bước tiếp. Nếu bị chặn, mang ví dụ lỗi nhỏ nhất.
+- **GVHD:** góp ý và duyệt bản thảo paper rồi chỉnh cho bản final. Nhóm không cần xin ý kiến GVHD trước từng bước hay họp định kỳ (DAT, 06/11).
 - **Git:** nhánh `<nick>/<chủ-đề>`, ví dụ `ldn/analyze-deg`. Mọi thay đổi trong `src/` qua PR, second reader review. Không push thẳng `main` trừ `notes/`.
 - **Issue:** mỗi công việc tuần có issue gắn milestone gate; người nhận tự gán khi bắt đầu.
 - **Nghỉ ngơi:** thực nghiệm dài chạy qua đêm chỉ với cấu hình đã kiểm tra; lần chạy đầu của cấu hình mới phải có người theo dõi.

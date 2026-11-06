@@ -29,14 +29,18 @@ Một UAV cánh quay thu dữ liệu định kỳ từ mạng cảm biến IoT k
 **Câu định vị dùng trong bài (nháp):** *"While parameter generalization has been shown for single-shot data harvesting [B21], it remains unclear whether such policies stay robust under structured distribution shifts when the objective is continual information freshness and the propulsion energy depends on speed."*
 Câu này phải được kiểm chứng lại sau tổng quan hệ thống ở tuần 1–2 (gate G0, `05`).
 
-**Câu định vị bản 2 (nháp 01/11/2026, chờ đọc Gong 2024, Lu 2025, Toure 2026 và ý kiến GVHD tại G0):**
+**Câu định vị bản 2 (nháp 01/11/2026, chờ đọc Gong 2024, Lu 2025, Toure 2026; nhóm chốt tại G0):**
 *"Prior work has shown that a single DRL policy can cover a range of scenario parameters for data harvesting [B21], and that AoI- and energy-aware UAV policies with speed as an action can be adapted to new sensor layouts through meta-learning with further training [Yi23]. What remains untested is whether a policy trained once with domain randomization keeps its information freshness and energy efficiency, without any retraining, under structured shifts in sensor layout, density, area and energy budget, compared with the same learner trained on a fixed layout and with results reported over multiple training seeds with confidence intervals."*
 
 Cơ sở và giới hạn của bản 2:
 - **Không còn là điểm mới** (theo Form B đã đọc): năng lượng đẩy phụ thuộc tốc độ với tốc độ là hành động, và huấn luyện trên nhiều bố trí (Yi 2023, PT (9)–(10), §IV-A2, §IV-B2); mô hình P(v) cùng AoI (Sun 2025, PT (4), nhưng v cố định).
 - **Khác biệt còn đứng được**, là về cách đánh giá: (1) không huấn luyện lại khi đánh giá (Yi 2023 Fig. 8 đo tốc độ thích nghi khi huấn luyện tiếp); (2) 4 dịch chuyển có cấu trúc (`03` §4); (3) đối chứng cùng learner huấn luyện trên bố trí cố định (Bayerlein 2021 §VI-B và Yi 2023 không có); (4) ≥ 10 seed huấn luyện kèm CI (chưa bài nào đã đọc có).
 - Câu không viết "first" hay "đầu tiên" (quy tắc 7). Nếu một bài nhóm A còn lại đủ 6 cột ma trận (DECISIONS 2026-11-01), câu này bị huỷ và áp dụng nhánh "không đạt" của tiêu chí G0 số 2.
-- Rủi ro phản biện: đóng góp nặng về phương pháp đánh giá hơn về thuật toán. Cần GVHD cho ý kiến tại G0 xem như vậy có đủ cho hội nghị đích không.
+- Rủi ro phản biện: đóng góp nặng về phương pháp đánh giá hơn về thuật toán. Nhóm cân nhắc tại G0 xem như vậy có đủ cho hội nghị đích không.
+
+**Ghi chú 06/11/2026 (phương pháp PG-TG-PPO, `notes/2026-11-06_dat_thiet-ke_PG-TG-PPO.md`):** câu định vị bản 2 viết cho DR-PPO và sẽ được thay khi chốt bản cho PG-TG-PPO. Hai ràng buộc đã biết cho bản mới:
+- Không nhận "phân tầng" là điểm mới (Gao et al. 2026, arXiv 2611.03884).
+- Không nhận "đưa ngân sách pin tuyệt đối vào quan sát" là điểm mới: Bayerlein 2021 (§IV-B, PT (34)) và Theile 2020 ✱ (§III-C) đã đưa ngân sách còn lại, tính bằng số bước, vào mạng. Quan sát neo chỉ là đưa lại thông tin này và mở rộng sang năng lượng phụ thuộc tốc độ.
 
 ## 4. Câu hỏi nghiên cứu
 1. **RQ1 (tổng quát hoá):** Domain randomization có làm giảm độ suy giảm hiệu năng OOD của PPO so với huấn luyện trên một bố trí cố định không?

@@ -128,6 +128,16 @@ Tầng học không chỉ chọn thứ tự. Nó còn chọn **nhịp tiêu năn
   - 10 seed kèm CI.
 - **Câu định vị nên đổi.** Không viết "đề xuất kiến trúc phân tầng". Viết: "chúng tôi kiểm có kiểm soát *khi nào* một policy phân tầng có quan sát neo vật lý tổng quát hoá zero-shot theo từng trục dịch chuyển, và so với heuristic tour mạnh".
 
+### Bayerlein 2021 và Theile 2020: ngân sách tuyệt đối trong quan sát (kiểm 06/11, W4-DAT-02)
+
+- **Đã có:** cả hai bài đưa ngân sách còn lại ở dạng tuyệt đối (số bước bay còn lại) vào mạng dưới dạng số vô hướng, và huấn luyện trên dải ngân sách khác nhau (Bayerlein §IV-B PT (34), §V-D, §VI-C; Theile §II-C, §III-C, §IV-A). Form B: `notes/reading/bayerlein2021multi_DAT.md` (mục W4-DAT-02), `notes/reading/theile2020_DAT.md`.
+- **Hệ quả cho thành phần A:** không trình bày "policy biết ngân sách tuyệt đối" là điểm mới. Viết là: quan sát neo **đưa lại** thông tin ngân sách tuyệt đối mà quan sát legacy của đề tài đã chuẩn hoá mất (E/E_max), và **mở rộng** sang năng lượng phụ thuộc tốc độ, theo cách của hai bài trên. Phải trích cả hai bài.
+- **Còn đứng được:**
+  - quy đổi sang ρ_E (năng lượng còn lại tính bằng số khe ở V_me, chia cho T − t), cần vì trong hai bài trên năng lượng không đổi theo bước nên "số bước còn lại" đã đủ;
+  - ô cố định theo mét khi diện tích đổi: Bayerlein dùng ô 10 m nhưng không đổi diện tích khi đánh giá (§VI-A);
+  - ablation M1 so với M3 (H7) đo tác dụng của quan sát neo trên từng trục OOD.
+- **G1 (§1) giữ nguyên** vì nó nói về quan sát legacy của chính đề tài, không phải về tài liệu.
+
 ## 4. Baseline: phải công bằng, kể cả với TSP mạnh hơn
 
 Nếu chỉ so với TSP hiện tại (luôn bay nhanh khi xa), reviewer sẽ nói chỉ cần cho TSP bay V_me là đủ. Vì vậy cần thêm baseline:
@@ -174,7 +184,7 @@ Lý do có bộ mới: các ý tưởng ở đây sinh ra từ việc xem số E
 ## 7. Thứ tự làm (chưa phải lịch; DAT chốt qua `tasks.json`)
 
 1. **Chẩn đoán miễn phí**, cần DAT push `results/raw/EXP-03` trước: `early_termination`, `hover_frac`, tỉ lệ chậm/nhanh theo bộ và nhánh. Nếu trên `ood_energy` PPO hết pin sớm nhiều hơn TSP, G1 được củng cố.
-2. **Đọc 3 bài** có thể trùng: arXiv 2611.03884, Bayerlein 2021 (b₀ có nằm trong quan sát không), Theile ~2020 "Varying Power Constraints".
+2. **Đọc 3 bài** có thể trùng: arXiv 2611.03884, Bayerlein 2021 (b₀ có nằm trong quan sát không), Theile ~2020 "Varying Power Constraints". *(06/11: đã đọc cả ba; xem §3, mục Bayerlein 2021 và Theile 2020.)*
 3. **Duyệt bản thiết kế** này, card EXP-08 và PREREG phụ lục B (FAO, LDN).
 4. **PR mã**, đều qua nhánh và second reader:
    - `obs_mode` trong `env.py` (FAO);
