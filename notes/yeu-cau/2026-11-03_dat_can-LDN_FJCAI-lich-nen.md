@@ -7,13 +7,19 @@
 - **Để làm gì:** "G1 sớm" ngày 05/11 kiểm tiêu chí #2: DR-PPO trên `id` có ≤ 63,1 khe ở cả 2 seed không. Nếu không đạt, nhóm bỏ FJCAI.
 - **Hạn:** tối 04/11.
 
+LDN: (06/11) Không làm nữa. DAT đã tự đánh giá 4 model pilot trên laptop DAT (`results/raw/EXP-02/eval_*`, 9152d06; push ở 30913ce), và G1 sớm đã được thay bằng EXP-02b (PREREG §10). LDN dùng các raw này để kiểm `analyze.py` (PR #43).
+
 ## A2. Đánh giá EXP-03 dần trong 06–08/11
 - **Cần:** đánh giá từng model EXP-03 ngay khi có `run_record.json` (2 nhánh × 10 seed).
 - **Hạn:** xong tất cả trước sáng 09/11.
 
+LDN: (06/11) DAT đã tự đánh giá 20 model EXP-03 (số sơ bộ ở `notes/2026-11-06_dat_EXP-03-so-bo.md`, PR #42). Phần còn lại của LDN gộp vào A3: chạy `analyze.py` trên `results/raw/EXP-03/*/events.csv` khi DAT push raw, rồi đối chiếu với file sơ bộ.
+
 ## A3. `analyze.py` và Results (09–10/11)
 - **Cần:** chạy `analyze.py` để ra deg theo seed, CI bootstrap, IQM, kiểm định hoán vị một phía + Holm cho H1 (4 bộ OOD), H2 (TSP trên `ood_cluster`), và Cliff's δ. Vẽ hình F3, F4 (bản rút gọn). Sau đó viết mục **Experimental Setup** (06–08/11) và **Results** (10/11).
 - **Hạn:** bảng chính 09/11; Results 10/11.
+
+LDN: (06/11) `analyze.py` đã xong ở PR #43 (bảng quyết định H1 theo PREREG §8, deg theo seed, chỉ số phụ, hình F4; FAO là second reader). Bảng chính chạy ngay khi DAT push raw EXP-03. Phần viết Setup/Results cho FJCAI dừng, vì đã bỏ FJCAI (DECISIONS 06/11, PR #42). Viết lại cho bài sau theo lịch DAT lập lại.
 
 ## A4. Ngưỡng ý nghĩa thực tiễn cho H1 (ô PREREG của LDN)
 - **Cần:** chốt ngưỡng trước khi khoá PREREG ngày **05/11**, thay vì 13/11 như trước.
