@@ -105,6 +105,14 @@ Các điểm dưới đây là lựa chọn lúc viết mã. Thiết kế để 
    - M4 2M bước tương đương khoảng 6 700 episode.
    - Tầng cao greedy cần khoảng 60–180 quyết định mỗi episode trên các bộ cũ (đo trên 20 episode mỗi bộ, kiểm tra mã, không phải kết quả).
    - Đề xuất M1 = 700 000 quyết định, tức khoảng 5 000–10 000 episode. FAO điều chỉnh sau khi đo bước/s.
+11. **Rà soát mã 06/11 (commit 7d60d5e):**
+    - **Seed reset lúc huấn luyện.** SB3 tự gọi `venv.seed(seed)` khi tạo model, nên env rank r reset bằng seed + r, không phải seed·1000 + r như `make_env` và run record ghi. Claude đã kiểm bằng cách dựng lại kịch bản đầu tiên của từng env.
+      - **Hệ quả cho EXP-01 đến EXP-03:** với n_envs = 8, hai seed huấn luyện liền nhau dùng chung 7/8 chuỗi kịch bản DR. Ví dụ seed 1 rank 0 lặp lại chuỗi của seed 0 rank 1. Các seed vẫn khác nhau ở khởi tạo mạng và ở hành động lấy mẫu. Nhánh Fixed không bị ảnh hưởng vì kịch bản cố định. Mức ảnh hưởng tới CI của nhánh DR chưa định lượng.
+      - **Việc cần làm:** ghi vào DECISIONS và phần giới hạn của bài. Không chạy lại EXP-03.
+      - **Từ EXP-08:** `--reset-seed-scheme spaced` (mặc định mới) reset đúng seed·1000 + r, và run record ghi danh sách seed thật.
+    - **Mask năng lượng.** Số khe bay được ước lượng theo tiến độ xấu nhất của 8 hướng. Mask cộng thêm 1 khe dự phòng: đo trên 1 600 macro-action, số khe thật vượt ước lượng tối đa 1 khe.
+    - **Tiến tour.** Tour chỉ tiến khi chính điểm đó được thu. Env có thể phục vụ một cảm biến khác cũ hơn trong cùng tầm.
+    - **Chặn seed khẳng định.** `plot_trajectory.py` và `plot_f6.py` cũng từ chối seed 300000–300099.
 10. **Chặn bộ khẳng định trong mã:** `evaluate.py` từ chối seed 300000–300099 nếu thiếu `--confirmatory` hoặc chưa có tag `prereg-B-lock`.
 
 ## Lệnh pilot EXP-08p trên laptop DAT (chỉ chạy sau khi card được ký và PR mã đã merge)
