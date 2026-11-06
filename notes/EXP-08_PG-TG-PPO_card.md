@@ -114,6 +114,11 @@ Các điểm dưới đây là lựa chọn lúc viết mã. Thiết kế để 
     - **Tiến tour.** Tour chỉ tiến khi chính điểm đó được thu. Env có thể phục vụ một cảm biến khác cũ hơn trong cùng tầm.
     - **Chặn seed khẳng định.** `plot_trajectory.py` và `plot_f6.py` cũng từ chối seed 300000–300099.
 10. **Chặn bộ khẳng định trong mã:** `evaluate.py` từ chối seed 300000–300099 nếu thiếu `--confirmatory` hoặc chưa có tag `prereg-B-lock`.
+12. **Sau review của FAO và LDN trên PR #45** (0c207f2, cd62a0b):
+    - **Tiến tour.** Tour tiến theo cảm biến được thu thật: thu c₂ thì bỏ qua c₁; thu một cảm biến ngoài tour thì tour đứng yên.
+    - **Chặn bộ mới.** Bốn bộ mới bị chặn trên **mọi** seed khi chưa có tag. `--probe-b` chỉ cho heuristic và được ghi vào run record. Phép thử độ khả thi của FAO (heuristic, seed 900000–900029, mã ngoài `evaluate.py`) và mọi lần dùng `--probe-b` phải khai trong PREREG phụ lục B §1.
+    - **Seed huấn luyện thay thế phải tránh dải đánh giá.** `train_ppo.py` từ chối seed khiến env reset rơi vào 100000–100099, 200000–200019 hoặc 300000–300099. Với scheme `spaced`, đó là seed 100, 200 và 300 (với n_envs = 8, seed 100 chạm 100000–100007). Vì vậy quy tắc "seed + 100" của PREREG §9 không dùng được cho pilot seed 0, 1: dùng **seed + 1000** cho pilot. EXP-08 (seed 10–19 → 110–119) vẫn an toàn.
+    - **Yếu tố gây nhiễu đã biết giữa M1–M3 và M4.** γ = 0,99 tính theo quyết định. Mỗi quyết định trung bình khoảng 2,7 khe (hl_greedy trên id), nên tầm nhìn hiệu dụng của nhánh tour dài hơn M4. Ngân sách tính toán cũng khác nhau (mục 9). H7 (M1 so M3) không bị ảnh hưởng vì cùng tầng tour và cùng γ. M1 so M4 là thăm dò và phải ghi kèm hai yếu tố này.
 
 ## Lệnh pilot EXP-08p trên laptop DAT (chỉ chạy sau khi card được ký và PR mã đã merge)
 

@@ -16,6 +16,10 @@ H5–H7 được hình thành **sau khi** đã xem kết quả EXP-03 và đọc
 
 Bài báo phải ghi rõ nguồn gốc này.
 
+**Những gì đã chạy trên phân phối bộ mới trước khi khoá** (khai báo, cập nhật đến lúc khoá):
+- FAO, 06/11: phép thử độ khả thi T = 300 bằng heuristic, seed 900000–900029, mã ngoài `evaluate.py` (`notes/2026-11-06_fao_review_PG-TG-PPO.md` §5). Không learner nào được chạy.
+- Mọi lần `evaluate.py --probe-b`: liệt kê run ID tại đây (run record có cảnh báo `--probe-b`).
+
 ## 2. Cấu hình
 
 - Commit: commit merge của PR khoá.
