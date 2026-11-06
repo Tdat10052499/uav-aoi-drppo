@@ -46,7 +46,12 @@ Bài phải trích Gao et al. 2026 (arXiv 2611.03884) và không nhận "phân t
   - Máy FAO hoặc Kaggle có chạy được M3, M4 (20 run) không? Quan sát Dict của M3/M4 nhỏ, không dùng buffer lớn như DQN.
 - FAO: (06/11) Đã đọc cả ba nháp ở góc môi trường: `notes/2026-11-06_fao_review_PG-TG-PPO.md`, 7 mục. Mục 1 (kênh thời gian đã có sẵn) và mục 2 (đơn vị ρ_E) nên sửa trước khi duyệt card. T = 300 đủ cho L = 2000 m (mục 5), nên có thể bỏ ✱. Nhận lịch W3–W8.
   - Hai PR mã trong W4: kịp. FAO làm W4-FAO-03 (`obs_mode`) trước, rồi W4-FAO-04. Tham số ép tốc độ của `_move_towards` sẽ có sớm để DAT dùng cho `options.py`.
-  - Máy cho M3, M4 (W6-FAO-03): CHỜ FAO trả lời (laptop FAO 16 GB hay Kaggle). Lưu ý: số thời gian chỉ lấy từ máy DAT (quy tắc 4); run trên máy FAO chỉ cho kết quả, không cho số đo thời gian.
+  - Máy cho M3, M4 (W6-FAO-03): **Kaggle** (FAO chọn 06/11). Điều kiện provenance:
+    - notebook clone repo đúng tag khoá phụ lục B và chạy qua `train_ppo.py`, để `run_record.json` ghi commit, cấu hình, seed và SHA256 checkpoint;
+    - tải về cả `runs/EXP-08/<run>/` và `results/raw/EXP-08/<run>/`;
+    - FAO kiểm `code_revision` và digest trước khi push.
+
+    Giới hạn thời gian mỗi phiên và số CPU của Kaggle chưa kiểm (✱); FAO kiểm trước W6. Một run 2M bước phải xong trong một phiên, vì `train_ppo.py` chưa có resume. Nếu không kịp thì báo DAT ngay. Lưu ý: số thời gian chỉ lấy từ máy DAT (quy tắc 4); run trên máy FAO chỉ cho kết quả, không cho số đo thời gian.
 
 ## 2. Nhiệm vụ của LDN
 
