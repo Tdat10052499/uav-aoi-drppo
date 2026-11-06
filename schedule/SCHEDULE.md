@@ -38,7 +38,6 @@
 | T6 23/10/2026 | DAT | `W1-DAT-06` Khung scripts/tune_ppo.py (chưa chạy) | T6 23/10/2026 | FAO | #11 |
 | T6 23/10/2026 | FAO | `W1-FAO-05` Ước lượng chi phí tính toán → Project Agreement §5 | T6 23/10/2026 | DAT | #15 |
 | T6 23/10/2026 | LDN | `W1-LDN-05` Tìm kiếm Q2, Q3; danh sách đọc toàn văn | T6 23/10/2026 | DAT | #6 |
-| T7 24/10/2026 | DAT | `W1-DAT-07` Tổng hợp góp ý GVHD về ngưỡng gate (hạn duyệt 25/10) | CN 25/10/2026 |  | #9 |
 | T7 24/10/2026 | DAT | `W1-DAT-08` Chốt thông tin hội nghị đích, quy định cộng điểm, mốc 18–19/01 | CN 25/10/2026 |  | #7 |
 
 ## W2
@@ -62,11 +61,10 @@
 | --- | --- | --- | --- | --- | --- |
 | T2 02/11/2026 | DAT | `W3-DAT-01` EXP-02: huấn luyện seed 0 (DR và Fixed) trên máy cố định | T4 04/11/2026 | FAO |  |
 | T3 03/11/2026 | LDN | `W3-LDN-01` Đánh giá từng model EXP-02 ngay khi xong; bảng mô tả tạm | CN 08/11/2026 | FAO |  |
-| T4 04/11/2026 | ALL | `W2-ALL-01` GATE G0 — họp 45', gửi GVHD | T4 04/11/2026 |  | #1 |
+| T4 04/11/2026 | ALL | `W2-ALL-01` GATE G0 — họp 45' | T4 04/11/2026 |  | #1 |
 | T5 05/11/2026 | DAT | `W3-DAT-02` EXP-02: huấn luyện seed 1 (DR và Fixed) | T7 07/11/2026 | FAO |  |
 | T5 05/11/2026 | FAO | `W3-FAO-01` Manifest checkpoint EXP-02 + second reader quỹ đạo (≥ 3/model) | CN 08/11/2026 |  |  |
 | T6 06/11/2026 | DAT | `W3-DAT-03` Đẩy dữ liệu thô EXP-03 lên main; merge PR #41, #42 | T7 07/11/2026 |  |  |
-| T7 07/11/2026 | DAT | `W3-DAT-04` Nhắn GVHD: kết quả EXP-03, hướng PG-TG-PPO, ngưỡng δ, tên đề tài, hạn đăng ký | CN 08/11/2026 |  |  |
 | T7 07/11/2026 | DAT | `W3-DAT-05` Đọc và chốt thiết kế PG-TG-PPO + card EXP-08 (bản nháp Claude soạn 06/11) | T2 09/11/2026 | LDN |  |
 
 ## W4
@@ -100,7 +98,6 @@
 | Bắt đầu | Ai | Task | Hạn | Second reader | Issue |
 | --- | --- | --- | --- | --- | --- |
 | T2 23/11/2026 | LDN | `W6-LDN-03` analyze.py cho EXP-08: H5–H7 đúng PREREG phụ lục B (PR) | CN 29/11/2026 | FAO |  |
-| T7 28/11/2026 | DAT | `S-GVHD-1` Họp GVHD định kỳ (2 tuần/lần) | CN 29/11/2026 |  |  |
 
 ## W7
 
@@ -120,7 +117,6 @@
 | T4 09/12/2026 | DAT | `W8-DAT-02` Viết mục Method: quan sát neo vật lý, semi-MDP tour-guided, DR, baseline TSP-eco/adaptive | CN 13/12/2026 | FAO |  |
 | T4 09/12/2026 | FAO | `W8-FAO-02` Hoàn tất data/checkpoint_manifest.md | CN 13/12/2026 | DAT |  |
 | T6 11/12/2026 | LDN | `W8-LDN-03` Cập nhật claim–evidence → measured | CN 13/12/2026 | FAO |  |
-| T7 12/12/2026 | DAT | `S-GVHD-2` Họp GVHD định kỳ (2 tuần/lần) | CN 13/12/2026 |  |  |
 
 ## W9
 
@@ -147,7 +143,6 @@
 | T2 28/12/2026 | DAT | `W11-DAT-01` Đồ án Chương 3 (phương pháp); phản biện mục của LDN | CN 03/01/2027 | LDN |  |
 | T2 28/12/2026 | FAO | `W11-FAO-01` Đồ án Chương 1 (lý thuyết), Chương 2 (tổng quan); phản biện mục của DAT | CN 03/01/2027 | DAT |  |
 | T2 28/12/2026 | LDN | `W11-LDN-01` Đồ án Chương 4 (thực nghiệm); phản biện mục của FAO | CN 03/01/2027 | FAO |  |
-| T7 02/01/2027 | DAT | `S-GVHD-3` Họp GVHD định kỳ (2 tuần/lần) | CN 03/01/2027 |  |  |
 
 ## W12
 
