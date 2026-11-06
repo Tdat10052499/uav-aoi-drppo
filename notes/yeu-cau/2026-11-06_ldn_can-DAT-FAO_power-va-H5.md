@@ -13,7 +13,7 @@
   - H6: tỉ số thật Ā_M1/Ā_TSPa = **0,95**.
   - Mục tiêu power: ≥ 0,8.
 
-DAT:
+DAT: Đồng ý. H5, H7 tính power tại hiệu ứng thật 1,5δ = 0,15; H6 tại tỉ số thật 0,95; mục tiêu power ≥ 0,8. Ghi cả lý do (quy tắc kép p_Holm và ước lượng ≥ δ ở hai bộ cho power ≈ 25% khi hiệu ứng thật đúng bằng δ) vào phụ lục B. (06/11/2026)
 
 FAO:
 
@@ -30,7 +30,7 @@ CV đo trên EXP-03 nằm trong 0,02–0,12. Power tính với CV 0,10 và 0,15 
 - **LDN đề xuất:** giữ **10 seed** (10–19) cho H5 và H6.
 - Nếu M1 chỉ ngang TSPa trên id2 thì H6 thiếu power; ghi điều này là giới hạn.
 
-DAT:
+DAT: Đồng ý giữ 10 seed (10–19) cho H5 và H6. Ghi vào giới hạn của phụ lục B: nếu M1 chỉ ngang TSP-adaptive trên id2 thì H6 có power 0,59–0,90. (06/11/2026)
 
 FAO:
 
@@ -44,7 +44,7 @@ FAO:
   - ghi power thấp của H7 vào phụ lục B;
   - sau pilot, nếu gap < 1 thì nhóm chọn **trước khi khoá**: tăng lên 15–20 seed cho M1 và M3, hoặc hạ H7 xuống thăm dò.
 
-DAT:
+DAT: Đồng ý. Ghi power thấp của H7 vào phụ lục B. Sau pilot, nếu gap < 1 thì nhóm chọn trước khi khoá: 15–20 seed cho M1 và M3, hoặc hạ H7 xuống thăm dò; ghi lựa chọn vào DECISIONS. (06/11/2026)
 
 FAO:
 
@@ -70,6 +70,9 @@ FAO:
 
 LDN nghiêng về (1) + (2): chặt nhất, và không cần sửa mã baseline.
 
-DAT:
+DAT: Chọn (1) + (2) + (4), không làm (3). (06/11/2026)
+- (1) Đã thêm mục **EXP-08a-b** vào `notes/EXP-08_PG-TG-PPO_card.md` (thăm dò, chỉ heuristic), có tiêu chí hành động ghi trước. LDN chạy, FAO đọc lại.
+- (2) H5 và mốc S dùng **heuristic tốt nhất trên từng bộ** = argmin Ā của {TSP, TSP-eco, TSP-adaptive}. Đề xuất chốt trong phụ lục B: heuristic tốt nhất được chọn trên **chính các seed khẳng định** (300000–300099) và **chỉ từ kết quả heuristic**, trước khi xem số của M1. Lấy min trên ba baseline nghiêng về phía baseline, tức là bảo thủ cho H5. LDN xem giúp cách này có làm thay đổi phép kiểm sign-flip không.
+- (4) Bỏ câu "TSP vì vậy không tiết kiệm năng lượng" ở thiết kế §1; G3 sẽ viết lại theo kết quả EXP-08a-b (chỗ thắng nằm ở thứ tự, bỏ điểm, treo, không ở tốc độ bay). Không đưa câu cũ vào bài.
 
 FAO:

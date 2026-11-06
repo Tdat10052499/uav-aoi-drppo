@@ -31,6 +31,41 @@ Hành động:
 Lưu ý: tương quan, không phải nhân quả.
 ```
 
+## EXP-08a-b: kiểm heuristic trước pilot (thăm dò, chỉ heuristic; thêm 06/11/2026)
+
+> Thêm sau khi card đã ký, theo B4 (1) trong `notes/yeu-cau/2026-11-06_ldn_can-DAT-FAO_power-va-H5.md` (DAT chọn 06/11). **LDN và FAO cần xác nhận mục này trước khi chạy.** Owner chạy: LDN. Second reader: FAO.
+
+```text
+Experiment ID: EXP-08a-b
+Thăm dò hay khẳng định: THĂM DÒ. Chỉ heuristic, không có policy học; chỉ mô tả, không p-value.
+Câu hỏi: TSP-adaptive (chuyển sang V_me khi ρ_E ≤ 1) có yếu hơn TSP thường khi pin thấp không?
+  Heuristic nào tốt nhất trên từng bộ?
+Bối cảnh: EXP-08a (PR #50): V_mr 31,3 J/m < V_me 43,5 J/m theo preset zeng2019_arxiv_v1, nên
+  giảm tốc về V_me làm mỗi joule đi được ít quãng đường hơn.
+Phương pháp: random, tsp, tsp_eco, tsp_adaptive; config configs/env_grounded.json; 100 episode.
+  (a) Bộ cũ id + 4 OOD, seed 100000–100099 (đã dùng ở EXP-01/03; không phải seed khẳng định).
+  (b) ood_energy_low (SUITES_B), cờ --probe-b, seed 100000–100099; KHÔNG dùng 300000–300099.
+Lệnh:
+  python scripts/evaluate.py --experiment-id EXP-08a-b --method random tsp tsp_eco tsp_adaptive \
+         --config configs/env_grounded.json
+  python scripts/evaluate.py --experiment-id EXP-08a-b --method random tsp tsp_eco tsp_adaptive \
+         --suites ood_energy_low --probe-b --config configs/env_grounded.json
+Chỉ số: Ā, coverage, early_termination, slow_frac, fast_frac, năng lượng mỗi mét, theo bộ × heuristic.
+Dự đoán (từ mô hình năng lượng, chưa đo): trên ood_energy và ood_energy_low,
+  Ā(TSP-adaptive) ≥ Ā(TSP).
+Hành động (ghi trước):
+- Dù kết quả thế nào: H5 và mốc S dùng heuristic tốt nhất trên từng bộ = argmin Ā của
+  {TSP, TSP-eco, TSP-adaptive}, chọn trên chính seed khẳng định và chỉ từ kết quả heuristic,
+  trước khi xem số của M1 (B4 (2); chốt trong PREREG phụ lục B).
+- Nếu Ā(TSP-adaptive) > Ā(TSP) trên một bộ pin thấp: ghi vào phụ lục B rằng TSP-adaptive không
+  phải baseline mạnh nhất trên bộ đó; G3 viết lại theo thứ tự, bỏ điểm, treo (B4 (4)).
+- Nếu Ā(TSP-adaptive) ≤ Ā(TSP): giữ mô tả TSP-adaptive là baseline mạnh; G3 vẫn bỏ câu
+  "TSP không tiết kiệm năng lượng".
+- Không sửa mã baseline (B4 (3) không chọn).
+Lưu ý: kết quả (b) là dữ liệu đã thấy trên bộ OOD mới, chỉ để đặt baseline; ghi vào run_record
+  (--probe-b) và phụ lục B §1.
+```
+
 ## EXP-08p: pilot (thăm dò, 2 seed)
 
 ```text
