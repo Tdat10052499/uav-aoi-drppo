@@ -1,6 +1,6 @@
 # EXP-08a: chẩn đoán từ raw EXP-03 (thăm dò, chỉ mô tả)
 
-Sinh bởi `scripts/diag_exp08a.py` tại commit `7dff400`. 11500 episode; t_end không suy ra được (0 hoặc nhiều nghiệm): 0.
+Sinh bởi `scripts/diag_exp08a.py` tại commit `a684265`. 11500 episode; t_end không suy ra được (0 hoặc nhiều nghiệm): 0.
 Năng lượng mỗi khe (env.py): truyền 4264.0 J, treo không truyền 4114.0 J, V_me 2806.9 J, V_mr 3598.6 J; T = 300.
 DR, Fixed: trung bình của 10 trung bình theo seed, [min–max] các trung bình seed. Heuristic: trung bình 100 episode.
 
