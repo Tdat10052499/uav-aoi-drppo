@@ -277,3 +277,13 @@ DAT xác nhận:
 - Lần ký này chỉ đổi chữ và thứ tự (mục 10 đặt trước mục 11), không đổi nội dung đã ký.
 
 Chữ ký: **DAT (Hồ Du Tuấn Đạt), thiết kế, 06/11/2026** (xác nhận qua Claude).
+
+## Nhật ký chạy EXP-08p (DAT, laptop cố định)
+
+| Nhánh | Seed | Run ID | Commit | Thời gian | Tốc độ | Điều kiện máy | Đánh giá |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| M1 | 0 | `dr_ppo_mask_opt_grd_lam0.1_s0_20261107-184114` | `7e65f93` | 18:41–19:15 ngày 07/11, 2068,4 s | 338,4 quyết định/s (1 155 244 khe môi trường) | chạy một mình, không tiến trình nặng nào khác (DAT xác nhận 07/11) | chưa |
+
+- Số đo thời gian của M1 seed 0 dùng được theo quy tắc 4.
+- Bước đánh giá heuristic của pilot chưa chạy, phải chạy trước khi đối chiếu tiêu chí.
+- Mã `nets.py` (PR #55) merge chưa có review; FAO review sau merge. Nếu có lỗi thì chạy lại run này.
