@@ -197,6 +197,11 @@ python scripts/evaluate.py --experiment-id EXP-08p --model runs/EXP-08p/<run-id>
 ```
 
 - Ghi run ID vào card này.
+
+**Run EXP-08p đã chạy (laptop DAT, `.venv` Python 3.12.0):**
+| Nhánh | Seed | Run ID | Commit | Thời gian | Ghi chú |
+| --- | --- | --- | --- | --- | --- |
+| M1 | 0 | `dr_ppo_mask_opt_grd_lam0.1_s0_20261107-184114` | 7e65f93 | 34,5 phút; 338,4 quyết định/s (`run_record.json`) | Chạy một mình; DAT xác nhận 07/11 máy không chạy việc gì khác → **dùng được làm số đo thời gian** (quy tắc 4). Model SHA256 `3ffe6d0b…`. Đánh giá: chưa |
 - Bước/s nằm trong `results/raw/EXP-08p/<run-id>/run_record.json` (`metrics.steps_per_s`).
 - Push `results/raw/EXP-08p/` sau khi xong.
 - **Không** chạy bộ id2, ood_energy_low, ood_area_2000, ood_combo trên seed 300000–300099 ở pilot. `evaluate.py` sẽ từ chối.
