@@ -45,7 +45,8 @@ from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 # (TourGuidedEnv: hl_greedy and --policy options models); empty for flat policies.
 FIELDS = ["method", "train_seed", "suite", "episode_seed", "mean_aoi", "peak_aoi", "energy_used_J",
           "energy_frac", "collections", "coverage", "hover_frac", "slow_frac", "fast_frac",
-          "boundary_hits", "early_termination", "N", "L", "E_max", "return", "decisions"]
+          "boundary_hits", "early_termination", "N", "L", "E_max", "return", "decisions",
+          "t_end", "dist_m", "move_energy_J", "J_per_m"]
 
 
 def lock_tag_exists() -> bool:

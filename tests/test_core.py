@@ -132,6 +132,38 @@ def test_episode_runs_for_all_heuristics_and_suites():
             assert 0.0 <= m["energy_frac"] <= 1.0 + 1e-9
 
 
+def test_pilot_metrics_t_end_and_energy_per_metre():
+    """EXP-08p extra metrics: t_end equals the slots actually executed; J_per_m of a pure
+    V_mr / V_me flight matches the energy model (V_mr is cheaper per metre than V_me)."""
+    for suite in (SUITES["id"], SUITES["ood_energy"]):
+        env = UAVAoIEnv(scenario=suite)
+        for name, cls in HEURISTICS.items():
+            pol = cls()
+            env.reset(seed=11)
+            pol.reset(env)
+            done, info = False, {}
+            while not done:
+                _, _, term, trunc, info = env.step(pol.act(env))
+                done = term or trunc
+            m = info["episode_metrics"]
+            assert m["t_end"] == int(env.action_counts.sum()), (name, m["t_end"])
+            assert 0 < m["t_end"] <= env.cfg.T
+            if m["dist_m"] > 0:
+                assert m["move_energy_J"] <= m["energy_used_J"] + 1e-6
+    sp = characteristic_speeds()
+    for a, v in ((1, sp["V_me"]), (9, sp["V_mr"])):
+        env = UAVAoIEnv(scenario=SUITES["id"])
+        env.reset(seed=3)
+        env.pos = np.array([env.L / 2, env.L / 2])
+        env.step(a)
+        dist, e = env.dist, env.move_energy
+        assert dist > 0
+        assert abs(e / dist - propulsion_power(v, PRESETS[env.cfg.rotor_preset]) / v) / (e / dist) < 0.05
+    e_me = propulsion_power(sp["V_me"], PRESETS["zeng2019_arxiv_v1"]) / sp["V_me"]
+    e_mr = propulsion_power(sp["V_mr"], PRESETS["zeng2019_arxiv_v1"]) / sp["V_mr"]
+    assert e_mr < e_me
+
+
 def test_fixed_scenario_is_fixed():
     env = UAVAoIEnv(scenario=TRAIN_FIXED)
     env.reset(seed=1); a = env.sensors.copy()
