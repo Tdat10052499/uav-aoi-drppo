@@ -32,48 +32,12 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 
 import numpy as np
 import torch
-import torch.nn as nn
-from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMonitor
 
 from uavaoi import TRAIN_DR, TRAIN_FIXED, EnvConfig, UAVAoIEnv
 from uavaoi.options import TourGuidedEnv
+from uavaoi.nets import MapCandExtractor, SmallCNN  # noqa: F401  (re-exported for tune_ppo.py)
 from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
-
-
-class SmallCNN(BaseFeaturesExtractor):
-    """Feature extractor for the 5 x 31 x 31 centred map (NatureCNN needs >= 36 x 36)."""
-
-    def __init__(self, observation_space, features_dim: int = 256):
-        super().__init__(observation_space, features_dim)
-        c = observation_space.shape[0]
-        self.cnn = nn.Sequential(
-            nn.Conv2d(c, 32, 3, stride=1, padding=1), nn.ReLU(),
-            nn.Conv2d(32, 64, 3, stride=2, padding=1), nn.ReLU(),
-            nn.Conv2d(64, 64, 3, stride=2, padding=1), nn.ReLU(),
-            nn.Flatten(),
-        )
-        with torch.no_grad():
-            n = self.cnn(torch.zeros(1, *observation_space.shape)).shape[1]
-        self.head = nn.Sequential(nn.Linear(n, features_dim), nn.ReLU())
-
-    def forward(self, x):
-        return self.head(self.cnn(x))
-
-
-class MapCandExtractor(BaseFeaturesExtractor):
-    """Dict observation of TourGuidedEnv: SmallCNN on 'map' + MLP on the K x 4 candidate
-    features 'cand', concatenated (EXP-08 arms M1-M3)."""
-
-    def __init__(self, observation_space, features_dim: int = 256, cand_dim: int = 64):
-        super().__init__(observation_space, features_dim)
-        self.map_net = SmallCNN(observation_space["map"], features_dim=features_dim)
-        n_cand = int(np.prod(observation_space["cand"].shape))
-        self.cand_net = nn.Sequential(nn.Linear(n_cand, cand_dim), nn.ReLU())
-        self.head = nn.Sequential(nn.Linear(features_dim + cand_dim, features_dim), nn.ReLU())
-
-    def forward(self, obs):
-        return self.head(torch.cat([self.map_net(obs["map"]), self.cand_net(obs["cand"])], dim=1))
 
 
 def make_env(train: str, cfg: EnvConfig, seed: int, rank: int, masked: bool,

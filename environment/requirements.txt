@@ -1,3 +1,6 @@
+# Python 3.12 is required to load the EXP-01..03 models (classes pickled by value from scripts/train_ppo.py).
+# Versions of the EXP-03 runs (laptop DAT): Python 3.12.0, numpy 2.5.4, torch 2.14.1+cpu, gymnasium 1.4.0,
+# stable-baselines3 2.9.0, sb3-contrib 2.9.0, scipy 1.18.1. From EXP-08 the extractors live in src/uavaoi/nets.py.
 # core (environment, heuristics, statistics, tests)
 numpy>=1.26
 # training / evaluation of learned policies

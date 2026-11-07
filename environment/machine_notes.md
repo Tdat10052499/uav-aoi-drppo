@@ -27,6 +27,8 @@ FAO, 20/10/2026: cấu hình Laptop DAT do DAT cung cấp (thêm SSD 512 GB NVMe
 
 FAO, 19/10/2026: gymnasium 1.4.0, stable-baselines3 2.9.0, sb3-contrib 2.9.0; pip.exe bị Application Control chặn, dùng python -m pip.
 
+DAT, 07/11/2026 (yêu cầu FAO `notes/yeu-cau/2026-11-06_fao_can-DAT_python-model.md`, mục 1): **model EXP-01..03 chỉ nạp được bằng Python 3.12.** `SmallCNN` nằm trong `scripts/train_ppo.py` chạy dưới tên `__main__`, nên cloudpickle lưu lớp theo giá trị, kèm bytecode Python 3.12; Python 3.14 (laptop FAO) sập khi nạp. Từ EXP-08, lớp mạng nằm ở `src/uavaoi/nets.py` (PR `DAT/nets-module`) và được lưu theo tên module. Trên laptop DAT, lệnh `python` trỏ tới Python 3.15 không có numpy; chạy bằng `.\.venv\Scripts\python.exe` (Python 3.12.0).
+
 ## Quy tắc đo
 - Số thời gian (steps/s, thời gian suy luận) chỉ lấy từ **một máy cố định**, không chạy tác vụ nặng khác cùng lúc.
 - Cùng một bảng so sánh phải từ cùng một máy.

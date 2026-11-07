@@ -45,7 +45,8 @@ from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv, VecMoni
 from uavaoi import SUITES, TRAIN_DR, TRAIN_FIXED, EnvConfig, UAVAoIEnv, run_episode
 from uavaoi.runrecord import REPO_ROOT, RunRecord, new_run_dir, sha256_file
 from evaluate import SB3Policy
-from train_ppo import SmallCNN, make_env
+from train_ppo import make_env
+from uavaoi.nets import SmallCNN
 
 VAL_SEED_BASE = 200_000
 TRIAL_FIELDS = ["trial", "state", "val_mean_aoi", "val_mean_energy_frac", "learning_rate", "n_steps",
