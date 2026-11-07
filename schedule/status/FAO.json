@@ -15,6 +15,31 @@
       "date": "2026-10-30",
       "evidence": "PR #30 review FAO 30/10: 2 lượt DR + 2 lượt Fixed (mask) chạy không lỗi trên laptop FAO",
       "state": "approved"
+    },
+    "W2-LDN-02": {
+      "date": "2026-11-06",
+      "evidence": "PR #43 FAO approve (06/11); chạy lại analyze.py trên raw EXP-03: EXP-03_summary.md trùng từng dòng (SHA256 fb14d4b2…); DECISIONS PR #52 FAO approve",
+      "state": "approved"
+    },
+    "W3-DAT-01": {
+      "date": "2026-11-06",
+      "evidence": "results/raw/EXP-02 s0 DR+Fixed: completed, ab17c93, không patch, digest có; data/checkpoint_manifest.md; results/processed/EXP-02_degenerate.md",
+      "state": "approved"
+    },
+    "W3-DAT-02": {
+      "date": "2026-11-06",
+      "evidence": "results/raw/EXP-02 s1 DR+Fixed: completed, ab17c93, không patch, digest có; data/checkpoint_manifest.md",
+      "state": "approved"
+    },
+    "W4-DAT-03": {
+      "date": "2026-11-06",
+      "evidence": "PR #45 FAO review f6a0290 + 0c207f2, duyệt sau merge 0c207f2..cd62a0b; test 27/27, smoke PASS",
+      "state": "approved"
+    },
+    "W4-LDN-03": {
+      "date": "2026-11-06",
+      "evidence": "PR #50 FAO approve 06/11: diag_exp08a.py tái lập bảng từng dòng; t_end suy ra khớp đo trực tiếp (PR #53) cho TSP",
+      "state": "approved"
     }
   },
   "tasks": {
@@ -67,7 +92,8 @@
       "state": "done"
     },
     "W3-FAO-01": {
-      "date": "2026-11-04",
+      "date": "2026-11-06",
+      "note": "bước 1 manifest xong (e13b1fd); bước 2–3 làm trên EXP-03 s7/s5 (phương án (a)), 4/6 quỹ đạo hỏng; chờ DAT xác nhận (a) hay gửi model EXP-02",
       "state": "doing"
     },
     "W4-FAO-01": {
@@ -87,8 +113,9 @@
     },
     "W5-FAO-04": {
       "date": "2026-11-06",
+      "evidence": "notes/EXP-03R_reeval_card.md: DR s7 + Fixed s5 MATCH 500/500, events.csv trùng từng byte; raw results/raw/EXP-03R (c9b1896); review_log dòng W5-FAO-04",
       "note": "model DR s7, Fixed s5 đã tải; card notes/EXP-03R_reeval_card.md; chờ chạy trên laptop FAO",
-      "state": "doing"
+      "state": "done"
     }
   }
 }

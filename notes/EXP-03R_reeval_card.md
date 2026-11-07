@@ -72,6 +72,18 @@ Lần chạy đầu trên venv chính của laptop FAO (Python 3.14.3) **không 
 - Cách xử lý cho EXP-03R: tạo venv Python 3.12 riêng với đúng phiên bản thư viện của run gốc (numpy 2.5.4, torch 2.14.1+cpu, gymnasium 1.4.0, SB3 và sb3_contrib 2.9.0, scipy 1.18.1). Mã và lệnh không đổi; chỉ đổi đường dẫn `$py`. Không sửa `evaluate.py` (phải chạy ở commit khoá).
 - Không có thư mục raw nào được tạo ở lần lỗi: `evaluate.py` nạp model trước `new_run_dir`.
 
-## Kết quả
+## Kết quả (06/11, laptop FAO, venv Python 3.12.10)
 
-(điền sau khi chạy)
+Raw: c9b1896. Cả 3 run có `code_revision` b5cd784, không patch, numpy 2.5.4, torch 2.14.1+cpu, SB3 2.9.0, node Faolan.
+
+| Run | Trạng thái | `checkpoint_digest` | So với run gốc EXP-03 |
+| --- | --- | --- | --- |
+| `reeval_fixed_ppo_s5` | completed, 22:23:38 → 22:43:27 | sha256:58733dd3… (khớp) | **MATCH 500/500**, 0 dòng lệch; `events.csv` trùng từng byte với `eval_fixed_ppo_s5` |
+| `reeval_dr_ppo_s7_b` | completed, 22:48:10 → 22:58:04 | sha256:617efd7c… (khớp) | **MATCH 500/500**, 0 dòng lệch; `events.csv` trùng từng byte với `eval_dr_ppo_s7` |
+| `reeval_dr_ppo_s7` | running, bắt đầu 20:52:09, dừng ở 67/500 episode | not-applicable | 67 dòng có đều khớp. **Loại**: cửa sổ PowerShell bị đóng giữa chừng. Giữ lại vì raw chỉ ghi thêm; chạy lại bằng run ID mới `_b` |
+
+Kết luận: đánh giá EXP-03 tái lập chính xác (atol 1e-9, thực tế trùng từng byte) trên máy thứ hai với cùng mã khoá và cùng bản thư viện. Kết quả kỳ vọng của card đạt. Mean AoI theo bộ của run lại khớp run gốc (DR s7: 55,44 / 43,55 / 97,09 / 125,56 / 147,76; Fixed s5: 107,39 / 70,54 / 126,89 / 137,15 / 137,77).
+
+Giới hạn: chỉ kiểm khâu đánh giá của 2 trên 20 model, không kiểm khâu huấn luyện. Tái lập chỉ đạt khi dùng đúng Python 3.12 (mục "Sửa trước khi chạy").
+
+Thời gian chạy trên laptop FAO không dùng làm số đo (quy tắc 4).

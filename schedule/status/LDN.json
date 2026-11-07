@@ -91,7 +91,7 @@
     },
     "W4-LDN-04": {
       "date": "2026-11-06",
-      "note": "06/11: số H1/H2 chính thức đã chạy (chờ merge #43 để commit processed); heuristics_lock khớp EXP-01 1500/1500; power §4b, PR #51",
+      "note": "06/11: số chính thức đã commit (7de532d); power §4b + DAT đồng ý B1–B3; còn: FAO trả lời B1–B4, review PR #51, đưa vào PREREG phụ lục B (W5-FAO-03)",
       "state": "doing"
     }
   }
